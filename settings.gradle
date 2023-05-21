@@ -14,3 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "GoonersApp"
 include ':app'
+include ':feature:match'
+include ':feature:team'
+include ':feature:history'

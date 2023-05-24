@@ -14,9 +14,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
@@ -34,8 +37,9 @@ fun SquadPlayerCard(
     ) {
         Column {
             Row {
-                SquadPlayerHeaderImage(
-                    "https://www.arsenal.com/sites/default/files/styles/player_featured_image_1045x658/public/images/Odegaard_Profile_1100x693_0.jpg?itok=deJq4bzS"
+                PlayerHeaderImage(
+                    "https://www.arsenal.com/sites/default/files/styles/player_featured_image_1045x658/public/images/Odegaard_Profile_1100x693_0.jpg?itok=deJq4bzS",
+                    186.dp
                 )
             }
             Box(
@@ -52,15 +56,63 @@ fun SquadPlayerCard(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun StatPlayerCard(
+    onClick: () -> Unit,
+) {
+    Card(
+        modifier = Modifier
+            .width(146.dp)
+            .height(190.dp),
+        onClick = onClick,
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Column {
+            Row {
+                PlayerHeaderImage(
+                    "https://www.arsenal.com/sites/default/files/styles/player_featured_image_1045x658/public/images/Odegaard_Profile_1100x693_0.jpg?itok=deJq4bzS",
+                    146.dp
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                Column(
+                    modifier = Modifier
+                    .fillMaxSize()
+                        .align(Alignment.Center)
+                ) {
+                    Text(
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        text = "Odegaard",
+                        color = Color.White,
+                        fontSize = 16.sp
+                    )
+                    Text(
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        text = "15G 9A",
+                        color = Color.Red,
+                        fontSize = 14.sp
+                    )
+                }
+
+            }
+        }
+    }
+}
+
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun SquadPlayerHeaderImage(
-    imageUrl : String
+fun PlayerHeaderImage(
+    imageUrl : String,
+    height : Dp
 ) {
     GlideImage(
         modifier = Modifier
             .fillMaxWidth()
-            .height(186.dp),
+            .height(height),
         contentScale = ContentScale.Crop,
         model = imageUrl,
         contentDescription = null

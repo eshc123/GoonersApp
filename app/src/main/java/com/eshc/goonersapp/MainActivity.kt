@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.eshc.goonersapp.ui.theme.GoonersAppTheme
 import com.eshc.team.ui.SquadPlayerCard
+import com.eshc.team.ui.StatPlayerCard
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +28,9 @@ class MainActivity : ComponentActivity() {
                     //Greeting("Android")
                     Column() {
                         SquadPlayerCard {
+
+                        }
+                        StatPlayerCard{
 
                         }
                     }

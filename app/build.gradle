@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.eshc.goonersapp"
-        minSdk 24
+        minSdk 21
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -65,4 +65,6 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
 
     implementation(project(':feature:team'))
+    implementation(project(':feature:match'))
+    implementation(project(':feature:history'))
 }

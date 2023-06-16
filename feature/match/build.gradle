@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.eshc.match'
+    namespace 'com.eshc.goonersapp.match'
     compileSdk 33
 
     defaultConfig {

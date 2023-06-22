@@ -1,4 +1,4 @@
-package com.eshc.match
+package com.eshc.goonersapp.match
 
 import org.junit.Test
 

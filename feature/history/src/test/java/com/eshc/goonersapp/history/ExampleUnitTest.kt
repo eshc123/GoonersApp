@@ -1,4 +1,4 @@
-package com.eshc.history
+package com.eshc.goonersapp.history
 
 import org.junit.Test
 

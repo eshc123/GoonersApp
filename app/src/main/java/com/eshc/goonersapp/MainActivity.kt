@@ -12,8 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.eshc.goonersapp.ui.theme.GoonersAppTheme
-import com.eshc.team.ui.SquadPlayerCard
-import com.eshc.team.ui.StatPlayerCard
+import com.eshc.goonersapp.team.ui.SquadPlayerCard
+import com.eshc.goonersapp.team.ui.StatPlayerCard
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

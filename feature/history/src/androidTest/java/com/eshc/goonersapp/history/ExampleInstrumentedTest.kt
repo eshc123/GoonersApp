@@ -1,4 +1,4 @@
-package com.eshc.history
+package com.eshc.goonersapp.history
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -1,4 +1,4 @@
-package com.eshc.team
+package com.eshc.goonersapp.team
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -1,4 +1,4 @@
-package com.eshc.match
+package com.eshc.goonersapp.match
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

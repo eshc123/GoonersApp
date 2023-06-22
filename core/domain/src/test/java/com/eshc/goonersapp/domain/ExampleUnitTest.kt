@@ -1,4 +1,4 @@
-package com.eshc.domain
+package com.eshc.goonersapp.domain
 
 import org.junit.Test
 

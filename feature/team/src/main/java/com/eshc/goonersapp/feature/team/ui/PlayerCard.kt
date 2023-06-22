@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.team.ui
+package com.eshc.goonersapp.feature.team.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

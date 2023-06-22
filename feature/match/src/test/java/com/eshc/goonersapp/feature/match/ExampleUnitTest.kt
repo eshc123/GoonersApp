@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.domain
+package com.eshc.goonersapp.feature.match
 
 import org.junit.Test
 

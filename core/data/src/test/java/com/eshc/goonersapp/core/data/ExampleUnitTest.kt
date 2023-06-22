@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.team
+package com.eshc.goonersapp.core.data
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.data
+package com.eshc.goonersapp.feature.history
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.eshc.data.test", appContext.packageName)
+        assertEquals("com.eshc.history.test", appContext.packageName)
     }
 }

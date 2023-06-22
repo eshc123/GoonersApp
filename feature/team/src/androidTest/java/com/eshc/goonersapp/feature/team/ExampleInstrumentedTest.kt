@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.domain
+package com.eshc.goonersapp.feature.team
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.eshc.domain.test", appContext.packageName)
+        assertEquals("com.eshc.team.test", appContext.packageName)
     }
 }

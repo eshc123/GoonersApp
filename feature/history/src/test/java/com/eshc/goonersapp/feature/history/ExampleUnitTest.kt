@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.match
+package com.eshc.goonersapp.feature.history
 
 import org.junit.Test
 

@@ -67,4 +67,5 @@ dependencies {
     implementation(project(':feature:team'))
     implementation(project(':feature:match'))
     implementation(project(':feature:history'))
+    implementation(project(':core:designsystem'))
 }

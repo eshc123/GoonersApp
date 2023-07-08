@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.eshc.goonersapp.data'
+    namespace 'com.eshc.goonersapp.core.data'
     compileSdk 33
 
     defaultConfig {

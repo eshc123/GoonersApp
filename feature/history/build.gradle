@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.eshc.goonersapp.history'
+    namespace 'com.eshc.goonersapp.feature.history'
     compileSdk 33
 
     defaultConfig {

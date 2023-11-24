@@ -27,19 +27,21 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
-import com.eshc.goonersapp.core.network.model.NetworkPlayer
+import com.eshc.goonersapp.core.network.model.RemotePlayer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SquadPlayerCard(
-    player: NetworkPlayer,
-    onClick: () -> Unit,
+    player: RemotePlayer,
+    onClick: (String) -> Unit,
 ) {
     Card(
         modifier = Modifier
             .width(186.dp)
             .height(216.dp),
-        onClick = onClick,
+        onClick = {
+           onClick(player.id)
+        },
         shape = RoundedCornerShape(8.dp)
     ) {
         Box(

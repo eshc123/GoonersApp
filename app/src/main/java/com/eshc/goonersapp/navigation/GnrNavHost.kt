@@ -7,6 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.eshc.goonersapp.feature.home.navigation.homeNavigationRoute
 import com.eshc.goonersapp.feature.home.navigation.homeScreen
+import com.eshc.goonersapp.feature.team.navigation.navigateToPlayerDetail
+import com.eshc.goonersapp.feature.team.navigation.playerDetailScreen
 import com.eshc.goonersapp.feature.team.navigation.teamScreen
 
 @Composable
@@ -18,6 +20,11 @@ fun GnrNavHost(
         startDestination = homeNavigationRoute
     ){
         homeScreen()
-        teamScreen()
+        teamScreen(
+            onClick = {
+                navController.navigateToPlayerDetail(it)
+            }
+        )
+        playerDetailScreen()
     }
 }

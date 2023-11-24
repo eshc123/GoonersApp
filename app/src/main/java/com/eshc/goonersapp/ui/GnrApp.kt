@@ -27,8 +27,12 @@ fun GnrApp() {
                 destinations = TopLevelDestination.values().toList(),
                 onNavigateToDestination = {
                     when (it) {
-                        TopLevelDestination.HOME -> navController.navigateToHome()
-                        else -> navController.navigateToTeam()
+                        TopLevelDestination.HOME -> navController.navigateToHome(
+                            navOptions = topLevelNavOptions
+                        )
+                        else -> navController.navigateToTeam(
+                            navOptions = topLevelNavOptions
+                        )
                     }
                 }
             )

@@ -33,13 +33,15 @@ import com.eshc.goonersapp.core.network.model.RemotePlayer
 @Composable
 fun SquadPlayerCard(
     player: RemotePlayer,
-    onClick: () -> Unit,
+    onClick: (String) -> Unit,
 ) {
     Card(
         modifier = Modifier
             .width(186.dp)
             .height(216.dp),
-        onClick = onClick,
+        onClick = {
+           onClick(player.id)
+        },
         shape = RoundedCornerShape(8.dp)
     ) {
         Box(

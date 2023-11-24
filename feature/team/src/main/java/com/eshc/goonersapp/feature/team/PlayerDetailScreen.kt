@@ -34,16 +34,15 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
-import com.eshc.goonersapp.core.network.model.RemotePlayer
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun PlayerDetailScreen(
-    player : RemotePlayer
+    viewModel: PlayerDetailViewModel = hiltViewModel()
 ) {
 
     var selectedTab by remember { mutableStateOf(DetailTab.PROFILE) }
-
+    val player by viewModel.playerDetail.collectAsState()
 
     LazyColumn(
         modifier = Modifier.fillMaxSize()

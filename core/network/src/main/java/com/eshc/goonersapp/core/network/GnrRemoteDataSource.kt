@@ -4,5 +4,7 @@ import com.eshc.goonersapp.core.network.model.RemotePlayer
 
 interface GnrRemoteDataSource {
 
-    suspend fun getPlayers() : List<RemotePlayer>
+    suspend fun getPlayerList() : List<RemotePlayer>
+
+    suspend fun getPlayer(playerId : String) : RemotePlayer
 }

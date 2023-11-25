@@ -1,20 +1,23 @@
 plugins {
-    id("com.android.library")
+    id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
 }
 
-
 android {
-    namespace = "com.eshc.goonersapp.feature.playground"
+    namespace = "com.eshc.goonersapp"
     compileSdk = 34
 
+
     defaultConfig {
+        applicationId = "com.eshc.goonersapp"
         minSdk = 24
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
 
         vectorDrawables.useSupportLibrary = true
     }
@@ -23,8 +26,8 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
             )
         }
     }
@@ -40,6 +43,11 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 }
 
@@ -67,8 +75,10 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-compiler:2.44")
 
-    implementation("com.github.bumptech.glide:compose:1.0.0-alpha.1")
-
+    implementation(project(":feature:home"))
+    implementation(project(":feature:team"))
+    implementation(project(":feature:match"))
+    implementation(project(":feature:history"))
+    implementation(project(":feature:playground"))
     implementation(project(":core:designsystem"))
-    implementation(project(":core:network"))
 }

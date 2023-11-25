@@ -111,6 +111,8 @@ obj/
 .idea/.gitignore
 .idea/gradle.xml
 
+deploymentTargetDropDown.xml
+
 # OS-specific files
 .DS_Store
 .DS_Store?

@@ -1,11 +1,14 @@
 package com.eshc.goonersapp.feature.home
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -28,9 +33,11 @@ import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.eshc.goonersapp.core.designsystem.shape.TicketShape
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 
 
+@OptIn(ExperimentalGlideComposeApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun HomeRoute() {
     Column(
@@ -46,6 +53,38 @@ fun HomeRoute() {
             fontSize = 30.sp,
         )
         Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            modifier = Modifier.padding(start = 8.dp),
+            text = "Upcoming Matches",
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+            fontSize = 24.sp,
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = 8.dp),
+
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            item {
+                UpcomingMatchTicketCard(
+                    homeShortName = "WHU",
+                    homeUrl = "https://www.arsenal.com/sites/default/files/styles/feed_crest_thumbnail/public/logos/westhamunited.png?auto=webp&itok=37U68OD4",
+                    time = "2023.11.02 04:30",
+                    location = "London Stadium",
+                    competitionUrl = "https://www.arsenal.com/sites/default/files/styles/small/public/logos/Unknown-1.png?auto=webp&itok=vWaxFMmA"
+                )
+                UpcomingMatchTicketCard(
+                    homeShortName = "NEW",
+                    homeUrl = "https://www.arsenal.com/sites/default/files/styles/feed_crest_thumbnail/public/logos/newcastleunited_0.png?auto=webp&itok=fIdaH1e6",
+                    time = "2023.11.05 02:30",
+                    location = "St. James' Park",
+                    competitionUrl = "https://www.arsenal.com/sites/default/files/styles/small/public/logos/comp_8.png?auto=webp&itok=EBszNKBn"
+                )
+            }
+        }
 
         Text(
             modifier = Modifier.padding(start = 8.dp),
@@ -67,6 +106,129 @@ fun HomeRoute() {
     }
 }
 
+
+@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun UpcomingMatchTicketCard(
+    homeShortName: String = "ARS",
+    homeUrl: String = "https://www.arsenal.com/sites/default/files/styles/feed_crest_thumbnail/public/logos/arsenal-1.png?auto=webp&itok=7a6a0zug",
+    awayShortName: String = "ARS",
+    awayUrl: String = "https://www.arsenal.com/sites/default/files/styles/feed_crest_thumbnail/public/logos/arsenal-1.png?auto=webp&itok=7a6a0zug",
+    time: String,
+    location: String,
+    competitionUrl: String
+) {
+    ElevatedCard(
+        modifier = Modifier
+            .padding(8.dp)
+            .width(260.dp)
+            .height(180.dp),
+        shape = TicketShape(8.dp, CornerSize(4.dp), weight = 2f),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(2f)
+                .background(Color(0xFF151D2D)),//0xFFDA0209)),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                modifier = Modifier
+                    //.background(Color(1f, 0f, 0f, 0.9f))
+                    .fillMaxWidth()
+                    .weight(2f),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f),
+                ) {
+                    Text(
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        text = homeShortName,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        fontSize = 36.sp,
+                    )
+
+                    GlideImage(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .align(Alignment.CenterHorizontally),
+                        contentScale = ContentScale.Crop,
+                        model = homeUrl,
+                        contentDescription = null
+                    ) {
+                        it.diskCacheStrategy(
+                            DiskCacheStrategy.ALL
+                        )
+                    }
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f),//.background(Color.Red),
+                ) {
+                    Text(
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        text = awayShortName,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        fontSize = 36.sp,
+                    )
+
+                    GlideImage(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .align(Alignment.CenterHorizontally),
+                        contentScale = ContentScale.Crop,
+                        model = awayUrl,
+                        contentDescription = null
+                    ) {
+                        it.diskCacheStrategy(
+                            DiskCacheStrategy.ALL
+                        )
+                    }
+                }
+
+            }
+
+
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f).padding(horizontal = 24.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+
+            Text(
+                text = "${time}\n${location}",
+                fontFamily = pretendard,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.DarkGray,
+                fontSize = 14.sp,
+            )
+
+            GlideImage(
+                modifier = Modifier.height(30.dp),
+                model = competitionUrl,
+                contentDescription = null
+            ) {
+                it.diskCacheStrategy(
+                    DiskCacheStrategy.ALL
+                )
+            }
+        }
+    }
+}
 
 
 @OptIn(ExperimentalGlideComposeApi::class)
@@ -189,32 +351,32 @@ fun RecentlyMatchCard(
                         .height(0.dp)
                         .width(8.dp))
 
-                        Column(
-                            modifier = Modifier.wrapContentHeight().weight(1f).padding(start = 28.dp,bottom = 12.dp,end = 12.dp)
-                        ) {
-                            Text(
-                                modifier = Modifier.padding(horizontal = 4.dp),
-                                text = "7` Saka",
-                                fontWeight = FontWeight.Normal,
-                                color = Color.White,
-                                fontSize = 18.sp,
-                            )
-                            Text(
-                                modifier = Modifier.padding(horizontal = 4.dp),
-                                text = "17` Saka",
-                                fontWeight = FontWeight.Normal,
-                                color = Color.White,
-                                fontSize = 18.sp,
-                            )
-                            Text(
-                                modifier = Modifier.padding(horizontal = 4.dp),
-                                text = "27` Saka",
-                                fontWeight = FontWeight.Normal,
-                                color = Color.White,
-                                fontSize = 18.sp,
-                            )
+                    Column(
+                        modifier = Modifier.wrapContentHeight().weight(1f).padding(start = 28.dp,bottom = 12.dp,end = 12.dp)
+                    ) {
+                        Text(
+                            modifier = Modifier.padding(horizontal = 4.dp),
+                            text = "7` Saka",
+                            fontWeight = FontWeight.Normal,
+                            color = Color.White,
+                            fontSize = 18.sp,
+                        )
+                        Text(
+                            modifier = Modifier.padding(horizontal = 4.dp),
+                            text = "17` Saka",
+                            fontWeight = FontWeight.Normal,
+                            color = Color.White,
+                            fontSize = 18.sp,
+                        )
+                        Text(
+                            modifier = Modifier.padding(horizontal = 4.dp),
+                            text = "27` Saka",
+                            fontWeight = FontWeight.Normal,
+                            color = Color.White,
+                            fontSize = 18.sp,
+                        )
 
-                        }
+                    }
 
                 }
             }

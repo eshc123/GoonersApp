@@ -6,7 +6,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.eshc.goonersapp.feature.team.PlayerDetailScreen
+import com.eshc.goonersapp.feature.team.detail.PlayerDetailScreen
 import com.eshc.goonersapp.feature.team.TeamRoute
 
 const val teamNavigationRoute = "team_route"

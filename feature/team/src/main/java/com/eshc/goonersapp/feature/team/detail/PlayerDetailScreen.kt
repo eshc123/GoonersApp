@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.feature.team
+package com.eshc.goonersapp.feature.team.detail
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -90,109 +90,33 @@ fun PlayerDetailScreen(
             )
         }
 
-//        item {
-//            Row(
-//                modifier = Modifier.fillMaxWidth()
-//            ) {
-//                DetailTab.values().forEach {
-//                    TabItem(
-//                        modifier = Modifier.weight(1f),
-//                        tabTitle = it.name,
-//                        isSelected = selectedTab == it,
-//                        onSelect = {
-//                            selectedTab = it
-//                        }
-//                    )
-//                }
-//            }
-//        }
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                DetailTab.values().forEach {
+                    TabItem(
+                        modifier = Modifier.weight(1f),
+                        tabTitle = it.name,
+                        isSelected = selectedTab == it,
+                        onSelect = {
+                            selectedTab = it
+                        }
+                    )
+                }
+            }
+        }
 
         item {
-            OutlinedCard(
-                modifier = Modifier
-                    .padding(start = 16.dp, end = 16.dp, top = 24.dp)
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                border = BorderStroke(width = 1.dp, color = Color(0xFFF1F1F1)),
-                colors = CardDefaults.outlinedCardColors(
-                    containerColor = Color.Transparent
-                )
-
-            ) {
-
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ){
-                    Column(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text(
-                            text = "Date Of Birth",
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Medium,
-                            color = Color.Gray,
-                            fontSize = 15.sp,
-                            letterSpacing = 0.1.sp
-                        )
-                        Text(
-                            text = "May 14, 1998 (25)",
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Medium,
-                            color = Color.Black,
-                            fontSize = 16.sp,
-                            letterSpacing = 0.1.sp
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Text(
-                            text = "Position",
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Medium,
-                            color = Color.Gray,
-                            fontSize = 15.sp,
-                            letterSpacing = 0.1.sp
-                        )
-                        Text(
-                            text = player.position,
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Medium,
-                            color = Color.Black,
-                            fontSize = 16.sp,
-                            letterSpacing = 0.1.sp
-                        )
-                    }
-                    Column(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text(
-                            text = "Nationality",
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Medium,
-                            color = Color.Gray,
-                            fontSize = 15.sp,
-                            letterSpacing = 0.1.sp
-                        )
-                        Text(
-                            text = "England",
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Medium,
-                            color = Color.Black,
-                            fontSize = 16.sp,
-                                    letterSpacing = 0.1.sp
-                        )
-                    }
+            when(selectedTab){
+                DetailTab.PROFILE -> {
+                    ProfileScreen(player = player)
                 }
-
-
+                DetailTab.STATS -> {
+                    StatScreen()
+                }
             }
+            
 
         }
     }
@@ -230,5 +154,5 @@ fun TabItem(
 }
 
 enum class DetailTab {
-    PROFILE, STATS, etc
+    PROFILE, STATS
 }

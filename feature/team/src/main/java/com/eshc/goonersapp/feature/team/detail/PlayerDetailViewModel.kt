@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.feature.team
+package com.eshc.goonersapp.feature.team.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

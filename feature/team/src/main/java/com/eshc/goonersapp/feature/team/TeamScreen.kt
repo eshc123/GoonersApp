@@ -62,8 +62,10 @@ fun TeamScreen(
         Column(
             modifier = Modifier.width(IntrinsicSize.Max)
         ) {
-
-
+            val int = intArrayOf(0,1)
+            int.sorted().reduceIndexed { index, acc, i ->
+                if(index % 2 == 1) i else 0
+            }
             Text(
                 modifier = Modifier.padding(top = 8.dp, start = 8.dp),
                 text = "GOALKEEPERS",

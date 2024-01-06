@@ -1,8 +1,8 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 
@@ -39,35 +39,37 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.7"
     }
 }
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.8.1")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    implementation("androidx.navigation:navigation-compose:2.7.5")
+    implementation(libs.androidx.navigation.compose)
 
-    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-compiler:2.44")
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
-    implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
+    implementation(libs.glide.compose)
 
     implementation(project(":core:designsystem"))
 }

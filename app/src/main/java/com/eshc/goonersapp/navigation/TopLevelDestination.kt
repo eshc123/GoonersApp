@@ -39,10 +39,10 @@ enum class TopLevelDestination(
         iconTextId = team.string.team,
         titleTextId = team.string.team
     ),
-    PLAYGROUND(
-        selectedIcon = IconPack.IcPlaygroundSelected,
-        unselectedIcon = IconPack.IcPlaygroundUnselected,
-        iconTextId = playground.string.playground,
-        titleTextId = playground.string.playground
-    )
+//    PLAYGROUND(
+//        selectedIcon = IconPack.IcPlaygroundSelected,
+//        unselectedIcon = IconPack.IcPlaygroundUnselected,
+//        iconTextId = playground.string.playground,
+//        titleTextId = playground.string.playground
+//    )
 }

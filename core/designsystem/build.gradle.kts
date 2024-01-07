@@ -1,13 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.hilt.android)
-    alias(libs.plugins.kotlin.kapt)
 }
 
 
 android {
-    namespace = "com.eshc.goonersapp.feature.playground"
+    namespace = "com.eshc.goonersapp.core.designsystem"
     compileSdk = 34
 
     defaultConfig {
@@ -62,15 +60,4 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-
-    implementation(libs.androidx.navigation.compose)
-
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-
-    implementation(libs.glide.compose)
-
-    implementation(project(":core:designsystem"))
-    implementation(project(":core:network"))
 }

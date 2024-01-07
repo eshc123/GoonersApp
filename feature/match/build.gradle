@@ -28,7 +28,7 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.4.3'
+        kotlinCompilerExtensionVersion '1.5.7'
     }
     buildFeatures {
         compose true
@@ -61,5 +61,5 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.44"
     kapt "com.google.dagger:hilt-compiler:2.44"
 
-    implementation 'com.github.bumptech.glide:compose:1.0.0-alpha.1'
+    implementation 'com.github.bumptech.glide:compose:1.0.0-beta01'
 }

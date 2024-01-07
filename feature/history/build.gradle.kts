@@ -7,7 +7,7 @@ plugins {
 
 
 android {
-    namespace = "com.eshc.goonersapp.feature.playground"
+    namespace = "com.eshc.goonersapp.feature.history"
     compileSdk = 34
 
     defaultConfig {
@@ -23,8 +23,8 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
             )
         }
     }
@@ -72,5 +72,4 @@ dependencies {
     implementation(libs.glide.compose)
 
     implementation(project(":core:designsystem"))
-    implementation(project(":core:network"))
 }

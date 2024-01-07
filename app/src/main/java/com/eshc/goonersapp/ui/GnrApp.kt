@@ -16,7 +16,7 @@ import androidx.navigation.navOptions
 import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBar
 import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBarItem
 import com.eshc.goonersapp.feature.home.navigation.navigateToHome
-import com.eshc.goonersapp.feature.team.TeamScreen
+import com.eshc.goonersapp.feature.match.navigation.navigateToMatch
 import com.eshc.goonersapp.feature.team.navigation.navigateToTeam
 import com.eshc.goonersapp.feature.team.ui.SquadPlayerCard
 import com.eshc.goonersapp.navigation.GnrNavHost
@@ -39,12 +39,9 @@ fun GnrApp() {
                         restoreState = true
                     }
                     when (it) {
-                        TopLevelDestination.HOME -> navController.navigateToHome(
-                            navOptions = topLevelNavOptions
-                        )
-                        else -> navController.navigateToTeam(
-                            navOptions = topLevelNavOptions
-                        )
+                        TopLevelDestination.HOME -> navController.navigateToHome()
+                        TopLevelDestination.MATCH -> navController.navigateToMatch()
+                        else -> navController.navigateToTeam()
                     }
                 }
             )

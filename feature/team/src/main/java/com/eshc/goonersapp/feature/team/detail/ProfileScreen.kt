@@ -54,7 +54,7 @@ fun ProfileScreen(
                     letterSpacing = 0.1.sp
                 )
                 Text(
-                    text = "May 14, 1998 (25)",
+                    text = player.birthDate,
                     textAlign = TextAlign.Center,
                     fontFamily = pretendard,
                     fontWeight = FontWeight.Medium,
@@ -81,6 +81,25 @@ fun ProfileScreen(
                     fontSize = 16.sp,
                     letterSpacing = 0.1.sp
                 )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = "Weight",
+                    textAlign = TextAlign.Center,
+                    fontFamily = pretendard,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Gray,
+                    fontSize = 15.sp,
+                    letterSpacing = 0.1.sp
+                )
+                Text(
+                    text = "${player.weight}kg",
+                    textAlign = TextAlign.Center,
+                    fontFamily = pretendard,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Black,
+                    fontSize = 16.sp,
+                    letterSpacing = 0.1.sp
+                )
             }
             Column(
                 modifier = Modifier.weight(1f)
@@ -96,6 +115,25 @@ fun ProfileScreen(
                 )
                 Text(
                     text = "England",
+                    textAlign = TextAlign.Center,
+                    fontFamily = pretendard,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Black,
+                    fontSize = 16.sp,
+                    letterSpacing = 0.1.sp
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = "Height",
+                    textAlign = TextAlign.Center,
+                    fontFamily = pretendard,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Gray,
+                    fontSize = 15.sp,
+                    letterSpacing = 0.1.sp
+                )
+                Text(
+                    text = "${player.height}cm",
                     textAlign = TextAlign.Center,
                     fontFamily = pretendard,
                     fontWeight = FontWeight.Medium,

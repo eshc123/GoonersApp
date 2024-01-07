@@ -94,7 +94,7 @@ fun PlayerDetailScreen(
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                DetailTab.values().forEach {
+                DetailTab.entries.forEach {
                     TabItem(
                         modifier = Modifier.weight(1f),
                         tabTitle = it.name,

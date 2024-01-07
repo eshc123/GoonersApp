@@ -5,9 +5,8 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
 }
 
-
 android {
-    namespace = "com.eshc.goonersapp.feature.history"
+    namespace = "com.eshc.goonersapp.feature.match"
     compileSdk = 34
 
     defaultConfig {
@@ -23,8 +22,8 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
         }
     }
@@ -72,4 +71,5 @@ dependencies {
     implementation(libs.glide.compose)
 
     implementation(project(":core:designsystem"))
+    implementation(project(":core:network"))
 }

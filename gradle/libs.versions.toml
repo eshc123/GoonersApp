@@ -1,7 +1,7 @@
 [versions]
 activity-compose = "1.8.2"
 androidx-junit = "1.1.5"
-core-ktx = "1.12.0"
+core-ktx = "1.9.0"
 espresso-core = "3.5.1"
 hilt-android = "2.50"
 hilt-compiler = "2.50"

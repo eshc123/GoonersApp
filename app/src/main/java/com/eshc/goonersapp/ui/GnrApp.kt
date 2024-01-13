@@ -29,7 +29,7 @@ fun GnrApp() {
     Scaffold(
         bottomBar = {
             GnrBottomBar(
-                destinations = TopLevelDestination.values().toList(),
+                destinations = TopLevelDestination.entries,
                 onNavigateToDestination = {
                     val topLevelNavOptions = navOptions {
                         popUpTo(navController.graph.findStartDestination().id) {
@@ -39,9 +39,15 @@ fun GnrApp() {
                         restoreState = true
                     }
                     when (it) {
-                        TopLevelDestination.HOME -> navController.navigateToHome()
-                        TopLevelDestination.MATCH -> navController.navigateToMatch()
-                        else -> navController.navigateToTeam()
+                        TopLevelDestination.HOME -> navController.navigateToHome(
+                            topLevelNavOptions
+                        )
+                        TopLevelDestination.MATCH -> navController.navigateToMatch(
+                            topLevelNavOptions
+                        )
+                        else -> navController.navigateToTeam(
+                            topLevelNavOptions
+                        )
                     }
                 }
             )

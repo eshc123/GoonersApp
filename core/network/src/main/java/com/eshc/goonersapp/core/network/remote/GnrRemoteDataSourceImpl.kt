@@ -36,6 +36,9 @@ val dummy = listOf(
         name = "Aaron\nRamsdale",
         backNumber = 1,
         position = "GK",
+        birthDate = "1998-05-14",
+        height = 190,
+        weight = 88,
         imageUrl = "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/Headshot_Ramsdale_1510x850_0.jpg?auto=webp&itok=w6EQqPOI"
     ),
     RemotePlayer(
@@ -170,6 +173,9 @@ val dummy = listOf(
         name = "Bukayo\nSaka",
         backNumber = 7,
         position = "FW",
+        birthDate = "2001-09-05",
+        height = 178,
+        weight = 72,
         imageUrl = "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/Headshot_Saka_1510x850_0.jpg?auto=webp&itok=yZpptHcr"
     ),
     RemotePlayer(

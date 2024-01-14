@@ -6,15 +6,15 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.eshc.goonersapp.feature.match.MatchRoute
 
-const val homeNavigationMatch = "match_route"
+const val matchNavigationRoute = "match_route"
 
 fun NavController.navigateToMatch(navOptions: NavOptions? = null) {
-    this.navigate(homeNavigationMatch, navOptions)
+    this.navigate(matchNavigationRoute, navOptions)
 }
 
 fun NavGraphBuilder.matchScreen() {
     composable(
-        route = homeNavigationMatch
+        route = matchNavigationRoute
     ) {
         MatchRoute()
     }

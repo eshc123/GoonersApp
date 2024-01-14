@@ -26,20 +26,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
-import com.eshc.goonersapp.core.network.model.RemotePlayer
 import com.eshc.goonersapp.feature.team.ui.SquadPlayerCard
 
 @Composable
 fun TeamRoute(
-    onClick : (String) -> Unit
-){
-    TeamScreen(onClick= onClick)
+    onClick: (String) -> Unit
+) {
+    TeamScreen(onClick = onClick)
 }
 
 @Composable
 fun TeamScreen(
     viewModel: TeamViewModel = hiltViewModel(),
-    onClick : (String) -> Unit
+    onClick: (String) -> Unit
 ) {
 
     val items by viewModel.items.collectAsState()
@@ -49,22 +48,13 @@ fun TeamScreen(
             .fillMaxSize()
             .verticalScroll(st)
     ) {
-        Text(
-            modifier = Modifier.padding(top = 8.dp, start = 8.dp),
-            text = "TEAM",
-            fontFamily = pretendard,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black,
-            fontSize = 30.sp,
-        )
-
         Spacer(modifier = Modifier.height(12.dp))
         Column(
             modifier = Modifier.width(IntrinsicSize.Max)
         ) {
-            val int = intArrayOf(0,1)
+            val int = intArrayOf(0, 1)
             int.sorted().reduceIndexed { index, acc, i ->
-                if(index % 2 == 1) i else 0
+                if (index % 2 == 1) i else 0
             }
             Text(
                 modifier = Modifier.padding(top = 8.dp, start = 8.dp),
@@ -208,4 +198,6 @@ fun TeamScreen(
 
         Spacer(modifier = Modifier.size(16.dp))
     }
+
+
 }

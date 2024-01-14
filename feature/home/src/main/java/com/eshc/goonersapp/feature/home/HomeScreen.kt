@@ -28,21 +28,9 @@ fun HomeRoute() {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
-        item {
-            Text(
-                modifier = Modifier.padding(top = 8.dp, start = 8.dp),
-                text = "HOME",
-                //fontFamily = pretendard,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                fontSize = 30.sp,
-            )
 
+        item {
             Spacer(modifier = Modifier.height(12.dp))
-
-        }
-
-        item {
             Text(
                 modifier = Modifier.padding(start = 8.dp),
                 text = "Team Dashboard",

@@ -30,9 +30,9 @@ import com.eshc.goonersapp.feature.team.ui.SquadPlayerCard
 
 @Composable
 fun TeamRoute(
-    onClick: (String) -> Unit
+    onPlayerClick: (String) -> Unit,
 ) {
-    TeamScreen(onClick = onClick)
+    TeamScreen(onClick = onPlayerClick)
 }
 
 @Composable

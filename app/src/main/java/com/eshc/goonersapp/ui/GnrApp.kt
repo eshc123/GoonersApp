@@ -1,5 +1,6 @@
 package com.eshc.goonersapp.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -18,12 +20,13 @@ import androidx.navigation.navOptions
 import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBar
 import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBarItem
-import com.eshc.goonersapp.core.designsystem.component.TopBar
+import com.eshc.goonersapp.core.designsystem.component.TopLevelTopBar
 import com.eshc.goonersapp.core.designsystem.iconpack.IcFootballClub
 import com.eshc.goonersapp.core.designsystem.iconpack.IcSearch
 import com.eshc.goonersapp.feature.home.navigation.navigateToHome
 import com.eshc.goonersapp.feature.match.navigation.navigateToMatch
 import com.eshc.goonersapp.feature.team.navigation.navigateToTeam
+import com.eshc.goonersapp.feature.team.navigation.navigateToTeamHistory
 import com.eshc.goonersapp.navigation.GnrNavHost
 import com.eshc.goonersapp.navigation.TopLevelDestination
 import com.eshc.goonersapp.navigation.topLevelDestinationSet
@@ -73,6 +76,7 @@ fun GnrApp() {
                 TopLevelDestination.entries.find { it.route == currentRoute }?.let { topLevelDestination ->
                     GnrTopLevelBar(
                         topLevelDestination = topLevelDestination,
+                        navController = navController
                     )
                 }
 
@@ -85,9 +89,10 @@ fun GnrApp() {
 
 @Composable
 fun GnrTopLevelBar(
-    topLevelDestination : TopLevelDestination
+    topLevelDestination : TopLevelDestination,
+    navController: NavController
 ){
-    TopBar(
+    TopLevelTopBar(
         modifier = Modifier.padding(horizontal = 8.dp),
         title = topLevelDestination.name
     ) {
@@ -103,6 +108,9 @@ fun GnrTopLevelBar(
                 imageVector = IconPack.IcSearch,
                 contentDescription = null,
                 modifier= Modifier.padding(horizontal = 8.dp).size(24.dp)
+                    .clickable {
+                        navController.navigateToTeamHistory()
+                    }
             )
     }
 }

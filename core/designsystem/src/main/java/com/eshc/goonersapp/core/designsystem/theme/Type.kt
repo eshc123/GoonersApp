@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.ui.theme
+package com.eshc.goonersapp.core.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

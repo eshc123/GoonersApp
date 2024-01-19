@@ -8,9 +8,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.eshc.goonersapp.feature.team.detail.PlayerDetailScreen
 import com.eshc.goonersapp.feature.team.TeamRoute
+import com.eshc.goonersapp.feature.team.history.TeamHistoryScreen
 
 const val teamNavigationRoute = "team_route"
 const val playerDetailNavigationRoute = "player_route"
+const val teamHistoryNavigationRoute = "team_history_route"
 
 
 internal const val playerIdArg = "playerId"
@@ -23,13 +25,19 @@ fun NavController.navigateToPlayerDetail(playerId : String, navOptions: NavOptio
     this.navigate(playerDetailNavigationRoute + "/${playerId}",navOptions)
 }
 
+fun NavController.navigateToTeamHistory(navOptions: NavOptions? = null) {
+    this.navigate(teamHistoryNavigationRoute, navOptions)
+}
+
 fun NavGraphBuilder.teamScreen(
-    onClick : (String) -> Unit
+    onPlayerClick : (String) -> Unit
 ) {
     composable(
         route = teamNavigationRoute
     ) {
-        TeamRoute(onClick)
+        TeamRoute(
+            onPlayerClick
+        )
     }
 }
 
@@ -41,5 +49,15 @@ fun NavGraphBuilder.playerDetailScreen() {
         ),
     ) {
         PlayerDetailScreen()
+    }
+}
+
+fun NavGraphBuilder.teamHistoryScreen(
+    onPlayerClick : (String) -> Unit
+) {
+    composable(
+        route = teamHistoryNavigationRoute
+    ) {
+        TeamHistoryScreen(onPlayerClick)
     }
 }

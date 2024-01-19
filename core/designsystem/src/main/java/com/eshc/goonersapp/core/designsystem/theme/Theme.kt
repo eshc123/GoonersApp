@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.ui.theme
+package com.eshc.goonersapp.core.designsystem.theme
 
 import android.app.Activity
 import android.os.Build
@@ -54,7 +54,7 @@ fun GoonersAppTheme(
         else -> LightColorScheme
     }
     val view = LocalView.current
-    if (!view.isInEditMode) {
+    if (!view.isInEditMode && view.context is Activity) {
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.background.toArgb()

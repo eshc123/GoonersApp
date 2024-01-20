@@ -2,6 +2,7 @@
 plugins {
     id("java-library")
     alias(libs.plugins.org.jetbrains.kotlin.jvm)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 java {
@@ -10,6 +11,7 @@ java {
 }
 
 dependencies {
-    implementation(libs.hilt.compiler)
+    implementation(libs.hilt.core)
     implementation(libs.kotlinx.coroutines)
+    kapt(libs.hilt.compiler)
 }

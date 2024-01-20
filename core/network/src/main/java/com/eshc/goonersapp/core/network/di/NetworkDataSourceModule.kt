@@ -1,0 +1,18 @@
+package com.eshc.goonersapp.core.network.di
+
+import com.eshc.goonersapp.core.network.PlayerNetworkDataSource
+import com.eshc.goonersapp.core.network.remote.PlayerNetworkDataSourceImpl
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class NetworkDataSourceModule {
+
+    @Binds
+    abstract fun bindPlayerNetworkDataSource(
+        gnrRemoteDataSource: PlayerNetworkDataSourceImpl
+    ): PlayerNetworkDataSource
+}

@@ -19,11 +19,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
-import com.eshc.goonersapp.core.network.model.RemotePlayer
+import com.eshc.goonersapp.core.domain.model.Player
 
 @Composable
 fun ProfileScreen(
-    player : RemotePlayer
+    player : Player
 ) {
     OutlinedCard(
         modifier = Modifier

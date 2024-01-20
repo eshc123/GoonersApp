@@ -1,15 +1,15 @@
 package com.eshc.goonersapp.core.network.remote
 
-import com.eshc.goonersapp.core.network.GnrRemoteDataSource
-import com.eshc.goonersapp.core.network.api.GnrNetworkService
+import com.eshc.goonersapp.core.network.PlayerNetworkDataSource
+import com.eshc.goonersapp.core.network.api.PlayerNetworkService
 import com.eshc.goonersapp.core.network.model.RemotePlayer
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class GnrRemoteDataSourceImpl @Inject constructor(
-    private val gnrNetworkService: GnrNetworkService
-) : GnrRemoteDataSource {
+class PlayerNetworkDataSourceImpl @Inject constructor(
+    private val playerNetworkService: PlayerNetworkService
+) : PlayerNetworkDataSource {
 
 
     override suspend fun getPlayerList(): List<RemotePlayer> {
@@ -20,7 +20,7 @@ class GnrRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getPlayer(playerId: String): RemotePlayer {
+    override suspend fun getPlayerDetail(playerId: String): RemotePlayer {
         try {
             return dummy.find { it.id == playerId } ?: RemotePlayer(id = "-1")
         }catch (e:Exception){

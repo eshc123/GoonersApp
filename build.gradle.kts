@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.hilt.android) apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.plugin.serialization) apply false
-    alias(libs.plugins.kotlin.kapt) apply false
     alias(libs.plugins.room) apply false
     alias(libs.plugins.org.jetbrains.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
 }

@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.room)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -49,8 +49,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(libs.room.compiler)
+    kapt(libs.room.compiler)
     implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

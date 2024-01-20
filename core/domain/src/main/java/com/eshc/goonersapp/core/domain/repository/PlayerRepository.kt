@@ -7,5 +7,5 @@ interface PlayerRepository {
 
     fun getPlayers() : Flow<List<Player>>
 
-    fun getPlayerDetail(playerId: String) : Flow<Player>
+    fun getPlayerDetail(playerId: Int) : Flow<Player>
 }

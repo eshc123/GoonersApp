@@ -15,7 +15,7 @@ class PlayerRepositoryImpl @Inject constructor(
         emit(playerNetworkDataSource.getPlayerList().map { it.toModel() })
     }
 
-    override fun getPlayerDetail(playerId: String): Flow<Player> = flow {
+    override fun getPlayerDetail(playerId: Int): Flow<Player> = flow {
         emit(playerNetworkDataSource.getPlayerDetail(playerId).toModel())
     }
 }

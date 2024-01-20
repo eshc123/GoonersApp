@@ -40,7 +40,7 @@ fun SquadPlayerCard(
             .width(186.dp)
             .height(216.dp),
         onClick = {
-           onClick(player.id)
+           onClick(player.id.toString())
         },
         shape = RoundedCornerShape(8.dp)
     ) {

@@ -6,5 +6,5 @@ interface PlayerNetworkDataSource {
 
     suspend fun getPlayerList() : List<RemotePlayer>
 
-    suspend fun getPlayerDetail(playerId : String) : RemotePlayer
+    suspend fun getPlayerDetail(playerId : Int) : RemotePlayer
 }

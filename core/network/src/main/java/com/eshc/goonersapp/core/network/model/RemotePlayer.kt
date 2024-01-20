@@ -1,15 +1,28 @@
 package com.eshc.goonersapp.core.network.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class RemotePlayer(
-    val id :String,
+    @SerialName("player_id")
+    val id :Int,
+    @SerialName("player_name")
     val name : String = "",
+    @SerialName("back_number")
     val backNumber : Int = 0,
+    @SerialName("initial")
     val position : String = "",
+    @SerialName("birth_date")
     val birthDate : String = "",
+    @SerialName("stature")
     val height : Int = 0,
+    @SerialName("weight")
     val weight : Int = 0,
+    @SerialName("image_url")
     val imageUrl : String = "",
+    @SerialName("contract_start_date")
+    val contractStartDate : String = "",
+    @SerialName("contract_end_date")
+    val contractEndDate : String = ""
 )

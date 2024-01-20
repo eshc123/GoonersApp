@@ -36,6 +36,7 @@ androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtim
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt-compiler" }
+hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "hilt-compiler" }
 junit = { module = "junit:junit", version.ref = "junit" }
 glide-compose = { module = "com.github.bumptech.glide:compose", version.ref = "glide-compose" }
 retrofit = { module = "com.squareup.retrofit2:retrofit" , version.ref = "retrofit" }

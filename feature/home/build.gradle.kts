@@ -72,5 +72,5 @@ dependencies {
     implementation(libs.glide.compose)
 
     implementation(project(":core:designsystem"))
-    implementation(project(":core:network"))
+    implementation(project(":core:domain"))
 }

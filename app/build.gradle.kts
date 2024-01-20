@@ -51,6 +51,7 @@ android {
     }
 }
 
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -83,4 +84,6 @@ dependencies {
     implementation(project(":feature:history"))
     implementation(project(":feature:playground"))
     implementation(project(":core:designsystem"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:data"))
 }

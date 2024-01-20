@@ -12,7 +12,7 @@ import dagger.hilt.components.SingletonComponent
 abstract class DataModule {
 
     @Binds
-    internal abstract fun bindsPlayerRepository(
+    abstract fun bindsPlayerRepository(
         playerRepository: PlayerRepositoryImpl,
     ): PlayerRepository
 }

@@ -2,8 +2,8 @@ package com.eshc.goonersapp.feature.team
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eshc.goonersapp.core.network.PlayerNetworkDataSource
-import com.eshc.goonersapp.core.network.model.RemotePlayer
+import com.eshc.goonersapp.core.domain.model.Player
+import com.eshc.goonersapp.core.domain.usecase.GetPlayersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -11,16 +11,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TeamViewModel @Inject constructor(
-    private val playerNetworkDataSource: PlayerNetworkDataSource
+    private val getPlayersUseCase: GetPlayersUseCase
 ) : ViewModel() {
 
-    val items = MutableStateFlow<List<RemotePlayer>>(emptyList())
+    val items = MutableStateFlow<List<Player>>(emptyList())
 
     init {
         viewModelScope.launch {
-            items.emit(
-                playerNetworkDataSource.getPlayerList()
-            )
+            getPlayersUseCase.invoke().collect {
+                items.emit(it)
+            }
         }
     }
 }

@@ -7,4 +7,5 @@ plugins {
     alias(libs.plugins.kotlin.plugin.serialization) apply false
     alias(libs.plugins.kotlin.kapt) apply false
     alias(libs.plugins.room) apply false
+    alias(libs.plugins.org.jetbrains.kotlin.jvm) apply false
 }

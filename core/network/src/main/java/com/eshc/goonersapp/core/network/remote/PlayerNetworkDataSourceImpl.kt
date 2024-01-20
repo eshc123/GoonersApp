@@ -20,7 +20,7 @@ class PlayerNetworkDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getPlayer(playerId: String): RemotePlayer {
+    override suspend fun getPlayerDetail(playerId: String): RemotePlayer {
         try {
             return dummy.find { it.id == playerId } ?: RemotePlayer(id = "-1")
         }catch (e:Exception){

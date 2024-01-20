@@ -22,7 +22,7 @@ class PlayerDetailViewModel @Inject constructor(
 
     val playerDetail: StateFlow<RemotePlayer> =
         flow {
-            emit(playerNetworkDataSource.getPlayer(playerId))
+            emit(playerNetworkDataSource.getPlayerDetail(playerId))
         }.stateIn(
             viewModelScope, started = SharingStarted.WhileSubscribed(5_000),
             initialValue = RemotePlayer("-1"),

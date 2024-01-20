@@ -19,10 +19,10 @@ class PlayerDetailViewModel @Inject constructor(
 
     private val playerId: String = savedStateHandle.get<String>(PLAYER_ID_SAVED_STATE_KEY)!!
 
-    val playerDetail: StateFlow<Player> = getPlayerDetailUseCase(playerId)
+    val playerDetail: StateFlow<Player> = getPlayerDetailUseCase(playerId.toInt())
         .stateIn(
             viewModelScope, started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = Player("-1"),
+            initialValue = Player(-1),
         )
 
     companion object {

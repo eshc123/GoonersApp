@@ -11,4 +11,5 @@ java {
 
 dependencies {
     implementation(libs.hilt.compiler)
+    implementation(libs.kotlinx.coroutines)
 }

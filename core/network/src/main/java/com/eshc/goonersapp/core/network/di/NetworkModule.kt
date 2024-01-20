@@ -1,7 +1,7 @@
 package com.eshc.goonersapp.core.network.di
 
 import com.eshc.goonersapp.core.network.BuildConfig
-import com.eshc.goonersapp.core.network.api.GnrNetworkService
+import com.eshc.goonersapp.core.network.api.PlayerNetworkService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -50,8 +50,8 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideGnrNetworkService(retrofit: Retrofit) : GnrNetworkService =
+    fun providePlayerNetworkService(retrofit: Retrofit) : PlayerNetworkService =
         retrofit.create(
-            GnrNetworkService::class.java
+            PlayerNetworkService::class.java
         )
 }

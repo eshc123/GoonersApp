@@ -9,6 +9,6 @@ class GetPlayerDetailUseCase @Inject constructor(
     private val playerRepository: PlayerRepository
 ) {
 
-    operator fun invoke(playerId : String): Flow<Player> =
+    operator fun invoke(playerId : Int): Flow<Player> =
         playerRepository.getPlayerDetail(playerId)
 }

@@ -1,7 +1,7 @@
 package com.eshc.goonersapp.core.domain.model
 
 data class Player(
-    val id :String,
+    val id :Int,
     val name : String = "",
     val backNumber : Int = 0,
     val position : String = "",

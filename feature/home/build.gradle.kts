@@ -69,7 +69,7 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
-    implementation(libs.glide.compose)
+    implementation(libs.coil.compose)
 
     implementation(project(":core:designsystem"))
     implementation(project(":core:domain"))

@@ -26,13 +26,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.shape.TicketShape
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun UpcomingMatchTicketCard(
     homeShortName: String = "ARS",
@@ -80,19 +77,14 @@ fun UpcomingMatchTicketCard(
                         color = Color.White,
                         fontSize = 36.sp,
                     )
-
-                    GlideImage(
+                    AsyncImage(
                         modifier = Modifier
                             .size(48.dp)
                             .align(Alignment.CenterHorizontally),
-                        contentScale = ContentScale.Crop,
                         model = homeUrl,
-                        contentDescription = null
-                    ) {
-                        it.diskCacheStrategy(
-                            DiskCacheStrategy.ALL
-                        )
-                    }
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                    )
                 }
 
                 Column(
@@ -107,19 +99,14 @@ fun UpcomingMatchTicketCard(
                         color = Color.White,
                         fontSize = 36.sp,
                     )
-
-                    GlideImage(
+                    AsyncImage(
                         modifier = Modifier
                             .size(48.dp)
                             .align(Alignment.CenterHorizontally),
-                        contentScale = ContentScale.Crop,
                         model = awayUrl,
-                        contentDescription = null
-                    ) {
-                        it.diskCacheStrategy(
-                            DiskCacheStrategy.ALL
-                        )
-                    }
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                    )
                 }
 
             }
@@ -141,22 +128,17 @@ fun UpcomingMatchTicketCard(
                 color = Color.DarkGray,
                 fontSize = 14.sp,
             )
-
-            GlideImage(
-                modifier = Modifier.height(30.dp),
+            AsyncImage(
+                modifier = Modifier
+                    .size(30.dp),
                 model = competitionUrl,
                 contentDescription = null
-            ) {
-                it.diskCacheStrategy(
-                    DiskCacheStrategy.ALL
-                )
-            }
+            )
         }
     }
 }
 
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun RecentlyMatchCard(
     homeShortName: String = "ARS",
@@ -201,18 +183,14 @@ fun RecentlyMatchCard(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    GlideImage(
+                    AsyncImage(
                         modifier = Modifier
                             .size(48.dp)
                             .align(Alignment.CenterVertically),
                         contentScale = ContentScale.Crop,
                         model = homeUrl,
                         contentDescription = null
-                    ) {
-                        it.diskCacheStrategy(
-                            DiskCacheStrategy.ALL
-                        )
-                    }
+                    )
                     Column(
                         modifier = Modifier
                             .wrapContentHeight()
@@ -249,19 +227,14 @@ fun RecentlyMatchCard(
                         }
 
                     }
-
-                    GlideImage(
+                    AsyncImage(
                         modifier = Modifier
                             .size(48.dp)
                             .align(Alignment.CenterVertically),
                         contentScale = ContentScale.Crop,
                         model = awayUrl,
                         contentDescription = null
-                    ) {
-                        it.diskCacheStrategy(
-                            DiskCacheStrategy.ALL
-                        )
-                    }
+                    )
                 }
                 Spacer(modifier = Modifier
                     .width(0.dp)
@@ -321,16 +294,11 @@ fun RecentlyMatchCard(
                 color = Color.DarkGray,
                 fontSize = 14.sp,
             )
-
-            GlideImage(
+            AsyncImage(
                 modifier = Modifier.height(30.dp),
                 model = competitionUrl,
                 contentDescription = null
-            ) {
-                it.diskCacheStrategy(
-                    DiskCacheStrategy.ALL
-                )
-            }
+            )
         }
     }
 }

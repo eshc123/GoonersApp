@@ -23,9 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 import com.eshc.goonersapp.core.domain.model.Player
 
@@ -100,22 +98,17 @@ fun SquadPlayerCard(
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun PlayerHeaderImage(
     imageUrl: String,
     height: Dp
 ) {
-    GlideImage(
+    AsyncImage(
         modifier = Modifier
             .fillMaxWidth()
             .height(height),
         contentScale = ContentScale.Crop,
         model = imageUrl,
         contentDescription = null
-    ) {
-        it.diskCacheStrategy(
-            DiskCacheStrategy.ALL
-        )
-    }
+    )
 }

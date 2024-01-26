@@ -83,6 +83,7 @@ dependencies {
     implementation(project(":feature:match"))
     implementation(project(":feature:history"))
     implementation(project(":feature:playground"))
+    implementation(project(":feature:chat"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:domain"))
     implementation(project(":core:data"))

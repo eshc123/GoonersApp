@@ -3,17 +3,21 @@ package com.eshc.goonersapp.feature.match.component.calendar
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -34,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -45,15 +50,18 @@ enum class CalendarMode {
 @Composable
 fun Calendar(
     height: Int,
-    headerHeight : Int,
-    yearRangeList : List<Int>,
-    currentCalendarMode : CalendarMode,
-    selectedMonth : LocalDate,
+    headerHeight: Int,
+    yearRangeList: List<Int> = IntRange(
+        1901,
+        java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)
+    ).toList(),
+    currentCalendarMode: CalendarMode,
+    selectedMonth: LocalDate,
     selectedStartDate: LocalDate,
-    selectedEndDate : LocalDate? = null,
-    listState : LazyGridState,
-    calendarListState : CalendarList,
-    onChangeMonth : (LocalDate) -> Unit,
+    selectedEndDate: LocalDate? = null,
+    listState: LazyGridState,
+    calendarListState: CalendarList,
+    onChangeMonth: (LocalDate) -> Unit,
     onChangeDate: (LocalDate) -> Unit,
     onSelectDate: (LocalDate) -> Unit,
     onChangeCurrentCalendarMode: (CalendarMode) -> Unit
@@ -71,12 +79,13 @@ fun Calendar(
         ) {
             Icon(
                 modifier = Modifier.clickable {
-                    when(currentCalendarMode){
+                    when (currentCalendarMode) {
                         CalendarMode.DATE -> {
                             onChangeMonth(selectedMonth.minusMonths(1L))
                         }
+
                         else -> {
-                            if(selectedMonth.year > 1901)
+                            if (selectedMonth.year > 1901)
                                 onChangeMonth(selectedMonth.minusYears(1L))
                         }
                     }
@@ -159,15 +168,21 @@ fun Calendar(
                     columns = GridCells.Fixed(7),
 
                     ) {
-                    items(listOf("일", "월", "화", "수", "목", "금", "토")) {
-                        CalendarDayItem(it, 27)
+                    items(listOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")) {
+                        CalendarDayItem(it, 24)
                     }
 
                     items(calendarListState.preDates) { localDate ->
                         FaintCalendarItem(localDate, (height - headerHeight) / 7)
                     }
                     items(calendarListState.curDates) { localDate ->
-                        CalendarItem(localDate, selectedStartDate, selectedEndDate,(height - headerHeight) / 7) {
+                        CalendarItem(
+                            localDate,
+                            selectedStartDate,
+                            selectedEndDate,
+                            (height - headerHeight) / 7,
+                            localDate.dayOfMonth % 5 == 0 // TODO
+                        ) {
                             onSelectDate(it)
                             onChangeDate(it)
                         }
@@ -194,17 +209,25 @@ fun Calendar(
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         items(IntRange(1, 12).toList()) {
-                            CalendarMonthAndYearItem(
+                            CalendarMonthItem(
                                 onClick = {
                                     onChangeMonth(selectedMonth.withMonth(it.toInt()))
-                                    val last = LocalDate.of(selectedStartDate.year, it.toInt(), 1).withDayOfMonth(
-                                        LocalDate.of(selectedStartDate.year, it.toInt(), 1).lengthOfMonth()
-                                    ).dayOfMonth
-                                    onChangeDate( if (selectedStartDate.dayOfMonth > last)
-                                        LocalDate.of(selectedStartDate.year, it.toInt(), last)
-                                    else {
-                                        LocalDate.of(selectedStartDate.year, it.toInt(), selectedStartDate.dayOfMonth)
-                                    })
+                                    val last = LocalDate.of(selectedStartDate.year, it.toInt(), 1)
+                                        .withDayOfMonth(
+                                            LocalDate.of(selectedStartDate.year, it.toInt(), 1)
+                                                .lengthOfMonth()
+                                        ).dayOfMonth
+                                    onChangeDate(
+                                        if (selectedStartDate.dayOfMonth > last)
+                                            LocalDate.of(selectedStartDate.year, it.toInt(), last)
+                                        else {
+                                            LocalDate.of(
+                                                selectedStartDate.year,
+                                                it.toInt(),
+                                                selectedStartDate.dayOfMonth
+                                            )
+                                        }
+                                    )
                                     onChangeCurrentCalendarMode(CalendarMode.DATE)
                                 },
                                 it.toString(),
@@ -233,14 +256,19 @@ fun Calendar(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         items(yearRangeList) {
-                            CalendarMonthAndYearItem(
+                            CalendarYearItem(
                                 onClick = {
                                     onChangeMonth(selectedMonth.withYear(it.toInt()))
-                                    onChangeDate(LocalDate.of(it.toInt(), selectedStartDate.month, selectedStartDate.dayOfMonth))
+                                    onChangeDate(
+                                        LocalDate.of(
+                                            it.toInt(),
+                                            selectedStartDate.month,
+                                            selectedStartDate.dayOfMonth
+                                        )
+                                    )
                                     onChangeCurrentCalendarMode(CalendarMode.MONTH)
                                 },
                                 it.toString(),
-                                (height - headerHeight) / 4,
                                 isSelected = selectedMonth.year == it
                             )
                         }
@@ -252,7 +280,49 @@ fun Calendar(
 }
 
 @Composable
-fun CalendarMonthAndYearItem(
+fun CalendarYearItem(
+    onClick: (String) -> Unit,
+    text: String,
+    height: Int = 28,
+    fontSize: TextUnit = 20.sp,
+    isSelected: Boolean
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(CircleShape)
+                .border(
+                    if (isSelected)
+                        BorderStroke(1.dp, Color.Red)
+                    else BorderStroke(0.dp, Color.Transparent),
+                    shape = CircleShape
+                )
+                .clickable {
+                    onClick(text)
+                },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                modifier = Modifier
+                    .align(Alignment.Center),
+                text = text,
+                fontSize = fontSize,
+                fontWeight = FontWeight.Bold
+            )
+        }
+
+    }
+}
+
+
+@Composable
+fun CalendarMonthItem(
     onClick: (String) -> Unit,
     text: String,
     height: Int,
@@ -261,43 +331,37 @@ fun CalendarMonthAndYearItem(
 ) {
     Box(
         modifier = Modifier
+            .fillMaxWidth()
             .height(height.dp),
         contentAlignment = Alignment.Center
     ) {
-        OutlinedCard(
-            modifier = Modifier.size(height.dp),
-            border =
-            if (isSelected)
-                BorderStroke(1.dp, Color.Red)
-            else BorderStroke(0.dp, Color.Transparent),
-            shape = CircleShape
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(CircleShape)
-                    .clickable {
-                        onClick(text)
-                    },
-                contentAlignment = Alignment.Center
-//                    .let {
-//                    if(isSelected) it.background(color = Color.LightGray)
-//                    else it
-//                }
-            ) {
-                Text(
-                    modifier = Modifier
-                        .align(Alignment.Center),
-                    text = text,
-                    fontSize = fontSize,
-                    fontWeight = FontWeight.Bold
+        Box(
+            modifier = Modifier
+                .padding(4.dp)
+                .wrapContentWidth()
+                .aspectRatio(1f)
+                .border(
+                    if (isSelected)
+                        BorderStroke(1.dp, Color.Red)
+                    else BorderStroke(0.dp, Color.Transparent),
+                    shape = CircleShape
                 )
-            }
+                .clickable {
+                    onClick(text)
+                },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                modifier = Modifier
+                    .align(Alignment.Center),
+                text = text,
+                fontSize = fontSize,
+                fontWeight = FontWeight.Bold
+            )
         }
-
     }
-}
 
+}
 
 
 @Composable
@@ -307,7 +371,7 @@ fun CalendarDayItem(
 ) {
     Box(
         modifier = Modifier
-            .padding(bottom = 17.dp)
+            .padding(bottom = 6.dp)
             .height(height.dp)
     ) {
         Box(
@@ -321,7 +385,7 @@ fun CalendarDayItem(
                     .height(height.dp),
                 text = text,
                 fontSize = 12.sp,
-                color = if (text == "일" || text == "토") Color.Red else Color.Gray,
+                color = if (text == "SUN" || text == "SAT") Color.Red else Color.Gray,
                 fontWeight = FontWeight.Normal
             )
         }
@@ -334,9 +398,10 @@ fun CalendarItem(
     selectedDate: LocalDate,
     selectedEndDate: LocalDate? = null,
     height: Int,
-    onSelectDate: (LocalDate) -> Unit
+    isMatchDay: Boolean = false,
+    onSelectDate: (LocalDate) -> Unit,
 ) {
-    Box(
+    Column(
         modifier = Modifier
             .height(height.dp)
             .background(
@@ -347,41 +412,45 @@ fun CalendarItem(
                     Color.Red.copy(alpha = 0.5f)
                 else
                     Color.Transparent
-            ),
-        contentAlignment = Alignment.Center
+            )
+            .clickable {
+                onSelectDate(localDate)
+            },
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        OutlinedCard(
-            modifier = Modifier.size(40.dp),
-            border =
-            if (selectedDate.year == localDate.year && selectedDate.month == localDate.month && selectedDate.dayOfMonth == localDate.dayOfMonth)
-                BorderStroke(1.dp, Color.Red)
-            else BorderStroke(0.dp, Color.Transparent),
-            shape = CircleShape
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(CircleShape)
-                    .clickable {
-                        onSelectDate(localDate)
-                    }
-                    .padding(4.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    modifier = Modifier,
-                    text = localDate.dayOfMonth.toString(),
-                    fontSize = 14.sp,
-                    color = if (localDate.dayOfWeek in setOf(
-                            DayOfWeek.SATURDAY,
-                            DayOfWeek.SUNDAY
-                        )
-                    ) Color.Red else Color.Black,
-                    fontWeight = FontWeight.Medium
+        Box(
+            modifier = Modifier
+                .wrapContentSize()
+                .clip(CircleShape)
+                .padding(4.dp)
+                .border(
+                    if (selectedDate.year == localDate.year && selectedDate.month == localDate.month && selectedDate.dayOfMonth == localDate.dayOfMonth)
+                        BorderStroke(1.dp, Color.Red)
+                    else BorderStroke(0.dp, Color.Transparent)
                 )
-                Text(text = "아스날 vs 상대팀")
-            }
+        ) {
+            Text(
+                modifier = Modifier,
+                text = localDate.dayOfMonth.toString(),
+                fontSize = 14.sp,
+                color = if (localDate.dayOfWeek in setOf(
+                        DayOfWeek.SATURDAY,
+                        DayOfWeek.SUNDAY
+                    )
+                ) Color.Red else Color.Black,
+                fontWeight = FontWeight.Medium
+            )
         }
+        if (isMatchDay) {
+            AsyncImage(
+                modifier = Modifier.size(20.dp),
+                model = "https://www.arsenal.com/sites/default/files/styles/feed_crest_thumbnail/public/logos/arsenal-1.png?auto=webp&itok=7a6a0zug",
+                contentDescription = null
+            )
+            Text(text = "3:0", fontSize = 12.sp)
+            Text(text = "WIN", fontSize = 12.sp)
+        }
+
 
     }
 }
@@ -394,13 +463,13 @@ fun FaintCalendarItem(
     Box(
         modifier = Modifier
             .height(height.dp),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.TopCenter
 
     ) {
-        Box(modifier = Modifier.padding(4.dp)){
+        Box(modifier = Modifier.padding(4.dp)) {
             Text(
                 modifier = Modifier
-                    .align(Alignment.Center),
+                    .align(Alignment.TopCenter),
                 text = localDate.dayOfMonth.toString(),
                 fontSize = 14.sp,
                 color = Color.LightGray

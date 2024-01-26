@@ -45,9 +45,8 @@ fun MatchRoute() {
         }
 
         Calendar(
-            height = 750,
+            height = 700,
             headerHeight = 60,
-            yearRangeList = IntRange(1901, java.util.Calendar.getInstance().get(java.util.Calendar.YEAR) + 100).toList(),
             currentCalendarMode = currentCalendarMode,
             selectedMonth = selectedMonth,
             selectedStartDate = selectedDate,

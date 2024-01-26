@@ -3,6 +3,7 @@ package com.eshc.goonersapp.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.eshc.goonersapp.feature.chat.navigation.chatRoomScreen
 import com.eshc.goonersapp.feature.home.navigation.homeNavigationRoute
 import com.eshc.goonersapp.feature.home.navigation.homeScreen
 import com.eshc.goonersapp.feature.match.navigation.matchScreen
@@ -32,5 +33,6 @@ fun GnrNavHost(
                 navController.navigateToPlayerDetail(it)
             }
         )
+        chatRoomScreen()
     }
 }

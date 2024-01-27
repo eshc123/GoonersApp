@@ -79,7 +79,7 @@ fun TeamScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             items(
-                items.filter { it.position == "GK" }
+                items.filter { it.positionCategory == "Goalkeeper" }
             ) {
                 SquadPlayerCard(
                     it, onClick
@@ -115,7 +115,7 @@ fun TeamScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             items(
-                items.filter { it.position == "DF" }
+                items.filter { it.positionCategory == "Defender" }
             ) {
                 SquadPlayerCard(
                     it, onClick
@@ -151,7 +151,7 @@ fun TeamScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             items(
-                items.filter { it.position == "MF" }
+                items.filter { it.positionCategory == "Midfielder" }
             ) {
                 SquadPlayerCard(
                     it, onClick
@@ -187,7 +187,7 @@ fun TeamScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             items(
-                items.filter { it.position == "FW" }
+                items.filter { it.positionCategory == "Forward" }
             ) {
                 SquadPlayerCard(
                     it, onClick

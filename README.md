@@ -1,7 +1,7 @@
 ﻿# GoonersApp
 
 <p>
-<img alt="api" src="https://img.shields.io/badge/API-24%2B-green?logo=android"/>
+<img alt="api" src="https://img.shields.io/badge/API-26%2B-green?logo=android"/>
 <img alt="api" src="https://img.shields.io/badge/Kotlin-1.9.20%2B-purple?logo=kotlin"/>    
 <img alt="license" src="https://img.shields.io/github/license/hongbeomi/FindTaek?color=blue&logo=apache"/>
 </p>
@@ -9,7 +9,19 @@
 <b>App for Gooners</b>
 <br>
 
-## 
+## Stack & Libraries
+- Minimum SDK level 26
+- Kotlin
+- Kotlin Serialization
+- Jetpack
+  - Compose
+  - Navigation
+- Coroutine
+  - Flow
+- Hilt
+- Retrofit2
+- OkHttp3
+- Coil
 
 ## License 
 

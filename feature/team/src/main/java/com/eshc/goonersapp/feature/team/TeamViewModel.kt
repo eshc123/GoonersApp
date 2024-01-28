@@ -6,6 +6,8 @@ import com.eshc.goonersapp.core.domain.model.Player
 import com.eshc.goonersapp.core.domain.usecase.GetPlayersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,12 +16,13 @@ class TeamViewModel @Inject constructor(
     private val getPlayersUseCase: GetPlayersUseCase
 ) : ViewModel() {
 
-    val items = MutableStateFlow<List<Player>>(emptyList())
+    private val _players = MutableStateFlow<List<Player>>(emptyList())
+    val player : StateFlow<List<Player>> = _players.asStateFlow()
 
     init {
         viewModelScope.launch {
-            getPlayersUseCase.invoke().collect {
-                items.emit(it)
+            getPlayersUseCase().collect {
+                _players.emit(it)
             }
         }
     }

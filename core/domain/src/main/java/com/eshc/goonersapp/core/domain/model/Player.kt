@@ -14,3 +14,10 @@ data class Player(
     val position : String = "",
     val positionCategory : String = ""
 )
+
+enum class PlayerPosition(val positionCategory: String) {
+    GOALKEEPER("Goalkeeper"),
+    DEFENDER("Defender"),
+    MIDFIELDER("Midfielder"),
+    FORWARD("Forward")
+}

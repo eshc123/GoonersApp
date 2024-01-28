@@ -26,9 +26,9 @@ class PlayerNetworkDataSourceImpl @Inject constructor(
 
     override suspend fun getPlayerDetail(playerId: Int): RemotePlayer {
         return try {
-            val response = playerNetworkService.getPlayerDetail()
+            val response = playerNetworkService.getPlayerDetail(playerId = playerId)
             if(response.isSuccessful){
-                response.body()?.result?.firstOrNull() ?: RemotePlayer(-1)
+                response.body()?.result ?: RemotePlayer(-1)
             }else RemotePlayer(-1)
         }catch (e:Exception){
             RemotePlayer(-1)

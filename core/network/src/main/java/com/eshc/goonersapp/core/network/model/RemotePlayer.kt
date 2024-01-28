@@ -11,8 +11,6 @@ data class RemotePlayer(
     val name : String = "",
     @SerialName("back_number")
     val backNumber : Int = 0,
-    @SerialName("initial")
-    val position : String = "",
     @SerialName("birth_date")
     val birthDate : String = "",
     @SerialName("stature")
@@ -24,5 +22,11 @@ data class RemotePlayer(
     @SerialName("contract_start_date")
     val contractStartDate : String = "",
     @SerialName("contract_end_date")
-    val contractEndDate : String = ""
+    val contractEndDate : String = "",
+    @SerialName("main_position")
+    val mainPosition : String = "", // ex) Right Back
+    @SerialName("category")
+    val positionCategory : String = "", // ex) Defender
+    @SerialName("initial")
+    val positionInitial : String = "" // RB
 )

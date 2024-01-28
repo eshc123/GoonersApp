@@ -7,9 +7,13 @@ fun RemotePlayer.toModel() = Player(
     id = id,
     name = name,
     backNumber = backNumber,
-    position = position,
     birthDate = birthDate,
     height = height,
     weight = weight,
-    imageUrl = imageUrl
+    imageUrl = imageUrl,
+    contractStartDate = contractStartDate,
+    contractEndDate = contractEndDate,
+    positionDetail = mainPosition,
+    position = positionInitial,
+    positionCategory = positionCategory
 )

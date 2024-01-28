@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 import com.eshc.goonersapp.core.domain.model.Player
 
@@ -54,7 +55,7 @@ fun ProfileScreen(
                     letterSpacing = 0.1.sp
                 )
                 Text(
-                    text = player.birthDate,
+                    text = DateUtil.getYearAndMonthAndDate(player.birthDate),
                     textAlign = TextAlign.Center,
                     fontFamily = pretendard,
                     fontWeight = FontWeight.Medium,

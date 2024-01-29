@@ -74,7 +74,7 @@ fun ProfileScreen(
                     letterSpacing = 0.1.sp
                 )
                 Text(
-                    text = player.position,
+                    text = player.positionDetail,
                     textAlign = TextAlign.Center,
                     fontFamily = pretendard,
                     fontWeight = FontWeight.Medium,
@@ -115,7 +115,7 @@ fun ProfileScreen(
                     letterSpacing = 0.1.sp
                 )
                 Text(
-                    text = "England",
+                    text = player.nationality,
                     textAlign = TextAlign.Center,
                     fontFamily = pretendard,
                     fontWeight = FontWeight.Medium,

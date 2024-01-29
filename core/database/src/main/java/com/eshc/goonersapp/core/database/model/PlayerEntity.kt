@@ -10,7 +10,8 @@ import androidx.room.PrimaryKey
 data class PlayerEntity(
     @PrimaryKey
     val id : Int,
-    val position : String,
+    @ColumnInfo(name = "main_position")
+    val mainPosition : String,
     val name : String,
     @ColumnInfo(name = "birth_date")
     val birthDate : String,
@@ -18,8 +19,11 @@ data class PlayerEntity(
     val weight : Int,
     @ColumnInfo(name = "back_number")
     val backNumber : Int,
-    @ColumnInfo(name = "country_id")
-    val countryId : Int,
+    val nationality : String,
     @ColumnInfo(name = "image_url")
-    val imageUrl : String
+    val imageUrl : String,
+    @ColumnInfo(name = "contract_start_date")
+    val contractStartDate : String = "",
+    @ColumnInfo(name = "contract_end_date")
+    val contractEndDate : String = "",
 )

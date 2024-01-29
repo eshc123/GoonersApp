@@ -17,7 +17,7 @@ class TeamViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _players = MutableStateFlow<List<Player>>(emptyList())
-    val player : StateFlow<List<Player>> = _players.asStateFlow()
+    val players : StateFlow<List<Player>> = _players.asStateFlow()
 
     init {
         viewModelScope.launch {

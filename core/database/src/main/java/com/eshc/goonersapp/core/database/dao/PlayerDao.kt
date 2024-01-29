@@ -2,6 +2,7 @@ package com.eshc.goonersapp.core.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Upsert
 import com.eshc.goonersapp.core.database.model.PlayerEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -14,5 +15,18 @@ interface PlayerDao {
             FROM player
         """
     )
-    fun getPlayers() : Flow<List<PlayerEntity>>
+    fun getPlayerEntities() : Flow<List<PlayerEntity>>
+
+    @Query(
+        value = """
+            SELECT *
+            FROM player
+            WHERE id = :playerId
+        """
+    )
+    suspend fun getPlayerEntity(playerId : Int) : PlayerEntity?
+
+
+    @Upsert
+    suspend fun upsertPlayer(entity: PlayerEntity)
 }

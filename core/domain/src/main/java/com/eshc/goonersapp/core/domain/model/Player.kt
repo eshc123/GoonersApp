@@ -12,7 +12,8 @@ data class Player(
     val contractEndDate : String = "",
     val positionDetail : String = "",
     val position : String = "",
-    val positionCategory : String = ""
+    val positionCategory : String = "",
+    val nationality : String = ""
 )
 
 enum class PlayerPosition(val positionCategory: String) {

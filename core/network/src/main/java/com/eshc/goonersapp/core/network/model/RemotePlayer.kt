@@ -28,5 +28,7 @@ data class RemotePlayer(
     @SerialName("category")
     val positionCategory : String = "", // ex) Defender
     @SerialName("initial")
-    val positionInitial : String = "" // RB
+    val positionInitial : String = "", // RB
+    @SerialName("nationality1")
+    val nationality : String = "", // RB
 )

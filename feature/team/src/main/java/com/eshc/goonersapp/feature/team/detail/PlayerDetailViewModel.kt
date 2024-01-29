@@ -3,11 +3,12 @@ package com.eshc.goonersapp.feature.team.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eshc.goonersapp.core.domain.model.Player
 import com.eshc.goonersapp.core.domain.usecase.GetPlayerDetailUseCase
+import com.eshc.goonersapp.feature.team.state.PlayerDetailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -19,10 +20,11 @@ class PlayerDetailViewModel @Inject constructor(
 
     private val playerId: String = savedStateHandle.get<String>(PLAYER_ID_SAVED_STATE_KEY)!!
 
-    val playerDetail: StateFlow<Player> = getPlayerDetailUseCase(playerId.toInt())
+    val playerDetailUiState: StateFlow<PlayerDetailUiState> = getPlayerDetailUseCase(playerId.toInt())
+        .map { PlayerDetailUiState.Success(it) }
         .stateIn(
             viewModelScope, started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = Player(-1),
+            initialValue = PlayerDetailUiState.Loading,
         )
 
     companion object {

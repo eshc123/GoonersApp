@@ -15,5 +15,6 @@ fun RemotePlayer.toModel() = Player(
     contractEndDate = contractEndDate,
     positionDetail = mainPosition,
     position = positionInitial,
-    positionCategory = positionCategory
+    positionCategory = positionCategory,
+    nationality = nationality
 )

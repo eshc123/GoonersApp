@@ -20,6 +20,7 @@ Players
 - Jetpack
   - Compose
   - Navigation
+  - Room
 - Coroutine
   - Flow
 - Hilt

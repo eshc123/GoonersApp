@@ -1,6 +1,8 @@
 package com.eshc.goonersapp.core.network.di
 
+import com.eshc.goonersapp.core.network.MatchNetworkDataSource
 import com.eshc.goonersapp.core.network.PlayerNetworkDataSource
+import com.eshc.goonersapp.core.network.remote.MatchNetworkDataSourceImpl
 import com.eshc.goonersapp.core.network.remote.PlayerNetworkDataSourceImpl
 import dagger.Binds
 import dagger.Module
@@ -15,4 +17,9 @@ abstract class NetworkDataSourceModule {
     abstract fun bindPlayerNetworkDataSource(
         gnrRemoteDataSource: PlayerNetworkDataSourceImpl
     ): PlayerNetworkDataSource
+
+    @Binds
+    abstract fun bindMatchNetworkDataSource(
+        gnrRemoteDataSource: MatchNetworkDataSourceImpl
+    ): MatchNetworkDataSource
 }

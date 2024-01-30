@@ -26,7 +26,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -39,6 +38,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.eshc.goonersapp.core.common.util.DateUtil
+import com.eshc.goonersapp.core.domain.model.Match
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -60,7 +61,8 @@ fun Calendar(
     selectedStartDate: LocalDate,
     selectedEndDate: LocalDate? = null,
     listState: LazyGridState,
-    calendarListState: CalendarList,
+    calendarDatesState: CalendarDates,
+    matchList : Map<LocalDate,List<Match>>,
     onChangeMonth: (LocalDate) -> Unit,
     onChangeDate: (LocalDate) -> Unit,
     onSelectDate: (LocalDate) -> Unit,
@@ -172,22 +174,22 @@ fun Calendar(
                         CalendarDayItem(it, 24)
                     }
 
-                    items(calendarListState.preDates) { localDate ->
+                    items(calendarDatesState.preDates) { localDate ->
                         FaintCalendarItem(localDate, (height - headerHeight) / 7)
                     }
-                    items(calendarListState.curDates) { localDate ->
+                    items(calendarDatesState.curDates) { localDate ->
                         CalendarItem(
                             localDate,
                             selectedStartDate,
                             selectedEndDate,
                             (height - headerHeight) / 7,
-                            localDate.dayOfMonth % 5 == 0 // TODO
+                            matchList
                         ) {
                             onSelectDate(it)
                             onChangeDate(it)
                         }
                     }
-                    items(calendarListState.nextDates) { localDate ->
+                    items(calendarDatesState.nextDates) { localDate ->
                         FaintCalendarItem(localDate, (height - headerHeight) / 7)
                     }
                 }
@@ -398,7 +400,7 @@ fun CalendarItem(
     selectedDate: LocalDate,
     selectedEndDate: LocalDate? = null,
     height: Int,
-    isMatchDay: Boolean = false,
+    matchList: Map<LocalDate, List<Match>>,
     onSelectDate: (LocalDate) -> Unit,
 ) {
     Column(
@@ -422,12 +424,14 @@ fun CalendarItem(
             modifier = Modifier
                 .wrapContentSize()
                 .clip(CircleShape)
-                .padding(4.dp)
                 .border(
                     if (selectedDate.year == localDate.year && selectedDate.month == localDate.month && selectedDate.dayOfMonth == localDate.dayOfMonth)
                         BorderStroke(1.dp, Color.Red)
-                    else BorderStroke(0.dp, Color.Transparent)
+                    else BorderStroke(0.dp, Color.Transparent),
+                    CircleShape
                 )
+                .padding(4.dp)
+
         ) {
             Text(
                 modifier = Modifier,
@@ -441,14 +445,32 @@ fun CalendarItem(
                 fontWeight = FontWeight.Medium
             )
         }
-        if (isMatchDay) {
-            AsyncImage(
-                modifier = Modifier.size(20.dp),
-                model = "https://www.arsenal.com/sites/default/files/styles/feed_crest_thumbnail/public/logos/arsenal-1.png?auto=webp&itok=7a6a0zug",
-                contentDescription = null
-            )
-            Text(text = "3:0", fontSize = 12.sp)
-            Text(text = "WIN", fontSize = 12.sp)
+        if (matchList.containsKey(localDate)) {
+            matchList[localDate]?.firstOrNull()?.let { match ->
+                AsyncImage(
+                    modifier = Modifier.size(24.dp),
+                    model = if(match.homeTeamName == "Arsenal") match.awayTeamImageUrl else match.homeTeamImageUrl,
+                    contentDescription = null
+                )
+                if(match.isFinished){
+                    Text(text = "${match.homeScore}:${match.awayScore}",
+                        fontSize = 12.sp)
+                    Text(
+                        text = if(match.homeTeamName == "Arsenal"){
+                            if(match.homeScore > match.awayScore) "WIN"
+                            else if(match.homeScore < match.awayScore) "LOSS"
+                            else "DRAW"
+                        }else {
+                            if(match.awayScore > match.homeScore) "WIN"
+                            else if(match.awayScore < match.homeScore) "LOSS"
+                            else "DRAW"
+                        }, fontSize = 12.sp)
+                }else {
+                    Text(text = DateUtil.getTimeString(match.matchDate), fontSize = 12.sp)
+                }
+
+            }
+
         }
 
 

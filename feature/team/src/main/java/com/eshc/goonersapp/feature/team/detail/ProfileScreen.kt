@@ -55,7 +55,7 @@ fun ProfileScreen(
                     letterSpacing = 0.1.sp
                 )
                 Text(
-                    text = DateUtil.getYearAndMonthAndDate(player.birthDate),
+                    text = DateUtil.getYearAndMonthAndDateString(player.birthDate),
                     textAlign = TextAlign.Center,
                     fontFamily = pretendard,
                     fontWeight = FontWeight.Medium,

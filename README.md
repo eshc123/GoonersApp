@@ -10,8 +10,10 @@
 <br>
 
 ##
-<img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/player.gif" width="30%"/>
-Players
+| Players | Matches | 
+| :---------------: | :---------------: | 
+| <img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/player.gif" align="center" width="300px"/> | <img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/match.gif" align="center" width="300px"/> |
+
 
 ## Stack & Libraries
 - Minimum SDK level 26

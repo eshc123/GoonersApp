@@ -27,6 +27,7 @@ import com.eshc.goonersapp.core.designsystem.iconpack.IcSearch
 import com.eshc.goonersapp.feature.chat.navigation.navigateToChatRoom
 import com.eshc.goonersapp.feature.home.navigation.navigateToHome
 import com.eshc.goonersapp.feature.match.navigation.navigateToMatch
+import com.eshc.goonersapp.feature.team.navigation.navigateToClubDetail
 import com.eshc.goonersapp.feature.team.navigation.navigateToTeam
 import com.eshc.goonersapp.feature.team.navigation.navigateToTeamHistory
 import com.eshc.goonersapp.navigation.GnrNavHost
@@ -104,7 +105,7 @@ fun GnrTopLevelBar(
                 contentDescription = null,
                 modifier= Modifier.padding(horizontal = 8.dp).size(24.dp)
                     .clickable {
-                        navController.navigateToChatRoom()
+                        navController.navigateToClubDetail()
                     }
             )
 

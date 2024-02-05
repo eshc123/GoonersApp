@@ -7,6 +7,7 @@ import com.eshc.goonersapp.feature.chat.navigation.chatRoomScreen
 import com.eshc.goonersapp.feature.home.navigation.homeNavigationRoute
 import com.eshc.goonersapp.feature.home.navigation.homeScreen
 import com.eshc.goonersapp.feature.match.navigation.matchScreen
+import com.eshc.goonersapp.feature.team.navigation.clubDetailScreen
 import com.eshc.goonersapp.feature.team.navigation.navigateToPlayerDetail
 import com.eshc.goonersapp.feature.team.navigation.playerDetailScreen
 import com.eshc.goonersapp.feature.team.navigation.teamHistoryScreen
@@ -34,5 +35,6 @@ fun GnrNavHost(
             }
         )
         chatRoomScreen()
+        clubDetailScreen()
     }
 }

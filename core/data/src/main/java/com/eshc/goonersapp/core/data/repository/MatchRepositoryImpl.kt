@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class MatchRepositoryImpl @Inject constructor(
-    private val matchNetworkDataSource: MatchNetworkDataSourceImpl
+    private val matchNetworkDataSource: MatchNetworkDataSource
 ) : MatchRepository {
 
     override fun getMatchesByMonth(startDate : String, endDate : String): Flow<List<Match>> = flow {

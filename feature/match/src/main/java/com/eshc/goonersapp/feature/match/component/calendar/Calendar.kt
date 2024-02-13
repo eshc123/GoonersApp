@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,12 +29,14 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,6 +49,74 @@ import java.time.format.DateTimeFormatter
 
 enum class CalendarMode {
     DATE, MONTH, YEAR
+}
+
+@Composable
+fun Calendar(
+    height: Int,
+    headerHeight: Int,
+    selectedStartDate: LocalDate,
+    calendarDatesState: CalendarDates,
+    matchList : Map<LocalDate,List<Match>>,
+    onSelectDate: (LocalDate) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(height.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .height(headerHeight.dp)
+                .padding(horizontal = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.Center),
+                    text = calendarDatesState.currentMonth.format(DateTimeFormatter.ofPattern("yyyy.MM")),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+
+            }
+
+        }
+        Column(modifier = Modifier.fillMaxSize()) {
+            LazyVerticalGrid(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
+                columns = GridCells.Fixed(7),
+
+                ) {
+                items(listOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")) {
+                    CalendarDayItem(it, 24)
+                }
+
+                items(calendarDatesState.preDates) { localDate ->
+                    FaintCalendarItem(localDate, (height - headerHeight) / 7)
+                }
+                items(calendarDatesState.curDates) { localDate ->
+                    CalendarItem(
+                        localDate,
+                        selectedStartDate,
+                        (height - headerHeight) / 7,
+                        matchList
+                    ) {
+                        onSelectDate(it)
+                    }
+                }
+                items(calendarDatesState.nextDates) { localDate ->
+                    FaintCalendarItem(localDate, (height - headerHeight) / 7)
+                }
+            }
+        }
+    }
 }
 
 @Composable
@@ -181,7 +252,7 @@ fun Calendar(
                         CalendarItem(
                             localDate,
                             selectedStartDate,
-                            selectedEndDate,
+                           // selectedEndDate,
                             (height - headerHeight) / 7,
                             matchList
                         ) {
@@ -371,34 +442,21 @@ fun CalendarDayItem(
     text: String,
     height: Int
 ) {
-    Box(
-        modifier = Modifier
-            .padding(bottom = 6.dp)
-            .height(height.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(4.dp)
-        ) {
-            Text(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .height(height.dp),
-                text = text,
-                fontSize = 12.sp,
-                color = if (text == "SUN" || text == "SAT") Color.Red else Color.Gray,
-                fontWeight = FontWeight.Normal
-            )
-        }
-    }
+    Text(
+        modifier = Modifier.padding(bottom = 6.dp)
+            .height(height.dp),
+        text = text,
+        fontSize = 12.sp,
+        color = if (text == "SUN" || text == "SAT") Color.Red else Color.Gray,
+        fontWeight = FontWeight.Normal,
+        textAlign = TextAlign.Center
+    )
 }
 
 @Composable
 fun CalendarItem(
     localDate: LocalDate,
     selectedDate: LocalDate,
-    selectedEndDate: LocalDate? = null,
     height: Int,
     matchList: Map<LocalDate, List<Match>>,
     onSelectDate: (LocalDate) -> Unit,
@@ -406,45 +464,25 @@ fun CalendarItem(
     Column(
         modifier = Modifier
             .height(height.dp)
-            .background(
-                if (selectedEndDate != null && (localDate.isEqual(selectedEndDate) || localDate.isEqual(
-                        selectedDate
-                    ) || (localDate.isAfter(selectedDate) && localDate.isBefore(selectedEndDate)))
-                )
-                    Color.Red.copy(alpha = 0.5f)
-                else
-                    Color.Transparent
-            )
-            .clickable {
+            .clickable(
+                indication = null,
+                interactionSource =  remember { MutableInteractionSource() }
+            ) {
                 onSelectDate(localDate)
             },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(
-            modifier = Modifier
-                .wrapContentSize()
-                .clip(CircleShape)
-                .border(
-                    if (selectedDate.year == localDate.year && selectedDate.month == localDate.month && selectedDate.dayOfMonth == localDate.dayOfMonth)
-                        BorderStroke(1.dp, Color.Red)
-                    else BorderStroke(0.dp, Color.Transparent),
-                    CircleShape
+        Text(
+            modifier = Modifier.padding(4.dp),
+            text = localDate.dayOfMonth.toString(),
+            fontSize = 14.sp,
+            color = if (localDate.dayOfWeek in setOf(
+                    DayOfWeek.SATURDAY,
+                    DayOfWeek.SUNDAY
                 )
-                .padding(4.dp)
-
-        ) {
-            Text(
-                modifier = Modifier,
-                text = localDate.dayOfMonth.toString(),
-                fontSize = 14.sp,
-                color = if (localDate.dayOfWeek in setOf(
-                        DayOfWeek.SATURDAY,
-                        DayOfWeek.SUNDAY
-                    )
-                ) Color.Red else Color.Black,
-                fontWeight = FontWeight.Medium
-            )
-        }
+            ) Color.Red else Color.Black,
+            fontWeight = FontWeight.Medium
+        )
         if (matchList.containsKey(localDate)) {
             matchList[localDate]?.firstOrNull()?.let { match ->
                 AsyncImage(
@@ -473,7 +511,6 @@ fun CalendarItem(
 
         }
 
-
     }
 }
 
@@ -482,21 +519,11 @@ fun FaintCalendarItem(
     localDate: LocalDate,
     height: Int
 ) {
-    Box(
-        modifier = Modifier
-            .height(height.dp),
-        contentAlignment = Alignment.TopCenter
-
-    ) {
-        Box(modifier = Modifier.padding(4.dp)) {
-            Text(
-                modifier = Modifier
-                    .align(Alignment.TopCenter),
-                text = localDate.dayOfMonth.toString(),
-                fontSize = 14.sp,
-                color = Color.LightGray
-            )
-
-        }
-    }
+    Text(
+        modifier = Modifier.height(height.dp).padding(4.dp),
+        text = localDate.dayOfMonth.toString(),
+        fontSize = 14.sp,
+        color = Color.LightGray,
+        textAlign = TextAlign.Center
+    )
 }

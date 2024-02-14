@@ -9,12 +9,12 @@ data class RemoteMatch(
     val id :Int,
     @SerialName("home_team_name")
     val homeTeamName : String = "",
-    @SerialName("home_team_iamge")
-    val homeTeamIamge : String = "",
+    @SerialName("home_team_image")
+    val homeTeamImage : String = "",
     @SerialName("away_team_name")
     val awayTeamName : String = "",
-    @SerialName("away_team_iamge")
-    val awayTeamIamge : String = "",
+    @SerialName("away_team_image")
+    val awayTeamImage : String = "",
     @SerialName("match_date")
     val matchDate : String = "",
     @SerialName("home_score")

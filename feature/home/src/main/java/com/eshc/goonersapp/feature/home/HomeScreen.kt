@@ -36,7 +36,6 @@ fun HomeRoute() {
                 color = Color.Black,
                 fontSize = 24.sp,
             )
-            Spacer(modifier = Modifier.height(12.dp))
             DashboardCard()
         }
 
@@ -50,10 +49,9 @@ fun HomeRoute() {
                 color = Color.Black,
                 fontSize = 24.sp,
             )
-            Spacer(modifier = Modifier.height(12.dp))
 
             LazyRow(
-                contentPadding = PaddingValues(horizontal = 8.dp),
+                contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
 
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
@@ -65,6 +63,9 @@ fun HomeRoute() {
                         location = "London Stadium",
                         competitionUrl = "https://www.arsenal.com/sites/default/files/styles/small/public/logos/Unknown-1.png?auto=webp&itok=vWaxFMmA"
                     )
+                }
+
+                item {
                     UpcomingMatchTicketCard(
                         homeShortName = "NEW",
                         homeUrl = "https://www.arsenal.com/sites/default/files/styles/feed_crest_thumbnail/public/logos/newcastleunited_0.png?auto=webp&itok=fIdaH1e6",
@@ -83,7 +84,6 @@ fun HomeRoute() {
                 color = Color.Black,
                 fontSize = 24.sp,
             )
-            Spacer(modifier = Modifier.height(12.dp))
 
             RecentlyMatchCard(
                 homeShortName = "WHU",

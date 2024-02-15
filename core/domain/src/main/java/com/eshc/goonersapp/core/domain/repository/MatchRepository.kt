@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MatchRepository {
 
-    fun getMatchesByMonth(startDate : String, endDate : String): Flow<List<Match>>
+    fun getMatchesBySeason(season : String): Flow<List<Match>>
 }

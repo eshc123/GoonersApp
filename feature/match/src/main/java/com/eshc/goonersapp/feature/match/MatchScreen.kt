@@ -35,23 +35,14 @@ fun MatchScreen(
 
     val matches by viewModel.matches.collectAsStateWithLifecycle()
 
-//    LaunchedEffect(pagerState.currentPage) {
-////        calendarMonthListState[pagerState.currentPage].currentMonth.let { currentMonth ->
-////            viewModel.fetchMatchesByMonth(
-////                currentMonth.withDayOfMonth(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-////                currentMonth.plusMonths(1L).withDayOfMonth(1).minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-////            )
-////        }
-//    }
-
-        Calendar(
-            height = 700,
-            headerHeight = 60,
-            matchList = matches.groupBy {
-                DateUtil.getYearAndMonthAndDateLocalDate(it.matchDate)
-            },
-            onSelectDate = {
-                selectedDate = it
-            },
-        )
+    Calendar(
+        height = 700,
+        headerHeight = 60,
+        matchList = matches.groupBy {
+            DateUtil.getYearAndMonthAndDateLocalDate(it.matchDate)
+        },
+        onSelectDate = {
+            selectedDate = it
+        },
+    )
 }

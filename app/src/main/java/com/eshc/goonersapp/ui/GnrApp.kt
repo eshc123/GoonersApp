@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -39,7 +38,6 @@ fun GnrApp() {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
 
-
     Scaffold(
         bottomBar = {
             GnrBottomBar(
@@ -56,9 +54,11 @@ fun GnrApp() {
                         TopLevelDestination.HOME -> navController.navigateToHome(
                             topLevelNavOptions
                         )
+
                         TopLevelDestination.MATCH -> navController.navigateToMatch(
                             topLevelNavOptions
                         )
+
                         else -> navController.navigateToTeam(
                             topLevelNavOptions
                         )
@@ -73,13 +73,45 @@ fun GnrApp() {
                 .fillMaxSize()
         )
         {
-            if(topLevelDestinationSet.contains(currentRoute)){
-                TopLevelDestination.entries.find { it.route == currentRoute }?.let { topLevelDestination ->
-                    GnrTopLevelBar(
-                        topLevelDestination = topLevelDestination,
-                        navController = navController
-                    )
-                }
+            if (topLevelDestinationSet.contains(currentRoute)) {
+                TopLevelDestination.entries.find { it.route == currentRoute }
+                    ?.let { topLevelDestination ->
+                        GnrTopLevelBar(
+                            topLevelDestination = topLevelDestination,
+                            icons = {
+                                when (topLevelDestination) {
+                                    TopLevelDestination.TEAM -> {
+                                        Icon(
+                                            imageVector = IconPack.IcFootballClub,
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .padding(horizontal = 8.dp)
+                                                .size(24.dp)
+                                                .clickable {
+                                                    navController.navigateToChatRoom()
+                                                }
+                                        )
+                                        Icon(
+                                            imageVector = IconPack.IcSearch,
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .padding(horizontal = 8.dp)
+                                                .size(24.dp)
+                                                .clickable {
+                                                    navController.navigateToTeamHistory()
+                                                }
+                                        )
+                                    }
+
+                                    else -> {
+
+                                    }
+                                }
+
+
+                            }
+                        )
+                    }
 
             }
 
@@ -90,32 +122,14 @@ fun GnrApp() {
 
 @Composable
 fun GnrTopLevelBar(
-    topLevelDestination : TopLevelDestination,
-    navController: NavController
-){
+    topLevelDestination: TopLevelDestination,
+    icons: @Composable () -> Unit
+) {
     TopLevelTopBar(
         modifier = Modifier.padding(horizontal = 8.dp),
         title = topLevelDestination.name
     ) {
-        if(topLevelDestination == TopLevelDestination.TEAM)
-            Icon(
-                imageVector = IconPack.IcFootballClub,
-                contentDescription = null,
-                modifier= Modifier.padding(horizontal = 8.dp).size(24.dp)
-                    .clickable {
-                        navController.navigateToChatRoom()
-                    }
-            )
-
-        if(topLevelDestination == TopLevelDestination.TEAM)
-            Icon(
-                imageVector = IconPack.IcSearch,
-                contentDescription = null,
-                modifier= Modifier.padding(horizontal = 8.dp).size(24.dp)
-                    .clickable {
-                        navController.navigateToTeamHistory()
-                    }
-            )
+        icons()
     }
 }
 
@@ -138,14 +152,14 @@ fun GnrBottomBar(
                     Icon(
                         imageVector = destination.unselectedIcon,
                         contentDescription = null,
-                        modifier= Modifier.size(24.dp)
+                        modifier = Modifier.size(24.dp)
                     )
                 },
                 selectedIcon = {
                     Icon(
                         imageVector = destination.selectedIcon,
                         contentDescription = null,
-                        modifier= Modifier.size(24.dp)
+                        modifier = Modifier.size(24.dp)
                     )
                 }
             )

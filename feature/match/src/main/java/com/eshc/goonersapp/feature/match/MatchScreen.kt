@@ -55,21 +55,7 @@ fun MatchScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        Icon(
-            imageVector =
-                when(calendarType){
-                    CalendarType.Grid -> IconPack.IcList
-                    CalendarType.List -> IconPack.IcGrid
-                } ,
-            contentDescription = null,
-            modifier= Modifier.align(Alignment.End).padding(8.dp).size(24.dp)
-                .clickable {
-                    calendarType = when(calendarType){
-                        CalendarType.Grid -> CalendarType.List
-                        CalendarType.List -> CalendarType.Grid
-                    }
-                }
-        )
+
         when(calendarType){
             CalendarType.Grid-> {
                 CalendarGrid(
@@ -81,13 +67,21 @@ fun MatchScreen(
                     onSelectDate = {
                         selectedDate = it
                     },
+                    onChangeCalendarType = {
+                        calendarType = CalendarType.List
+                    }
                 )
             }
             CalendarType.List -> {
                 CalendarList(
+                    season = "2023-2024",
+                    headerHeight = 60,
                    matchList = matches.groupBy {
                        DateUtil.getYearAndMonthAndDateLocalDate(it.matchDate)
-                   }
+                   },
+                    onChangeCalendarType = {
+                        calendarType = CalendarType.Grid
+                    }
                 )
             }
         }

@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -35,9 +36,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.common.util.DateUtil
+import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.ImageCard
+import com.eshc.goonersapp.core.designsystem.iconpack.IcGrid
+import com.eshc.goonersapp.core.designsystem.iconpack.IcList
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 import com.eshc.goonersapp.core.domain.model.Match
+import com.eshc.goonersapp.feature.match.CalendarType
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -49,7 +54,8 @@ fun CalendarGrid(
     height: Int,
     headerHeight: Int,
     matchList: Map<LocalDate, List<Match>>,
-    onSelectDate: (LocalDate) -> Unit
+    onSelectDate: (LocalDate) -> Unit,
+    onChangeCalendarType : () -> Unit
 ) {
     val calendarMonthListState by remember {
         mutableStateOf(CalendarUtil.getCalendarDatesListAsOneYear(LocalDate.of(2023, 8, 1)))
@@ -63,30 +69,35 @@ fun CalendarGrid(
             .fillMaxWidth()
             .height(height.dp)
     ) {
-        Row(
+        Box(
             modifier = Modifier
+                .fillMaxWidth()
                 .height(headerHeight.dp)
                 .padding(horizontal = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    modifier = Modifier
-                        .align(Alignment.Center),
-                    text = calendarMonthListState[curIndex].currentMonth.format(
-                        DateTimeFormatter.ofPattern(
-                            "yyyy.MM"
-                        )
-                    ),
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
-                )
-
-            }
-
+            Text(
+                modifier = Modifier
+                    .align(Alignment.Center),
+                text = calendarMonthListState[curIndex].currentMonth.format(
+                    DateTimeFormatter.ofPattern(
+                        "yyyy.MM"
+                    )
+                ),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+            Icon(
+                imageVector =IconPack.IcList,
+                contentDescription = null,
+                modifier= Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(8.dp)
+                    .size(24.dp)
+                    .clickable {
+                        onChangeCalendarType()
+                    }
+            )
         }
         Column(modifier = Modifier.fillMaxSize()) {
             Row(
@@ -142,32 +153,63 @@ fun CalendarGrid(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CalendarList(
+    season : String,
+    headerHeight :Int,
     matchList: Map<LocalDate, List<Match>>,
+    onChangeCalendarType : () -> Unit
 ) {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
-    ){
-        matchList.forEach { (localDate, matches) ->
-            stickyHeader {
-                Text(
-                    text = localDate.format(DateTimeFormatter.ofPattern("yyyy.MM")),
-                    fontFamily = pretendard,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black,
-                    fontSize = 18.sp,
-                    letterSpacing = 0.1.sp
-                )
-            }
-            items(matches){
-                CalendarListItem(
-                    it
-                )
-            }
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(headerHeight.dp)
+                .padding(horizontal = 8.dp),
+        ){
+            Text(
+                modifier = Modifier
+                    .align(Alignment.Center),
+                text = season,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+            Icon(
+                imageVector =IconPack.IcGrid,
+                contentDescription = null,
+                modifier= Modifier.align(Alignment.CenterEnd).padding(8.dp).size(24.dp)
+                    .clickable {
+                        onChangeCalendarType()
+                    }
+            )
         }
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ){
+            matchList.forEach { (localDate, matches) ->
+                stickyHeader {
+                    Text(
+                        text = localDate.format(DateTimeFormatter.ofPattern("yyyy.MM")),
+                        fontFamily = pretendard,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        fontSize = 18.sp,
+                        letterSpacing = 0.1.sp
+                    )
+                }
+                items(matches){
+                    CalendarListItem(
+                        it
+                    )
+                }
+            }
 
+        }
     }
+
 }
 
 @Composable

@@ -11,7 +11,12 @@ object DateUtil {
 
     fun getYearAndMonthAndDateString(date : String ) : String {
         if(date.isBlank()) return date
-        return LocalDate.parse(date, defaultDateFormat).toString()
+        return LocalDate.parse(date, defaultDateFormat).format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+    }
+
+    fun getYearAndMonthAndDateAndTimeString(date : String ) : String {
+        if(date.isBlank()) return date
+        return LocalDateTime.parse(date, defaultDateFormat).format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"))
     }
 
     fun getYearAndMonthAndDateLocalDate(date : String ) : LocalDate {

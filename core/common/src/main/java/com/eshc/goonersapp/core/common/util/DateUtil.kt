@@ -9,6 +9,11 @@ const val DefaultDatePattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 object DateUtil {
     private val defaultDateFormat = DateTimeFormatter.ofPattern(DefaultDatePattern)
 
+    fun getYearAndMonthString(date : String ) : String {
+        if(date.isBlank()) return date
+        return LocalDate.parse(date, defaultDateFormat).format(DateTimeFormatter.ofPattern("yyyy.MM"))
+    }
+
     fun getYearAndMonthAndDateString(date : String ) : String {
         if(date.isBlank()) return date
         return LocalDate.parse(date, defaultDateFormat).format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))

@@ -1,6 +1,7 @@
 package com.eshc.goonersapp.feature.match.component.calendar
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -43,6 +44,7 @@ import com.eshc.goonersapp.core.designsystem.iconpack.IcList
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 import com.eshc.goonersapp.core.domain.model.Match
 import com.eshc.goonersapp.feature.match.CalendarType
+import okhttp3.internal.wait
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -155,7 +157,7 @@ fun CalendarGrid(
 fun CalendarList(
     season : String,
     headerHeight :Int,
-    matchList: Map<LocalDate, List<Match>>,
+    matchList: Map<String, List<Match>>,
     onChangeCalendarType : () -> Unit
 ) {
     Column(
@@ -178,7 +180,10 @@ fun CalendarList(
             Icon(
                 imageVector =IconPack.IcGrid,
                 contentDescription = null,
-                modifier= Modifier.align(Alignment.CenterEnd).padding(8.dp).size(24.dp)
+                modifier= Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(8.dp)
+                    .size(24.dp)
                     .clickable {
                         onChangeCalendarType()
                     }
@@ -187,16 +192,17 @@ fun CalendarList(
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ){
-            matchList.forEach { (localDate, matches) ->
-                stickyHeader {
+            matchList.forEach { (yearAndMonth, matches) ->
+                item {
                     Text(
-                        text = localDate.format(DateTimeFormatter.ofPattern("yyyy.MM")),
+                        modifier = Modifier.padding(vertical = 6.dp),
+                        text = yearAndMonth,
                         fontFamily = pretendard,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black,
-                        fontSize = 18.sp,
+                        fontSize = 20.sp,
                         letterSpacing = 0.1.sp
                     )
                 }
@@ -219,7 +225,8 @@ fun CalendarListItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
+            .wrapContentHeight()
+            .padding(vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
@@ -238,13 +245,13 @@ fun CalendarListItem(
             horizontalArrangement = Arrangement.Center
         ) {
             AsyncImage(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(32.dp),
                 model = match.homeTeamImageUrl,
-                contentDescription = null
+                contentDescription = null,
             )
             Text(
                 modifier = Modifier.padding(horizontal = 8.dp),
-                text = "${match.homeScore} : ${match.awayScore}",
+                text = if(match.isFinished) "${match.homeScore} : ${match.awayScore}" else "  vs  ",
                 fontFamily = pretendard,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
@@ -252,7 +259,7 @@ fun CalendarListItem(
                 letterSpacing = 0.1.sp
             )
             AsyncImage(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(32.dp),
                 model = match.awayTeamImageUrl,
                 contentDescription = null
             )

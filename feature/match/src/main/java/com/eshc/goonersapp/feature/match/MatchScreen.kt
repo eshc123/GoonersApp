@@ -77,7 +77,7 @@ fun MatchScreen(
                     season = "2023-2024",
                     headerHeight = 60,
                    matchList = matches.groupBy {
-                       DateUtil.getYearAndMonthAndDateLocalDate(it.matchDate)
+                       DateUtil.getYearAndMonthString(it.matchDate)
                    },
                     onChangeCalendarType = {
                         calendarType = CalendarType.Grid

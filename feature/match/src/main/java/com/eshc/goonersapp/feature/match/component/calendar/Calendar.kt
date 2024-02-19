@@ -57,7 +57,8 @@ fun CalendarGrid(
     headerHeight: Int,
     matchList: Map<LocalDate, List<Match>>,
     onSelectDate: (LocalDate) -> Unit,
-    onChangeCalendarType : () -> Unit
+    onChangeCalendarType : () -> Unit,
+    onClickDetail: (Match) -> Unit
 ) {
     val calendarMonthListState by remember {
         mutableStateOf(CalendarUtil.getCalendarDatesListAsOneYear(LocalDate.of(2023, 8, 1)))
@@ -135,7 +136,7 @@ fun CalendarGrid(
                                             (height - headerHeight) / 7,
                                             matchList
                                         ) {
-                                            onSelectDate(it)
+                                            onClickDetail(it)
                                         }
                                     else {
                                         FaintCalendarItem(localDate, (height - headerHeight) / 7)
@@ -158,7 +159,8 @@ fun CalendarList(
     season : String,
     headerHeight :Int,
     matchList: Map<String, List<Match>>,
-    onChangeCalendarType : () -> Unit
+    onChangeCalendarType : () -> Unit,
+    onClickDetail : (Match) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -208,7 +210,8 @@ fun CalendarList(
                 }
                 items(matches){
                     CalendarListItem(
-                        it
+                        match = it,
+                        onClickDetail = onClickDetail
                     )
                 }
             }
@@ -220,12 +223,16 @@ fun CalendarList(
 
 @Composable
 fun CalendarListItem(
-    match: Match
+    match: Match,
+    onClickDetail: (Match) -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
+            .clickable {
+                onClickDetail(match)
+            }
             .padding(vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -296,7 +303,7 @@ fun RowScope.CalendarItem(
     localDate: LocalDate,
     height: Int,
     matchList: Map<LocalDate, List<Match>>,
-    onSelectDate: (LocalDate) -> Unit,
+    onClickDetail: (Match) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -306,7 +313,11 @@ fun RowScope.CalendarItem(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
             ) {
-                onSelectDate(localDate)
+                if (matchList.containsKey(localDate)) {
+                    matchList[localDate]?.firstOrNull()?.let { match ->
+                        onClickDetail(match)
+                    }
+                }
             },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

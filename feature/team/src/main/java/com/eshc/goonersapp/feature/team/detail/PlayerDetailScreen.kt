@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.eshc.goonersapp.core.designsystem.component.TabItem
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 import com.eshc.goonersapp.core.domain.model.Player
 import com.eshc.goonersapp.feature.team.state.PlayerDetailUiState
@@ -135,36 +136,6 @@ fun PlayerDetailScreen(
 
 }
 
-@Composable
-fun TabItem(
-    modifier: Modifier = Modifier,
-    tabTitle: String,
-    isSelected: Boolean,
-    onSelect: () -> Unit
-) {
-    Column(
-        modifier = modifier
-            .clickable {
-                onSelect()
-            },
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            modifier = Modifier.padding(vertical = 16.dp),
-            text = tabTitle,
-            fontFamily = pretendard,
-            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-            color = if (isSelected) Color.Black else Color.LightGray,
-            fontSize = 14.sp
-        )
-        if (isSelected)
-            Divider(
-                modifier = Modifier,
-                color = Color.Black,
-                thickness = 2.dp
-            )
-    }
-}
 
 enum class DetailTab {
     PROFILE, STATS

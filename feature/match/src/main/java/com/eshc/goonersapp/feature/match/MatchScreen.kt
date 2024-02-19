@@ -22,6 +22,7 @@ import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.iconpack.IcGrid
 import com.eshc.goonersapp.core.designsystem.iconpack.IcList
+import com.eshc.goonersapp.core.domain.model.Match
 import com.eshc.goonersapp.feature.match.component.calendar.CalendarGrid
 import com.eshc.goonersapp.feature.match.component.calendar.CalendarList
 import java.time.LocalDate
@@ -32,10 +33,12 @@ enum class CalendarType {
 
 @Composable
 fun MatchRoute(
-    viewModel: MatchViewModel = hiltViewModel()
+    viewModel: MatchViewModel = hiltViewModel(),
+    onClickDetail: (Match) -> Unit
 ) {
     MatchScreen(
-        viewModel = viewModel
+        viewModel = viewModel,
+        onClickDetail = onClickDetail
     )
 }
 
@@ -43,7 +46,8 @@ fun MatchRoute(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MatchScreen(
-    viewModel: MatchViewModel
+    viewModel: MatchViewModel,
+    onClickDetail: (Match) -> Unit
 ) {
     var selectedDate by remember {
         mutableStateOf(LocalDate.now())
@@ -56,8 +60,8 @@ fun MatchScreen(
         modifier = Modifier.fillMaxSize()
     ) {
 
-        when(calendarType){
-            CalendarType.Grid-> {
+        when (calendarType) {
+            CalendarType.Grid -> {
                 CalendarGrid(
                     height = 700,
                     headerHeight = 60,
@@ -69,18 +73,25 @@ fun MatchScreen(
                     },
                     onChangeCalendarType = {
                         calendarType = CalendarType.List
+                    },
+                    onClickDetail = {
+                        onClickDetail(it)
                     }
                 )
             }
+
             CalendarType.List -> {
                 CalendarList(
                     season = "2023-2024",
                     headerHeight = 60,
-                   matchList = matches.groupBy {
-                       DateUtil.getYearAndMonthString(it.matchDate)
-                   },
+                    matchList = matches.groupBy {
+                        DateUtil.getYearAndMonthString(it.matchDate)
+                    },
                     onChangeCalendarType = {
                         calendarType = CalendarType.Grid
+                    },
+                    onClickDetail = {
+                        onClickDetail(it)
                     }
                 )
             }

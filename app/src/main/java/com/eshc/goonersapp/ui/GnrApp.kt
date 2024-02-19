@@ -40,31 +40,34 @@ fun GnrApp() {
 
     Scaffold(
         bottomBar = {
-            GnrBottomBar(
-                destinations = TopLevelDestination.entries,
-                onNavigateToDestination = {
-                    val topLevelNavOptions = navOptions {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+            if (topLevelDestinationSet.contains(currentRoute)){
+                GnrBottomBar(
+                    destinations = TopLevelDestination.entries,
+                    onNavigateToDestination = {
+                        val topLevelNavOptions = navOptions {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                    when (it) {
-                        TopLevelDestination.HOME -> navController.navigateToHome(
-                            topLevelNavOptions
-                        )
+                        when (it) {
+                            TopLevelDestination.HOME -> navController.navigateToHome(
+                                topLevelNavOptions
+                            )
 
-                        TopLevelDestination.MATCH -> navController.navigateToMatch(
-                            topLevelNavOptions
-                        )
+                            TopLevelDestination.MATCH -> navController.navigateToMatch(
+                                topLevelNavOptions
+                            )
 
-                        else -> navController.navigateToTeam(
-                            topLevelNavOptions
-                        )
+                            else -> navController.navigateToTeam(
+                                topLevelNavOptions
+                            )
+                        }
                     }
-                }
-            )
+                )
+            }
+
         }
     ) { padding ->
         Column(
@@ -88,7 +91,7 @@ fun GnrApp() {
                                                 .padding(horizontal = 8.dp)
                                                 .size(24.dp)
                                                 .clickable {
-                                                    navController.navigateToChatRoom()
+
                                                 }
                                         )
                                         Icon(

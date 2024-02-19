@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.eshc.goonersapp.feature.chat.navigation.chatRoomScreen
+import com.eshc.goonersapp.feature.chat.navigation.navigateToChatRoom
 import com.eshc.goonersapp.feature.home.navigation.homeNavigationRoute
 import com.eshc.goonersapp.feature.home.navigation.homeScreen
 import com.eshc.goonersapp.feature.match.model.toUiModel
@@ -35,7 +36,11 @@ fun GnrNavHost(
                 navController.navigateToMatchDetail(it.toUiModel())
             }
         )
-        matchDetailScreen()
+        matchDetailScreen(
+            onClickChat = {
+                navController.navigateToChatRoom()
+            }
+        )
         teamHistoryScreen(
             onPlayerClick = {
                 navController.navigateToPlayerDetail(it)

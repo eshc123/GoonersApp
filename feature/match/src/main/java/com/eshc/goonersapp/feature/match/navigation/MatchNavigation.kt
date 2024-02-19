@@ -39,13 +39,17 @@ fun NavGraphBuilder.matchScreen(
 }
 
 
-fun NavGraphBuilder.matchDetailScreen() {
+fun NavGraphBuilder.matchDetailScreen(
+    onClickChat : () -> Unit
+) {
     composable(
         route = "$matchDetailNavigationRoute?$matchArg={$matchArg}",
         arguments = listOf(
             navArgument(matchArg) { type = MatchType },
         ),
     ) {
-        MatchDetailRoute()
+        MatchDetailRoute(
+            onClickChat = onClickChat
+        )
     }
 }

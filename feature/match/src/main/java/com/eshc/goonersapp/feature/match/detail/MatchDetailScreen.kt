@@ -1,16 +1,21 @@
 package com.eshc.goonersapp.feature.match.detail
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,140 +33,168 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.common.util.DateUtil
+import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.ImageCard
 import com.eshc.goonersapp.core.designsystem.component.TabItem
+import com.eshc.goonersapp.core.designsystem.iconpack.IcSearch
+import com.eshc.goonersapp.core.designsystem.iconpack.IcTalk
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 import com.eshc.goonersapp.feature.match.model.MatchUiModel
 
 @Composable
 fun MatchDetailRoute(
-    viewModel: MatchDetailViewModel = hiltViewModel()
-){
+    viewModel: MatchDetailViewModel = hiltViewModel(),
+    onClickChat: () -> Unit
+) {
     val match by viewModel.match.collectAsStateWithLifecycle()
-    MatchDetailScreen(match)
+    MatchDetailScreen(match, onClickChat)
 }
 
 @Composable
 fun MatchDetailScreen(
-    match: MatchUiModel
+    match: MatchUiModel,
+    onClickChat: () -> Unit
 ) {
     var selectedTab by remember { mutableStateOf(DetailTab.SUMMARY) }
 
-    LazyColumn(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
-        item {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp, vertical = 20.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Column(
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            item {
+                Row(
                     modifier = Modifier
-                        .wrapContentHeight()
-                        .weight(1f)
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp, vertical = 20.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
+                    Column(
+                        modifier = Modifier
+                            .wrapContentHeight()
+                            .weight(1f)
+                    ) {
+                        Text(
+                            text = DateUtil.getYearAndMonthAndDateAndTimeString(match.matchDate),
+                            fontFamily = pretendard,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black,
+                            fontSize = 18.sp
+                        )
+                        Text(
+                            modifier = Modifier.padding(top = 4.dp),
+                            text = match.stadiumName,
+                            fontFamily = pretendard,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.Black,
+                            fontSize = 16.sp
+                        )
+                    }
+                    ImageCard(backgroundColor = Color(0xFF151D2D)) {
+                        AsyncImage(
+                            model = "https://www.arsenal.com/sites/default/files/styles/small/public/logos/comp_8.png?auto=webp&itok=EBszNKBn",
+                            contentDescription = null
+                        )
+                    }
+
+                }
+
+
+            }
+
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .padding(vertical = 12.dp, horizontal = 24.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    AsyncImage(
+                        modifier = Modifier.width(64.dp),
+                        model = match.homeTeamImageUrl,
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth
+                    )
                     Text(
-                        text = DateUtil.getYearAndMonthAndDateAndTimeString(match.matchDate),
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                        text = if (match.isFinished) "${match.homeScore} : ${match.awayScore}" else "  vs  ",
                         fontFamily = pretendard,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black,
-                        fontSize = 18.sp
+                        fontSize = 24.sp,
+                        letterSpacing = 0.1.sp
                     )
-                    Text(
-                        modifier = Modifier.padding(top = 4.dp),
-                        text = match.stadiumName,
-                        fontFamily = pretendard,
-                        fontWeight = FontWeight.Medium,
-                        color = Color.Black,
-                        fontSize = 16.sp
-                    )
-                }
-                ImageCard(backgroundColor = Color(0xFF151D2D)) {
                     AsyncImage(
-                        model = "https://www.arsenal.com/sites/default/files/styles/small/public/logos/comp_8.png?auto=webp&itok=EBszNKBn",
-                        contentDescription = null
+                        modifier = Modifier.width(64.dp),
+                        model = match.awayTeamImageUrl,
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth
                     )
                 }
 
+                Divider(
+                    modifier = Modifier
+                        .padding(top = 6.dp)
+                        .fillMaxWidth(), thickness = 8.dp, color = Color(0xFFE4E4E4)
+                )
             }
 
 
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    DetailTab.entries.forEach {
+                        TabItem(
+                            modifier = Modifier.weight(1f),
+                            tabTitle = it.name,
+                            isSelected = selectedTab == it,
+                            onSelect = {
+                                selectedTab = it
+                            }
+                        )
+                    }
+                }
+            }
+
+            item {
+                when (selectedTab) {
+                    DetailTab.SUMMARY -> {
+
+                    }
+
+                    DetailTab.COMMENT -> {
+
+                    }
+                }
+
+
+            }
         }
 
-        item{
-            Row(
+        FloatingActionButton(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(18.dp),
+            onClick = onClickChat
+        ) {
+            Icon(
+                imageVector = IconPack.IcTalk,
+                contentDescription = null,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(vertical = 12.dp, horizontal = 24.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                AsyncImage(
-                    modifier = Modifier.width(64.dp),
-                    model = match.homeTeamImageUrl,
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth
-                )
-                Text(
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                    text = if(match.isFinished) "${match.homeScore} : ${match.awayScore}" else "  vs  ",
-                    fontFamily = pretendard,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black,
-                    fontSize = 24.sp,
-                    letterSpacing = 0.1.sp
-                )
-                AsyncImage(
-                    modifier = Modifier.width(64.dp),
-                    model = match.awayTeamImageUrl,
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth
-                )
-            }
-
-            Divider(
-                modifier = Modifier
-                    .padding(top = 6.dp)
-                    .fillMaxWidth(), thickness = 8.dp, color = Color(0xFFE4E4E4)
+                    .padding(horizontal = 8.dp)
+                    .size(24.dp)
             )
         }
-
-
-        item {
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                DetailTab.entries.forEach {
-                    TabItem(
-                        modifier = Modifier.weight(1f),
-                        tabTitle = it.name,
-                        isSelected = selectedTab == it,
-                        onSelect = {
-                            selectedTab = it
-                        }
-                    )
-                }
-            }
-        }
-
-        item {
-            when(selectedTab){
-                DetailTab.SUMMARY -> {
-
-                }
-                DetailTab.COMMENT -> {
-
-                }
-            }
-
-
-        }
     }
+
+
 }
 
 enum class DetailTab {

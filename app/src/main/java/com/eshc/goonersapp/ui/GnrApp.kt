@@ -88,7 +88,7 @@ fun GnrApp() {
                                                 .padding(horizontal = 8.dp)
                                                 .size(24.dp)
                                                 .clickable {
-                                                    navController.navigateToChatRoom()
+
                                                 }
                                         )
                                         Icon(

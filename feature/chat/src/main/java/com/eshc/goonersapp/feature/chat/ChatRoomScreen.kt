@@ -30,25 +30,29 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 import com.eshc.goonersapp.feature.chat.component.ChatMessageCard
 
 @Composable
-fun ChatRoomRoute() {
-    ChatRoomScreen()
+fun ChatRoomRoute(
+    viewModel: ChatViewModel = hiltViewModel()
+) {
+    ChatRoomScreen(viewModel)
 }
 
 
 @Composable
-fun ChatRoomScreen() {
+fun ChatRoomScreen(
+    viewModel: ChatViewModel
+) {
 
     var message by remember {
         mutableStateOf(TextFieldValue())
     }
 
-    var messageList by remember {
-        mutableStateOf(listOf<String>())
-    }
+    val messageList by viewModel.chatMessages.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -60,12 +64,12 @@ fun ChatRoomScreen() {
                 .padding(horizontal = 16.dp),
             reverseLayout = true
         ) {
-            items(messageList) {
+            items(messageList) { chatMessage ->
                 Box(
                     modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.CenterEnd
+                    contentAlignment = if(chatMessage.isMine) Alignment.CenterEnd else Alignment.CenterStart
                 ) {
-                    ChatMessageCard(text = it)
+                    ChatMessageCard(text = chatMessage.message, isMine = chatMessage.isMine)
                 }
             }
         }
@@ -107,7 +111,8 @@ fun ChatRoomScreen() {
                     .padding(start = 12.dp)
                     .size(24.dp)
                     .clickable {
-                        messageList = listOf(message.text) + messageList
+                        viewModel.sendMessage(message.text)
+                        viewModel.addMessageAsMine(message.text)
                         message = TextFieldValue()
                     }
             )

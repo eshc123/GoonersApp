@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.core.domain.usecase
+package com.eshc.goonersapp.core.domain.usecase.chat
 
 import com.eshc.goonersapp.core.domain.repository.ChatRepository
 import kotlinx.coroutines.flow.Flow

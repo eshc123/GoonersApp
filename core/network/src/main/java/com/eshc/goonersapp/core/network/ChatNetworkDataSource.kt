@@ -1,12 +1,13 @@
 package com.eshc.goonersapp.core.network
 
+import com.eshc.goonersapp.core.network.model.RemoteChatMessage
 import kotlinx.coroutines.flow.Flow
 
 interface ChatNetworkDataSource {
 
-    suspend fun joinChatRoom() : Boolean
+    suspend fun connectChatRoom()
 
-    fun getChatMessages() : Flow<String>
+    fun getChatMessages() : Flow<RemoteChatMessage>
 
     fun sendChatMessage(message : String)
 

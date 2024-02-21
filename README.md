@@ -29,6 +29,7 @@
 - Retrofit2
 - OkHttp3
 - Coil
+- Socket.IO
 
 ## License 
 

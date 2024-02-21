@@ -3,7 +3,7 @@ package com.eshc.goonersapp.feature.match
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eshc.goonersapp.core.domain.model.Match
-import com.eshc.goonersapp.core.domain.usecase.GetMatchesByMonthUseCase
+import com.eshc.goonersapp.core.domain.usecase.GetMatchesBySeasonUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,27 +14,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MatchViewModel @Inject constructor(
-    private val getMatchesByMonthUseCase : GetMatchesByMonthUseCase
+    private val getMatchesBySeasonUseCase : GetMatchesBySeasonUseCase
 ) : ViewModel() {
     private val _matches = MutableStateFlow<List<Match>>(emptyList())
     val matches : StateFlow<List<Match>> = _matches.asStateFlow()
 
-    private val alreadyFetchedMonthStartDateSet = mutableSetOf<String>()
+    init {
+        fetchMatchesBySeason("2023-2024")
+    }
 
-    fun fetchMatchesByMonth(
-        startDate : String,
-        endDate : String
+    fun fetchMatchesBySeason(
+        season : String
     ){
-        if(!alreadyFetchedMonthStartDateSet.contains(startDate)) {
-            viewModelScope.launch {
-                getMatchesByMonthUseCase(startDate, endDate)
-                    .catch {
-                        //TODO Error
-                    }.collect {
-                        alreadyFetchedMonthStartDateSet.add(startDate)
-                        _matches.emit((matches.value + it).distinctBy { it.id })
-                    }
-            }
+        viewModelScope.launch {
+            getMatchesBySeasonUseCase(season)
+                .catch {
+                    //TODO Error
+                }.collect {
+                    _matches.emit(it)
+                }
         }
     }
 }

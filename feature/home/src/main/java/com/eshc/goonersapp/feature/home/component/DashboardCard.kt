@@ -28,7 +28,7 @@ import com.eshc.goonersapp.core.designsystem.theme.pretendard
 fun DashboardCard() {
     ElevatedCard(
         modifier = Modifier
-            .padding(8.dp)
+            .padding(horizontal = 24.dp, vertical = 12.dp)
             .fillMaxWidth()
             .height(IntrinsicSize.Max),
         shape = RoundedCornerShape(4.dp),
@@ -40,36 +40,54 @@ fun DashboardCard() {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(40.dp)
-                .background(Color(0xFF151D2D)),
+                .background(Color(0xFF151D2D))
+                .padding(horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "EPL",
                 fontFamily = pretendard,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Bold,
                 color = Color.White,
                 fontSize = 14.sp,
             )
         }
         Column(
-            modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(vertical = 4.dp)
+            modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(vertical = 4.dp, horizontal = 8.dp)
         ){
-            repeat(4){
-                LeagueDashboardItem()
-            }
+            LeagueDashboardItem(
+                1,"ARS",40,13,3,2,22
+            )
+            LeagueDashboardItem(
+                2,"LIV",33,10,3,2,16
+            )
+            LeagueDashboardItem(
+                3,"MCI",30,9,3,2,12
+            )
+            LeagueDashboardItem(
+                4,"AVL",29,8,3,2,10
+            )
         }
     }
 }
 
 @Composable
-fun LeagueDashboardItem() {
+fun LeagueDashboardItem(
+    rank : Int,
+    team : String,
+    points : Int,
+    wins : Int,
+    draws : Int,
+    losses : Int,
+    goalDiff : Int
+) {
     Row(
         modifier = Modifier.fillMaxWidth().wrapContentHeight(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             modifier = Modifier.width(74.dp),
-            text = "1. ARS",
+            text = "${rank}. ${team}",
             fontFamily = pretendard,
             fontWeight = FontWeight.SemiBold,
             color = Color.DarkGray,
@@ -77,7 +95,7 @@ fun LeagueDashboardItem() {
         )
         Text(
             modifier = Modifier.wrapContentHeight().weight(1f),
-            text = "40",
+            text = "$points",
             fontFamily = pretendard,
             fontWeight = FontWeight.Medium,
             color = Color.DarkGray,
@@ -85,7 +103,7 @@ fun LeagueDashboardItem() {
         )
         Text(
             modifier = Modifier.wrapContentHeight().weight(1f),
-            text = "13",
+            text = "$wins",
             fontFamily = pretendard,
             fontWeight = FontWeight.Medium,
             color = Color.DarkGray,
@@ -93,7 +111,7 @@ fun LeagueDashboardItem() {
         )
         Text(
             modifier = Modifier.wrapContentHeight().weight(1f),
-            text = "3",
+            text = "$draws",
             fontFamily = pretendard,
             fontWeight = FontWeight.Medium,
             color = Color.DarkGray,
@@ -101,7 +119,7 @@ fun LeagueDashboardItem() {
         )
         Text(
             modifier = Modifier.wrapContentHeight().weight(1f),
-            text = "2",
+            text = "$losses",
             fontFamily = pretendard,
             fontWeight = FontWeight.Medium,
             color = Color.DarkGray,
@@ -109,7 +127,7 @@ fun LeagueDashboardItem() {
         )
         Text(
             modifier = Modifier.wrapContentHeight().weight(1f),
-            text = "+22",
+            text = "${if(goalDiff > 0)"+" else ""}${goalDiff}",
             fontFamily = pretendard,
             fontWeight = FontWeight.Medium,
             color = Color.DarkGray,

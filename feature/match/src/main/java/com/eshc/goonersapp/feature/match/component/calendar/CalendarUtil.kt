@@ -6,7 +6,14 @@ data class CalendarDates(
     val preDates: List<LocalDate>,
     val curDates: List<LocalDate>,
     val nextDates: List<LocalDate>,
-)
+    val currentMonth : LocalDate
+){
+    fun getAllDates() = preDates + curDates + nextDates
+
+    fun isCurDates(index : Int) : Boolean {
+        return preDates.size <= index && preDates.size + curDates.size > index
+    }
+}
 
 object CalendarUtil {
 
@@ -31,7 +38,8 @@ object CalendarUtil {
         return CalendarDates(
             preDates = getPreDates(localDate, preDatesEnd),
             curDates = getCurDates(localDate),
-            nextDates = getNextDates(localDate, preDatesEnd + 1, localDate.lengthOfMonth())
+            nextDates = getNextDates(localDate, preDatesEnd + 1, localDate.lengthOfMonth()),
+            currentMonth = localDate
         )
     }
 

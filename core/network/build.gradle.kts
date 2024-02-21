@@ -67,4 +67,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
 
+    implementation(libs.socket.io.client){
+        exclude("org.json","json")
+    }
+
 }

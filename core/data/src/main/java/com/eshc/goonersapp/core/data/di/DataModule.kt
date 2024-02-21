@@ -1,7 +1,9 @@
 package com.eshc.goonersapp.core.data.di
 
+import com.eshc.goonersapp.core.data.repository.ChatRepositoryImpl
 import com.eshc.goonersapp.core.data.repository.MatchRepositoryImpl
 import com.eshc.goonersapp.core.data.repository.PlayerRepositoryImpl
+import com.eshc.goonersapp.core.domain.repository.ChatRepository
 import com.eshc.goonersapp.core.domain.repository.MatchRepository
 import com.eshc.goonersapp.core.domain.repository.PlayerRepository
 import dagger.Binds
@@ -22,4 +24,9 @@ abstract class DataModule {
     abstract fun bindsMatchRepository(
         matchRepository: MatchRepositoryImpl,
     ): MatchRepository
+
+    @Binds
+    abstract fun bindsChatRepository(
+        chatRepository: ChatRepositoryImpl,
+    ): ChatRepository
 }

@@ -5,6 +5,7 @@ import com.eshc.goonersapp.core.designsystem.iconpack.IcFootballClub
 import com.eshc.goonersapp.core.designsystem.iconpack.IcInfo
 import com.eshc.goonersapp.core.designsystem.iconpack.IcPerson
 import com.eshc.goonersapp.core.designsystem.iconpack.IcSearch
+import com.eshc.goonersapp.core.designsystem.iconpack.IcTalk
 import kotlin.collections.List as ____KtList
 
 public object IconPack

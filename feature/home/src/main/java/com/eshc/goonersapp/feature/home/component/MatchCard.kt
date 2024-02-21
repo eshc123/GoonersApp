@@ -42,7 +42,6 @@ fun UpcomingMatchTicketCard(
 ) {
     ElevatedCard(
         modifier = Modifier
-            .padding(8.dp)
             .width(260.dp)
             .height(180.dp),
         shape = TicketShape(8.dp, CornerSize(4.dp), weight = 2f),
@@ -152,7 +151,7 @@ fun RecentlyMatchCard(
 ) {
     ElevatedCard(
         modifier = Modifier
-            .padding(8.dp)
+            .padding(horizontal = 24.dp, vertical = 12.dp)
             .fillMaxWidth()
             .height(IntrinsicSize.Max),
         shape = RoundedCornerShape(4.dp),

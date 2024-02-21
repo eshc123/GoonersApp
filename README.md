@@ -12,7 +12,7 @@
 ##
 | Players | Matches | 
 | :---------------: | :---------------: | 
-| <img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/player.gif" align="center" width="240px"/> | <img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/match.gif" align="center" width="240px"/> |
+| <img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/player.gif" align="center" width="240px"/> | <img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/match02.gif" align="center" width="240px"/> |
 
 
 ## Stack & Libraries
@@ -29,6 +29,7 @@
 - Retrofit2
 - OkHttp3
 - Coil
+- Socket.IO
 
 ## License 
 

@@ -1,471 +1,361 @@
 package com.eshc.goonersapp.feature.match.component.calendar
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyGridState
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.common.util.DateUtil
+import com.eshc.goonersapp.core.designsystem.IconPack
+import com.eshc.goonersapp.core.designsystem.component.ImageCard
+import com.eshc.goonersapp.core.designsystem.iconpack.IcGrid
+import com.eshc.goonersapp.core.designsystem.iconpack.IcList
+import com.eshc.goonersapp.core.designsystem.theme.pretendard
 import com.eshc.goonersapp.core.domain.model.Match
+import com.eshc.goonersapp.feature.match.CalendarType
+import okhttp3.internal.wait
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-enum class CalendarMode {
-    DATE, MONTH, YEAR
-}
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Calendar(
+fun CalendarGrid(
     height: Int,
     headerHeight: Int,
-    yearRangeList: List<Int> = IntRange(
-        1901,
-        java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)
-    ).toList(),
-    currentCalendarMode: CalendarMode,
-    selectedMonth: LocalDate,
-    selectedStartDate: LocalDate,
-    selectedEndDate: LocalDate? = null,
-    listState: LazyGridState,
-    calendarDatesState: CalendarDates,
-    matchList : Map<LocalDate,List<Match>>,
-    onChangeMonth: (LocalDate) -> Unit,
-    onChangeDate: (LocalDate) -> Unit,
+    matchList: Map<LocalDate, List<Match>>,
     onSelectDate: (LocalDate) -> Unit,
-    onChangeCurrentCalendarMode: (CalendarMode) -> Unit
+    onChangeCalendarType : () -> Unit,
+    onClickDetail: (Match) -> Unit
 ) {
+    val calendarMonthListState by remember {
+        mutableStateOf(CalendarUtil.getCalendarDatesListAsOneYear(LocalDate.of(2023, 8, 1)))
+    }
+
+    val listState = rememberLazyListState()
+    val curIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .height(height.dp)
     ) {
-        Row(
+        Box(
             modifier = Modifier
+                .fillMaxWidth()
                 .height(headerHeight.dp)
                 .padding(horizontal = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
-                modifier = Modifier.clickable {
-                    when (currentCalendarMode) {
-                        CalendarMode.DATE -> {
-                            onChangeMonth(selectedMonth.minusMonths(1L))
-                        }
-
-                        else -> {
-                            if (selectedMonth.year > 1901)
-                                onChangeMonth(selectedMonth.minusYears(1L))
-                        }
-                    }
-                },
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = null
-            )
-            Box(
-                modifier = Modifier.weight(1f)
-            ) {
-                when (currentCalendarMode) {
-                    CalendarMode.DATE -> {
-                        Text(
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .clickable {
-                                    onChangeCurrentCalendarMode(CalendarMode.MONTH)
-                                },
-                            text = selectedMonth.format(DateTimeFormatter.ofPattern("yyyy.MM")),
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black
-                        )
-                    }
-
-                    CalendarMode.MONTH -> {
-                        Text(
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .clickable {
-                                    onChangeCurrentCalendarMode(CalendarMode.YEAR)
-                                },
-                            text = selectedMonth.format(DateTimeFormatter.ofPattern("yyyy")),
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black
-                        )
-                    }
-
-                    CalendarMode.YEAR -> {
-                        Text(
-                            modifier = Modifier.align(Alignment.Center),
-                            text = selectedMonth.format(DateTimeFormatter.ofPattern("yyyy")),
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black
-                        )
-                    }
-                }
-
-            }
-            //if (currentCalendarMode == CalendarMode.DATE)
-            Icon(
+            Text(
                 modifier = Modifier
-                    .rotate(180f)
+                    .align(Alignment.Center),
+                text = calendarMonthListState[curIndex].currentMonth.format(
+                    DateTimeFormatter.ofPattern(
+                        "yyyy.MM"
+                    )
+                ),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+            Icon(
+                imageVector =IconPack.IcList,
+                contentDescription = null,
+                modifier= Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(8.dp)
+                    .size(24.dp)
                     .clickable {
-                        when (currentCalendarMode) {
-                            CalendarMode.DATE -> {
-                                onChangeMonth(selectedMonth.plusMonths(1L))
-                            }
-
-                            else -> {
-                                if (selectedMonth.year < yearRangeList.last())
-                                    onChangeMonth(selectedMonth.plusYears(1L))
-                            }
-                        }
-                    },
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = null
+                        onChangeCalendarType()
+                    }
             )
         }
         Column(modifier = Modifier.fillMaxSize()) {
-            AnimatedVisibility(
-                visible = currentCalendarMode == CalendarMode.DATE
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Absolute.SpaceEvenly
             ) {
-                LazyVerticalGrid(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 16.dp),
-                    columns = GridCells.Fixed(7),
-
-                    ) {
-                    items(listOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")) {
-                        CalendarDayItem(it, 24)
-                    }
-
-                    items(calendarDatesState.preDates) { localDate ->
-                        FaintCalendarItem(localDate, (height - headerHeight) / 7)
-                    }
-                    items(calendarDatesState.curDates) { localDate ->
-                        CalendarItem(
-                            localDate,
-                            selectedStartDate,
-                            selectedEndDate,
-                            (height - headerHeight) / 7,
-                            matchList
-                        ) {
-                            onSelectDate(it)
-                            onChangeDate(it)
-                        }
-                    }
-                    items(calendarDatesState.nextDates) { localDate ->
-                        FaintCalendarItem(localDate, (height - headerHeight) / 7)
-                    }
+                listOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT").forEach {
+                    CalendarDayItem(it, 24)
                 }
             }
-            AnimatedVisibility(
-                visible = currentCalendarMode == CalendarMode.MONTH
+            LazyRow(
+                modifier = Modifier.fillMaxSize(),
+                state = listState,
+                flingBehavior = rememberSnapFlingBehavior(lazyListState = listState)
             ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 10.dp, start = 8.dp, end = 8.dp)
-                ) {
-                    LazyVerticalGrid(
+                items(12) {
+                    Column(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .align(Alignment.TopCenter),
-                        columns = GridCells.Fixed(4),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                            .fillParentMaxWidth()
+                            .padding(horizontal = 16.dp)
                     ) {
-                        items(IntRange(1, 12).toList()) {
-                            CalendarMonthItem(
-                                onClick = {
-                                    onChangeMonth(selectedMonth.withMonth(it.toInt()))
-                                    val last = LocalDate.of(selectedStartDate.year, it.toInt(), 1)
-                                        .withDayOfMonth(
-                                            LocalDate.of(selectedStartDate.year, it.toInt(), 1)
-                                                .lengthOfMonth()
-                                        ).dayOfMonth
-                                    onChangeDate(
-                                        if (selectedStartDate.dayOfMonth > last)
-                                            LocalDate.of(selectedStartDate.year, it.toInt(), last)
-                                        else {
-                                            LocalDate.of(
-                                                selectedStartDate.year,
-                                                it.toInt(),
-                                                selectedStartDate.dayOfMonth
-                                            )
+                        for (i in 0 until calendarMonthListState[it].getAllDates().size / 7) {
+                            Row(
+                                modifier = Modifier.fillParentMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceAround,
+                            ) {
+                                calendarMonthListState[it].getAllDates()
+                                    .chunked(7)[i].forEachIndexed { index, localDate ->
+                                    if (calendarMonthListState[it].isCurDates(i * 7 + index))
+                                        CalendarItem(
+                                            localDate,
+                                            (height - headerHeight) / 7,
+                                            matchList
+                                        ) {
+                                            onClickDetail(it)
                                         }
-                                    )
-                                    onChangeCurrentCalendarMode(CalendarMode.DATE)
-                                },
-                                it.toString(),
-                                (height - headerHeight) / 4,
-                                isSelected = it == selectedMonth.monthValue
-                            )
+                                    else {
+                                        FaintCalendarItem(localDate, (height - headerHeight) / 7)
+                                    }
+                                }
+                            }
                         }
                     }
+
                 }
 
             }
-            AnimatedVisibility(
-                visible = currentCalendarMode == CalendarMode.YEAR
-            ) {
-                Box(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    LazyVerticalGrid(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .fillMaxWidth()
-                            .padding(start = 8.dp, end = 8.dp, bottom = 4.dp),
-                        columns = GridCells.Fixed(4),
-                        userScrollEnabled = true,
-                        state = listState,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        items(yearRangeList) {
-                            CalendarYearItem(
-                                onClick = {
-                                    onChangeMonth(selectedMonth.withYear(it.toInt()))
-                                    onChangeDate(
-                                        LocalDate.of(
-                                            it.toInt(),
-                                            selectedStartDate.month,
-                                            selectedStartDate.dayOfMonth
-                                        )
-                                    )
-                                    onChangeCurrentCalendarMode(CalendarMode.MONTH)
-                                },
-                                it.toString(),
-                                isSelected = selectedMonth.year == it
-                            )
-                        }
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun CalendarList(
+    season : String,
+    headerHeight :Int,
+    matchList: Map<String, List<Match>>,
+    onChangeCalendarType : () -> Unit,
+    onClickDetail : (Match) -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(headerHeight.dp)
+                .padding(horizontal = 8.dp),
+        ){
+            Text(
+                modifier = Modifier
+                    .align(Alignment.Center),
+                text = season,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+            Icon(
+                imageVector =IconPack.IcGrid,
+                contentDescription = null,
+                modifier= Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(8.dp)
+                    .size(24.dp)
+                    .clickable {
+                        onChangeCalendarType()
                     }
+            )
+        }
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ){
+            matchList.forEach { (yearAndMonth, matches) ->
+                item {
+                    Text(
+                        modifier = Modifier.padding(vertical = 6.dp),
+                        text = yearAndMonth,
+                        fontFamily = pretendard,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        fontSize = 20.sp,
+                        letterSpacing = 0.1.sp
+                    )
+                }
+                items(matches){
+                    CalendarListItem(
+                        match = it,
+                        onClickDetail = onClickDetail
+                    )
                 }
             }
+
         }
     }
+
 }
 
 @Composable
-fun CalendarYearItem(
-    onClick: (String) -> Unit,
-    text: String,
-    height: Int = 28,
-    fontSize: TextUnit = 20.sp,
-    isSelected: Boolean
+fun CalendarListItem(
+    match: Match,
+    onClickDetail: (Match) -> Unit
 ) {
-    Box(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(1f),
-        contentAlignment = Alignment.Center
+            .wrapContentHeight()
+            .clickable {
+                onClickDetail(match)
+            }
+            .padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(
+        Text(
+            text = DateUtil.getYearAndMonthAndDateAndTimeString(match.matchDate),
+            fontFamily = pretendard,
+            fontWeight = FontWeight.Medium,
+            color = Color.Black,
+            fontSize = 16.sp,
+            letterSpacing = 0.1.sp
+        )
+        Row(
             modifier = Modifier
-                .fillMaxSize()
-                .clip(CircleShape)
-                .border(
-                    if (isSelected)
-                        BorderStroke(1.dp, Color.Red)
-                    else BorderStroke(0.dp, Color.Transparent),
-                    shape = CircleShape
-                )
-                .clickable {
-                    onClick(text)
-                },
-            contentAlignment = Alignment.Center
+                .wrapContentHeight()
+                .weight(1f),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
+            AsyncImage(
+                modifier = Modifier.size(32.dp),
+                model = match.homeTeamImageUrl,
+                contentDescription = null,
+            )
             Text(
-                modifier = Modifier
-                    .align(Alignment.Center),
-                text = text,
-                fontSize = fontSize,
-                fontWeight = FontWeight.Bold
+                modifier = Modifier.padding(horizontal = 8.dp),
+                text = if(match.isFinished) "${match.homeScore} : ${match.awayScore}" else "  vs  ",
+                fontFamily = pretendard,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                fontSize = 16.sp,
+                letterSpacing = 0.1.sp
+            )
+            AsyncImage(
+                modifier = Modifier.size(32.dp),
+                model = match.awayTeamImageUrl,
+                contentDescription = null
             )
         }
-
-    }
-}
-
-
-@Composable
-fun CalendarMonthItem(
-    onClick: (String) -> Unit,
-    text: String,
-    height: Int,
-    fontSize: TextUnit = 20.sp,
-    isSelected: Boolean
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(height.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Box(
-            modifier = Modifier
-                .padding(4.dp)
-                .wrapContentWidth()
-                .aspectRatio(1f)
-                .border(
-                    if (isSelected)
-                        BorderStroke(1.dp, Color.Red)
-                    else BorderStroke(0.dp, Color.Transparent),
-                    shape = CircleShape
-                )
-                .clickable {
-                    onClick(text)
-                },
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                modifier = Modifier
-                    .align(Alignment.Center),
-                text = text,
-                fontSize = fontSize,
-                fontWeight = FontWeight.Bold
+        ImageCard(backgroundColor = Color(0xFF151D2D)) {
+            AsyncImage(
+                model = "https://www.arsenal.com/sites/default/files/styles/small/public/logos/comp_8.png?auto=webp&itok=EBszNKBn",
+                contentDescription = null
             )
         }
     }
-
 }
 
-
 @Composable
-fun CalendarDayItem(
+fun RowScope.CalendarDayItem(
     text: String,
     height: Int
 ) {
-    Box(
+    Text(
         modifier = Modifier
             .padding(bottom = 6.dp)
             .height(height.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(4.dp)
-        ) {
-            Text(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .height(height.dp),
-                text = text,
-                fontSize = 12.sp,
-                color = if (text == "SUN" || text == "SAT") Color.Red else Color.Gray,
-                fontWeight = FontWeight.Normal
-            )
-        }
-    }
+            .weight(1f),
+        text = text,
+        fontSize = 12.sp,
+        color = if (text == "SUN" || text == "SAT") Color.Red else Color.Gray,
+        fontWeight = FontWeight.Normal,
+        textAlign = TextAlign.Center
+    )
 }
 
 @Composable
-fun CalendarItem(
+fun RowScope.CalendarItem(
     localDate: LocalDate,
-    selectedDate: LocalDate,
-    selectedEndDate: LocalDate? = null,
     height: Int,
     matchList: Map<LocalDate, List<Match>>,
-    onSelectDate: (LocalDate) -> Unit,
+    onClickDetail: (Match) -> Unit
 ) {
     Column(
         modifier = Modifier
             .height(height.dp)
-            .background(
-                if (selectedEndDate != null && (localDate.isEqual(selectedEndDate) || localDate.isEqual(
-                        selectedDate
-                    ) || (localDate.isAfter(selectedDate) && localDate.isBefore(selectedEndDate)))
-                )
-                    Color.Red.copy(alpha = 0.5f)
-                else
-                    Color.Transparent
-            )
-            .clickable {
-                onSelectDate(localDate)
+            .weight(1f)
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) {
+                if (matchList.containsKey(localDate)) {
+                    matchList[localDate]?.firstOrNull()?.let { match ->
+                        onClickDetail(match)
+                    }
+                }
             },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(
-            modifier = Modifier
-                .wrapContentSize()
-                .clip(CircleShape)
-                .border(
-                    if (selectedDate.year == localDate.year && selectedDate.month == localDate.month && selectedDate.dayOfMonth == localDate.dayOfMonth)
-                        BorderStroke(1.dp, Color.Red)
-                    else BorderStroke(0.dp, Color.Transparent),
-                    CircleShape
+        Text(
+            modifier = Modifier.padding(4.dp),
+            text = localDate.dayOfMonth.toString(),
+            fontSize = 14.sp,
+            color = if (localDate.dayOfWeek in setOf(
+                    DayOfWeek.SATURDAY,
+                    DayOfWeek.SUNDAY
                 )
-                .padding(4.dp)
-
-        ) {
-            Text(
-                modifier = Modifier,
-                text = localDate.dayOfMonth.toString(),
-                fontSize = 14.sp,
-                color = if (localDate.dayOfWeek in setOf(
-                        DayOfWeek.SATURDAY,
-                        DayOfWeek.SUNDAY
-                    )
-                ) Color.Red else Color.Black,
-                fontWeight = FontWeight.Medium
-            )
-        }
+            ) Color.Red else Color.Black,
+            fontWeight = FontWeight.Medium
+        )
         if (matchList.containsKey(localDate)) {
             matchList[localDate]?.firstOrNull()?.let { match ->
                 AsyncImage(
                     modifier = Modifier.size(24.dp),
-                    model = if(match.homeTeamName == "Arsenal") match.awayTeamImageUrl else match.homeTeamImageUrl,
+                    model = if (match.homeTeamName == "Arsenal") match.awayTeamImageUrl else match.homeTeamImageUrl,
                     contentDescription = null
                 )
-                if(match.isFinished){
-                    Text(text = "${match.homeScore}:${match.awayScore}",
-                        fontSize = 12.sp)
+                if (match.isFinished) {
                     Text(
-                        text = if(match.homeTeamName == "Arsenal"){
-                            if(match.homeScore > match.awayScore) "WIN"
-                            else if(match.homeScore < match.awayScore) "LOSS"
+                        text = "${match.homeScore}:${match.awayScore}",
+                        fontSize = 12.sp
+                    )
+                    Text(
+                        text = if (match.homeTeamName == "Arsenal") {
+                            if (match.homeScore > match.awayScore) "WIN"
+                            else if (match.homeScore < match.awayScore) "LOSS"
                             else "DRAW"
-                        }else {
-                            if(match.awayScore > match.homeScore) "WIN"
-                            else if(match.awayScore < match.homeScore) "LOSS"
+                        } else {
+                            if (match.awayScore > match.homeScore) "WIN"
+                            else if (match.awayScore < match.homeScore) "LOSS"
                             else "DRAW"
-                        }, fontSize = 12.sp)
-                }else {
+                        }, fontSize = 12.sp
+                    )
+                } else {
                     Text(text = DateUtil.getTimeString(match.matchDate), fontSize = 12.sp)
                 }
 
@@ -473,30 +363,22 @@ fun CalendarItem(
 
         }
 
-
     }
 }
 
 @Composable
-fun FaintCalendarItem(
+fun RowScope.FaintCalendarItem(
     localDate: LocalDate,
     height: Int
 ) {
-    Box(
+    Text(
         modifier = Modifier
-            .height(height.dp),
-        contentAlignment = Alignment.TopCenter
-
-    ) {
-        Box(modifier = Modifier.padding(4.dp)) {
-            Text(
-                modifier = Modifier
-                    .align(Alignment.TopCenter),
-                text = localDate.dayOfMonth.toString(),
-                fontSize = 14.sp,
-                color = Color.LightGray
-            )
-
-        }
-    }
+            .height(height.dp)
+            .weight(1f)
+            .padding(4.dp),
+        text = localDate.dayOfMonth.toString(),
+        fontSize = 14.sp,
+        color = Color.LightGray,
+        textAlign = TextAlign.Center
+    )
 }

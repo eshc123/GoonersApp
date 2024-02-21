@@ -73,4 +73,5 @@ dependencies {
     implementation(libs.coil.compose)
 
     implementation(project(":core:designsystem"))
+    implementation(project(":core:domain"))
 }

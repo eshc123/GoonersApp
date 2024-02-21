@@ -10,4 +10,6 @@ interface ChatNetworkDataSource {
 
     fun sendChatMessage(message : String)
 
+    fun disconnectChatRoom()
+
 }

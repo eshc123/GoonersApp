@@ -39,4 +39,7 @@ class ChatNetworkDataSourceImpl  @Inject constructor(
         socket.emit("req_chatMessage", message)
     }
 
+    override fun disconnectChatRoom() {
+        socket.disconnect()
+    }
 }

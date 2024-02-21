@@ -1,11 +1,14 @@
 package com.eshc.goonersapp.core.domain.repository
 
+import com.eshc.goonersapp.core.domain.model.ChatMessage
 import kotlinx.coroutines.flow.Flow
 
 interface ChatRepository {
-    fun joinChatRoom() : Flow<Boolean>
+    suspend fun connectChatRoom()
 
-    fun getChatMessages() : Flow<String>
+    fun getChatMessages() : Flow<ChatMessage>
 
     fun sendChatMessage(message : String)
+
+    fun disconnectChatRoom()
 }

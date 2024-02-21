@@ -22,7 +22,7 @@ fun ChatMessageCard(
     Card(
         modifier = Modifier
             .wrapContentSize()
-            .widthIn(max = 200.dp)
+            .widthIn(max = 250.dp)
             .padding( vertical = 3.dp),
         shape = RoundedCornerShape(
             bottomEnd = 12.dp,

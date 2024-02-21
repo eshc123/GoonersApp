@@ -18,6 +18,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
+import com.eshc.goonersapp.core.domain.model.MessageType
 import com.eshc.goonersapp.feature.chat.component.ChatMessageCard
 
 @Composable
@@ -67,9 +69,27 @@ fun ChatRoomScreen(
             items(messageList) { chatMessage ->
                 Box(
                     modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = if(chatMessage.isMine) Alignment.CenterEnd else Alignment.CenterStart
+                    contentAlignment = when (chatMessage.messageType) {
+                        MessageType.Mine -> Alignment.CenterEnd
+                        MessageType.Others -> Alignment.CenterStart
+                        MessageType.System -> Alignment.Center
+                    }
                 ) {
-                    ChatMessageCard(text = chatMessage.message, isMine = chatMessage.isMine)
+                    when (chatMessage.messageType) {
+                        MessageType.System ->
+                            Text(
+                                modifier = Modifier.padding(8.dp),
+                                text = chatMessage.message,
+                                fontFamily = pretendard,
+                                fontWeight = FontWeight.Normal,
+                                color = Color.LightGray
+                            )
+                        else -> ChatMessageCard(
+                            text = chatMessage.message,
+                            isMine = chatMessage.messageType == MessageType.Mine
+                        )
+                    }
+
                 }
             }
         }
@@ -112,7 +132,6 @@ fun ChatRoomScreen(
                     .size(24.dp)
                     .clickable {
                         viewModel.sendMessage(message.text)
-                        viewModel.addMessageAsMine(message.text)
                         message = TextFieldValue()
                     }
             )

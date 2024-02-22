@@ -21,10 +21,12 @@ import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBar
 import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBarItem
 import com.eshc.goonersapp.core.designsystem.component.TopLevelTopBar
 import com.eshc.goonersapp.core.designsystem.iconpack.IcFootballClub
+import com.eshc.goonersapp.core.designsystem.iconpack.IcInfo
 import com.eshc.goonersapp.core.designsystem.iconpack.IcSearch
 import com.eshc.goonersapp.feature.chat.navigation.navigateToChatRoom
 import com.eshc.goonersapp.feature.home.navigation.navigateToHome
 import com.eshc.goonersapp.feature.match.navigation.navigateToMatch
+import com.eshc.goonersapp.feature.team.navigation.navigateToClubDetail
 import com.eshc.goonersapp.feature.team.navigation.navigateToTeam
 import com.eshc.goonersapp.feature.team.navigation.navigateToTeamHistory
 import com.eshc.goonersapp.navigation.GnrNavHost
@@ -85,13 +87,13 @@ fun GnrApp() {
                                 when (topLevelDestination) {
                                     TopLevelDestination.TEAM -> {
                                         Icon(
-                                            imageVector = IconPack.IcFootballClub,
+                                            imageVector = IconPack.IcInfo,
                                             contentDescription = null,
                                             modifier = Modifier
                                                 .padding(horizontal = 8.dp)
                                                 .size(24.dp)
                                                 .clickable {
-
+                                                    navController.navigateToClubDetail()
                                                 }
                                         )
                                         Icon(

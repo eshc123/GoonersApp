@@ -37,10 +37,10 @@ class MatchNetworkDataSourceImpl @Inject constructor(
         return try {
             val response = matchNetworkService.getRecentlyMatch()
             if(response.isSuccessful){
-                response.body()?.result?.match ?: RemoteMatch(0)
-            }else RemoteMatch(0)
+                response.body()?.result?.match ?: RemoteMatch(0, homeTeamId = 0, awayTeamId = 0)
+            }else RemoteMatch(0, homeTeamId = 0, awayTeamId = 0)
         }catch (e:Exception){
-            RemoteMatch(0)
+            RemoteMatch(0, homeTeamId = 0, awayTeamId = 0)
         }
     }
 }

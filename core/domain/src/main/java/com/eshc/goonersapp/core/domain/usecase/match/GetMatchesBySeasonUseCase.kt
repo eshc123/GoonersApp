@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.core.domain.usecase
+package com.eshc.goonersapp.core.domain.usecase.match
 
 import com.eshc.goonersapp.core.domain.model.Match
 import com.eshc.goonersapp.core.domain.repository.MatchRepository

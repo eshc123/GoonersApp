@@ -3,7 +3,7 @@ package com.eshc.goonersapp.feature.match
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eshc.goonersapp.core.domain.model.Match
-import com.eshc.goonersapp.core.domain.usecase.GetMatchesBySeasonUseCase
+import com.eshc.goonersapp.core.domain.usecase.match.GetMatchesBySeasonUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

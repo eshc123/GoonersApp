@@ -6,4 +6,9 @@ import kotlinx.coroutines.flow.Flow
 interface MatchRepository {
 
     fun getMatchesBySeason(season : String): Flow<List<Match>>
+
+    fun getUpcomingMatches() : Flow<List<Match>>
+
+    fun getRecentlyMatch() : Flow<Match>
+
 }

@@ -15,4 +15,12 @@ class MatchRepositoryImpl @Inject constructor(
     override fun getMatchesBySeason(season : String): Flow<List<Match>> = flow {
         emit(matchNetworkDataSource.getMatchesBySeason(season).map { it.toModel() })
     }
+
+    override fun getUpcomingMatches(): Flow<List<Match>> = flow {
+        emit(matchNetworkDataSource.getUpcomingMatches().map { it.toModel() })
+    }
+
+    override fun getRecentlyMatch(): Flow<Match> = flow {
+        emit(matchNetworkDataSource.getRecentlyMatch().toModel())
+    }
 }

@@ -31,6 +31,17 @@
 - Coil
 - Socket.IO
 
+## Backend
+Backend developers who provided the APIs and Server.
+  
+| Mirandalaw | yjin-01 |
+|:-----------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------:|
+| <img src="https://avatars.githubusercontent.com/u/74170593?v=4" alt="shine" width="80" height="80"> | <img src="https://avatars.githubusercontent.com/u/92343369?v=4" alt="ngwoon" width="80" height="80"> |
+|                              [Github](https://github.com/Mirandalaw)                              |                              [Github](https://github.com/yjin-01)                              |
+
+- Repository : https://github.com/Mirandalaw/gooner
+
+
 ## License 
 
     Copyright 2024 SeokJoon Jung

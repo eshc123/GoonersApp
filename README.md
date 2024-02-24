@@ -10,10 +10,13 @@
 <br>
 
 ##
-| Players | Matches | Chat |  
+|  Home | Players | Matches |
 | :---------------: | :---------------: | :---------------: | 
-| <img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/player.gif" align="center" width="240px"/> | <img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/match02.gif" align="center" width="240px"/> | <img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/chat.gif" align="center" width="240px"/> |
+| <img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/home.gif" align="center" width="240px"/> | <img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/player.gif" align="center" width="240px"/> | <img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/match02.gif" align="center" width="240px"/> |
 
+| Chat |  
+| :---------------: |
+| <img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/chat.gif" align="center" width="240px"/> |
 
 ## Stack & Libraries
 - Minimum SDK level 26

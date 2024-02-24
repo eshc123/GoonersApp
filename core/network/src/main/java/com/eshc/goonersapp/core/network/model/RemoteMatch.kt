@@ -7,14 +7,22 @@ import kotlinx.serialization.Serializable
 data class RemoteMatch(
     @SerialName("match_id")
     val id :Int,
+    @SerialName("home_team_id")
+    val homeTeamId : Int,
     @SerialName("home_team_name")
     val homeTeamName : String = "",
     @SerialName("home_team_image")
     val homeTeamImage : String = "",
+    @SerialName("home_team_nickname")
+    val homeTeamNickname : String = "",
+    @SerialName("away_team_id")
+    val awayTeamId : Int,
     @SerialName("away_team_name")
     val awayTeamName : String = "",
     @SerialName("away_team_image")
     val awayTeamImage : String = "",
+    @SerialName("away_team_nickname")
+    val awayTeamNickname : String = "",
     @SerialName("match_date")
     val matchDate : String = "",
     @SerialName("home_score")

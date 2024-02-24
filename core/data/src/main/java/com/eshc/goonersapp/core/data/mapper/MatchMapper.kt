@@ -5,10 +5,14 @@ import com.eshc.goonersapp.core.network.model.RemoteMatch
 
 fun RemoteMatch.toModel() = Match(
     id = id,
+    homeTeamId = homeTeamId,
     homeTeamName = homeTeamName,
     homeTeamImageUrl = homeTeamImage,
+    homeTeamNickname = homeTeamNickname,
+    awayTeamId = awayTeamId,
     awayTeamName = awayTeamName,
     awayTeamImageUrl = awayTeamImage,
+    awayTeamNickname = awayTeamNickname,
     matchDate = matchDate,
     homeScore = homeScore,
     awayScore = awayScore,

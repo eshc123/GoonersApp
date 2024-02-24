@@ -39,7 +39,7 @@ fun GnrNavHost(
         )
         matchDetailScreen(
             onClickChat = {
-                navController.navigateToChatRoom()
+                navController.navigateToChatRoom(it)
             }
         )
         teamHistoryScreen(

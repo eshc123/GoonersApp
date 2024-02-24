@@ -21,4 +21,26 @@ class MatchNetworkDataSourceImpl @Inject constructor(
             emptyList()
         }
     }
+
+    override suspend fun getUpcomingMatches(): List<RemoteMatch> {
+        return try {
+            val response = matchNetworkService.getUpcomingMatches()
+            if(response.isSuccessful){
+                response.body()?.result ?: emptyList()
+            }else emptyList()
+        }catch (e:Exception){
+            emptyList()
+        }
+    }
+
+    override suspend fun getRecentlyMatch(): RemoteMatch {
+        return try {
+            val response = matchNetworkService.getRecentlyMatch()
+            if(response.isSuccessful){
+                response.body()?.result?.match ?: RemoteMatch(0)
+            }else RemoteMatch(0)
+        }catch (e:Exception){
+            RemoteMatch(0)
+        }
+    }
 }

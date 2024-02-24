@@ -1,7 +1,6 @@
 package com.eshc.goonersapp.feature.match.detail
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,7 +35,6 @@ import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.ImageCard
 import com.eshc.goonersapp.core.designsystem.component.TabItem
-import com.eshc.goonersapp.core.designsystem.iconpack.IcSearch
 import com.eshc.goonersapp.core.designsystem.iconpack.IcTalk
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 import com.eshc.goonersapp.feature.match.model.MatchUiModel
@@ -44,7 +42,7 @@ import com.eshc.goonersapp.feature.match.model.MatchUiModel
 @Composable
 fun MatchDetailRoute(
     viewModel: MatchDetailViewModel = hiltViewModel(),
-    onClickChat: () -> Unit
+    onClickChat: (MatchUiModel) -> Unit
 ) {
     val match by viewModel.match.collectAsStateWithLifecycle()
     MatchDetailScreen(match, onClickChat)
@@ -53,7 +51,7 @@ fun MatchDetailRoute(
 @Composable
 fun MatchDetailScreen(
     match: MatchUiModel,
-    onClickChat: () -> Unit
+    onClickChat: (MatchUiModel) -> Unit
 ) {
     var selectedTab by remember { mutableStateOf(DetailTab.SUMMARY) }
 
@@ -182,7 +180,9 @@ fun MatchDetailScreen(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(18.dp),
-            onClick = onClickChat
+            onClick = {
+                onClickChat(match)
+            }
         ) {
             Icon(
                 imageVector = IconPack.IcTalk,

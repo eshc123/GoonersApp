@@ -3,13 +3,11 @@ package com.eshc.goonersapp.feature.match.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
-import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.eshc.goonersapp.core.domain.model.Match
 import com.eshc.goonersapp.feature.match.MatchRoute
 import com.eshc.goonersapp.feature.match.detail.MatchDetailRoute
-import com.eshc.goonersapp.feature.match.detail.MatchDetailScreen
 import com.eshc.goonersapp.feature.match.model.MatchType
 import com.eshc.goonersapp.feature.match.model.MatchUiModel
 
@@ -40,7 +38,7 @@ fun NavGraphBuilder.matchScreen(
 
 
 fun NavGraphBuilder.matchDetailScreen(
-    onClickChat : () -> Unit
+    onClickChat : (MatchUiModel) -> Unit
 ) {
     composable(
         route = "$matchDetailNavigationRoute?$matchArg={$matchArg}",

@@ -27,15 +27,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.eshc.goonersapp.core.designsystem.component.ImageCard
 import com.eshc.goonersapp.core.designsystem.shape.TicketShape
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 
 @Composable
 fun UpcomingMatchTicketCard(
-    homeShortName: String = "ARS",
-    homeUrl: String = "https://www.arsenal.com/sites/default/files/styles/feed_crest_thumbnail/public/logos/arsenal-1.png?auto=webp&itok=7a6a0zug",
-    awayShortName: String = "ARS",
-    awayUrl: String = "https://www.arsenal.com/sites/default/files/styles/feed_crest_thumbnail/public/logos/arsenal-1.png?auto=webp&itok=7a6a0zug",
+    homeShortName: String ,
+    homeUrl: String,
+    awayShortName: String,
+    awayUrl: String,
     time: String,
     location: String,
     competitionUrl: String
@@ -112,27 +113,42 @@ fun UpcomingMatchTicketCard(
 
 
         }
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f).padding(horizontal = 24.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+                .weight(1f)
+                .padding(horizontal = 24.dp),
+            verticalArrangement = Arrangement.Center
         ) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                Text(
+                    text = time,
+                    fontFamily = pretendard,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.DarkGray,
+                    fontSize = 13.sp,
+                )
+                ImageCard(backgroundColor = Color(0xFF151D2D)) {
+                    AsyncImage(
+                        model = competitionUrl,
+                        contentDescription = null,
+                        modifier = Modifier.width(40.dp)
+                    )
+                }
 
+            }
             Text(
-                text = "${time}\n${location}",
+                text = location,
                 fontFamily = pretendard,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.DarkGray,
-                fontSize = 14.sp,
+                fontSize = 13.sp,
             )
-            AsyncImage(
-                modifier = Modifier
-                    .size(30.dp),
-                model = competitionUrl,
-                contentDescription = null
-            )
+
         }
     }
 }
@@ -140,18 +156,18 @@ fun UpcomingMatchTicketCard(
 
 @Composable
 fun RecentlyMatchCard(
-    homeShortName: String = "ARS",
-    homeUrl: String = "https://www.arsenal.com/sites/default/files/styles/feed_crest_thumbnail/public/logos/arsenal-1.png?auto=webp&itok=7a6a0zug",
-    awayShortName: String = "ARS",
-    awayUrl: String = "https://www.arsenal.com/sites/default/files/styles/feed_crest_thumbnail/public/logos/arsenal-1.png?auto=webp&itok=7a6a0zug",
+    homeShortName: String ,
+    homeUrl: String ,
+    awayShortName: String,
+    awayUrl: String,
     time: String,
     location: String,
     competitionUrl: String,
-    score : String = "0 : 3"
+    score : String
 ) {
     ElevatedCard(
         modifier = Modifier
-            .padding(horizontal = 24.dp, vertical = 12.dp)
+            .padding(horizontal = 8.dp, vertical = 12.dp)
             .fillMaxWidth()
             .height(IntrinsicSize.Max),
         shape = RoundedCornerShape(4.dp),
@@ -178,13 +194,13 @@ fun RecentlyMatchCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
-                        .padding(4.dp),
+                        .padding(bottom = 4.dp, top = 12.dp, start= 12.dp, end = 12.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     AsyncImage(
                         modifier = Modifier
-                            .size(48.dp)
+                            .size(40.dp)
                             .align(Alignment.CenterVertically),
                         contentScale = ContentScale.Crop,
                         model = homeUrl,
@@ -228,7 +244,7 @@ fun RecentlyMatchCard(
                     }
                     AsyncImage(
                         modifier = Modifier
-                            .size(48.dp)
+                            .size(40.dp)
                             .align(Alignment.CenterVertically),
                         contentScale = ContentScale.Crop,
                         model = awayUrl,
@@ -249,54 +265,58 @@ fun RecentlyMatchCard(
                         .width(8.dp))
 
                     Column(
-                        modifier = Modifier.wrapContentHeight().weight(1f).padding(start = 28.dp,bottom = 12.dp,end = 12.dp)
+                        modifier = Modifier
+                            .wrapContentHeight()
+                            .weight(1f)
+                            .padding(start = 28.dp, bottom = 12.dp, end = 12.dp)
                     ) {
-                        Text(
-                            modifier = Modifier.padding(horizontal = 4.dp),
-                            text = "7` Saka",
-                            fontWeight = FontWeight.Normal,
-                            color = Color.White,
-                            fontSize = 18.sp,
-                        )
-                        Text(
-                            modifier = Modifier.padding(horizontal = 4.dp),
-                            text = "17` Saka",
-                            fontWeight = FontWeight.Normal,
-                            color = Color.White,
-                            fontSize = 18.sp,
-                        )
-                        Text(
-                            modifier = Modifier.padding(horizontal = 4.dp),
-                            text = "27` Saka",
-                            fontWeight = FontWeight.Normal,
-                            color = Color.White,
-                            fontSize = 18.sp,
-                        )
+//                        Text(
+//                            modifier = Modifier.padding(horizontal = 4.dp),
+//                            text = "7` Saka",
+//                            fontWeight = FontWeight.Normal,
+//                            color = Color.White,
+//                            fontSize = 18.sp,
+//                        )
 
                     }
 
                 }
             }
         }
-        Row(
+
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(60.dp).padding(horizontal = 24.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+                .height(60.dp)
+                .padding(horizontal = 24.dp),
+                verticalArrangement = Arrangement.Center
         ) {
-
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                Text(
+                    text = time,
+                    fontFamily = pretendard,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.DarkGray,
+                    fontSize = 13.sp,
+                )
+                ImageCard(backgroundColor = Color(0xFF151D2D)) {
+                    AsyncImage(
+                        model = competitionUrl,
+                        contentDescription = null,
+                        modifier = Modifier.width(40.dp)
+                    )
+                }
+            }
             Text(
-                text = "${time}\n${location}",
+                text = location,
                 fontFamily = pretendard,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.DarkGray,
-                fontSize = 14.sp,
-            )
-            AsyncImage(
-                modifier = Modifier.height(30.dp),
-                model = competitionUrl,
-                contentDescription = null
+                fontSize = 13.sp,
             )
         }
     }

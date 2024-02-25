@@ -1,6 +1,6 @@
 package com.eshc.goonersapp.core.network
 
-import com.eshc.goonersapp.core.network.model.RemotePlayer
+import com.eshc.goonersapp.core.network.model.player.RemotePlayer
 
 interface PlayerNetworkDataSource {
 

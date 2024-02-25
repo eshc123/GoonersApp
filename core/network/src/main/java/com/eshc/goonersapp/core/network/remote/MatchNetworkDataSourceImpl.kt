@@ -2,7 +2,7 @@ package com.eshc.goonersapp.core.network.remote
 
 import com.eshc.goonersapp.core.network.MatchNetworkDataSource
 import com.eshc.goonersapp.core.network.api.MatchNetworkService
-import com.eshc.goonersapp.core.network.model.RemoteMatch
+import com.eshc.goonersapp.core.network.model.match.RemoteMatch
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -1,6 +1,6 @@
 package com.eshc.goonersapp.core.network
 
-import com.eshc.goonersapp.core.network.model.RemoteMatch
+import com.eshc.goonersapp.core.network.model.match.RemoteMatch
 
 interface MatchNetworkDataSource {
 

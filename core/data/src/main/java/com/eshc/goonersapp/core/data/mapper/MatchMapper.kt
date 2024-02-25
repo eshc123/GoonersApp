@@ -1,7 +1,7 @@
 package com.eshc.goonersapp.core.data.mapper
 
 import com.eshc.goonersapp.core.domain.model.Match
-import com.eshc.goonersapp.core.network.model.RemoteMatch
+import com.eshc.goonersapp.core.network.model.match.RemoteMatch
 
 fun RemoteMatch.toModel() = Match(
     id = id,

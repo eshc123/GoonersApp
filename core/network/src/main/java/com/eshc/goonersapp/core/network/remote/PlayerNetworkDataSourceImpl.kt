@@ -1,9 +1,8 @@
 package com.eshc.goonersapp.core.network.remote
 
-import android.util.Log
 import com.eshc.goonersapp.core.network.PlayerNetworkDataSource
 import com.eshc.goonersapp.core.network.api.PlayerNetworkService
-import com.eshc.goonersapp.core.network.model.RemotePlayer
+import com.eshc.goonersapp.core.network.model.player.RemotePlayer
 import javax.inject.Inject
 import javax.inject.Singleton
 

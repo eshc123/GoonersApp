@@ -1,6 +1,6 @@
 package com.eshc.goonersapp.core.network
 
-import com.eshc.goonersapp.core.network.model.RemoteChatMessage
+import com.eshc.goonersapp.core.network.model.chat.RemoteChatMessage
 import kotlinx.coroutines.flow.Flow
 
 interface ChatNetworkDataSource {

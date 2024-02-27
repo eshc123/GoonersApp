@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,13 +18,16 @@ class TeamViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _players = MutableStateFlow<List<Player>>(emptyList())
-    val players : StateFlow<List<Player>> = _players.asStateFlow()
+    val players: StateFlow<List<Player>> = _players.asStateFlow()
 
     init {
         viewModelScope.launch {
-            getPlayersUseCase().collect {
-                _players.emit(it)
-            }
+            getPlayersUseCase()
+                .catch {
+                    //TODO
+                }.collect {
+                    _players.emit(it)
+                }
         }
     }
 }

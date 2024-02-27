@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.core.network.model
+package com.eshc.goonersapp.core.network.model.chat
 
 sealed class RemoteChatMessage{
     data object Connected : RemoteChatMessage()

@@ -1,7 +1,7 @@
 package com.eshc.goonersapp.core.network.api
 
 import com.eshc.goonersapp.core.network.model.BaseResponse
-import com.eshc.goonersapp.core.network.model.RemotePlayer
+import com.eshc.goonersapp.core.network.model.player.RemotePlayer
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

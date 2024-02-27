@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.core.network.model
+package com.eshc.goonersapp.core.network.model.player
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

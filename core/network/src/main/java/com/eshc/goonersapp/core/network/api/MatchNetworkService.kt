@@ -1,8 +1,8 @@
 package com.eshc.goonersapp.core.network.api
 
 import com.eshc.goonersapp.core.network.model.BaseResponse
-import com.eshc.goonersapp.core.network.model.RemoteMatch
-import com.eshc.goonersapp.core.network.model.RemoteRecentlyMatch
+import com.eshc.goonersapp.core.network.model.match.RemoteMatch
+import com.eshc.goonersapp.core.network.model.match.RemoteRecentlyMatch
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

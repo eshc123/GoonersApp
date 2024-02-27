@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.Settings
 import com.eshc.goonersapp.core.network.ChatNetworkDataSource
-import com.eshc.goonersapp.core.network.model.RemoteChatMessage
+import com.eshc.goonersapp.core.network.model.chat.RemoteChatMessage
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.socket.client.Socket
 import kotlinx.coroutines.channels.awaitClose

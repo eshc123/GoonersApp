@@ -4,9 +4,8 @@ import com.eshc.goonersapp.core.data.mapper.toModel
 import com.eshc.goonersapp.core.domain.model.ChatMessage
 import com.eshc.goonersapp.core.domain.repository.ChatRepository
 import com.eshc.goonersapp.core.network.ChatNetworkDataSource
-import com.eshc.goonersapp.core.network.model.RemoteChatMessage
+import com.eshc.goonersapp.core.network.model.chat.RemoteChatMessage
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 

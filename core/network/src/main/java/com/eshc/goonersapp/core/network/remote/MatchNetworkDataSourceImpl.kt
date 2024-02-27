@@ -2,7 +2,10 @@ package com.eshc.goonersapp.core.network.remote
 
 import com.eshc.goonersapp.core.network.MatchNetworkDataSource
 import com.eshc.goonersapp.core.network.api.MatchNetworkService
-import com.eshc.goonersapp.core.network.model.RemoteMatch
+import com.eshc.goonersapp.core.network.model.NetworkResult
+import com.eshc.goonersapp.core.network.model.handleApi
+import com.eshc.goonersapp.core.network.model.match.RemoteMatch
+import com.eshc.goonersapp.core.network.model.match.RemoteRecentlyMatch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -11,36 +14,21 @@ class MatchNetworkDataSourceImpl @Inject constructor(
     private val matchNetworkService: MatchNetworkService
 ) : MatchNetworkDataSource {
 
-    override suspend fun getMatchesBySeason(season : String): List<RemoteMatch> {
-        return try {
-            val response = matchNetworkService.getMatchesBySeason(season = season)
-            if(response.isSuccessful){
-                response.body()?.result ?: emptyList()
-            }else emptyList()
-        }catch (e:Exception){
-            emptyList()
+    override suspend fun getMatchesBySeason(season : String): NetworkResult<List<RemoteMatch>> {
+        return handleApi {
+            matchNetworkService.getMatchesBySeason(season = season)
         }
     }
 
-    override suspend fun getUpcomingMatches(): List<RemoteMatch> {
-        return try {
-            val response = matchNetworkService.getUpcomingMatches()
-            if(response.isSuccessful){
-                response.body()?.result ?: emptyList()
-            }else emptyList()
-        }catch (e:Exception){
-            emptyList()
+    override suspend fun getUpcomingMatches(): NetworkResult<List<RemoteMatch>> {
+        return handleApi {
+            matchNetworkService.getUpcomingMatches()
         }
     }
 
-    override suspend fun getRecentlyMatch(): RemoteMatch {
-        return try {
-            val response = matchNetworkService.getRecentlyMatch()
-            if(response.isSuccessful){
-                response.body()?.result?.match ?: RemoteMatch(0, homeTeamId = 0, awayTeamId = 0)
-            }else RemoteMatch(0, homeTeamId = 0, awayTeamId = 0)
-        }catch (e:Exception){
-            RemoteMatch(0, homeTeamId = 0, awayTeamId = 0)
+    override suspend fun getRecentlyMatch(): NetworkResult<RemoteRecentlyMatch> {
+        return handleApi {
+            matchNetworkService.getRecentlyMatch()
         }
     }
 }

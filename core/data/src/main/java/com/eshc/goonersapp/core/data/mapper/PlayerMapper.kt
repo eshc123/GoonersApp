@@ -2,7 +2,7 @@ package com.eshc.goonersapp.core.data.mapper
 
 import com.eshc.goonersapp.core.database.model.PlayerEntity
 import com.eshc.goonersapp.core.domain.model.Player
-import com.eshc.goonersapp.core.network.model.RemotePlayer
+import com.eshc.goonersapp.core.network.model.player.RemotePlayer
 
 fun RemotePlayer.toModel() = Player(
     id = id,

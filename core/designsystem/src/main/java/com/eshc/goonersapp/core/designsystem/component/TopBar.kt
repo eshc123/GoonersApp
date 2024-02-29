@@ -55,7 +55,7 @@ fun TopBar(
         Icon(
             imageVector = Icons.Default.ArrowBack,
             contentDescription = null,
-            modifier= Modifier.padding(start = 8.dp,end = 8.dp, top = 8.dp).size(24.dp)
+            modifier= Modifier.padding(start = 8.dp,end = 8.dp).size(24.dp)
         )
         Text(
             modifier = Modifier.padding(vertical = 8.dp).wrapContentHeight().weight(1f),

@@ -1,6 +1,6 @@
 package com.eshc.goonersapp.core.domain.model
 
-data class Club(
+data class Team(
     val clubId : Int,
     val clubName : String = "",
     val officialName : String = "",

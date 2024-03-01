@@ -28,7 +28,8 @@ import com.eshc.goonersapp.feature.home.component.UpcomingMatchTicketCard
 
 @Composable
 fun HomeRoute(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    onShowSnackbar : (String) -> Unit
 ) {
     HomeScreen(
         viewModel

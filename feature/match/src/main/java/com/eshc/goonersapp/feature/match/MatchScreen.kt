@@ -34,7 +34,8 @@ enum class CalendarType {
 @Composable
 fun MatchRoute(
     viewModel: MatchViewModel = hiltViewModel(),
-    onClickDetail: (Match) -> Unit
+    onClickDetail: (Match) -> Unit,
+    onShowSnackbar : (String) -> Unit
 ) {
     MatchScreen(
         viewModel = viewModel,

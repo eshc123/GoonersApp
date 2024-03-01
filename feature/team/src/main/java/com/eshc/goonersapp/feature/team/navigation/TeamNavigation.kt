@@ -24,8 +24,8 @@ fun NavController.navigateToTeam(navOptions: NavOptions? = null) {
     this.navigate(teamNavigationRoute, navOptions)
 }
 
-fun NavController.navigateToPlayerDetail(playerId : String, navOptions: NavOptions? = null) {
-    this.navigate(playerDetailNavigationRoute + "/${playerId}",navOptions)
+fun NavController.navigateToPlayerDetail(playerId: String, navOptions: NavOptions? = null) {
+    this.navigate(playerDetailNavigationRoute + "/${playerId}", navOptions)
 }
 
 fun NavController.navigateToTeamHistory(navOptions: NavOptions? = null) {
@@ -37,44 +37,56 @@ fun NavController.navigateToClubDetail(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.teamScreen(
-    onPlayerClick : (String) -> Unit
+    onPlayerClick: (String) -> Unit,
+    onShowSnackbar: (String) -> Unit
 ) {
     composable(
         route = teamNavigationRoute
     ) {
         TeamRoute(
-            onPlayerClick
+            onPlayerClick,
+            onShowSnackbar
         )
     }
 }
 
-fun NavGraphBuilder.playerDetailScreen() {
+fun NavGraphBuilder.playerDetailScreen(
+    onShowSnackbar: (String) -> Unit
+) {
     composable(
         route = "$playerDetailNavigationRoute/{$playerIdArg}",
         arguments = listOf(
             navArgument(playerIdArg) { type = NavType.StringType },
         ),
     ) {
-        PlayerDetailScreen()
+        PlayerDetailScreen(
+            onShowSnackbar = onShowSnackbar
+        )
     }
 }
 
 fun NavGraphBuilder.teamHistoryScreen(
-    onPlayerClick : (String) -> Unit
+    onPlayerClick: (String) -> Unit,
+    onShowSnackbar: (String) -> Unit
 ) {
     composable(
         route = teamHistoryNavigationRoute
     ) {
-        TeamHistoryScreen(onPlayerClick)
+        TeamHistoryScreen(
+            onPlayerClick,
+            onShowSnackbar
+        )
     }
 }
 
 fun NavGraphBuilder.clubDetailScreen(
-
+    onShowSnackbar: (String) -> Unit
 ) {
     composable(
         route = clubDetailNavigationRoute
     ) {
-        ClubDetailRoute()
+        ClubDetailRoute(
+            onShowSnackbar = onShowSnackbar
+        )
     }
 }

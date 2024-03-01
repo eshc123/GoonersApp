@@ -11,7 +11,8 @@ import com.eshc.goonersapp.core.designsystem.component.TopBar
 
 @Composable
 fun TeamHistoryScreen(
-    onClick : (String) -> Unit
+    onClick : (String) -> Unit,
+    onShowSnackbar : (String) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize()

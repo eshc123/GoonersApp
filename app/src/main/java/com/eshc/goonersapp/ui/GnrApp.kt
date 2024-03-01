@@ -130,7 +130,16 @@ fun GnrApp() {
 
             }
 
-            GnrNavHost(navController = navController)
+            GnrNavHost(
+                navController = navController,
+                onShowSnackbar = { message ->
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar(
+                            message
+                        )
+                    }
+                }
+            )
         }
     }
 }

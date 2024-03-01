@@ -20,6 +20,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,7 +41,8 @@ import com.eshc.goonersapp.feature.team.state.ClubDetailUiState
 
 @Composable
 fun ClubDetailRoute(
-    clubDetailViewModel: ClubDetailViewModel = hiltViewModel()
+    clubDetailViewModel: ClubDetailViewModel = hiltViewModel(),
+    onShowSnackbar : (String) -> Unit
 ) {
     val clubDetailUiState by clubDetailViewModel.clubDetail.collectAsStateWithLifecycle()
 

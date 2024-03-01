@@ -47,15 +47,20 @@ import com.eshc.goonersapp.feature.chat.component.ChatMessageCard
 
 @Composable
 fun ChatRoomRoute(
-    viewModel: ChatViewModel = hiltViewModel()
+    viewModel: ChatViewModel = hiltViewModel(),
+    onShowSnackbar : (String) -> Unit
 ) {
-    ChatRoomScreen(viewModel)
+    ChatRoomScreen(
+        viewModel,
+        onShowSnackbar = onShowSnackbar
+    )
 }
 
 
 @Composable
 fun ChatRoomScreen(
-    viewModel: ChatViewModel
+    viewModel: ChatViewModel,
+    onShowSnackbar : (String) -> Unit
 ) {
 
     val match by viewModel.match.collectAsStateWithLifecycle()

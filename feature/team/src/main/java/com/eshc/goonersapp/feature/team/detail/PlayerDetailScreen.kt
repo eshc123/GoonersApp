@@ -36,7 +36,8 @@ import com.eshc.goonersapp.feature.team.state.PlayerDetailUiState
 
 @Composable
 fun PlayerDetailScreen(
-    viewModel: PlayerDetailViewModel = hiltViewModel()
+    viewModel: PlayerDetailViewModel = hiltViewModel(),
+    onShowSnackbar : (String) -> Unit
 ) {
 
     var selectedTab by remember { mutableStateOf(DetailTab.PROFILE) }

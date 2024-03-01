@@ -42,10 +42,14 @@ import com.eshc.goonersapp.feature.match.model.MatchUiModel
 @Composable
 fun MatchDetailRoute(
     viewModel: MatchDetailViewModel = hiltViewModel(),
-    onClickChat: (MatchUiModel) -> Unit
+    onClickChat: (MatchUiModel) -> Unit,
+    onShowSnackbar : (String) -> Unit
 ) {
     val match by viewModel.match.collectAsStateWithLifecycle()
-    MatchDetailScreen(match, onClickChat)
+    MatchDetailScreen(
+        match = match,
+        onClickChat = onClickChat
+    )
 }
 
 @Composable

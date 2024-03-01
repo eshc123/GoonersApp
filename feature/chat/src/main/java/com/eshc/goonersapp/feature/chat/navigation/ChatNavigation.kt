@@ -19,13 +19,17 @@ fun NavController.navigateToChatRoom(matchUiModel: MatchUiModel, navOptions: Nav
     this.navigate("$chatRoomNavigationRoute?${matchArg}=$matchUiModel", navOptions)
 }
 
-fun NavGraphBuilder.chatRoomScreen() {
+fun NavGraphBuilder.chatRoomScreen(
+    onShowSnackbar : (String) -> Unit
+) {
     composable(
         route = "$chatRoomNavigationRoute?${matchArg}={$matchArg}",
         arguments = listOf(
             navArgument(matchArg) { type = MatchType },
         ),
     ) {
-        ChatRoomRoute()
+        ChatRoomRoute(
+            onShowSnackbar = onShowSnackbar
+        )
     }
 }

@@ -25,20 +25,23 @@ fun NavController.navigateToMatchDetail(matchUiModel: MatchUiModel,navOptions: N
 }
 
 fun NavGraphBuilder.matchScreen(
-    onClickDetail : (Match) -> Unit
+    onClickDetail : (Match) -> Unit,
+    onShowSnackbar : (String) -> Unit
 ) {
     composable(
         route = matchNavigationRoute
     ) {
         MatchRoute(
-            onClickDetail = onClickDetail
+            onClickDetail = onClickDetail,
+            onShowSnackbar = onShowSnackbar
         )
     }
 }
 
 
 fun NavGraphBuilder.matchDetailScreen(
-    onClickChat : (MatchUiModel) -> Unit
+    onClickChat : (MatchUiModel) -> Unit,
+    onShowSnackbar : (String) -> Unit
 ) {
     composable(
         route = "$matchDetailNavigationRoute?$matchArg={$matchArg}",
@@ -47,7 +50,8 @@ fun NavGraphBuilder.matchDetailScreen(
         ),
     ) {
         MatchDetailRoute(
-            onClickChat = onClickChat
+            onClickChat = onClickChat,
+            onShowSnackbar = onShowSnackbar
         )
     }
 }

@@ -19,35 +19,48 @@ import com.eshc.goonersapp.feature.team.navigation.teamScreen
 
 @Composable
 fun GnrNavHost(
-    navController: NavHostController
+    navController: NavHostController,
+    onShowSnackbar : (String) -> Unit
 ) {
     NavHost(
         navController = navController,
         startDestination = homeNavigationRoute
     ){
-        homeScreen()
+        homeScreen(
+            onShowSnackbar = onShowSnackbar
+        )
         teamScreen(
             onPlayerClick = {
                 navController.navigateToPlayerDetail(it)
-            }
+            },
+            onShowSnackbar = onShowSnackbar
         )
-        playerDetailScreen()
+        playerDetailScreen(
+            onShowSnackbar = onShowSnackbar
+        )
         matchScreen(
             onClickDetail = {
                 navController.navigateToMatchDetail(it.toUiModel())
-            }
+            },
+            onShowSnackbar = onShowSnackbar
         )
         matchDetailScreen(
             onClickChat = {
                 navController.navigateToChatRoom(it)
-            }
+            },
+            onShowSnackbar = onShowSnackbar
         )
         teamHistoryScreen(
             onPlayerClick = {
                 navController.navigateToPlayerDetail(it)
-            }
+            },
+            onShowSnackbar = onShowSnackbar
         )
-        chatRoomScreen()
-        clubDetailScreen()
+        chatRoomScreen(
+            onShowSnackbar = onShowSnackbar
+        )
+        clubDetailScreen(
+            onShowSnackbar = onShowSnackbar
+        )
     }
 }

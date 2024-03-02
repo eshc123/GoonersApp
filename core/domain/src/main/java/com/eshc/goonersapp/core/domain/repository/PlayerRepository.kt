@@ -1,6 +1,6 @@
 package com.eshc.goonersapp.core.domain.repository
 
-import com.eshc.goonersapp.core.domain.model.Player
+import com.eshc.goonersapp.core.domain.model.player.Player
 import kotlinx.coroutines.flow.Flow
 
 interface PlayerRepository {

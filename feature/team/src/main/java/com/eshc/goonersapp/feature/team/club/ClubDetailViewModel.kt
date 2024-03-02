@@ -2,10 +2,8 @@ package com.eshc.goonersapp.feature.team.club
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eshc.goonersapp.core.domain.model.TeamDetail
 import com.eshc.goonersapp.core.domain.usecase.team.GetTeamDetailUseCase
 import com.eshc.goonersapp.feature.team.state.ClubDetailUiState
-import com.eshc.goonersapp.feature.team.state.PlayerDetailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

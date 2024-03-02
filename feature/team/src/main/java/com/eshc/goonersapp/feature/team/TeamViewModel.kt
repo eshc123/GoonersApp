@@ -2,7 +2,7 @@ package com.eshc.goonersapp.feature.team
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eshc.goonersapp.core.domain.model.Player
+import com.eshc.goonersapp.core.domain.model.player.Player
 import com.eshc.goonersapp.core.domain.usecase.GetPlayersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

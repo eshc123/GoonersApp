@@ -42,7 +42,7 @@ import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.component.ImageCard
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
-import com.eshc.goonersapp.core.domain.model.MessageType
+import com.eshc.goonersapp.core.domain.model.chat.MessageType
 import com.eshc.goonersapp.feature.chat.component.ChatMessageCard
 
 @Composable

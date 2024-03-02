@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.core.domain.model
+package com.eshc.goonersapp.core.domain.model.match
 
 data class Match(
     val id :Int,

@@ -1,7 +1,7 @@
 package com.eshc.goonersapp.core.data.repository
 
 import com.eshc.goonersapp.core.data.mapper.toModel
-import com.eshc.goonersapp.core.domain.model.TeamDetail
+import com.eshc.goonersapp.core.domain.model.team.TeamDetail
 import com.eshc.goonersapp.core.domain.repository.TeamRepository
 import com.eshc.goonersapp.core.network.TeamNetworkDataSource
 import com.eshc.goonersapp.core.network.model.NetworkResult

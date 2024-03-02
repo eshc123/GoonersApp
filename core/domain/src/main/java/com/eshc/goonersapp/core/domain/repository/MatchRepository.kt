@@ -1,6 +1,6 @@
 package com.eshc.goonersapp.core.domain.repository
 
-import com.eshc.goonersapp.core.domain.model.Match
+import com.eshc.goonersapp.core.domain.model.match.Match
 import kotlinx.coroutines.flow.Flow
 
 interface MatchRepository {

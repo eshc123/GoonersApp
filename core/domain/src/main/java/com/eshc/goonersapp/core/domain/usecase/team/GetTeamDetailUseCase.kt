@@ -1,6 +1,6 @@
 package com.eshc.goonersapp.core.domain.usecase.team
 
-import com.eshc.goonersapp.core.domain.model.TeamDetail
+import com.eshc.goonersapp.core.domain.model.team.TeamDetail
 import com.eshc.goonersapp.core.domain.repository.TeamRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

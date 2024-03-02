@@ -2,7 +2,7 @@ package com.eshc.goonersapp.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eshc.goonersapp.core.domain.model.Match
+import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.usecase.match.GetRecentlyMatchUseCase
 import com.eshc.goonersapp.core.domain.usecase.match.GetUpcomingMatchesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

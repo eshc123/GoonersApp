@@ -1,7 +1,7 @@
 package com.eshc.goonersapp.feature.match.model
 
 import android.os.Parcelable
-import com.eshc.goonersapp.core.domain.model.Match
+import com.eshc.goonersapp.core.domain.model.match.Match
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString

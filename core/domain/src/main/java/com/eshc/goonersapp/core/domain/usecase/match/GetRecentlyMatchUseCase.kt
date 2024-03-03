@@ -1,5 +1,6 @@
 package com.eshc.goonersapp.core.domain.usecase.match
 
+import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.repository.MatchRepository
 import kotlinx.coroutines.flow.Flow
@@ -9,6 +10,6 @@ class GetRecentlyMatchUseCase @Inject constructor(
     private val matchRepository: MatchRepository
 ) {
 
-    operator fun invoke(): Flow<Match> =
+    operator fun invoke(): Flow<DataResult<Match>> =
         matchRepository.getRecentlyMatch()
 }

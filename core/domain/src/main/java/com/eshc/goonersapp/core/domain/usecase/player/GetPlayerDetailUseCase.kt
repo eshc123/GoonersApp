@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.core.domain.usecase
+package com.eshc.goonersapp.core.domain.usecase.player
 
 import com.eshc.goonersapp.core.domain.model.player.Player
 import com.eshc.goonersapp.core.domain.repository.PlayerRepository

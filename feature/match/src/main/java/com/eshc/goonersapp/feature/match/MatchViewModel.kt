@@ -2,6 +2,7 @@ package com.eshc.goonersapp.feature.match
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.usecase.match.GetMatchesBySeasonUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,7 +32,15 @@ class MatchViewModel @Inject constructor(
                 .catch {
                     //TODO Error
                 }.collect {
-                    _matches.emit(it)
+                    when(it){
+                        is DataResult.Success -> {
+                            _matches.emit(it.data)
+                        }
+                        is DataResult.Failure -> {
+
+                        }
+                    }
+
                 }
         }
     }

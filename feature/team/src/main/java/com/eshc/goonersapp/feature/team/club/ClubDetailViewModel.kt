@@ -2,6 +2,7 @@ package com.eshc.goonersapp.feature.team.club
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.usecase.team.GetTeamDetailUseCase
 import com.eshc.goonersapp.feature.team.state.ClubDetailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,10 +19,11 @@ class ClubDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     val clubDetail: StateFlow<ClubDetailUiState> = getTeamDetailUseCase()
-        .catch {
-            // TODO
-        }.map {
-            ClubDetailUiState.Success(it)
+        .map {
+            when(it){
+                is DataResult.Success -> ClubDetailUiState.Success(it.data)
+                is DataResult.Failure -> ClubDetailUiState.Error
+            }
         }
         .stateIn(
             viewModelScope, started = SharingStarted.WhileSubscribed(5_000),

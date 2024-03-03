@@ -1,7 +1,7 @@
 package com.eshc.goonersapp.core.data.mapper
 
-import com.eshc.goonersapp.core.domain.model.Team
-import com.eshc.goonersapp.core.domain.model.TeamDetail
+import com.eshc.goonersapp.core.domain.model.team.Team
+import com.eshc.goonersapp.core.domain.model.team.TeamDetail
 import com.eshc.goonersapp.core.network.model.team.RemoteTeam
 import com.eshc.goonersapp.core.network.model.team.RemoteTeamDetail
 

@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.eshc.goonersapp.core.domain.model.Match
+import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.feature.match.MatchRoute
 import com.eshc.goonersapp.feature.match.detail.MatchDetailRoute
 import com.eshc.goonersapp.feature.match.model.MatchType

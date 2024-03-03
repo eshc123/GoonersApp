@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
-import com.eshc.goonersapp.core.domain.model.Player
+import com.eshc.goonersapp.core.domain.model.player.Player
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

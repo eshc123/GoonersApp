@@ -3,7 +3,7 @@ package com.eshc.goonersapp.feature.team.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eshc.goonersapp.core.domain.usecase.GetPlayerDetailUseCase
+import com.eshc.goonersapp.core.domain.usecase.player.GetPlayerDetailUseCase
 import com.eshc.goonersapp.feature.team.state.PlayerDetailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted

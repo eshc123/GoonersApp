@@ -1,7 +1,7 @@
 package com.eshc.goonersapp.core.data.repository
 
 import com.eshc.goonersapp.core.data.mapper.toModel
-import com.eshc.goonersapp.core.domain.model.ChatMessage
+import com.eshc.goonersapp.core.domain.model.chat.ChatMessage
 import com.eshc.goonersapp.core.domain.repository.ChatRepository
 import com.eshc.goonersapp.core.network.ChatNetworkDataSource
 import com.eshc.goonersapp.core.network.model.chat.RemoteChatMessage

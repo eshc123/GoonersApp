@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.core.domain.model
+package com.eshc.goonersapp.core.domain.model.chat
 
 data class ChatMessage(
     val message : String,

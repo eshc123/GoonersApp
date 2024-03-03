@@ -2,7 +2,8 @@ package com.eshc.goonersapp.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eshc.goonersapp.core.domain.model.Match
+import com.eshc.goonersapp.core.domain.model.DataResult
+import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.usecase.match.GetRecentlyMatchUseCase
 import com.eshc.goonersapp.core.domain.usecase.match.GetUpcomingMatchesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,16 +31,29 @@ class HomeViewModel @Inject constructor(
                 .catch {
                     //TODO
                 }.collect {
-                    _upcomingMatches.emit(
-                        it
-                    )
+                    when(it){
+                        is DataResult.Success -> {
+                            _upcomingMatches.emit(it.data)
+                        }
+                        is DataResult.Failure -> {
+
+                        }
+                    }
+
                 }
 
             getRecentlyMatchUseCase()
                 .catch {
                     //TODO
                 }.collect {
-                    _recentlyMatch.emit(it)
+                    when(it){
+                        is DataResult.Success -> {
+                            _recentlyMatch.emit(it.data)
+                        }
+                        is DataResult.Failure -> {
+
+                        }
+                    }
                 }
         }
     }

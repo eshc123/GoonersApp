@@ -1,7 +1,6 @@
 package com.eshc.goonersapp.feature.match.component.calendar
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -42,9 +41,7 @@ import com.eshc.goonersapp.core.designsystem.component.ImageCard
 import com.eshc.goonersapp.core.designsystem.iconpack.IcGrid
 import com.eshc.goonersapp.core.designsystem.iconpack.IcList
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
-import com.eshc.goonersapp.core.domain.model.Match
-import com.eshc.goonersapp.feature.match.CalendarType
-import okhttp3.internal.wait
+import com.eshc.goonersapp.core.domain.model.match.Match
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

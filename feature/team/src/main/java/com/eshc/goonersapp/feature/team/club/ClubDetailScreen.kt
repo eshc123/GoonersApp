@@ -35,8 +35,7 @@ import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.component.TopBar
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
-import com.eshc.goonersapp.core.domain.model.Match
-import com.eshc.goonersapp.core.domain.model.Team
+import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.feature.team.state.ClubDetailUiState
 
 @Composable
@@ -45,6 +44,12 @@ fun ClubDetailRoute(
     onShowSnackbar : (String) -> Unit
 ) {
     val clubDetailUiState by clubDetailViewModel.clubDetail.collectAsStateWithLifecycle()
+
+    LaunchedEffect(clubDetailUiState){
+        if(clubDetailUiState is ClubDetailUiState.Error){
+            onShowSnackbar("Can't load Data")
+        }
+    }
 
     ClubDetailScreen(
         clubDetailUiState

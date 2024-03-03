@@ -1,33 +1,30 @@
 package com.eshc.goonersapp.core.data.repository
 
+import com.eshc.goonersapp.core.data.mapper.toDataResult
 import com.eshc.goonersapp.core.data.mapper.toEntity
 import com.eshc.goonersapp.core.data.mapper.toModel
 import com.eshc.goonersapp.core.database.dao.PlayerDao
-import com.eshc.goonersapp.core.domain.model.Player
+import com.eshc.goonersapp.core.domain.model.DataResult
+import com.eshc.goonersapp.core.domain.model.player.Player
 import com.eshc.goonersapp.core.domain.repository.PlayerRepository
 import com.eshc.goonersapp.core.network.PlayerNetworkDataSource
 import com.eshc.goonersapp.core.network.model.NetworkResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PlayerRepositoryImpl @Inject constructor(
     private val playerNetworkDataSource: PlayerNetworkDataSource,
     private val playerDao: PlayerDao
 ) : PlayerRepository {
-    override fun getPlayers(): Flow<List<Player>> = flow {
-        when(val result = playerNetworkDataSource.getPlayerList()){
-            is NetworkResult.Success -> {
-                emit(result.data.map { it.toModel() })
+    override fun getPlayers(): Flow<DataResult<List<Player>>> = flow {
+        emit(
+            playerNetworkDataSource.getPlayerList().toDataResult {
+                it.map { remotePlayer ->
+                    remotePlayer.toModel()
+                }
             }
-            is NetworkResult.Error -> {
-                throw Exception(result.message)
-            }
-            is NetworkResult.Exception -> {
-                throw result.e
-            }
-        }
+        )
     }
 
     override fun getPlayerDetail(playerId: Int): Flow<Player> = flow {

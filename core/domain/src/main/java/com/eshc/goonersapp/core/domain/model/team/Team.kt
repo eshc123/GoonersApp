@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.core.domain.model
+package com.eshc.goonersapp.core.domain.model.team
 
 data class Team(
     val clubId : Int,

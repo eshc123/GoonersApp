@@ -21,7 +21,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,8 +31,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
-import com.eshc.goonersapp.core.domain.model.Player
-import com.eshc.goonersapp.core.domain.model.PlayerPosition
+import com.eshc.goonersapp.core.domain.model.player.Player
+import com.eshc.goonersapp.core.domain.model.player.PlayerPosition
 import com.eshc.goonersapp.feature.team.ui.SquadPlayerCard
 
 @Composable

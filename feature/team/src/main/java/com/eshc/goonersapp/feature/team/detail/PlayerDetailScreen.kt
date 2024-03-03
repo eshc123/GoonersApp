@@ -1,8 +1,6 @@
 package com.eshc.goonersapp.feature.team.detail
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,7 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.component.TabItem
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
-import com.eshc.goonersapp.core.domain.model.Player
+import com.eshc.goonersapp.core.domain.model.player.Player
 import com.eshc.goonersapp.feature.team.state.PlayerDetailUiState
 
 

@@ -1,6 +1,8 @@
 package com.eshc.goonersapp.core.data.repository
 
+import com.eshc.goonersapp.core.data.mapper.toDataResult
 import com.eshc.goonersapp.core.data.mapper.toModel
+import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.repository.MatchRepository
 import com.eshc.goonersapp.core.network.MatchNetworkDataSource
@@ -13,46 +15,31 @@ class MatchRepositoryImpl @Inject constructor(
     private val matchNetworkDataSource: MatchNetworkDataSource
 ) : MatchRepository {
 
-    override fun getMatchesBySeason(season : String): Flow<List<Match>> = flow {
-        when(val result = matchNetworkDataSource.getMatchesBySeason(season)){
-            is NetworkResult.Success -> {
-                emit(result.data .map { it.toModel() })
+    override fun getMatchesBySeason(season : String): Flow<DataResult<List<Match>>> = flow {
+        emit(
+            matchNetworkDataSource.getMatchesBySeason(season).toDataResult {
+                it.map { remoteMatch ->
+                    remoteMatch.toModel()
+                }
             }
-            is NetworkResult.Error -> {
-                throw Exception(result.message)
-            }
-            is NetworkResult.Exception -> {
-                throw result.e
-            }
-        }
-
+        )
     }
 
-    override fun getUpcomingMatches(): Flow<List<Match>> = flow {
-        when(val result = matchNetworkDataSource.getUpcomingMatches()){
-            is NetworkResult.Success -> {
-                emit(result.data .map { it.toModel() })
+    override fun getUpcomingMatches(): Flow<DataResult<List<Match>>> = flow {
+        emit(
+            matchNetworkDataSource.getUpcomingMatches().toDataResult {
+                it.map { remoteMatch ->
+                    remoteMatch.toModel()
+                }
             }
-            is NetworkResult.Error -> {
-                throw Exception(result.message)
-            }
-            is NetworkResult.Exception -> {
-                throw result.e
-            }
-        }
+        )
     }
 
-    override fun getRecentlyMatch(): Flow<Match> = flow {
-        when(val result = matchNetworkDataSource.getRecentlyMatch()){
-            is NetworkResult.Success -> {
-                emit(result.data.match.toModel())
+    override fun getRecentlyMatch(): Flow<DataResult<Match>> = flow {
+        emit(
+            matchNetworkDataSource.getRecentlyMatch().toDataResult {
+                it.match.toModel()
             }
-            is NetworkResult.Error -> {
-                throw Exception(result.message)
-            }
-            is NetworkResult.Exception -> {
-                throw result.e
-            }
-        }
+        )
     }
 }

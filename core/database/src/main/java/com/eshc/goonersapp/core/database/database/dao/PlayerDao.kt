@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.core.database.dao
+package com.eshc.goonersapp.core.database.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query

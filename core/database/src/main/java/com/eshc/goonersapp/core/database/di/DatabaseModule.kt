@@ -1,7 +1,8 @@
-package com.eshc.goonersapp.core.database
+package com.eshc.goonersapp.core.database.di
 
 import android.content.Context
 import androidx.room.Room
+import com.eshc.goonersapp.core.database.database.GnrDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

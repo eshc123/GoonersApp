@@ -50,4 +50,4 @@ jobs:
         KEYSTORE: ${{ secrets.DEBUG_KEYSTORE_BASE64 }}
     
     - name: Build with Gradle
-      run: ./gradlew build  
+      run: ./gradlew assembleDebug  

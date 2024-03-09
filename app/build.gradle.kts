@@ -26,8 +26,11 @@ android {
     }
 
     signingConfigs {
+        getByName("debug") {
+            storeFile = file("keystore/debug.keystore")
+        }
         create("release"){
-            storeFile = file("keystore/gnr_release.jks")
+            storeFile = file("keystore/release.keystore")
             storePassword = gradleLocalProperties(rootDir).getProperty("SIGNING_STORE_PASSWORD")
             keyAlias =  gradleLocalProperties(rootDir).getProperty("SIGNING_KEY_ALIAS")
             keyPassword =  gradleLocalProperties(rootDir).getProperty("SIGNING_KEY_PASSWORD")
@@ -35,6 +38,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            isMinifyEnabled = false
+            isDebuggable = true
+            signingConfig = signingConfigs.getByName("debug")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(

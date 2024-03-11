@@ -2,9 +2,11 @@ package com.eshc.goonersapp.feature.login
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.eshc.goonersapp.core.designsystem.component.GnrTextFiled
 import com.eshc.goonersapp.core.designsystem.component.TopBar
 
 @Composable
@@ -16,6 +18,13 @@ fun LoginScreen(
     ) {
         TopBar(
             title = "Login"
+        )
+        GnrTextFiled(
+            modifier = Modifier.fillMaxWidth(),
+            message = "",
+            onValueChange = {
+
+            }
         )
     }
 }

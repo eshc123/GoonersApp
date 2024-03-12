@@ -8,6 +8,8 @@ import com.eshc.goonersapp.feature.chat.navigation.navigateToChatRoom
 import com.eshc.goonersapp.feature.home.navigation.homeNavigationRoute
 import com.eshc.goonersapp.feature.home.navigation.homeScreen
 import com.eshc.goonersapp.feature.login.navigation.loginScreen
+import com.eshc.goonersapp.feature.login.navigation.navigateToSignUp
+import com.eshc.goonersapp.feature.login.navigation.signUpScreen
 import com.eshc.goonersapp.feature.match.model.toUiModel
 import com.eshc.goonersapp.feature.match.navigation.matchDetailScreen
 import com.eshc.goonersapp.feature.match.navigation.matchScreen
@@ -64,6 +66,12 @@ fun GnrNavHost(
             onShowSnackbar = onShowSnackbar
         )
         loginScreen(
+            onShowSnackbar = onShowSnackbar,
+            onClickSignUp = {
+                navController.navigateToSignUp()
+            }
+        )
+        signUpScreen(
             onShowSnackbar = onShowSnackbar
         )
     }

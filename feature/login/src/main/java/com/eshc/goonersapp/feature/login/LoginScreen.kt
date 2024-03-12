@@ -24,7 +24,8 @@ import com.eshc.goonersapp.core.designsystem.theme.pretendard
 
 @Composable
 fun LoginScreen(
-    onShowSnackbar: (String) -> Unit
+    onShowSnackbar: (String) -> Unit,
+    onClickSignUp : () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -95,7 +96,7 @@ fun LoginScreen(
                 containerColor = Color(0xFF151D2D)
             ),
             onClick = {
-
+                onClickSignUp()
 
             }) {
             Text(
@@ -111,5 +112,8 @@ fun LoginScreen(
 @Preview
 @Composable
 fun PreviewLoginScreen() {
-    LoginScreen(onShowSnackbar = {})
+    LoginScreen(
+        onShowSnackbar = {},
+        onClickSignUp = {}
+    )
 }

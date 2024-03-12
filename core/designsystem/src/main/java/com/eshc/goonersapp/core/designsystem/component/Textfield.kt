@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,7 +19,8 @@ import com.eshc.goonersapp.core.designsystem.theme.pretendard
 fun GnrTextFiled(
     modifier: Modifier = Modifier,
     message : String,
-    onValueChange : (String) -> Unit
+    onValueChange : (String) -> Unit,
+    placeholder : String = ""
 ) {
     BasicTextField(
         modifier = modifier,
@@ -31,11 +33,19 @@ fun GnrTextFiled(
         onValueChange = onValueChange,
         decorationBox = { innerTextField ->
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .background(Color(0xFFF1F1F1), CircleShape)
                     .padding(horizontal = 16.dp),
                 contentAlignment = Alignment.CenterStart
             ) {
+                if(message.isBlank()){
+                    Text(
+                        text = placeholder,
+                        fontFamily = pretendard,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.LightGray
+                    )
+                }
                 innerTextField()
             }
 

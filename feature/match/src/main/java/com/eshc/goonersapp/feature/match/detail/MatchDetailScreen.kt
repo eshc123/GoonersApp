@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -82,18 +83,14 @@ fun MatchDetailScreen(
                     ) {
                         Text(
                             text = DateUtil.getYearAndMonthAndDateAndTimeString(match.matchDate),
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.titleLarge,
                             color = Color.Black,
-                            fontSize = 18.sp
                         )
                         Text(
                             modifier = Modifier.padding(top = 4.dp),
                             text = match.stadiumName,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Medium,
+                            style = MaterialTheme.typography.titleMedium,
                             color = Color.Black,
-                            fontSize = 16.sp
                         )
                     }
                     ImageCard(backgroundColor = Color(0xFF151D2D)) {
@@ -126,11 +123,8 @@ fun MatchDetailScreen(
                     Text(
                         modifier = Modifier.padding(horizontal = 8.dp),
                         text = if (match.isFinished) "${match.homeScore} : ${match.awayScore}" else "  vs  ",
-                        fontFamily = pretendard,
-                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.titleLarge,
                         color = Color.Black,
-                        fontSize = 24.sp,
-                        letterSpacing = 0.1.sp
                     )
                     AsyncImage(
                         modifier = Modifier.width(64.dp),

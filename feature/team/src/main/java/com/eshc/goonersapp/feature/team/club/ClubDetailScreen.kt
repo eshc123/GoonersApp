@@ -64,7 +64,7 @@ fun ClubDetailScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         TopBar(
-            title = "Club"
+            title = "CLUB"
         )
         when(clubDetailUiState){
             is ClubDetailUiState.Success -> {

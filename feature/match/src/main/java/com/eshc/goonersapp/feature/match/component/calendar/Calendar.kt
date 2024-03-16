@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -83,8 +84,7 @@ fun CalendarGrid(
                         "yyyy.MM"
                     )
                 ),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleLarge,
                 color = Color.Black
             )
             Icon(
@@ -172,8 +172,7 @@ fun CalendarList(
                 modifier = Modifier
                     .align(Alignment.Center),
                 text = season,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleLarge,
                 color = Color.Black
             )
             Icon(
@@ -198,11 +197,9 @@ fun CalendarList(
                     Text(
                         modifier = Modifier.padding(vertical = 6.dp),
                         text = yearAndMonth,
-                        fontFamily = pretendard,
-                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.titleLarge,
                         color = Color.Black,
-                        fontSize = 20.sp,
-                        letterSpacing = 0.1.sp
+                        fontSize = 20.sp
                     )
                 }
                 items(matches){
@@ -235,10 +232,8 @@ fun CalendarListItem(
     ) {
         Text(
             text = DateUtil.getYearAndMonthAndDateAndTimeString(match.matchDate),
-            fontFamily = pretendard,
-            fontWeight = FontWeight.Medium,
+            style = MaterialTheme.typography.titleMedium,
             color = Color.Black,
-            fontSize = 16.sp,
             letterSpacing = 0.1.sp
         )
         Row(
@@ -256,10 +251,9 @@ fun CalendarListItem(
             Text(
                 modifier = Modifier.padding(horizontal = 8.dp),
                 text = if(match.isFinished) "${match.homeScore} : ${match.awayScore}" else "  vs  ",
-                fontFamily = pretendard,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.ExtraBold,
                 color = Color.Black,
-                fontSize = 16.sp,
                 letterSpacing = 0.1.sp
             )
             AsyncImage(
@@ -288,9 +282,8 @@ fun RowScope.CalendarDayItem(
             .height(height.dp)
             .weight(1f),
         text = text,
-        fontSize = 12.sp,
         color = if (text == "SUN" || text == "SAT") Color.Red else Color.Gray,
-        fontWeight = FontWeight.Normal,
+        style = MaterialTheme.typography.labelMedium,
         textAlign = TextAlign.Center
     )
 }
@@ -321,13 +314,12 @@ fun RowScope.CalendarItem(
         Text(
             modifier = Modifier.padding(4.dp),
             text = localDate.dayOfMonth.toString(),
-            fontSize = 14.sp,
             color = if (localDate.dayOfWeek in setOf(
                     DayOfWeek.SATURDAY,
                     DayOfWeek.SUNDAY
                 )
             ) Color.Red else Color.Black,
-            fontWeight = FontWeight.Medium
+            style = MaterialTheme.typography.labelLarge,
         )
         if (matchList.containsKey(localDate)) {
             matchList[localDate]?.firstOrNull()?.let { match ->
@@ -339,7 +331,7 @@ fun RowScope.CalendarItem(
                 if (match.isFinished) {
                     Text(
                         text = "${match.homeScore}:${match.awayScore}",
-                        fontSize = 12.sp
+                        style = MaterialTheme.typography.labelMedium,
                     )
                     Text(
                         text = if (match.homeTeamName == "Arsenal") {
@@ -350,10 +342,13 @@ fun RowScope.CalendarItem(
                             if (match.awayScore > match.homeScore) "WIN"
                             else if (match.awayScore < match.homeScore) "LOSS"
                             else "DRAW"
-                        }, fontSize = 12.sp
+                        },
+                        style = MaterialTheme.typography.labelMedium,
                     )
                 } else {
-                    Text(text = DateUtil.getTimeString(match.matchDate), fontSize = 12.sp)
+                    Text(text = DateUtil.getTimeString(match.matchDate),
+                        style = MaterialTheme.typography.labelMedium
+                    )
                 }
 
             }
@@ -374,7 +369,7 @@ fun RowScope.FaintCalendarItem(
             .weight(1f)
             .padding(4.dp),
         text = localDate.dayOfMonth.toString(),
-        fontSize = 14.sp,
+        style = MaterialTheme.typography.labelLarge,
         color = Color.LightGray,
         textAlign = TextAlign.Center
     )

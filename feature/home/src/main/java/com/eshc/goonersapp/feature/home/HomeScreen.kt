@@ -1,15 +1,13 @@
 package com.eshc.goonersapp.feature.home
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,7 +19,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.eshc.goonersapp.core.common.util.DateUtil
-import com.eshc.goonersapp.feature.home.component.DashboardCard
 import com.eshc.goonersapp.feature.home.component.RecentlyMatchCard
 import com.eshc.goonersapp.feature.home.component.UpcomingMatchTicketCard
 
@@ -67,9 +64,8 @@ fun HomeScreen(
             Text(
                 modifier = Modifier.padding(start = 8.dp),
                 text = "Upcoming Matches",
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleLarge,
                 color = Color.Black,
-                fontSize = 24.sp,
             )
 
             LazyRow(
@@ -97,9 +93,8 @@ fun HomeScreen(
                 Text(
                     modifier = Modifier.padding(start = 8.dp),
                     text = "Recently Result",
-                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleLarge,
                     color = Color.Black,
-                    fontSize = 24.sp,
                 )
 
                 RecentlyMatchCard(

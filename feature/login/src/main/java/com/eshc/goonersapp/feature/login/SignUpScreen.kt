@@ -39,7 +39,7 @@ fun SignUpScreen(
             modifier = Modifier.fillMaxSize()
         ) {
             TopBar(
-                title = "Sign Up"
+                title = "SIGN UP"
             )
             LazyColumn(
                 modifier = Modifier

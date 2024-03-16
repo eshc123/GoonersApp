@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,10 +27,7 @@ fun GnrTextFiled(
         modifier = modifier,
         value = message,
         maxLines = 1,
-        textStyle = TextStyle(
-            fontFamily = pretendard,
-            fontWeight = FontWeight.Normal,
-        ),
+        textStyle = MaterialTheme.typography.bodyMedium,
         onValueChange = onValueChange,
         decorationBox = { innerTextField ->
             Box(
@@ -41,8 +39,7 @@ fun GnrTextFiled(
                 if(message.isBlank()){
                     Text(
                         text = placeholder,
-                        fontFamily = pretendard,
-                        fontWeight = FontWeight.Normal,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = Color.LightGray
                     )
                 }

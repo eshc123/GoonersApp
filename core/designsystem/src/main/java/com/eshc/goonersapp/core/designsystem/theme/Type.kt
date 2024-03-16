@@ -15,13 +15,13 @@ val TypographyHankenGrotesk = Typography(
     ),
     displayMedium = TextStyle(
         fontFamily = hankenGrotesk,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 45.sp,
         lineHeight = 52.sp
     ),
     displaySmall = TextStyle(
         fontFamily = hankenGrotesk,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 36.sp,
         lineHeight = 44.sp,
     ),
@@ -34,13 +34,13 @@ val TypographyHankenGrotesk = Typography(
     ),
     headlineMedium = TextStyle(
         fontFamily = hankenGrotesk,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 28.sp,
         lineHeight = 36.sp
     ),
     headlineSmall = TextStyle(
         fontFamily = hankenGrotesk,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Medium,
         fontSize = 24.sp,
         lineHeight = 32.sp
     ),

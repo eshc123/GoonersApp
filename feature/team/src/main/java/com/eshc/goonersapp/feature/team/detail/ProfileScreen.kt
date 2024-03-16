@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,58 +49,40 @@ fun ProfileScreen(
                 Text(
                     text = "Date Of Birth",
                     textAlign = TextAlign.Center,
-                    fontFamily = pretendard,
-                    fontWeight = FontWeight.Medium,
                     color = Color.Gray,
-                    fontSize = 15.sp,
-                    letterSpacing = 0.1.sp
+                    style = MaterialTheme.typography.titleMedium,
                 )
                 Text(
                     text = DateUtil.getYearAndMonthAndDateString(player.birthDate),
                     textAlign = TextAlign.Center,
-                    fontFamily = pretendard,
-                    fontWeight = FontWeight.Medium,
+                    style = MaterialTheme.typography.titleMedium,
                     color = Color.Black,
-                    fontSize = 16.sp,
-                    letterSpacing = 0.1.sp
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     text = "Position",
                     textAlign = TextAlign.Center,
-                    fontFamily = pretendard,
-                    fontWeight = FontWeight.Medium,
                     color = Color.Gray,
-                    fontSize = 15.sp,
-                    letterSpacing = 0.1.sp
+                    style = MaterialTheme.typography.titleMedium,
                 )
                 Text(
                     text = player.positionDetail,
                     textAlign = TextAlign.Center,
-                    fontFamily = pretendard,
-                    fontWeight = FontWeight.Medium,
+                    style = MaterialTheme.typography.titleMedium,
                     color = Color.Black,
-                    fontSize = 16.sp,
-                    letterSpacing = 0.1.sp
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     text = "Weight",
                     textAlign = TextAlign.Center,
-                    fontFamily = pretendard,
-                    fontWeight = FontWeight.Medium,
                     color = Color.Gray,
-                    fontSize = 15.sp,
-                    letterSpacing = 0.1.sp
+                    style = MaterialTheme.typography.titleMedium,
                 )
                 Text(
                     text = "${player.weight}kg",
                     textAlign = TextAlign.Center,
-                    fontFamily = pretendard,
-                    fontWeight = FontWeight.Medium,
+                    style = MaterialTheme.typography.titleMedium,
                     color = Color.Black,
-                    fontSize = 16.sp,
-                    letterSpacing = 0.1.sp
                 )
             }
             Column(
@@ -108,39 +91,27 @@ fun ProfileScreen(
                 Text(
                     text = "Nationality",
                     textAlign = TextAlign.Center,
-                    fontFamily = pretendard,
-                    fontWeight = FontWeight.Medium,
                     color = Color.Gray,
-                    fontSize = 15.sp,
-                    letterSpacing = 0.1.sp
+                    style = MaterialTheme.typography.titleMedium,
                 )
                 Text(
                     text = player.nationality,
                     textAlign = TextAlign.Center,
-                    fontFamily = pretendard,
-                    fontWeight = FontWeight.Medium,
+                    style = MaterialTheme.typography.titleMedium,
                     color = Color.Black,
-                    fontSize = 16.sp,
-                    letterSpacing = 0.1.sp
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     text = "Height",
                     textAlign = TextAlign.Center,
-                    fontFamily = pretendard,
-                    fontWeight = FontWeight.Medium,
                     color = Color.Gray,
-                    fontSize = 15.sp,
-                    letterSpacing = 0.1.sp
+                    style = MaterialTheme.typography.titleMedium,
                 )
                 Text(
                     text = "${player.height}cm",
                     textAlign = TextAlign.Center,
-                    fontFamily = pretendard,
-                    fontWeight = FontWeight.Medium,
+                    style = MaterialTheme.typography.titleMedium,
                     color = Color.Black,
-                    fontSize = 16.sp,
-                    letterSpacing = 0.1.sp
                 )
             }
         }

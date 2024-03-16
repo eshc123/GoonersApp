@@ -18,7 +18,7 @@ fun TeamHistoryScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         TopBar(
-            title = "History"
+            title = "HISTORY"
         )
         LargeDropdownMenu(
             modifier = Modifier.padding(horizontal = 24.dp),

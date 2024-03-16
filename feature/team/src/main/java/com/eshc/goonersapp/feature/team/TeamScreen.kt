@@ -19,6 +19,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -76,10 +77,8 @@ fun TeamScreen(
         ) {
             Text(
                 text = "Players cannot be loaded.",
-                fontFamily = pretendard,
-                fontWeight = FontWeight.Medium,
+                style = MaterialTheme.typography.titleSmall,
                 color = Color.LightGray,
-                fontSize = 14.sp,
             )
         }
     }
@@ -97,12 +96,8 @@ fun ColumnScope.HorizontalPlayerListByPosition(
         Text(
             modifier = Modifier.padding(top = 8.dp, start = 8.dp),
             text = position,
-            fontFamily = pretendard,
-            fontWeight = FontWeight.SemiBold,
+            style = MaterialTheme.typography.titleLarge,
             color = Color.Black,
-            fontSize = 24.sp,
-            lineHeight = 24.sp,
-            letterSpacing = (-1).sp
         )
         Divider(
             modifier = Modifier

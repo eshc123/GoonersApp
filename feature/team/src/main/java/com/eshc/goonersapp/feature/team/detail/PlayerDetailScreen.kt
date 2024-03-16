@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -60,23 +61,17 @@ fun PlayerDetailScreen(
                         Text(
                             modifier = Modifier.padding(start = 12.dp, top = 16.dp),
                             textAlign = TextAlign.Start,
-                            text = "${player.backNumber}. ${player.name.replace("\n"," ")}",
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Bold,
+                            text = "${player.backNumber}. ${player.name}",
                             color = Color.Black,
-                            fontSize = 26.sp,
-                            lineHeight = 26.sp
+                            style = MaterialTheme.typography.headlineMedium,
                         )
 
                         Text(
                             modifier = Modifier.padding(start = 12.dp, bottom = 16.dp),
                             textAlign = TextAlign.Start,
                             text = player.positionDetail,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Medium,
                             color = Color.LightGray,
-                            fontSize = 14.sp,
-                            lineHeight = 26.sp
+                            style = MaterialTheme.typography.labelLarge,
                         )
 
                         Divider(

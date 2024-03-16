@@ -4,6 +4,7 @@ import com.eshc.goonersapp.core.network.BuildConfig
 import com.eshc.goonersapp.core.network.api.MatchNetworkService
 import com.eshc.goonersapp.core.network.api.PlayerNetworkService
 import com.eshc.goonersapp.core.network.api.TeamNetworkService
+import com.eshc.goonersapp.core.network.api.UserNetworkService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -72,6 +73,13 @@ object NetworkModule {
     fun provideTeamNetworkService(retrofit: Retrofit): TeamNetworkService =
         retrofit.create(
             TeamNetworkService::class.java
+        )
+
+    @Singleton
+    @Provides
+    fun provideUserNetworkService(retrofit: Retrofit): UserNetworkService =
+        retrofit.create(
+            UserNetworkService::class.java
         )
 
     @Singleton

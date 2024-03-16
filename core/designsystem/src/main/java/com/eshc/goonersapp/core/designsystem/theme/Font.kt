@@ -11,3 +11,10 @@ val pretendard = FontFamily(
     Font(R.font.pretendard_medium, FontWeight.Medium, FontStyle.Normal),
     Font(R.font.pretendard_semi_bold, FontWeight.SemiBold, FontStyle.Normal),
 )
+
+val hankenGrotesk = FontFamily(
+    Font(R.font.hankengrotesk_extra_bold, FontWeight.ExtraBold, FontStyle.Normal),
+    Font(R.font.hankengrotesk_medium, FontWeight.Medium, FontStyle.Normal),
+    Font(R.font.hankengrotesk_regular, FontWeight.Normal, FontStyle.Normal),
+    Font(R.font.hankengrotesk_light, FontWeight.Light, FontStyle.Normal),
+)

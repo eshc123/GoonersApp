@@ -5,6 +5,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,8 +17,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.domain.model.match.Match
+import com.eshc.goonersapp.feature.match.component.calendar.CalendarDates
 import com.eshc.goonersapp.feature.match.component.calendar.CalendarGrid
 import com.eshc.goonersapp.feature.match.component.calendar.CalendarList
+import com.eshc.goonersapp.feature.match.component.calendar.CalendarUtil
 import java.time.LocalDate
 
 enum class CalendarType {
@@ -55,14 +58,16 @@ fun MatchRoute(
 fun MatchScreen(
     modifier: Modifier = Modifier,
     viewModel: MatchViewModel,
+    calendarList : List<CalendarDates> = CalendarUtil.getCalendarDatesListAsOneYear(LocalDate.of(2023, 8, 1)),
     onClickDetail: (Match) -> Unit
 ) {
-    var selectedDate by remember {
-        mutableStateOf(LocalDate.now())
-    }
+    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     var calendarType by remember { mutableStateOf<CalendarType>(CalendarType.Grid) }
-
     val matches by viewModel.matches.collectAsStateWithLifecycle()
+    val calendarMonthListState by remember {
+        mutableStateOf(calendarList)
+    }
+    val calendarGridPagerState = rememberPagerState { calendarList.size }
 
     Column(
         modifier = modifier
@@ -76,6 +81,8 @@ fun MatchScreen(
                     matchList = matches.groupBy {
                         DateUtil.getYearAndMonthAndDateLocalDate(it.matchDate)
                     },
+                    calendarMonthListState = calendarMonthListState,
+                    pagerState = calendarGridPagerState,
                     onSelectDate = {
                         selectedDate = it
                     },

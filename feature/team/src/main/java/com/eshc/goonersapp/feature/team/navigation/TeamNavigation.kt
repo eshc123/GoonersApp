@@ -1,5 +1,6 @@
 package com.eshc.goonersapp.feature.team.navigation
 
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -37,6 +38,8 @@ fun NavController.navigateToClubDetail(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.teamScreen(
+    topBar : @Composable () -> Unit,
+    bottomBar : @Composable () -> Unit,
     onPlayerClick: (String) -> Unit,
     onShowSnackbar: (String) -> Unit
 ) {
@@ -44,6 +47,8 @@ fun NavGraphBuilder.teamScreen(
         route = teamNavigationRoute
     ) {
         TeamRoute(
+            topBar = topBar,
+            bottomBar = bottomBar,
             onPlayerClick,
             onShowSnackbar
         )

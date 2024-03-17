@@ -1,8 +1,10 @@
 package com.eshc.goonersapp.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.navigation
 import com.eshc.goonersapp.feature.chat.navigation.chatRoomScreen
 import com.eshc.goonersapp.feature.chat.navigation.navigateToChatRoom
 import com.eshc.goonersapp.feature.home.navigation.homeNavigationRoute
@@ -20,33 +22,58 @@ import com.eshc.goonersapp.feature.team.navigation.playerDetailScreen
 import com.eshc.goonersapp.feature.team.navigation.teamHistoryScreen
 import com.eshc.goonersapp.feature.team.navigation.teamScreen
 
+const val mainNavigationRoute = "main_route"
+
 @Composable
 fun GnrNavHost(
+    modifier : Modifier = Modifier,
     navController: NavHostController,
-    onShowSnackbar : (String) -> Unit
+    onShowSnackbar : (String) -> Unit,
+    topBar : @Composable (TopLevelDestination) -> Unit,
+    bottomBar : @Composable () -> Unit
 ) {
     NavHost(
+        modifier = modifier,
         navController = navController,
-        startDestination = homeNavigationRoute
+        startDestination = mainNavigationRoute
     ){
-        homeScreen(
-            onShowSnackbar = onShowSnackbar
-        )
-        teamScreen(
-            onPlayerClick = {
-                navController.navigateToPlayerDetail(it)
-            },
-            onShowSnackbar = onShowSnackbar
-        )
+        navigation(
+            startDestination = homeNavigationRoute,
+            route = mainNavigationRoute
+        ){
+            homeScreen(
+                topBar = {
+                    topBar(TopLevelDestination.HOME)
+                },
+                bottomBar = bottomBar,
+                onShowSnackbar = onShowSnackbar
+            )
+            teamScreen(
+                topBar = {
+                    topBar(TopLevelDestination.TEAM)
+                },
+                bottomBar = bottomBar,
+                onPlayerClick = {
+                    navController.navigateToPlayerDetail(it)
+                },
+                onShowSnackbar = onShowSnackbar
+            )
+            matchScreen(
+                topBar = {
+                    topBar(TopLevelDestination.MATCH)
+                },
+                bottomBar = bottomBar,
+                onClickDetail = {
+                    navController.navigateToMatchDetail(it.toUiModel())
+                },
+                onShowSnackbar = onShowSnackbar
+            )
+        }
+
         playerDetailScreen(
             onShowSnackbar = onShowSnackbar
         )
-        matchScreen(
-            onClickDetail = {
-                navController.navigateToMatchDetail(it.toUiModel())
-            },
-            onShowSnackbar = onShowSnackbar
-        )
+
         matchDetailScreen(
             onClickChat = {
                 navController.navigateToChatRoom(it)

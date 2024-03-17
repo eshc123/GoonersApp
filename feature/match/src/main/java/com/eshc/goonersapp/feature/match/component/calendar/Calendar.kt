@@ -20,6 +20,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -54,16 +56,14 @@ fun CalendarGrid(
     height: Int,
     headerHeight: Int,
     matchList: Map<LocalDate, List<Match>>,
+    calendarMonthListState: List<CalendarDates>,
+    pagerState : PagerState,
     onSelectDate: (LocalDate) -> Unit,
     onChangeCalendarType : () -> Unit,
     onClickDetail: (Match) -> Unit
 ) {
-    val calendarMonthListState by remember {
-        mutableStateOf(CalendarUtil.getCalendarDatesListAsOneYear(LocalDate.of(2023, 8, 1)))
-    }
 
     val listState = rememberLazyListState()
-    val curIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
 
     Column(
         modifier = Modifier
@@ -79,7 +79,7 @@ fun CalendarGrid(
             Text(
                 modifier = Modifier
                     .align(Alignment.Center),
-                text = calendarMonthListState[curIndex].currentMonth.format(
+                text = calendarMonthListState[pagerState.currentPage].currentMonth.format(
                     DateTimeFormatter.ofPattern(
                         "yyyy.MM"
                     )
@@ -109,43 +109,44 @@ fun CalendarGrid(
                     CalendarDayItem(it, 24)
                 }
             }
-            LazyRow(
-                modifier = Modifier.fillMaxSize(),
-                state = listState,
-                flingBehavior = rememberSnapFlingBehavior(lazyListState = listState)
-            ) {
-                items(12) {
-                    Column(
-                        modifier = Modifier
-                            .fillParentMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        for (i in 0 until calendarMonthListState[it].getAllDates().size / 7) {
-                            Row(
-                                modifier = Modifier.fillParentMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceAround,
-                            ) {
-                                calendarMonthListState[it].getAllDates()
-                                    .chunked(7)[i].forEachIndexed { index, localDate ->
-                                    if (calendarMonthListState[it].isCurDates(i * 7 + index))
-                                        CalendarItem(
-                                            localDate,
-                                            (height - headerHeight) / 7,
-                                            matchList
-                                        ) {
-                                            onClickDetail(it)
-                                        }
-                                    else {
-                                        FaintCalendarItem(localDate, (height - headerHeight) / 7)
+            HorizontalPager(state = pagerState) {
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    for (i in 0 until calendarMonthListState[it].getAllDates().size / 7) {
+                        Row(
+                            modifier = Modifier,
+                            horizontalArrangement = Arrangement.SpaceAround,
+                        ) {
+                            calendarMonthListState[it].getAllDates()
+                                .chunked(7)[i].forEachIndexed { index, localDate ->
+                                if (calendarMonthListState[it].isCurDates(i * 7 + index))
+                                    CalendarItem(
+                                        localDate,
+                                        (height - headerHeight) / 7,
+                                        matchList
+                                    ) {
+                                        onClickDetail(it)
                                     }
+                                else {
+                                    FaintCalendarItem(localDate, (height - headerHeight) / 7)
                                 }
                             }
                         }
                     }
-
                 }
-
             }
+//            LazyRow(
+//                modifier = Modifier.fillMaxSize(),
+//                state = listState,
+//                flingBehavior = rememberSnapFlingBehavior(lazyListState = listState)
+//            ) {
+//                items(12) {
+//
+//
+//                }
+//
+//            }
         }
     }
 }
@@ -304,9 +305,11 @@ fun RowScope.CalendarItem(
                 interactionSource = remember { MutableInteractionSource() }
             ) {
                 if (matchList.containsKey(localDate)) {
-                    matchList[localDate]?.firstOrNull()?.let { match ->
-                        onClickDetail(match)
-                    }
+                    matchList[localDate]
+                        ?.firstOrNull()
+                        ?.let { match ->
+                            onClickDetail(match)
+                        }
                 }
             },
         horizontalAlignment = Alignment.CenterHorizontally

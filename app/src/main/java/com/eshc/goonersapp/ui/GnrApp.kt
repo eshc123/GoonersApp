@@ -1,8 +1,6 @@
 package com.eshc.goonersapp.ui
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,11 +22,9 @@ import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBar
 import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBarItem
 import com.eshc.goonersapp.core.designsystem.component.TopLevelTopBar
-import com.eshc.goonersapp.core.designsystem.iconpack.IcFootballClub
 import com.eshc.goonersapp.core.designsystem.iconpack.IcInfo
 import com.eshc.goonersapp.core.designsystem.iconpack.IcSearch
 import com.eshc.goonersapp.core.designsystem.iconpack.IcUser
-import com.eshc.goonersapp.feature.chat.navigation.navigateToChatRoom
 import com.eshc.goonersapp.feature.home.navigation.navigateToHome
 import com.eshc.goonersapp.feature.login.navigation.navigateToLogin
 import com.eshc.goonersapp.feature.match.navigation.navigateToMatch
@@ -37,24 +33,78 @@ import com.eshc.goonersapp.feature.team.navigation.navigateToTeam
 import com.eshc.goonersapp.feature.team.navigation.navigateToTeamHistory
 import com.eshc.goonersapp.navigation.GnrNavHost
 import com.eshc.goonersapp.navigation.TopLevelDestination
-import com.eshc.goonersapp.navigation.topLevelDestinationSet
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GnrApp() {
     val navController = rememberNavController()
-    val currentBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = currentBackStackEntry?.destination?.route
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
+        modifier = Modifier,
         snackbarHost = {
             SnackbarHost(snackbarHostState)
-        },
-        bottomBar = {
-            if (topLevelDestinationSet.contains(currentRoute)){
+        }
+    ) { padding ->
+        GnrNavHost(
+            navController = navController,
+            onShowSnackbar = { message ->
+                coroutineScope.launch {
+                    snackbarHostState.showSnackbar(
+                        message
+                    )
+                }
+            },
+            topBar = { topLevelDestination ->
+                GnrTopLevelBar(
+                    topLevelDestination = topLevelDestination,
+                    icons = {
+                        when (topLevelDestination) {
+                            TopLevelDestination.TEAM -> {
+                                Icon(
+                                    imageVector = IconPack.IcInfo,
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .padding(horizontal = 8.dp)
+                                        .size(24.dp)
+                                        .clickable {
+                                            navController.navigateToClubDetail()
+                                        }
+                                )
+                                Icon(
+                                    imageVector = IconPack.IcSearch,
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .padding(horizontal = 8.dp)
+                                        .size(24.dp)
+                                        .clickable {
+                                            navController.navigateToTeamHistory()
+                                        }
+                                )
+                            }
+
+                            TopLevelDestination.HOME -> {
+                                Icon(
+                                    imageVector = IconPack.IcUser,
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .padding(horizontal = 8.dp)
+                                        .size(24.dp)
+                                        .clickable {
+                                            navController.navigateToLogin()
+                                        }
+                                )
+                            }
+
+                            else -> {
+
+                            }
+                        }
+                    }
+                )
+            },
+            bottomBar = {
                 GnrBottomBar(
                     destinations = TopLevelDestination.entries,
                     onNavigateToDestination = {
@@ -81,81 +131,8 @@ fun GnrApp() {
                     }
                 )
             }
-
-        }
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
         )
-        {
-            if (topLevelDestinationSet.contains(currentRoute)) {
-                TopLevelDestination.entries.find { it.route == currentRoute }
-                    ?.let { topLevelDestination ->
-                        GnrTopLevelBar(
-                            topLevelDestination = topLevelDestination,
-                            icons = {
-                                when (topLevelDestination) {
-                                    TopLevelDestination.TEAM -> {
-                                        Icon(
-                                            imageVector = IconPack.IcInfo,
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .padding(horizontal = 8.dp)
-                                                .size(24.dp)
-                                                .clickable {
-                                                    navController.navigateToClubDetail()
-                                                }
-                                        )
-                                        Icon(
-                                            imageVector = IconPack.IcSearch,
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .padding(horizontal = 8.dp)
-                                                .size(24.dp)
-                                                .clickable {
-                                                    navController.navigateToTeamHistory()
-                                                }
-                                        )
-                                    }
 
-                                    TopLevelDestination.HOME -> {
-                                        Icon(
-                                            imageVector = IconPack.IcUser,
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .padding(horizontal = 8.dp)
-                                                .size(24.dp)
-                                                .clickable {
-                                                    navController.navigateToLogin()
-                                                }
-                                        )
-                                    }
-
-                                    else -> {
-
-                                    }
-                                }
-
-
-                            }
-                        )
-                    }
-
-            }
-
-            GnrNavHost(
-                navController = navController,
-                onShowSnackbar = { message ->
-                    coroutineScope.launch {
-                        snackbarHostState.showSnackbar(
-                            message
-                        )
-                    }
-                }
-            )
-        }
     }
 }
 

@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -42,90 +43,93 @@ fun PlayerDetailScreen(
     var selectedTab by remember { mutableStateOf(DetailTab.PROFILE) }
     val playerDetailUiState by viewModel.playerDetailUiState.collectAsStateWithLifecycle()
 
-    when(playerDetailUiState){
-        is PlayerDetailUiState.Success -> {
-            (playerDetailUiState as PlayerDetailUiState.Success).playerDetail.let { player: Player ->
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    item {
-                        AsyncImage(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(220.dp),
-                            model = player.imageUrl,
-                            contentDescription = null,
-                            contentScale = ContentScale.FillWidth,
-                        )
+    Surface {
+        when(playerDetailUiState){
+            is PlayerDetailUiState.Success -> {
+                (playerDetailUiState as PlayerDetailUiState.Success).playerDetail.let { player: Player ->
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        item {
+                            AsyncImage(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(220.dp),
+                                model = player.imageUrl,
+                                contentDescription = null,
+                                contentScale = ContentScale.FillWidth,
+                            )
 
-                        Text(
-                            modifier = Modifier.padding(start = 12.dp, top = 16.dp),
-                            textAlign = TextAlign.Start,
-                            text = "${player.backNumber}. ${player.name}",
-                            color = Color.Black,
-                            style = MaterialTheme.typography.headlineMedium,
-                        )
+                            Text(
+                                modifier = Modifier.padding(start = 12.dp, top = 16.dp),
+                                textAlign = TextAlign.Start,
+                                text = "${player.backNumber}. ${player.name}",
+                                color = Color.Black,
+                                style = MaterialTheme.typography.headlineMedium,
+                            )
 
-                        Text(
-                            modifier = Modifier.padding(start = 12.dp, bottom = 16.dp),
-                            textAlign = TextAlign.Start,
-                            text = player.positionDetail,
-                            color = Color.LightGray,
-                            style = MaterialTheme.typography.labelLarge,
-                        )
+                            Text(
+                                modifier = Modifier.padding(start = 12.dp, bottom = 16.dp),
+                                textAlign = TextAlign.Start,
+                                text = player.positionDetail,
+                                color = Color.LightGray,
+                                style = MaterialTheme.typography.labelLarge,
+                            )
 
-                        Divider(
-                            modifier = Modifier
-                                .padding(top = 6.dp)
-                                .fillMaxWidth(), thickness = 8.dp, color = Color(0xFFE4E4E4)
-                        )
-                    }
-
-                    item {
-                        Row(
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            DetailTab.entries.forEach {
-                                TabItem(
-                                    modifier = Modifier.weight(1f),
-                                    tabTitle = it.name,
-                                    isSelected = selectedTab == it,
-                                    onSelect = {
-                                        selectedTab = it
-                                    }
-                                )
-                            }
+                            Divider(
+                                modifier = Modifier
+                                    .padding(top = 6.dp)
+                                    .fillMaxWidth(), thickness = 8.dp, color = Color(0xFFE4E4E4)
+                            )
                         }
-                    }
 
-                    item {
-                        when(selectedTab){
-                            DetailTab.PROFILE -> {
-                                ProfileScreen(player = player)
-                            }
-                            DetailTab.STATS -> {
-                                StatScreen()
+                        item {
+                            Row(
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                DetailTab.entries.forEach {
+                                    TabItem(
+                                        modifier = Modifier.weight(1f),
+                                        tabTitle = it.name,
+                                        isSelected = selectedTab == it,
+                                        onSelect = {
+                                            selectedTab = it
+                                        }
+                                    )
+                                }
                             }
                         }
 
+                        item {
+                            when(selectedTab){
+                                DetailTab.PROFILE -> {
+                                    ProfileScreen(player = player)
+                                }
+                                DetailTab.STATS -> {
+                                    StatScreen()
+                                }
+                            }
 
+
+                        }
                     }
                 }
-            }
 
-        }
-        is PlayerDetailUiState.Loading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ){
-                CircularProgressIndicator()
             }
-        }
-        else -> {
-            // TODO Error
+            is PlayerDetailUiState.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ){
+                    CircularProgressIndicator()
+                }
+            }
+            else -> {
+                // TODO Error
+            }
         }
     }
+
 
 
 }

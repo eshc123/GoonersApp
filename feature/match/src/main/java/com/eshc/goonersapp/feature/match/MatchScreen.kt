@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,20 +26,34 @@ enum class CalendarType {
 
 @Composable
 fun MatchRoute(
+    topBar : @Composable () -> Unit,
+    bottomBar : @Composable () -> Unit,
     viewModel: MatchViewModel = hiltViewModel(),
     onClickDetail: (Match) -> Unit,
     onShowSnackbar : (String) -> Unit
 ) {
-    MatchScreen(
-        viewModel = viewModel,
-        onClickDetail = onClickDetail
-    )
+    Scaffold(
+        topBar = {
+            topBar()
+        },
+        bottomBar = {
+            bottomBar()
+        }
+    ) { padding ->
+        MatchScreen(
+            modifier = Modifier.fillMaxSize().padding(padding),
+            viewModel = viewModel,
+            onClickDetail = onClickDetail
+        )
+    }
+
 }
 
 @SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MatchScreen(
+    modifier: Modifier = Modifier,
     viewModel: MatchViewModel,
     onClickDetail: (Match) -> Unit
 ) {
@@ -49,7 +65,7 @@ fun MatchScreen(
     val matches by viewModel.matches.collectAsStateWithLifecycle()
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier
     ) {
 
         when (calendarType) {

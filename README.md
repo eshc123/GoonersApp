@@ -18,6 +18,11 @@
 | :---------------: | :---------------: |
 | <img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/chat.gif" align="center" width="240px"/> | <img src="https://github.com/eshc123/GoonersApp/blob/main/screenshots/teamDetail.gif" align="center" width="240px"/> |
 
+<br/>
+
+<b> [Wiki](https://github.com/eshc123/GoonersApp/wiki) has more screens. </b>
+
+
 ## Stack & Libraries
 - Minimum SDK level 26
 - Kotlin

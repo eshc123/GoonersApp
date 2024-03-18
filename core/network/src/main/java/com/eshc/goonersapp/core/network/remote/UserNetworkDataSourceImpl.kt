@@ -4,7 +4,7 @@ import com.eshc.goonersapp.core.network.UserNetworkDataSource
 import com.eshc.goonersapp.core.network.api.UserNetworkService
 import com.eshc.goonersapp.core.network.model.NetworkResult
 import com.eshc.goonersapp.core.network.model.handleApi
-import com.eshc.goonersapp.core.network.model.user.LoginInfo
+import com.eshc.goonersapp.core.network.model.user.RemoteLoginInfo
 import com.eshc.goonersapp.core.network.model.user.body.CheckEmailBody
 import com.eshc.goonersapp.core.network.model.user.body.LoginBody
 import com.eshc.goonersapp.core.network.model.user.body.SignUpBody
@@ -32,7 +32,7 @@ class UserNetworkDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun login(body: LoginBody): NetworkResult<LoginInfo> {
+    override suspend fun login(body: LoginBody): NetworkResult<RemoteLoginInfo> {
         return handleApi {
             userNetworkService.login(body)
         }

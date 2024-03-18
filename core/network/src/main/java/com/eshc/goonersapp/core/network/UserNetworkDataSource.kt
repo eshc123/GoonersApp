@@ -1,7 +1,7 @@
 package com.eshc.goonersapp.core.network
 
 import com.eshc.goonersapp.core.network.model.NetworkResult
-import com.eshc.goonersapp.core.network.model.user.LoginInfo
+import com.eshc.goonersapp.core.network.model.user.RemoteLoginInfo
 import com.eshc.goonersapp.core.network.model.user.body.CheckEmailBody
 import com.eshc.goonersapp.core.network.model.user.body.LoginBody
 import com.eshc.goonersapp.core.network.model.user.body.SignUpBody
@@ -14,6 +14,6 @@ interface UserNetworkDataSource {
 
     suspend fun signUp(body: SignUpBody) : NetworkResult<String>
 
-    suspend fun login(body: LoginBody) : NetworkResult<LoginInfo>
+    suspend fun login(body: LoginBody) : NetworkResult<RemoteLoginInfo>
 
 }

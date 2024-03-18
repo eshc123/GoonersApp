@@ -18,7 +18,7 @@ interface UserNetworkService {
         @Body body : CheckEmailBody
     ) : Response<BaseResponse<String>>
 
-    @POST(value = "$USER_BASE_URL/email")
+    @POST(value = "$USER_BASE_URL/email/verification")
     suspend fun verifyEmail(
         @Body body : VerifyEmailBody
     ) : Response<BaseResponse<String>>

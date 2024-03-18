@@ -4,10 +4,12 @@ import com.eshc.goonersapp.core.data.repository.ChatRepositoryImpl
 import com.eshc.goonersapp.core.data.repository.MatchRepositoryImpl
 import com.eshc.goonersapp.core.data.repository.PlayerRepositoryImpl
 import com.eshc.goonersapp.core.data.repository.TeamRepositoryImpl
+import com.eshc.goonersapp.core.data.repository.UserRepositoryImpl
 import com.eshc.goonersapp.core.domain.repository.ChatRepository
 import com.eshc.goonersapp.core.domain.repository.MatchRepository
 import com.eshc.goonersapp.core.domain.repository.PlayerRepository
 import com.eshc.goonersapp.core.domain.repository.TeamRepository
+import com.eshc.goonersapp.core.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -36,4 +38,9 @@ abstract class DataModule {
     abstract fun bindsTeamRepository(
         teamRepository: TeamRepositoryImpl,
     ): TeamRepository
+
+    @Binds
+    abstract fun bindsUserRepository(
+        userRepository: UserRepositoryImpl,
+    ): UserRepository
 }

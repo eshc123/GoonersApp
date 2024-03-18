@@ -21,13 +21,17 @@ fun GnrTextFiled(
     modifier: Modifier = Modifier,
     message : String,
     onValueChange : (String) -> Unit,
-    placeholder : String = ""
+    placeholder : String = "",
+    enabled : Boolean = true
 ) {
     BasicTextField(
         modifier = modifier,
         value = message,
         maxLines = 1,
-        textStyle = MaterialTheme.typography.bodyMedium,
+        enabled = enabled,
+        textStyle = MaterialTheme.typography.bodyMedium.copy(
+            color = if(enabled) Color.Black else Color.Gray
+        ),
         onValueChange = onValueChange,
         decorationBox = { innerTextField ->
             Box(

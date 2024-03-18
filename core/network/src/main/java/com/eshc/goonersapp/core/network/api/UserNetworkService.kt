@@ -1,7 +1,7 @@
 package com.eshc.goonersapp.core.network.api
 
 import com.eshc.goonersapp.core.network.model.BaseResponse
-import com.eshc.goonersapp.core.network.model.user.LoginInfo
+import com.eshc.goonersapp.core.network.model.user.RemoteLoginInfo
 import com.eshc.goonersapp.core.network.model.user.body.CheckEmailBody
 import com.eshc.goonersapp.core.network.model.user.body.LoginBody
 import com.eshc.goonersapp.core.network.model.user.body.SignUpBody
@@ -18,7 +18,7 @@ interface UserNetworkService {
         @Body body : CheckEmailBody
     ) : Response<BaseResponse<String>>
 
-    @POST(value = "$USER_BASE_URL/email")
+    @POST(value = "$USER_BASE_URL/email/verification")
     suspend fun verifyEmail(
         @Body body : VerifyEmailBody
     ) : Response<BaseResponse<String>>
@@ -31,5 +31,5 @@ interface UserNetworkService {
     @POST(value = "$USER_BASE_URL/login")
     suspend fun login(
         @Body body : LoginBody
-    ) : Response<BaseResponse<LoginInfo>>
+    ) : Response<BaseResponse<RemoteLoginInfo>>
 }

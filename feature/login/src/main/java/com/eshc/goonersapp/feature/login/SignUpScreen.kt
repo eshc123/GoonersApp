@@ -34,6 +34,9 @@ fun SignUpScreen(
     viewModel: SignUpViewModel = hiltViewModel()
 ) {
     val inputTypeList by viewModel.signUpInputTypeList.collectAsStateWithLifecycle()
+    val email by viewModel.email.collectAsStateWithLifecycle()
+    val emailCode by viewModel.emailCode.collectAsStateWithLifecycle()
+
     Surface {
         Column(
             modifier = Modifier.fillMaxSize()
@@ -48,7 +51,7 @@ fun SignUpScreen(
             ) {
                 items(inputTypeList.reversed(), key = {
                     it
-                }){
+                }) { type ->
                     GnrTextFiled(
                         modifier = Modifier
                             .animateItemPlacement(
@@ -60,11 +63,34 @@ fun SignUpScreen(
                             .fillMaxWidth()
                             .padding(top = 16.dp, bottom = 16.dp, start = 16.dp, end = 16.dp)
                             .height(40.dp),
-                        message = "",
-                        onValueChange = {
+                        enabled = viewModel.isCurrentType(type),
+                        message = when (type) {
+                            SignUpInputType.Email -> {
+                                email
+                            }
 
+                            SignUpInputType.EmailAuth -> {
+                                emailCode
+                            }
+
+                            else -> ""
                         },
-                        placeholder = it.name
+                        onValueChange = {
+                            when (type) {
+                                SignUpInputType.Email -> {
+                                    viewModel.updateEmail(it)
+                                }
+
+                                SignUpInputType.EmailAuth -> {
+                                    viewModel.updateEmailCode(it)
+                                }
+
+                                else -> {
+
+                                }
+                            }
+                        },
+                        placeholder = type.name
                     )
                 }
             }

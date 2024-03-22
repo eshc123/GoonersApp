@@ -4,7 +4,7 @@ import com.eshc.goonersapp.core.network.TeamNetworkDataSource
 import com.eshc.goonersapp.core.network.model.NetworkResult
 import com.eshc.goonersapp.core.network.model.team.RemoteTeamDetail
 
-class FakeTeamNetworkDataSourceImpl : TeamNetworkDataSource {
+class FakeTeamNetworkDataSource : TeamNetworkDataSource {
 
     private var responseForTeamDetail : (() -> NetworkResult<RemoteTeamDetail>)? = null
 

@@ -72,4 +72,5 @@ dependencies {
         exclude("org.json","json")
     }
 
+    implementation(project(":core:common"))
 }

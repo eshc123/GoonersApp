@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.eshc.goonersapp.core.designsystem.component.LargeDropdownMenu
 import com.eshc.goonersapp.core.domain.model.player.Player
 import com.eshc.goonersapp.core.domain.model.player.PlayerPosition
 import com.eshc.goonersapp.feature.team.ui.SquadPlayerCard
@@ -49,10 +50,24 @@ fun TeamRoute(
             bottomBar()
         }
     ) { padding ->
-        TeamScreen(
-            modifier = Modifier.padding(padding),
-            onClick = onPlayerClick
-        )
+        Column(
+            modifier = Modifier.padding(padding)
+        ) {
+            LargeDropdownMenu(
+                modifier = Modifier.padding(horizontal = 24.dp),
+                label = "season",
+                items = listOf("2023-2024","2022-2023"),
+                onItemSelected = { index, item ->
+
+                }
+
+            )
+            TeamScreen(
+                modifier = Modifier.padding(padding),
+                onClick = onPlayerClick
+            )
+
+        }
     }
 }
 
@@ -131,7 +146,9 @@ fun ColumnScope.HorizontalPlayerListByPosition(
     }
     else {
         Box(
-            modifier = Modifier.fillMaxWidth().height(216.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(216.dp),
             contentAlignment = Alignment.Center
         ){
             CircularProgressIndicator()

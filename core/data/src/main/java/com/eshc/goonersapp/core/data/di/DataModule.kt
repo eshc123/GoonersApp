@@ -5,6 +5,8 @@ import com.eshc.goonersapp.core.data.repository.MatchRepositoryImpl
 import com.eshc.goonersapp.core.data.repository.PlayerRepositoryImpl
 import com.eshc.goonersapp.core.data.repository.TeamRepositoryImpl
 import com.eshc.goonersapp.core.data.repository.UserRepositoryImpl
+import com.eshc.goonersapp.core.data.util.NetworkConnectivityManager
+import com.eshc.goonersapp.core.data.util.NetworkConnectivityManagerImpl
 import com.eshc.goonersapp.core.domain.repository.ChatRepository
 import com.eshc.goonersapp.core.domain.repository.MatchRepository
 import com.eshc.goonersapp.core.domain.repository.PlayerRepository
@@ -43,4 +45,9 @@ abstract class DataModule {
     abstract fun bindsUserRepository(
         userRepository: UserRepositoryImpl,
     ): UserRepository
+
+    @Binds
+    internal abstract fun bindsNetworkConnectivityManager(
+        networkMonitor: NetworkConnectivityManagerImpl,
+    ): NetworkConnectivityManager
 }

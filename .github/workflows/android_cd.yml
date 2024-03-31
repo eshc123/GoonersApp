@@ -59,6 +59,6 @@ jobs:
         slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
         file_path: ./app/build/outputs/apk/debug/app-debug.apk
         channels: release-android
-        filename: debug_apk.apk
+        file_name: debug_apk.apk
         file_type: apk
         initial_comment: ${{ github.event.head_commit.message }}

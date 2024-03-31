@@ -63,7 +63,6 @@ fun TeamRoute(
 
             )
             TeamScreen(
-                modifier = Modifier.padding(padding),
                 onClick = onPlayerClick
             )
 

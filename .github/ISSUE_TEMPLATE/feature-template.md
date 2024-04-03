@@ -7,8 +7,8 @@ assignees: ''
 
 ---
 
-### 📌 Feature
+### Feature
 
 
-### 🛠 ToDo
+### ToDo
 - [ ]

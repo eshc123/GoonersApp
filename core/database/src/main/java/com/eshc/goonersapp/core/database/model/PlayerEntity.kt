@@ -10,8 +10,8 @@ import androidx.room.PrimaryKey
 data class PlayerEntity(
     @PrimaryKey
     val id : Int,
-    @ColumnInfo(name = "main_position")
-    val mainPosition : String,
+    @ColumnInfo(name = "position")
+    val position : String,
     val name : String,
     @ColumnInfo(name = "birth_date")
     val birthDate : String,

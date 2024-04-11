@@ -54,7 +54,7 @@ fun PlayerDetailScreen(
                                     .height(220.dp),
                                 model = player.imageUrl,
                                 contentDescription = null,
-                                contentScale = ContentScale.FillWidth,
+                                contentScale = ContentScale.Fit,
                             )
 
                             Text(

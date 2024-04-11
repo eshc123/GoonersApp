@@ -67,7 +67,7 @@ fun SquadPlayerCard(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
-                    .height(100.dp)
+                    .height(70.dp)
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(Color.Transparent, Color.Black),

@@ -21,15 +21,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.component.TabItem
-import com.eshc.goonersapp.core.designsystem.theme.pretendard
 import com.eshc.goonersapp.core.domain.model.player.Player
 import com.eshc.goonersapp.feature.team.state.PlayerDetailUiState
 
@@ -71,7 +68,7 @@ fun PlayerDetailScreen(
                             Text(
                                 modifier = Modifier.padding(start = 12.dp, bottom = 16.dp),
                                 textAlign = TextAlign.Start,
-                                text = player.positionDetail,
+                                text = player.position,
                                 color = Color.LightGray,
                                 style = MaterialTheme.typography.labelLarge,
                             )

@@ -6,29 +6,25 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RemotePlayer(
     @SerialName("player_id")
-    val id :Int,
+    val playerId :Int? = 0,
     @SerialName("player_name")
-    val name : String = "",
+    val playerName : String? = "",
     @SerialName("back_number")
-    val backNumber : Int = 0,
+    val backNumber : Int? = 0,
     @SerialName("birth_date")
-    val birthDate : String = "",
-    @SerialName("stature")
-    val height : Int = 0,
+    val birthDate : String? = "",
+    @SerialName("height")
+    val height : Int? = 0,
     @SerialName("weight")
-    val weight : Int = 0,
-    @SerialName("image_url")
-    val imageUrl : String = "",
-    @SerialName("contract_start_date")
-    val contractStartDate : String = "",
-    @SerialName("contract_end_date")
-    val contractEndDate : String = "",
-    @SerialName("main_position")
-    val mainPosition : String = "", // ex) Right Back
-    @SerialName("category")
-    val positionCategory : String = "", // ex) Defender
-    @SerialName("initial")
-    val positionInitial : String = "", // RB
-    @SerialName("nationality1")
-    val nationality : String = "", // RB
+    val weight : Int? = 0,
+    @SerialName("player_image")
+    val playerImage : String? = "",
+    @SerialName("position")
+    val position : String? = "",
+    @SerialName("position_initial")
+    val positionInitial : String? = "",
+    @SerialName("position_category")
+    val positionCategory : String? = "",
+    @SerialName("nationality")
+    val nationality : String? = ""
 )

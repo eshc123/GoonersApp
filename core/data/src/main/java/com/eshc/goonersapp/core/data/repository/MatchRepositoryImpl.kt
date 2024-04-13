@@ -4,6 +4,9 @@ import com.eshc.goonersapp.core.data.mapper.toDataResult
 import com.eshc.goonersapp.core.data.mapper.toModel
 import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.match.Match
+import com.eshc.goonersapp.core.domain.model.match.MatchInformation
+import com.eshc.goonersapp.core.domain.model.match.MatchRecently
+import com.eshc.goonersapp.core.domain.model.match.MatchUpcoming
 import com.eshc.goonersapp.core.domain.repository.MatchRepository
 import com.eshc.goonersapp.core.network.MatchNetworkDataSource
 import com.eshc.goonersapp.core.network.model.NetworkResult
@@ -15,31 +18,47 @@ class MatchRepositoryImpl @Inject constructor(
     private val matchNetworkDataSource: MatchNetworkDataSource
 ) : MatchRepository {
 
+    // TODO("Not yet implemented")
+    override fun getMatch(match: Int): Flow<DataResult<Match>> = flow {
+        val result = matchNetworkDataSource
+            .getMatch(match)
+            .toDataResult { remote -> }
+
+    }
+
+    override fun getMatchInformation(
+        match: Int,
+        season: Int,
+        opponent: Int
+    ): Flow<DataResult<MatchInformation>> = flow {
+        val result = matchNetworkDataSource
+            .getMatchInformation(match, season, opponent)
+            .toDataResult { remote -> remote.toModel() }
+
+        emit(result)
+    }
+
     override fun getMatchesBySeason(season : String): Flow<DataResult<List<Match>>> = flow {
-        emit(
-            matchNetworkDataSource.getMatchesBySeason(season).toDataResult {
-                it.map { remoteMatch ->
-                    remoteMatch.toModel()
-                }
-            }
-        )
+        val result = matchNetworkDataSource
+            .getMatchesBySeason(season.toInt())
+            .toDataResult {remote -> remote.map { response -> response.toModel() } }
+
+        emit(result)
     }
 
-    override fun getUpcomingMatches(): Flow<DataResult<List<Match>>> = flow {
-        emit(
-            matchNetworkDataSource.getUpcomingMatches().toDataResult {
-                it.map { remoteMatch ->
-                    remoteMatch.toModel()
-                }
-            }
-        )
+    override fun getUpcomingMatches(): Flow<DataResult<List<MatchUpcoming>>> = flow {
+        val result = matchNetworkDataSource
+            .getUpcomingMatches()
+            .toDataResult { remote -> remote.map { response -> response.toModel() } }
+
+        emit(result)
     }
 
-    override fun getRecentlyMatch(): Flow<DataResult<Match>> = flow {
-        emit(
-            matchNetworkDataSource.getRecentlyMatch().toDataResult {
-                it.match.toModel()
-            }
-        )
+    override fun getRecentlyMatch(): Flow<DataResult<MatchRecently>> = flow {
+        val result = matchNetworkDataSource
+            .getRecentlyMatch()
+            .toDataResult { remote -> remote.toModel() }
+
+        emit(result)
     }
 }

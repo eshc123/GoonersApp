@@ -1,9 +1,10 @@
 package com.eshc.goonersapp.core.network.model.match
 
-import com.eshc.goonersapp.core.network.model.match.RemoteMatch
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class RemoteRecentlyMatch(
-    val match : RemoteMatch,
+    @SerialName("match") val match: RemoteMatchUpcoming,
+    @SerialName("matchDetail") val matchDetail: List<RemoteMatchDetail>
 )

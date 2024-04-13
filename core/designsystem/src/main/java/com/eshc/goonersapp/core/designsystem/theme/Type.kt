@@ -1,102 +1,99 @@
 package com.eshc.goonersapp.core.designsystem.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.sp
 
-// Set of Material typography styles to start with
-val TypographyHankenGrotesk = Typography(
-    displayLarge = TextStyle(
-        fontFamily = hankenGrotesk,
+private val DefaultTextStyle = TextStyle(
+    fontFamily = poppins,
+    platformStyle = PlatformTextStyle(
+        includeFontPadding = false
+    ),
+    lineHeightStyle = LineHeightStyle(
+        alignment = LineHeightStyle.Alignment.Center,
+        trim = LineHeightStyle.Trim.None
+    )
+)
+
+val TypographyPoppins = Typography(
+    displayLarge = DefaultTextStyle.copy(
         fontWeight = FontWeight.ExtraBold,
         fontSize = 57.sp,
         lineHeight = 64.sp
     ),
-    displayMedium = TextStyle(
-        fontFamily = hankenGrotesk,
+    displayMedium = DefaultTextStyle.copy(
         fontWeight = FontWeight.ExtraBold,
         fontSize = 45.sp,
         lineHeight = 52.sp
     ),
-    displaySmall = TextStyle(
-        fontFamily = hankenGrotesk,
+    displaySmall =DefaultTextStyle.copy(
         fontWeight = FontWeight.ExtraBold,
         fontSize = 36.sp,
         lineHeight = 44.sp,
     ),
 
-    headlineLarge = TextStyle(
-        fontFamily = hankenGrotesk,
+    headlineLarge = DefaultTextStyle.copy(
         fontWeight = FontWeight.ExtraBold,
         fontSize = 32.sp,
         lineHeight = 40.sp
     ),
-    headlineMedium = TextStyle(
-        fontFamily = hankenGrotesk,
+    headlineMedium = DefaultTextStyle.copy(
         fontWeight = FontWeight.ExtraBold,
         fontSize = 28.sp,
         lineHeight = 36.sp
     ),
-    headlineSmall = TextStyle(
-        fontFamily = hankenGrotesk,
+    headlineSmall = DefaultTextStyle.copy(
         fontWeight = FontWeight.Medium,
         fontSize = 24.sp,
         lineHeight = 32.sp
     ),
 
-    titleLarge = TextStyle(
-        fontFamily = hankenGrotesk,
+    titleLarge = DefaultTextStyle.copy(
         fontWeight = FontWeight.ExtraBold,
         fontSize = 22.sp,
         lineHeight = 28.sp
     ),
-    titleMedium = TextStyle(
-        fontFamily = hankenGrotesk,
+    titleMedium = DefaultTextStyle.copy(
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
         lineHeight = 24.sp
     ),
-    titleSmall = TextStyle(
-        fontFamily = hankenGrotesk,
+    titleSmall = DefaultTextStyle.copy(
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
         lineHeight = 20.sp
     ),
 
-    bodyLarge = TextStyle(
-        fontFamily = hankenGrotesk,
+    bodyLarge = DefaultTextStyle.copy(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp
     ),
-    bodyMedium = TextStyle(
-        fontFamily = hankenGrotesk,
+    bodyMedium = DefaultTextStyle.copy(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 20.sp
     ),
-    bodySmall = TextStyle(
-        fontFamily = hankenGrotesk,
+    bodySmall = DefaultTextStyle.copy(
         fontWeight = FontWeight.Light,
         fontSize = 12.sp,
         lineHeight = 16.sp
     ),
 
-    labelLarge = TextStyle(
-        fontFamily = hankenGrotesk,
+    labelLarge = DefaultTextStyle.copy(
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
         lineHeight = 20.sp
     ),
-    labelMedium = TextStyle(
-        fontFamily = hankenGrotesk,
+    labelMedium = DefaultTextStyle.copy(
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
         lineHeight = 16.sp
     ),
-    labelSmall = TextStyle(
-        fontFamily = hankenGrotesk,
+    labelSmall = DefaultTextStyle.copy(
         fontWeight = FontWeight.Light,
         fontSize = 11.sp,
         lineHeight = 16.sp

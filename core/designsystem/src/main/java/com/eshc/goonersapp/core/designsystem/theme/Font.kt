@@ -18,3 +18,15 @@ val hankenGrotesk = FontFamily(
     Font(R.font.hankengrotesk_regular, FontWeight.Normal, FontStyle.Normal),
     Font(R.font.hankengrotesk_light, FontWeight.Light, FontStyle.Normal),
 )
+
+val poppins = FontFamily(
+    Font(R.font.poppins_black, FontWeight.Black, FontStyle.Normal),
+    Font(R.font.poppins_bold, FontWeight.Bold, FontStyle.Normal),
+    Font(R.font.poppins_extra_bold, FontWeight.ExtraBold, FontStyle.Normal),
+    Font(R.font.poppins_extra_light, FontWeight.ExtraLight, FontStyle.Normal),
+    Font(R.font.poppins_light, FontWeight.Light, FontStyle.Normal),
+    Font(R.font.poppins_medium, FontWeight.Medium, FontStyle.Normal),
+    Font(R.font.poppins_regular, FontWeight.Normal, FontStyle.Normal),
+    Font(R.font.poppins_semi_bold, FontWeight.SemiBold, FontStyle.Normal),
+    Font(R.font.poppins_thin, FontWeight.Thin, FontStyle.Normal)
+)

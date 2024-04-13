@@ -6,35 +6,37 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RemoteMatch(
     @SerialName("match_id")
-    val id :Int,
+    val id :Int?,
+    @SerialName("season_id")
+    val seasonId : Int?,
     @SerialName("home_team_id")
-    val homeTeamId : Int,
+    val homeTeamId : Int?,
     @SerialName("home_team_name")
-    val homeTeamName : String = "",
-    @SerialName("home_team_image")
-    val homeTeamImage : String = "",
+    val homeTeamName : String?,
+    @SerialName("home_team_image_url")
+    val homeTeamImageUrl : String?,
     @SerialName("home_team_nickname")
-    val homeTeamNickname : String = "",
+    val homeTeamNickname : String?,
     @SerialName("away_team_id")
-    val awayTeamId : Int,
+    val awayTeamId : Int?,
     @SerialName("away_team_name")
-    val awayTeamName : String = "",
-    @SerialName("away_team_image")
-    val awayTeamImage : String = "",
+    val awayTeamName : String?,
+    @SerialName("away_team_image_url")
+    val awayTeamImageUrl : String?,
     @SerialName("away_team_nickname")
-    val awayTeamNickname : String = "",
+    val awayTeamNickname : String?,
     @SerialName("match_date")
-    val matchDate : String = "",
+    val matchDate : String?,
     @SerialName("home_score")
-    val homeScore :Int = 0,
+    val homeScore :Int?,
     @SerialName("away_score")
-    val awayScore :Int = 0,
+    val awayScore :Int?,
     @SerialName("round")
-    val round :Int = 0,
+    val round :Int?,
     @SerialName("is_finished")
-    val isFinished :Int = 0,
-    @SerialName("stadium_name")
-    val stadiumName : String = "",
-    @SerialName("league_image_url")
-    val leagueImageUrl : String = "",
+    val isFinished :Int?,
+    @SerialName("venue_name")
+    val venueName : String?,
+    @SerialName("league_image")
+    val leagueImage : String?,
 )

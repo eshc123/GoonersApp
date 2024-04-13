@@ -117,7 +117,7 @@ fun ClubDetailScreen(
                             letterSpacing = 0.1.sp
                         )
                         Text(
-                            text = "Foundation Date",
+                            text = "Foundation Year",
                             textAlign = TextAlign.Center,
                             fontFamily = pretendard,
                             fontWeight = FontWeight.Bold,
@@ -126,43 +126,7 @@ fun ClubDetailScreen(
                             letterSpacing = 0.1.sp
                         )
                         Text(
-                            text = DateUtil.getYearAndMonthAndDateString(clubDetailUiState.teamDetail.team.foundationDate),
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Medium,
-                            color = Color.Black,
-                            fontSize = 14.sp,
-                            letterSpacing = 0.1.sp
-                        )
-                        Text(
-                            text = "Manager",
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black,
-                            fontSize = 14.sp,
-                            letterSpacing = 0.1.sp
-                        )
-                        Text(
-                            text = clubDetailUiState.teamDetail.team.manager,
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Medium,
-                            color = Color.Black,
-                            fontSize = 14.sp,
-                            letterSpacing = 0.1.sp
-                        )
-                        Text(
-                            text = "Captain",
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black,
-                            fontSize = 14.sp,
-                            letterSpacing = 0.1.sp
-                        )
-                        Text(
-                            text = clubDetailUiState.teamDetail.team.captain,
+                            text = clubDetailUiState.teamDetail.team.foundationDate,
                             textAlign = TextAlign.Center,
                             fontFamily = pretendard,
                             fontWeight = FontWeight.Medium,

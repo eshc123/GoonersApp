@@ -11,15 +11,15 @@ fun RemoteTeamDetail.toModel() = TeamDetail(
 )
 
 fun RemoteTeam.toModel() = Team(
-    clubId = id,
-    clubName = clubName,
-    officialName = officialName,
-    foundationDate = foundationDate,
-    imageUrl = imageUrl,
-    teamNickname = teamNickname,
-    managerId = managerId,
-    manager = manager,
-    captainId = captainId,
-    captain = captain,
-    stadiumName = stadiumName
+    clubId = teamId ?: 0,
+    clubName = teamName ?: "",
+    officialName = "",
+    foundationDate = (founded ?: 0).toString(),
+    imageUrl = teamImageUrl ?: "",
+    teamNickname = shortCode ?: "",
+    managerId = 0,
+    manager = "",
+    captainId = 0,
+    captain = "",
+    stadiumName = venueName ?:""
 )

@@ -17,8 +17,8 @@ data class RemotePlayer(
     val height : Int? = 0,
     @SerialName("weight")
     val weight : Int? = 0,
-    @SerialName("player_image")
-    val playerImage : String? = "",
+    @SerialName("player_image_url")
+    val playerImageUrl : String? = "",
     @SerialName("position")
     val position : String? = "",
     @SerialName("position_initial")

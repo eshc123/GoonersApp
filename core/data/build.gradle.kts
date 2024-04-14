@@ -13,7 +13,7 @@ android {
     defaultConfig {
         minSdk = 26
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.eshc.goonersapp.core.data.HiltTestRunner"
         consumerProguardFiles("consumer-rules.pro")
 
     }
@@ -42,10 +42,11 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.hilt.android.testing)
+    kaptAndroidTest(libs.hilt.android.compiler)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-
 
     implementation(project(":core:domain"))
     implementation(project(":core:database"))

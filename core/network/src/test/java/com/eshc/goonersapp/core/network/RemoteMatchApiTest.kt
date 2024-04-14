@@ -13,9 +13,13 @@ import org.junit.Test
 import retrofit2.Retrofit
 
 /**
- * Api Match local unit test
+ * Created By KanuKim97
+ *
+ * [RemoteMatchApiTest]
+ *  - Gooners api Match local unit test
+ *  - this test is real network api call test
  */
-class MatchApiUnitTest {
+class RemoteMatchApiTest {
     private val responseOkCode = 200
     private val baseUrl = BuildConfig.GNR_BASE_URL
     private val networkJson = Json { ignoreUnknownKeys = true }
@@ -87,7 +91,6 @@ class MatchApiUnitTest {
         val response = matchApi.getMatchesBySeason(seasonId = 2023)
 
         assertEquals(responseOkCode, response.code())
-        println(response.body())
     }
 
 

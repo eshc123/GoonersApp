@@ -78,7 +78,7 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 items(items = upcomingMatches, key = {
-                    it.id
+                    it.matchId
                 }){
                     UpcomingMatchTicketCard(
                         homeShortName = it.homeTeamNickname,
@@ -86,7 +86,7 @@ fun HomeScreen(
                         awayShortName = it.awayTeamNickname,
                         awayUrl = it.awayTeamImageUrl,
                         time = DateUtil.getYearAndMonthAndDateAndTimeString(it.matchDate),
-                        location = it.stadiumName,
+                        location = it.stadiumName ?: "",
                         competitionUrl = it.leagueImageUrl
                     )
                 }
@@ -103,14 +103,14 @@ fun HomeScreen(
                 )
 
                 RecentlyMatchCard(
-                    homeShortName = match.homeTeamNickname,
-                    homeUrl = match.homeTeamImageUrl,
-                    awayShortName = match.awayTeamNickname,
-                    awayUrl = match.awayTeamImageUrl,
-                    time = DateUtil.getYearAndMonthAndDateAndTimeString(match.matchDate),
-                    location = match.stadiumName,
-                    competitionUrl = match.leagueImageUrl,
-                    score = "${match.homeScore} : ${match.awayScore}"
+                    homeShortName = match.match.homeTeamName,
+                    homeUrl = match.match.homeTeamImageUrl,
+                    awayShortName = match.match.awayTeamNickname,
+                    awayUrl = match.match.awayTeamImageUrl,
+                    time = DateUtil.getYearAndMonthAndDateAndTimeString(match.match.matchDate),
+                    location = match.match.stadiumName,
+                    competitionUrl = match.match.leagueImageUrl,
+                    score = "${match.match.homeScore} : ${match.match.awayScore}"
                 )
             }
         }

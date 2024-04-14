@@ -9,7 +9,6 @@ import com.eshc.goonersapp.core.domain.model.match.MatchRecently
 import com.eshc.goonersapp.core.domain.model.match.MatchUpcoming
 import com.eshc.goonersapp.core.domain.repository.MatchRepository
 import com.eshc.goonersapp.core.network.MatchNetworkDataSource
-import com.eshc.goonersapp.core.network.model.NetworkResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -41,7 +40,7 @@ class MatchRepositoryImpl @Inject constructor(
     override fun getMatchesBySeason(season : String): Flow<DataResult<List<Match>>> = flow {
         val result = matchNetworkDataSource
             .getMatchesBySeason(season.toInt())
-            .toDataResult {remote -> remote.map { response -> response.toModel() } }
+            .toDataResult { remote -> remote.map { response -> response.toModel() } }
 
         emit(result)
     }

@@ -15,6 +15,14 @@ import javax.inject.Inject
  * [FakeMatchDataSource]
  *  - fakeMatchDataSource used in data Layer Test and network Layer Unit Test
  *
+ *  getMatch(matchId: Int)
+ *  - if matchId is over 39 then return [NetworkResult.Error]
+ *  - else return [NetworkResult.Success]
+ *
+ *  getMatchInformation(matchId: Int, seasonId: Int, opponentId: Int)
+ *  - if matchId is over 39 and seasonId over current year and opponentId under 38 then return [NetworkResult.Error]
+ *  - else return [NetworkResult.Success]
+ *
  *  getMatchesBySeason(seasonId: Int)
  *  - if seasonId is over current year then return [NetworkResult.Error]
  *  - else return [NetworkResult.Success]
@@ -27,12 +35,17 @@ import javax.inject.Inject
  */
 class FakeMatchDataSource @Inject constructor(): MatchNetworkDataSource {
     override suspend fun getMatch(matchId: Int): NetworkResult<RemoteMatch> {
-        return NetworkResult.Success(
-            RemoteMatch(
-                match = RemoteMatchTeam(),
-                matchDetail = listOf()
+
+        return if (matchId < 39) {
+            NetworkResult.Success(
+                RemoteMatch(
+                    match = RemoteMatchTeam(),
+                    matchDetail = listOf()
+                )
             )
-        )
+        } else {
+            NetworkResult.Error(code = 404, message = "Not Found")
+        }
     }
 
     override suspend fun getMatchInformation(
@@ -41,15 +54,17 @@ class FakeMatchDataSource @Inject constructor(): MatchNetworkDataSource {
         opponentId: Int,
     ): NetworkResult<RemoteMatchInformation> {
 
-
-
-        return NetworkResult.Success(
-            RemoteMatchInformation(
-                notablePlayer = null,
-                lineUp = listOf(),
-                performance = listOf()
+        return if (matchId < 39 && seasonId < 2025 && opponentId > 38) {
+            NetworkResult.Success(
+                RemoteMatchInformation(
+                    notablePlayer = null,
+                    lineUp = listOf(),
+                    performance = listOf()
+                )
             )
-        )
+        } else {
+            NetworkResult.Error(code = 404, message = "Not Found")
+        }
     }
 
     override suspend fun getMatchesBySeason(

@@ -17,9 +17,12 @@ class FakeMatchRepositoryImpl @Inject constructor(
     private val fakeMatchDataSource: FakeMatchDataSource
 ) : MatchRepository {
 
-    // TODO("Not yet implemented")
     override fun getMatch(match: Int): Flow<DataResult<Match>> = flow {
-        val result = fakeMatchDataSource.getMatch(match).toDataResult { remote -> }
+        val result = fakeMatchDataSource
+            .getMatch(match)
+            .toDataResult { remote -> remote.match.toModel() }
+
+        emit(result)
     }
 
     override fun getMatchInformation(

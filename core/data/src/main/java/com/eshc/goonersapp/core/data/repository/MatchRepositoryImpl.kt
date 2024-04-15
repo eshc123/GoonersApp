@@ -17,12 +17,12 @@ class MatchRepositoryImpl @Inject constructor(
     private val matchNetworkDataSource: MatchNetworkDataSource
 ) : MatchRepository {
 
-    // TODO("Not yet implemented")
     override fun getMatch(match: Int): Flow<DataResult<Match>> = flow {
         val result = matchNetworkDataSource
             .getMatch(match)
-            .toDataResult { remote -> }
+            .toDataResult { remote -> remote.match.toModel() }
 
+        emit(result)
     }
 
     override fun getMatchInformation(

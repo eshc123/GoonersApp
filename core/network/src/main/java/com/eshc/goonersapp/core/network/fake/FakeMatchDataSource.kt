@@ -39,7 +39,7 @@ class FakeMatchDataSource @Inject constructor(): MatchNetworkDataSource {
         return if (matchId < 39) {
             NetworkResult.Success(
                 RemoteMatch(
-                    match = RemoteMatchTeam(),
+                    match = RemoteMatchTeam(matchId = matchId),
                     matchDetail = listOf()
                 )
             )

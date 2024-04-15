@@ -36,7 +36,7 @@ class FakeMatchTest {
             when (result) {
                 is DataResult.Success -> {
                     assertEquals(
-                        Match(),
+                        Match(id = 38),
                         result.data
                     )
                 }

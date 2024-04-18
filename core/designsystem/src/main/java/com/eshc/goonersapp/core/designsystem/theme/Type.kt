@@ -99,3 +99,125 @@ val TypographyPoppins = Typography(
         lineHeight = 16.sp
     ),
 )
+
+object GnrTypography {
+    val heading1Bold = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp
+    )
+
+    val heading1SemiBold = DefaultTextStyle.copy(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 24.sp
+    )
+
+    val heading1Medium = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Medium,
+        fontSize = 24.sp
+    )
+
+    val heading1Regular = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Normal,
+        fontSize = 24.sp
+    )
+
+    val heading2Bold = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp
+    )
+
+    val heading2SemiBold = DefaultTextStyle.copy(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 20.sp
+    )
+
+    val heading2Medium = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Medium,
+        fontSize = 20.sp
+    )
+
+    val heading2Regular = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Normal,
+        fontSize = 20.sp
+    )
+
+    val subtitleBold = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp
+    )
+
+    val subtitleSemiBold = DefaultTextStyle.copy(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 18.sp
+    )
+
+    val subtitleMedium = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Medium,
+        fontSize = 18.sp
+    )
+
+    val subtitleRegular = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Normal,
+        fontSize = 18.sp
+    )
+
+    val body1Bold = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp
+    )
+
+    val body1SemiBold = DefaultTextStyle.copy(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 14.sp
+    )
+
+    val body1Medium = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp
+    )
+
+    val body1Regular = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp
+    )
+    
+    val body2Bold = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Bold,
+        fontSize = 12.sp
+    )
+
+    val body2SemiBold = DefaultTextStyle.copy(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 12.sp
+    )
+
+    val body2Medium = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Medium,
+        fontSize = 12.sp
+    )
+
+    val body2Regular = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp
+    )
+
+    val descriptionBold = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Bold,
+        fontSize = 10.sp
+    )
+
+    val descriptionSemiBold = DefaultTextStyle.copy(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 10.sp
+    )
+
+    val descriptionMedium = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Medium,
+        fontSize = 10.sp
+    )
+
+    val descriptionRegular = DefaultTextStyle.copy(
+        fontWeight = FontWeight.Normal,
+        fontSize = 10.sp
+    )
+}

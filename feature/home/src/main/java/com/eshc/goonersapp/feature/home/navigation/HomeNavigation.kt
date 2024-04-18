@@ -1,5 +1,6 @@
 package com.eshc.goonersapp.feature.home.navigation
 
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -13,12 +14,16 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.homeScreen(
-    onShowSnackbar : (String) -> Unit
+    topBar : @Composable () -> Unit,
+    bottomBar : @Composable () -> Unit,
+    onShowSnackbar : (String) -> Unit,
 ) {
     composable(
         route = homeNavigationRoute
     ) {
         HomeRoute(
+            topBar = topBar,
+            bottomBar = bottomBar,
             onShowSnackbar = onShowSnackbar
         )
     }

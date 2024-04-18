@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
 
     testImplementation(libs.junit)
+    testImplementation(libs.coroutine.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
@@ -70,4 +71,6 @@ dependencies {
     implementation(libs.socket.io.client){
         exclude("org.json","json")
     }
+
+    implementation(project(":core:common"))
 }

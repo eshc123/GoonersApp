@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -73,9 +74,8 @@ fun UpcomingMatchTicketCard(
                     Text(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         text = homeShortName,
-                        fontWeight = FontWeight.Bold,
                         color = Color.White,
-                        fontSize = 36.sp,
+                        style = MaterialTheme.typography.displaySmall
                     )
                     AsyncImage(
                         modifier = Modifier
@@ -95,9 +95,8 @@ fun UpcomingMatchTicketCard(
                     Text(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         text = awayShortName,
-                        fontWeight = FontWeight.Bold,
                         color = Color.White,
-                        fontSize = 36.sp,
+                        style = MaterialTheme.typography.displaySmall
                     )
                     AsyncImage(
                         modifier = Modifier
@@ -121,16 +120,16 @@ fun UpcomingMatchTicketCard(
             verticalArrangement = Arrangement.Center
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
                 Text(
                     text = time,
-                    fontFamily = pretendard,
-                    fontWeight = FontWeight.SemiBold,
+                    style = MaterialTheme.typography.labelLarge,
                     color = Color.DarkGray,
-                    fontSize = 13.sp,
                 )
                 ImageCard(backgroundColor = Color(0xFF151D2D)) {
                     AsyncImage(
@@ -143,10 +142,8 @@ fun UpcomingMatchTicketCard(
             }
             Text(
                 text = location,
-                fontFamily = pretendard,
-                fontWeight = FontWeight.SemiBold,
+                style = MaterialTheme.typography.labelLarge,
                 color = Color.DarkGray,
-                fontSize = 13.sp,
             )
 
         }
@@ -194,7 +191,7 @@ fun RecentlyMatchCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
-                        .padding(bottom = 4.dp, top = 12.dp, start= 12.dp, end = 12.dp),
+                        .padding(bottom = 4.dp, top = 12.dp, start = 12.dp, end = 12.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -222,22 +219,19 @@ fun RecentlyMatchCard(
                             Text(
                                 modifier = Modifier.align(Alignment.CenterVertically),
                                 text = homeShortName,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White,
-                                fontSize = 24.sp,
+                                style = MaterialTheme.typography.titleLarge,
+                                color = Color.White
                             )
                             Text(
                                 text = score,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White,
-                                fontSize = 24.sp,
+                                style = MaterialTheme.typography.titleLarge,
+                                color = Color.White
                             )
                             Text(
                                 modifier = Modifier.align(Alignment.CenterVertically),
                                 text = awayShortName,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White,
-                                fontSize = 24.sp,
+                                style = MaterialTheme.typography.titleLarge,
+                                color = Color.White
                             )
                         }
 
@@ -292,16 +286,16 @@ fun RecentlyMatchCard(
                 verticalArrangement = Arrangement.Center
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
                 Text(
                     text = time,
-                    fontFamily = pretendard,
-                    fontWeight = FontWeight.SemiBold,
+                    style = MaterialTheme.typography.labelLarge,
                     color = Color.DarkGray,
-                    fontSize = 13.sp,
                 )
                 ImageCard(backgroundColor = Color(0xFF151D2D)) {
                     AsyncImage(
@@ -313,10 +307,8 @@ fun RecentlyMatchCard(
             }
             Text(
                 text = location,
-                fontFamily = pretendard,
-                fontWeight = FontWeight.SemiBold,
+                style = MaterialTheme.typography.labelLarge,
                 color = Color.DarkGray,
-                fontSize = 13.sp,
             )
         }
     }

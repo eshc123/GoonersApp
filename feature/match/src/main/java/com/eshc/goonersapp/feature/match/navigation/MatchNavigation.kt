@@ -1,5 +1,6 @@
 package com.eshc.goonersapp.feature.match.navigation
 
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -25,6 +26,8 @@ fun NavController.navigateToMatchDetail(matchUiModel: MatchUiModel,navOptions: N
 }
 
 fun NavGraphBuilder.matchScreen(
+    topBar : @Composable () -> Unit,
+    bottomBar : @Composable () -> Unit,
     onClickDetail : (Match) -> Unit,
     onShowSnackbar : (String) -> Unit
 ) {
@@ -32,6 +35,8 @@ fun NavGraphBuilder.matchScreen(
         route = matchNavigationRoute
     ) {
         MatchRoute(
+            topBar = topBar,
+            bottomBar = bottomBar,
             onClickDetail = onClickDetail,
             onShowSnackbar = onShowSnackbar
         )

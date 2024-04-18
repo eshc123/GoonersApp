@@ -9,9 +9,13 @@ import retrofit2.http.Query
 const val PLAYER_BASE_URL = "/apis/player"
 interface PlayerNetworkService {
 
-    @GET(value = "$PLAYER_BASE_URL/team")
+    @GET(value = "$PLAYER_BASE_URL/team/season")
     suspend fun getPlayers(
-        @Query("teamId") teamId : Int = 2
+        @Query("teamId") teamId : Int = 19,
+        @Query("seasonId") seasonId : Int = 21646,
+        @Query("positionId") positionId : Int? = null,
+        @Query("keyword") keyword : String? = null
+
     ) : Response<BaseResponse<List<RemotePlayer>>>
 
     @GET(value = "$PLAYER_BASE_URL/detail")

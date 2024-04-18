@@ -10,8 +10,8 @@ data class Player(
     val imageUrl : String = "",
     val contractStartDate : String = "",
     val contractEndDate : String = "",
-    val positionDetail : String = "",
     val position : String = "",
+    val positionInitial : String = "",
     val positionCategory : String = "",
     val nationality : String = ""
 )

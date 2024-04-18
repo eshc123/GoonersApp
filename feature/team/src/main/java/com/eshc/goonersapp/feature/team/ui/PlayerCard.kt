@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -59,17 +60,14 @@ fun SquadPlayerCard(
                     .alpha(0.7f),
                 textAlign = TextAlign.Start,
                 text = player.backNumber.toString(),
-                fontFamily = pretendard,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.displaySmall,
                 color = Color.White,
-                fontSize = 36.sp,
-                lineHeight = 32.sp
             )
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
-                    .height(100.dp)
+                    .height(70.dp)
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(Color.Transparent, Color.Black),
@@ -82,14 +80,12 @@ fun SquadPlayerCard(
             ) {
 
                 Text(
-                    modifier = Modifier.padding(start = 8.dp, bottom = 4.dp),
+                    modifier = Modifier.padding(start = 8.dp, bottom = 4.dp, end = 8.dp),
                     textAlign = TextAlign.Start,
                     text = player.name,
-                    fontFamily = pretendard,
-                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.headlineMedium,
+                    lineHeight = 28.sp,
                     color = Color.White,
-                    fontSize = 26.sp,
-                    lineHeight = 26.sp
                 )
 
             }

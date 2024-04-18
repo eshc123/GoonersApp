@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -23,13 +25,31 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("keystore/debug.keystore")
+        }
+        create("release"){
+            storeFile = file("keystore/release.keystore")
+            storePassword = gradleLocalProperties(rootDir).getProperty("SIGNING_STORE_PASSWORD")
+            keyAlias =  gradleLocalProperties(rootDir).getProperty("SIGNING_KEY_ALIAS")
+            keyPassword =  gradleLocalProperties(rootDir).getProperty("SIGNING_KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
+        debug {
+            isMinifyEnabled = false
+            isDebuggable = true
+            signingConfig = signingConfigs.getByName("debug")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -58,8 +78,10 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    implementation(platform("androidx.compose:compose-bom:2024.02.02"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -68,7 +90,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.02.02"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
@@ -78,6 +100,10 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+
+    implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-messaging-ktx")
 
     implementation(project(":feature:home"))
     implementation(project(":feature:team"))

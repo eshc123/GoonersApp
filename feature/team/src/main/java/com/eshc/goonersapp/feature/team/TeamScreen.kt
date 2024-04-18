@@ -19,34 +19,60 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.eshc.goonersapp.core.designsystem.theme.pretendard
+import com.eshc.goonersapp.core.designsystem.component.LargeDropdownMenu
 import com.eshc.goonersapp.core.domain.model.player.Player
 import com.eshc.goonersapp.core.domain.model.player.PlayerPosition
 import com.eshc.goonersapp.feature.team.ui.SquadPlayerCard
 
 @Composable
 fun TeamRoute(
+    topBar : @Composable () -> Unit,
+    bottomBar : @Composable () -> Unit,
     onPlayerClick: (String) -> Unit,
     onShowSnackbar : (String) -> Unit
 ) {
-    TeamScreen(
-        onClick = onPlayerClick
-    )
+    Scaffold(
+        topBar = {
+            topBar()
+        },
+        bottomBar = {
+            bottomBar()
+        }
+    ) { padding ->
+        Column(
+            modifier = Modifier.padding(padding)
+        ) {
+            LargeDropdownMenu(
+                modifier = Modifier.padding(horizontal = 24.dp),
+                label = "season",
+                items = listOf("2023-2024","2022-2023"),
+                onItemSelected = { index, item ->
+
+                }
+
+            )
+            TeamScreen(
+                onClick = onPlayerClick
+            )
+
+        }
+    }
 }
 
 @Composable
 fun TeamScreen(
+    modifier: Modifier = Modifier,
     viewModel: TeamViewModel = hiltViewModel(),
     onClick: (String) -> Unit
 ) {
@@ -55,8 +81,7 @@ fun TeamScreen(
 
     if (players.isNotEmpty()) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = modifier
                 .padding(top = 12.dp)
                 .verticalScroll(scrollState)
         ) {
@@ -76,10 +101,8 @@ fun TeamScreen(
         ) {
             Text(
                 text = "Players cannot be loaded.",
-                fontFamily = pretendard,
-                fontWeight = FontWeight.Medium,
+                style = MaterialTheme.typography.titleSmall,
                 color = Color.LightGray,
-                fontSize = 14.sp,
             )
         }
     }
@@ -97,12 +120,8 @@ fun ColumnScope.HorizontalPlayerListByPosition(
         Text(
             modifier = Modifier.padding(top = 8.dp, start = 8.dp),
             text = position,
-            fontFamily = pretendard,
-            fontWeight = FontWeight.SemiBold,
+            style = MaterialTheme.typography.titleLarge,
             color = Color.Black,
-            fontSize = 24.sp,
-            lineHeight = 24.sp,
-            letterSpacing = (-1).sp
         )
         Divider(
             modifier = Modifier
@@ -126,7 +145,9 @@ fun ColumnScope.HorizontalPlayerListByPosition(
     }
     else {
         Box(
-            modifier = Modifier.fillMaxWidth().height(216.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(216.dp),
             contentAlignment = Alignment.Center
         ){
             CircularProgressIndicator()

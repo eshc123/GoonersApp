@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,10 +34,8 @@ fun TopLevelTopBar(
         Text(
             modifier = Modifier.padding(vertical = 8.dp).wrapContentHeight().weight(1f),
             text = title,
-            fontFamily = pretendard,
-            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.headlineLarge,
             color = Color.Black,
-            fontSize = 30.sp,
         )
         content()
     }
@@ -60,10 +59,8 @@ fun TopBar(
         Text(
             modifier = Modifier.padding(vertical = 8.dp).wrapContentHeight().weight(1f),
             text = title,
-            fontFamily = pretendard,
-            fontWeight = FontWeight.Medium,
+            style = MaterialTheme.typography.headlineLarge,
             color = Color.Black,
-            fontSize = 24.sp,
         )
         content()
     }

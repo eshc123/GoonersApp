@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,10 +33,9 @@ fun TabItem(
         Text(
             modifier = Modifier.padding(vertical = 16.dp),
             text = tabTitle,
-            fontFamily = pretendard,
-            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = if (isSelected) FontWeight.ExtraBold else FontWeight.Medium,
             color = if (isSelected) Color.Black else Color.LightGray,
-            fontSize = 14.sp
         )
         if (isSelected)
             Divider(

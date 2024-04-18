@@ -18,16 +18,8 @@ fun TeamHistoryScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         TopBar(
-            title = "History"
+            title = "HISTORY"
         )
-        LargeDropdownMenu(
-            modifier = Modifier.padding(horizontal = 24.dp),
-            label = "season",
-            items = listOf("2023-2024","2022-2023"),
-            onItemSelected = { index, item ->
-                
-            }
-            
-        )
+
     }
 }

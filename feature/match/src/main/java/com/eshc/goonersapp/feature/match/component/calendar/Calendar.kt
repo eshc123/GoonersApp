@@ -20,7 +20,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -53,16 +56,14 @@ fun CalendarGrid(
     height: Int,
     headerHeight: Int,
     matchList: Map<LocalDate, List<Match>>,
+    calendarMonthListState: List<CalendarDates>,
+    pagerState : PagerState,
     onSelectDate: (LocalDate) -> Unit,
     onChangeCalendarType : () -> Unit,
     onClickDetail: (Match) -> Unit
 ) {
-    val calendarMonthListState by remember {
-        mutableStateOf(CalendarUtil.getCalendarDatesListAsOneYear(LocalDate.of(2023, 8, 1)))
-    }
 
     val listState = rememberLazyListState()
-    val curIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
 
     Column(
         modifier = Modifier
@@ -78,13 +79,12 @@ fun CalendarGrid(
             Text(
                 modifier = Modifier
                     .align(Alignment.Center),
-                text = calendarMonthListState[curIndex].currentMonth.format(
+                text = calendarMonthListState[pagerState.currentPage].currentMonth.format(
                     DateTimeFormatter.ofPattern(
                         "yyyy.MM"
                     )
                 ),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleLarge,
                 color = Color.Black
             )
             Icon(
@@ -109,43 +109,44 @@ fun CalendarGrid(
                     CalendarDayItem(it, 24)
                 }
             }
-            LazyRow(
-                modifier = Modifier.fillMaxSize(),
-                state = listState,
-                flingBehavior = rememberSnapFlingBehavior(lazyListState = listState)
-            ) {
-                items(12) {
-                    Column(
-                        modifier = Modifier
-                            .fillParentMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        for (i in 0 until calendarMonthListState[it].getAllDates().size / 7) {
-                            Row(
-                                modifier = Modifier.fillParentMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceAround,
-                            ) {
-                                calendarMonthListState[it].getAllDates()
-                                    .chunked(7)[i].forEachIndexed { index, localDate ->
-                                    if (calendarMonthListState[it].isCurDates(i * 7 + index))
-                                        CalendarItem(
-                                            localDate,
-                                            (height - headerHeight) / 7,
-                                            matchList
-                                        ) {
-                                            onClickDetail(it)
-                                        }
-                                    else {
-                                        FaintCalendarItem(localDate, (height - headerHeight) / 7)
+            HorizontalPager(state = pagerState) {
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    for (i in 0 until calendarMonthListState[it].getAllDates().size / 7) {
+                        Row(
+                            modifier = Modifier,
+                            horizontalArrangement = Arrangement.SpaceAround,
+                        ) {
+                            calendarMonthListState[it].getAllDates()
+                                .chunked(7)[i].forEachIndexed { index, localDate ->
+                                if (calendarMonthListState[it].isCurDates(i * 7 + index))
+                                    CalendarItem(
+                                        localDate,
+                                        (height - headerHeight) / 7,
+                                        matchList
+                                    ) {
+                                        onClickDetail(it)
                                     }
+                                else {
+                                    FaintCalendarItem(localDate, (height - headerHeight) / 7)
                                 }
                             }
                         }
                     }
-
                 }
-
             }
+//            LazyRow(
+//                modifier = Modifier.fillMaxSize(),
+//                state = listState,
+//                flingBehavior = rememberSnapFlingBehavior(lazyListState = listState)
+//            ) {
+//                items(12) {
+//
+//
+//                }
+//
+//            }
         }
     }
 }
@@ -172,8 +173,7 @@ fun CalendarList(
                 modifier = Modifier
                     .align(Alignment.Center),
                 text = season,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleLarge,
                 color = Color.Black
             )
             Icon(
@@ -198,11 +198,9 @@ fun CalendarList(
                     Text(
                         modifier = Modifier.padding(vertical = 6.dp),
                         text = yearAndMonth,
-                        fontFamily = pretendard,
-                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.titleLarge,
                         color = Color.Black,
-                        fontSize = 20.sp,
-                        letterSpacing = 0.1.sp
+                        fontSize = 20.sp
                     )
                 }
                 items(matches){
@@ -235,10 +233,8 @@ fun CalendarListItem(
     ) {
         Text(
             text = DateUtil.getYearAndMonthAndDateAndTimeString(match.matchDate),
-            fontFamily = pretendard,
-            fontWeight = FontWeight.Medium,
+            style = MaterialTheme.typography.titleMedium,
             color = Color.Black,
-            fontSize = 16.sp,
             letterSpacing = 0.1.sp
         )
         Row(
@@ -256,10 +252,9 @@ fun CalendarListItem(
             Text(
                 modifier = Modifier.padding(horizontal = 8.dp),
                 text = if(match.isFinished) "${match.homeScore} : ${match.awayScore}" else "  vs  ",
-                fontFamily = pretendard,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.ExtraBold,
                 color = Color.Black,
-                fontSize = 16.sp,
                 letterSpacing = 0.1.sp
             )
             AsyncImage(
@@ -288,9 +283,8 @@ fun RowScope.CalendarDayItem(
             .height(height.dp)
             .weight(1f),
         text = text,
-        fontSize = 12.sp,
         color = if (text == "SUN" || text == "SAT") Color.Red else Color.Gray,
-        fontWeight = FontWeight.Normal,
+        style = MaterialTheme.typography.labelMedium,
         textAlign = TextAlign.Center
     )
 }
@@ -311,9 +305,11 @@ fun RowScope.CalendarItem(
                 interactionSource = remember { MutableInteractionSource() }
             ) {
                 if (matchList.containsKey(localDate)) {
-                    matchList[localDate]?.firstOrNull()?.let { match ->
-                        onClickDetail(match)
-                    }
+                    matchList[localDate]
+                        ?.firstOrNull()
+                        ?.let { match ->
+                            onClickDetail(match)
+                        }
                 }
             },
         horizontalAlignment = Alignment.CenterHorizontally
@@ -321,13 +317,12 @@ fun RowScope.CalendarItem(
         Text(
             modifier = Modifier.padding(4.dp),
             text = localDate.dayOfMonth.toString(),
-            fontSize = 14.sp,
             color = if (localDate.dayOfWeek in setOf(
                     DayOfWeek.SATURDAY,
                     DayOfWeek.SUNDAY
                 )
             ) Color.Red else Color.Black,
-            fontWeight = FontWeight.Medium
+            style = MaterialTheme.typography.labelLarge,
         )
         if (matchList.containsKey(localDate)) {
             matchList[localDate]?.firstOrNull()?.let { match ->
@@ -339,7 +334,7 @@ fun RowScope.CalendarItem(
                 if (match.isFinished) {
                     Text(
                         text = "${match.homeScore}:${match.awayScore}",
-                        fontSize = 12.sp
+                        style = MaterialTheme.typography.labelMedium,
                     )
                     Text(
                         text = if (match.homeTeamName == "Arsenal") {
@@ -350,10 +345,13 @@ fun RowScope.CalendarItem(
                             if (match.awayScore > match.homeScore) "WIN"
                             else if (match.awayScore < match.homeScore) "LOSS"
                             else "DRAW"
-                        }, fontSize = 12.sp
+                        },
+                        style = MaterialTheme.typography.labelMedium,
                     )
                 } else {
-                    Text(text = DateUtil.getTimeString(match.matchDate), fontSize = 12.sp)
+                    Text(text = DateUtil.getTimeString(match.matchDate),
+                        style = MaterialTheme.typography.labelMedium
+                    )
                 }
 
             }
@@ -374,7 +372,7 @@ fun RowScope.FaintCalendarItem(
             .weight(1f)
             .padding(4.dp),
         text = localDate.dayOfMonth.toString(),
-        fontSize = 14.sp,
+        style = MaterialTheme.typography.labelLarge,
         color = Color.LightGray,
         textAlign = TextAlign.Center
     )

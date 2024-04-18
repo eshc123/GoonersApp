@@ -46,7 +46,6 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
-
     implementation(project(":core:domain"))
     implementation(project(":core:database"))
     implementation(project(":core:network"))

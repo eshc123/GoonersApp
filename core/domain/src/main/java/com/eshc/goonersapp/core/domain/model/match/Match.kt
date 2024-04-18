@@ -1,12 +1,12 @@
 package com.eshc.goonersapp.core.domain.model.match
 
 data class Match(
-    val id :Int,
-    val homeTeamId : Int,
+    val id :Int = 0,
+    val homeTeamId : Int = 0,
     val homeTeamName : String = "",
     val homeTeamImageUrl : String = "",
     val homeTeamNickname : String = "",
-    val awayTeamId : Int,
+    val awayTeamId : Int = 0,
     val awayTeamName : String = "",
     val awayTeamImageUrl : String = "",
     val awayTeamNickname : String = "",

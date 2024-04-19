@@ -108,14 +108,16 @@ fun HomeScreen(
                     color = Color.Black,
                 )
                 RecentlyMatchCard(
-                    homeShortName = match.match.homeTeamName,
-                    homeUrl = match.match.homeTeamImageUrl,
-                    awayShortName = match.match.awayTeamNickname,
-                    awayUrl = match.match.awayTeamImageUrl,
+                    competitionUrl = match.match.leagueImageUrl,
+                    competitionName = "Premier league",
                     time = DateUtil.getYearAndMonthAndDateAndTimeString(match.match.matchDate),
                     location = match.match.stadiumName,
-                    competitionUrl = match.match.leagueImageUrl,
-                    score = "${match.match.homeScore} : ${match.match.awayScore}"
+                    homeUrl = match.match.homeTeamImageUrl,
+                    homeShortName = match.match.homeTeamNickname,
+                    homeScore = match.match.homeScore.toString(),
+                    awayUrl = match.match.awayTeamImageUrl,
+                    awayShortName = match.match.awayTeamNickname,
+                    awayScore = match.match.awayScore.toString()
                 )
             }
         }

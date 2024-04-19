@@ -13,10 +13,10 @@ import androidx.compose.ui.unit.Dp
 
 @Composable
 fun GNRElevatedCard(
-    modifier: Modifier = Modifier,
     shape: Shape,
     colors: CardColors,
     elevation: CardElevation,
+    modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {
     ElevatedCard(
@@ -30,16 +30,16 @@ fun GNRElevatedCard(
 
 @Composable
 fun GNRElevatedCard(
-    modifier: Modifier = Modifier,
     colors: CardColors,
     radius: Dp,
+    modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {
     GNRElevatedCard(
-        modifier = modifier,
         shape = RoundedCornerShape(radius),
         colors = colors,
         elevation = CardDefaults.elevatedCardElevation(),
+        modifier = modifier,
         content = content
     )
 }

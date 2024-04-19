@@ -1,7 +1,6 @@
 package com.eshc.goonersapp.feature.home.component
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,23 +20,23 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.component.GNRElevatedCard
-import com.eshc.goonersapp.core.designsystem.component.ImageCard
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF4C68A7
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF9E9E9E
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFC3CDE2
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF5F5F5
@@ -46,161 +45,24 @@ import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 
 @Composable
 fun RecentlyMatchCard(
-    homeShortName: String ,
-    homeUrl: String ,
-    awayShortName: String,
-    awayUrl: String,
+    competitionUrl: String,
+    competitionName: String,
     time: String,
     location: String,
-    competitionUrl: String,
-    score : String
-) {
-    ElevatedCard(
-        modifier = Modifier
-            .padding(horizontal = 8.dp, vertical = 12.dp)
-            .fillMaxWidth()
-            .height(IntrinsicSize.Max),
-        shape = RoundedCornerShape(4.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        )
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-                .background(Color(0xFF151D2D)),//0xFFDA0209)),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Column(
-                modifier = Modifier
-                    //.background(Color(1f, 0f, 0f, 0.9f))
-                    .fillMaxWidth()
-                    .weight(2f),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceAround
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .padding(bottom = 4.dp, top = 12.dp, start = 12.dp, end = 12.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    AsyncImage(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .align(Alignment.CenterVertically),
-                        contentScale = ContentScale.Crop,
-                        model = homeUrl,
-                        contentDescription = null
-                    )
-                    Column(
-                        modifier = Modifier
-                            .wrapContentHeight()
-                            .weight(1f),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 4.dp),
-                            horizontalArrangement = Arrangement.SpaceEvenly,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                modifier = Modifier.align(Alignment.CenterVertically),
-                                text = homeShortName,
-                                style = MaterialTheme.typography.titleLarge,
-                                color = Color.White
-                            )
-                            Text(
-                                text = score,
-                                style = MaterialTheme.typography.titleLarge,
-                                color = Color.White
-                            )
-                            Text(
-                                modifier = Modifier.align(Alignment.CenterVertically),
-                                text = awayShortName,
-                                style = MaterialTheme.typography.titleLarge,
-                                color = Color.White
-                            )
-                        }
-
-                    }
-                    AsyncImage(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .align(Alignment.CenterVertically),
-                        contentScale = ContentScale.Crop,
-                        model = awayUrl,
-                        contentDescription = null
-                    )
-                }
-                Spacer(modifier = Modifier
-                    .width(0.dp)
-                    .height(4.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Spacer(modifier = Modifier.weight(1f))
-                    Spacer(modifier = Modifier
-                        .height(0.dp)
-                        .width(8.dp))
-
-                    Column(
-                        modifier = Modifier
-                            .wrapContentHeight()
-                            .weight(1f)
-                            .padding(start = 28.dp, bottom = 12.dp, end = 12.dp)
-                    ) {  }
-                }
-            }
-        }
-
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-                .padding(horizontal = 24.dp),
-                verticalArrangement = Arrangement.Center
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 4.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-                Text(
-                    text = time,
-                    style = MaterialTheme.typography.labelLarge,
-                    color = Color.DarkGray,
-                )
-                ImageCard(backgroundColor = Color(0xFF151D2D)) {
-                    AsyncImage(
-                        model = competitionUrl,
-                        contentDescription = null,
-                        modifier = Modifier.width(40.dp)
-                    )
-                }
-            }
-            Text(
-                text = location,
-                style = MaterialTheme.typography.labelLarge,
-                color = Color.DarkGray,
-            )
-        }
-    }
-}
-
-@Composable
-fun RecentlyMatchCard(
+    homeUrl: String,
+    homeShortName: String,
+    homeScore: String,
+    awayUrl: String,
+    awayShortName: String,
+    awayScore: String,
     modifier: Modifier = Modifier
 ) {
+    val annotatedScore = buildAnnotatedString {
+        withStyle(style = SpanStyle(ColorFF10358A)) { append("$homeScore ") }
+        withStyle(style = SpanStyle(ColorFFC3CDE2)) { append(":") }
+        withStyle(style = SpanStyle(ColorFF10358A)) { append(" $awayScore") }
+    }
+
     GNRElevatedCard(
         modifier = modifier
             .padding(horizontal = 8.dp, vertical = 12.dp)
@@ -217,10 +79,45 @@ fun RecentlyMatchCard(
         Column(
             modifier = modifier
                 .fillMaxWidth()
-                .weight(1f),
+                .weight(1f)
+                .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                MatchLeagueInfo(
+                    logoSize = 25.dp,
+                    logoPadding = 4.dp,
+                    competitionUrl = competitionUrl,
+                    competitionName = competitionName,
+                    verticalAlignment = Alignment.CenterVertically,
+                )
+                Row {
+                    Text(
+                        text = time,
+                        color = ColorFF4C68A7,
+                        style = GnrTypography.descriptionRegular
+                    )
+                    Spacer(modifier = modifier.size(5.dp))
+                    Text(
+                        text = location,
+                        color = ColorFF4C68A7,
+                        style = GnrTypography.descriptionMedium
+                    )
+                }
+            }
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RecentlyTeamInfo(teamImgUrl = homeUrl, teamShortName = homeShortName, teamSide = "Home")
+                Text(text = annotatedScore, style = GnrTypography.heading1Bold)
+                RecentlyTeamInfo(teamImgUrl = awayUrl, teamShortName = awayShortName, teamSide = "Away")
+            }
         }
     }
 }
@@ -238,6 +135,8 @@ fun UpcomingMatchCard(
     competitionName: String
 ) {
     GNRElevatedCard(
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        radius = 10.dp,
         modifier = modifier
             .width(263.dp)
             .height(131.dp)
@@ -245,9 +144,7 @@ fun UpcomingMatchCard(
                 width = 1.dp,
                 color = ColorFFF5F5F5,
                 shape = RoundedCornerShape(10.dp)
-            ),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        radius = 10.dp
+            )
     ) {
         Column(
             modifier = modifier
@@ -255,39 +152,45 @@ fun UpcomingMatchCard(
                 .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            UpcomingMatchLeagueInfo(
-                modifier = modifier.fillMaxWidth(),
+            MatchLeagueInfo(
+                logoSize = 22.dp,
+                logoPadding = 4.dp,
                 competitionUrl = competitionUrl,
-                competitionName = competitionName
+                competitionName = competitionName,
+                modifier = modifier.fillMaxWidth()
             )
             UpcomingMatchInfo(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .weight(1f),
                 homeUrl = homeUrl,
                 homeShortName = homeShortName,
                 awayUrl = awayUrl,
-                awayShortName = awayShortName
+                awayShortName = awayShortName,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .weight(1f)
             )
             UpcomingMatchDateInfo(
-                modifier = modifier.fillMaxWidth(),
                 time = time,
-                location = location
+                location = location,
+                modifier = modifier.fillMaxWidth()
             )
         }
     }
 }
 
 @Composable
-fun UpcomingMatchLeagueInfo(
-    modifier: Modifier = Modifier,
+fun MatchLeagueInfo(
+    logoSize: Dp,
+    logoPadding: Dp,
     competitionUrl: String,
-    competitionName: String
+    competitionName: String,
+    modifier: Modifier = Modifier,
+    verticalAlignment: Alignment.Vertical = Alignment.Top,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start
 ) {
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.Top,
-        horizontalArrangement = Arrangement.Start
+        verticalAlignment = verticalAlignment,
+        horizontalArrangement = horizontalArrangement
     ) {
         Card(
             modifier = Modifier
@@ -298,12 +201,12 @@ fun UpcomingMatchLeagueInfo(
                     color = ColorFFDCDCDC
                 ),
             shape = CircleShape,
-            colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)),
+            colors = CardDefaults.cardColors(containerColor = ColorFFF5F5F5),
             content = {
                 Box(
                     modifier = Modifier
-                        .padding(4.dp)
-                        .size(22.dp),
+                        .padding(logoPadding)
+                        .size(logoSize),
                     content = { AsyncImage(model = competitionUrl, contentDescription = "League Logo") }
                 )
             }
@@ -318,30 +221,59 @@ fun UpcomingMatchLeagueInfo(
 }
 
 @Composable
+fun RecentlyTeamInfo(
+    teamImgUrl: String,
+    teamShortName: String,
+    teamSide: String,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.wrapContentSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        AsyncImage(
+            model = teamImgUrl,
+            contentDescription = "Home Team Logo",
+            modifier = modifier.size(50.dp)
+        )
+        Text(
+            text = teamShortName,
+            color = ColorFF181818,
+            style = GnrTypography.body1SemiBold
+        )
+        Text(
+            text = teamSide,
+            color = ColorFF9E9E9E,
+            style = GnrTypography.descriptionRegular
+        )
+    }
+}
+
+@Composable
 fun UpcomingMatchInfo(
-    modifier: Modifier = Modifier,
     homeUrl: String,
     homeShortName: String,
     awayUrl: String,
-    awayShortName: String
+    awayShortName: String,
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         content = {
-            HomeTeamInfo(homeUrl = homeUrl, homeShortName = homeShortName)
+            UpcomingHomeTeamInfo(homeUrl = homeUrl, homeShortName = homeShortName)
             Text(text = "VS", color = ColorFF10358A, style = GnrTypography.subtitleMedium)
-            AwayTeamInfo(awayUrl = awayUrl, awayShortName = awayShortName)
+            UpcomingAwayTeamInfo(awayUrl = awayUrl, awayShortName = awayShortName)
         }
     )
 }
 
 @Composable
-fun HomeTeamInfo(
-    modifier: Modifier = Modifier,
+fun UpcomingHomeTeamInfo(
     homeUrl: String,
-    homeShortName: String
+    homeShortName: String,
+    modifier: Modifier = Modifier
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -361,10 +293,10 @@ fun HomeTeamInfo(
 }
 
 @Composable
-fun AwayTeamInfo(
-    modifier: Modifier = Modifier,
+fun UpcomingAwayTeamInfo(
     awayUrl: String,
-    awayShortName: String
+    awayShortName: String,
+    modifier: Modifier = Modifier
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -385,9 +317,9 @@ fun AwayTeamInfo(
 
 @Composable
 fun UpcomingMatchDateInfo(
-    modifier: Modifier = Modifier,
     time: String,
-    location: String
+    location: String,
+    modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier.wrapContentHeight(),
@@ -422,19 +354,4 @@ fun UpcomingMatchDateInfo(
             }
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewUpcomingMatchCard() {
-    UpcomingMatchCard(
-        homeUrl = "",
-        homeShortName = "ARS",
-        awayUrl = "",
-        awayShortName = "MIC",
-        location = "Bramall Lane",
-        time = "2024.03.31 17:30",
-        competitionUrl = "",
-        competitionName = "Premier League"
-    )
 }

@@ -1,5 +1,6 @@
 package com.eshc.goonersapp.core.network.model
 
+import com.eshc.goonersapp.core.network.model.match.RemoteMatchTeam
 import retrofit2.HttpException
 import retrofit2.Response
 

@@ -11,7 +11,7 @@ interface TeamNetworkService {
 
     @GET(value = "$TEAM_BASE_URL/detail")
     suspend fun getTeamDetail(
-        @Query("teamId") teamId : Int = 2
+        @Query("teamId") teamId : Int = 19
     ) : Response<BaseResponse<RemoteTeamDetail>>
 
 }

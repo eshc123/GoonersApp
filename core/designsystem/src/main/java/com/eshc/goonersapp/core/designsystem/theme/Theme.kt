@@ -64,7 +64,7 @@ fun GoonersAppTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = TypographyHankenGrotesk,
+        typography = TypographyPoppins,
         content = content
     )
 }

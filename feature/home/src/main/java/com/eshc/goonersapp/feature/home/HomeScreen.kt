@@ -2,11 +2,13 @@ package com.eshc.goonersapp.feature.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,10 +19,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.eshc.goonersapp.core.common.util.DateUtil
+import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
+import com.eshc.goonersapp.feature.home.component.DashboardCard
 import com.eshc.goonersapp.feature.home.component.RecentlyMatchCard
-import com.eshc.goonersapp.feature.home.component.UpcomingMatchTicketCard
+import com.eshc.goonersapp.feature.home.component.UpcomingMatchCard
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeRoute(
     topBar : @Composable () -> Unit,
@@ -38,7 +43,7 @@ fun HomeRoute(
     ) { padding ->
         HomeScreen(
             modifier = Modifier.padding(padding),
-            viewModel
+            viewModel = viewModel
         )
     }
 }
@@ -55,59 +60,53 @@ fun HomeScreen(
         modifier = modifier,
         contentPadding = PaddingValues(top = 12.dp)
     ) {
-
-//TODO
-//        item {
-//            Spacer(modifier = Modifier.height(12.dp))
-//            Text(
-//                modifier = Modifier.padding(start = 8.dp),
-//                text = "Team Dashboard",
-//                fontWeight = FontWeight.Bold,
-//                color = Color.Black,
-//                fontSize = 24.sp,
-//            )
-//            DashboardCard()
-//        }
-
-
+        item {
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                modifier = Modifier.padding(start = 8.dp),
+                text = "Team Dashboard",
+                style = GnrTypography.subtitleMedium
+            )
+            DashboardCard()
+        }
 
         item {
             Text(
                 modifier = Modifier.padding(start = 8.dp),
                 text = "Upcoming Matches",
-                style = MaterialTheme.typography.titleLarge,
+                style = GnrTypography.subtitleMedium,
                 color = Color.Black,
             )
-
             LazyRow(
                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 12.dp),
-
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(items = upcomingMatches, key = {
-                    it.matchId
-                }){
-                    UpcomingMatchTicketCard(
-                        homeShortName = it.homeTeamNickname,
-                        homeUrl = it.homeTeamImageUrl,
-                        awayShortName = it.awayTeamNickname,
-                        awayUrl = it.awayTeamImageUrl,
-                        time = DateUtil.getYearAndMonthAndDateAndTimeString(it.matchDate),
-                        location = it.stadiumName ?: "",
-                        competitionUrl = it.leagueImageUrl
+                items(
+                    items = upcomingMatches,
+                    key = { upcomingMatches -> upcomingMatches.matchId }
+                ) { matches ->
+                    UpcomingMatchCard(
+                        homeUrl = matches.homeTeamImageUrl,
+                        homeShortName = matches.homeTeamNickname,
+                        awayUrl = matches.awayTeamImageUrl,
+                        awayShortName = matches.awayTeamNickname,
+                        time = DateUtil.getYearAndMonthAndDateAndTimeString(matches.matchDate),
+                        location = matches.stadiumName ?: "",
+                        competitionUrl = matches.leagueImageUrl,
+                        competitionName = "Premier League"
                     )
                 }
             }
         }
+
         recentlyMatch?.let { match ->
             item {
                 Text(
                     modifier = Modifier.padding(start = 8.dp),
                     text = "Recently Result",
-                    style = MaterialTheme.typography.titleLarge,
+                    style = GnrTypography.subtitleMedium,
                     color = Color.Black,
                 )
-
                 RecentlyMatchCard(
                     homeShortName = match.match.homeTeamName,
                     homeUrl = match.match.homeTeamImageUrl,
@@ -120,9 +119,6 @@ fun HomeScreen(
                 )
             }
         }
-
-
-
 
     }
 }

@@ -16,10 +16,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,6 +44,7 @@ import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF5F5F5
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF7F9FF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
+import com.eshc.goonersapp.core.domain.model.match.MatchDetail
 
 @Composable
 fun RecentlyMatchCard(
@@ -49,12 +52,15 @@ fun RecentlyMatchCard(
     competitionName: String,
     time: String,
     location: String,
+    homeId: Int,
     homeUrl: String,
     homeShortName: String,
     homeScore: String,
+    awayId: Int,
     awayUrl: String,
     awayShortName: String,
     awayScore: String,
+    matchHistory: List<MatchDetail>,
     modifier: Modifier = Modifier
 ) {
     val annotatedScore = buildAnnotatedString {
@@ -112,12 +118,45 @@ fun RecentlyMatchCard(
             Row(
                 modifier = modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RecentlyTeamInfo(teamImgUrl = homeUrl, teamShortName = homeShortName, teamSide = "Home")
-                Text(text = annotatedScore, style = GnrTypography.heading1Bold)
-                RecentlyTeamInfo(teamImgUrl = awayUrl, teamShortName = awayShortName, teamSide = "Away")
-            }
+                verticalAlignment = Alignment.CenterVertically,
+                content = {
+                    RecentlyTeamInfo(
+                        teamImgUrl = homeUrl,
+                        teamShortName = homeShortName,
+                        teamSide = "Home"
+                    )
+                    Text(
+                        text = annotatedScore,
+                        style = GnrTypography.heading1Bold
+                    )
+                    RecentlyTeamInfo(
+                        teamImgUrl = awayUrl,
+                        teamShortName = awayShortName,
+                        teamSide = "Away"
+                    )
+                }
+            )
+            Spacer(modifier = modifier.size(20.dp))
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                content = {
+                    RecentlyGoalHistory(
+                        teamId = homeId,
+                        matchHistory = matchHistory,
+                        modifier = modifier
+                            .wrapContentHeight()
+                            .weight(1f)
+                    )
+                    RecentlyGoalHistory(
+                        teamId = awayId,
+                        matchHistory = matchHistory,
+                        modifier = modifier
+                            .wrapContentHeight()
+                            .weight(1f)
+                    )
+                }
+            )
         }
     }
 }
@@ -247,6 +286,44 @@ fun RecentlyTeamInfo(
             style = GnrTypography.descriptionRegular
         )
     }
+}
+
+@Composable
+fun RecentlyGoalHistory(
+    teamId: Int,
+    matchHistory: List<MatchDetail>,
+    modifier: Modifier = Modifier
+) {
+    val goalHistory = matchHistory.let { detail ->
+        detail
+            .filter { history -> history.type == "GOAL" }
+            .filter { history -> history.teamId == teamId }
+    }
+
+    Column(
+        modifier = modifier
+            .wrapContentSize()
+            .padding(horizontal = 10.dp),
+        horizontalAlignment = Alignment.Start,
+        content =  {
+            goalHistory.forEach { history ->
+                Spacer(modifier = Modifier.size(3.dp))
+                Text(
+                    text = "${history.playerName} (${history.minute}`)",
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                    style = GnrTypography.descriptionMedium
+                )
+                Spacer(modifier = Modifier.size(1.5.dp))
+                HorizontalDivider(
+                    modifier = Modifier.wrapContentWidth(),
+                    thickness = 0.5.dp,
+                    color = ColorFFDCDCDC
+                )
+            }
+        }
+    )
 }
 
 @Composable

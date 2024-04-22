@@ -5,20 +5,18 @@ import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.model.match.MatchDetail
 import com.eshc.goonersapp.core.domain.model.match.MatchInformation
 import com.eshc.goonersapp.core.domain.model.match.MatchRecently
-import com.eshc.goonersapp.core.domain.model.match.MatchUpcoming
 import com.eshc.goonersapp.core.domain.model.match.NotablePlayer
 import com.eshc.goonersapp.core.domain.model.match.Performance
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchDetail
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchInformation
-import com.eshc.goonersapp.core.network.model.match.RemoteMatchTeam
-import com.eshc.goonersapp.core.network.model.match.RemoteMatchUpcoming
+import com.eshc.goonersapp.core.network.model.match.RemoteMatch
 import com.eshc.goonersapp.core.network.model.match.RemoteRecentlyMatch
 
 /**
- * [RemoteMatchTeam] Mapper
- *   - Mapping [RemoteMatchTeam] to [Match]
+ * [RemoteMatch] Mapper
+ *   - Mapping [RemoteMatch] to [Match]
  */
-fun RemoteMatchTeam.toModel() = Match(
+fun RemoteMatch.toModel() = Match(
     id = matchId,
     homeTeamId = homeTeamId,
     homeTeamName = homeTeamName,
@@ -33,28 +31,10 @@ fun RemoteMatchTeam.toModel() = Match(
     awayScore = awayScore,
     round = round,
     isFinished = isFinished == 1,
-    stadiumName = venueName,
+    stadiumName = venueName.toString(),
     leagueImageUrl = leagueImage
 )
 
-/**
- * [RemoteMatchUpcoming] Mapper
- *   - Mapping [RemoteMatchUpcoming] to [MatchUpcoming]
- */
-fun RemoteMatchUpcoming.toModel() = MatchUpcoming(
-    matchId = matchId,
-    homeTeamId = homeTeamId,
-    homeTeamNickname = homeTeamNickname,
-    homeTeamName = homeTeamName,
-    homeTeamImageUrl = homeTeamImage,
-    awayTeamId = awayTeamId,
-    awayTeamNickname = awayTeamNickname,
-    awayTeamName = awayTeamName,
-    awayTeamImageUrl = awayTeamImage,
-    matchDate = matchDate,
-    stadiumName = stadiumName,
-    leagueImageUrl = leagueImage
-)
 
 /**
  * [RemoteMatchInformation] Mapper
@@ -88,13 +68,12 @@ fun RemoteMatchInformation.toModel() = MatchInformation(
             positionInitial = remote.positionInitial
         )
     },
-    performance = performance.map { remote ->
-        Performance(
-            result = remote.result,
-            count = remote.count,
-            opponentImageUrl = remote.opponentImage
-        )
-    }
+    performance = Performance(
+        opponentImageUrl = performance.opponentImage,
+        win = performance.win,
+        draw = performance.draw,
+        lose = performance.lose
+    )
 )
 
 /**

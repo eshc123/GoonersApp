@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d99b531c25b652689e744b07faf8f917",
+    "identityHash": "0df9677e4646ca1fd4ebcd89563edbdf",
     "entities": [
       {
         "tableName": "player",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `main_position` TEXT NOT NULL, `name` TEXT NOT NULL, `birth_date` TEXT NOT NULL, `height` INTEGER NOT NULL, `weight` INTEGER NOT NULL, `back_number` INTEGER NOT NULL, `nationality` TEXT NOT NULL, `image_url` TEXT NOT NULL, `contract_start_date` TEXT NOT NULL, `contract_end_date` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `position` TEXT NOT NULL, `name` TEXT NOT NULL, `birth_date` TEXT NOT NULL, `height` INTEGER NOT NULL, `weight` INTEGER NOT NULL, `back_number` INTEGER NOT NULL, `nationality` TEXT NOT NULL, `image_url` TEXT NOT NULL, `contract_start_date` TEXT NOT NULL, `contract_end_date` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,8 +15,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "mainPosition",
-            "columnName": "main_position",
+            "fieldPath": "position",
+            "columnName": "position",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -88,7 +88,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd99b531c25b652689e744b07faf8f917')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0df9677e4646ca1fd4ebcd89563edbdf')"
     ]
   }
 }

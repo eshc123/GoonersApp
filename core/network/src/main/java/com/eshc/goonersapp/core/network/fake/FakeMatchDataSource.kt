@@ -2,10 +2,10 @@ package com.eshc.goonersapp.core.network.fake
 
 import com.eshc.goonersapp.core.network.MatchNetworkDataSource
 import com.eshc.goonersapp.core.network.model.NetworkResult
-import com.eshc.goonersapp.core.network.model.match.RemoteMatch
+import com.eshc.goonersapp.core.network.model.match.Performance
+import com.eshc.goonersapp.core.network.model.match.RemoteMatchData
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchInformation
-import com.eshc.goonersapp.core.network.model.match.RemoteMatchTeam
-import com.eshc.goonersapp.core.network.model.match.RemoteMatchUpcoming
+import com.eshc.goonersapp.core.network.model.match.RemoteMatch
 import com.eshc.goonersapp.core.network.model.match.RemoteRecentlyMatch
 import javax.inject.Inject
 
@@ -34,12 +34,12 @@ import javax.inject.Inject
  *   - return [NetworkResult.Success]
  */
 class FakeMatchDataSource @Inject constructor(): MatchNetworkDataSource {
-    override suspend fun getMatch(matchId: Int): NetworkResult<RemoteMatch> {
+    override suspend fun getMatch(matchId: Int): NetworkResult<RemoteMatchData> {
 
         return if (matchId < 39) {
             NetworkResult.Success(
-                RemoteMatch(
-                    match = RemoteMatchTeam(matchId = matchId),
+                RemoteMatchData(
+                    match = RemoteMatch(matchId = matchId),
                     matchDetail = listOf()
                 )
             )
@@ -59,7 +59,7 @@ class FakeMatchDataSource @Inject constructor(): MatchNetworkDataSource {
                 RemoteMatchInformation(
                     notablePlayer = null,
                     lineUp = listOf(),
-                    performance = listOf()
+                    performance = Performance()
                 )
             )
         } else {
@@ -69,7 +69,7 @@ class FakeMatchDataSource @Inject constructor(): MatchNetworkDataSource {
 
     override suspend fun getMatchesBySeason(
         seasonId: Int
-    ): NetworkResult<List<RemoteMatchTeam>> {
+    ): NetworkResult<List<RemoteMatch>> {
         return if (seasonId > 2024) {
             NetworkResult.Error(code = 404, message = "Not Found")
         } else {
@@ -77,14 +77,14 @@ class FakeMatchDataSource @Inject constructor(): MatchNetworkDataSource {
         }
     }
 
-    override suspend fun getUpcomingMatches(): NetworkResult<List<RemoteMatchUpcoming>> {
+    override suspend fun getUpcomingMatches(): NetworkResult<List<RemoteMatch>> {
         return NetworkResult.Success(listOf())
     }
 
     override suspend fun getRecentlyMatch(): NetworkResult<RemoteRecentlyMatch> {
         return NetworkResult.Success(
             RemoteRecentlyMatch(
-                match = RemoteMatchTeam(),
+                match = RemoteMatch(),
                 matchDetail = listOf()
             )
         )

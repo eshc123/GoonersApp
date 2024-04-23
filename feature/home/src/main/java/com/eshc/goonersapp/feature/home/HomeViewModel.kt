@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.model.match.MatchRecently
-import com.eshc.goonersapp.core.domain.model.match.MatchUpcoming
 import com.eshc.goonersapp.core.domain.usecase.match.GetRecentlyMatchUseCase
 import com.eshc.goonersapp.core.domain.usecase.match.GetUpcomingMatchesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,8 +20,8 @@ class HomeViewModel @Inject constructor(
     private val getUpcomingMatchesUseCase: GetUpcomingMatchesUseCase,
     private val getRecentlyMatchUseCase: GetRecentlyMatchUseCase
 ) : ViewModel() {
-    private val _upcomingMatches = MutableStateFlow<List<MatchUpcoming>>(emptyList())
-    val upcomingMatches : StateFlow<List<MatchUpcoming>> = _upcomingMatches.asStateFlow()
+    private val _upcomingMatches = MutableStateFlow<List<Match>>(emptyList())
+    val upcomingMatches : StateFlow<List<Match>> = _upcomingMatches.asStateFlow()
 
     private val _recentlyMatch = MutableStateFlow<MatchRecently?>(null)
     val recentlyMatch : StateFlow<MatchRecently?> = _recentlyMatch.asStateFlow()

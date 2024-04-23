@@ -85,7 +85,7 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 items(items = upcomingMatches, key = {
-                    it.matchId
+                    it.id
                 }){
                     UpcomingMatchTicketCard(
                         homeShortName = it.homeTeamNickname,

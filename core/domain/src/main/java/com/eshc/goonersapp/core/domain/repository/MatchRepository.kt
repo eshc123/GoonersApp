@@ -4,7 +4,6 @@ import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.model.match.MatchInformation
 import com.eshc.goonersapp.core.domain.model.match.MatchRecently
-import com.eshc.goonersapp.core.domain.model.match.MatchUpcoming
 import kotlinx.coroutines.flow.Flow
 
 interface MatchRepository {
@@ -15,7 +14,7 @@ interface MatchRepository {
 
     fun getMatchesBySeason(season : String): Flow<DataResult<List<Match>>>
 
-    fun getUpcomingMatches() : Flow<DataResult<List<MatchUpcoming>>>
+    fun getUpcomingMatches() : Flow<DataResult<List<Match>>>
 
     fun getRecentlyMatch() : Flow<DataResult<MatchRecently>>
 

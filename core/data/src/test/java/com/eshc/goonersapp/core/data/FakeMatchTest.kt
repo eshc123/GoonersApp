@@ -5,7 +5,7 @@ import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.model.match.MatchInformation
 import com.eshc.goonersapp.core.domain.model.match.MatchRecently
-import com.eshc.goonersapp.core.domain.model.match.MatchUpcoming
+import com.eshc.goonersapp.core.domain.model.match.Performance
 import com.eshc.goonersapp.core.domain.repository.MatchRepository
 import com.eshc.goonersapp.core.network.fake.FakeMatchDataSource
 import kotlinx.coroutines.runBlocking
@@ -59,7 +59,7 @@ class FakeMatchTest {
                         MatchInformation(
                             notablePlayer = null,
                             lineUp = listOf(),
-                            performance = listOf()
+                            performance = Performance(opponentImageUrl = "", win = 0, draw = 0, lose = 0)
                         ),
                         result.data
                     )
@@ -83,7 +83,7 @@ class FakeMatchTest {
     fun testUpcomingMatchesWithFake() = runBlocking {
         fakeMatchRepository.getUpcomingMatches().collect { result ->
             when (result) {
-                is DataResult.Success -> { assertEquals(listOf<MatchUpcoming>(), result.data) }
+                is DataResult.Success -> { assertEquals(listOf<Match>(), result.data) }
                 is DataResult.Failure -> { /* Nothing */ }
             }
         }

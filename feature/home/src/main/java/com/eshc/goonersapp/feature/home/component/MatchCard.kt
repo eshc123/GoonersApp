@@ -254,6 +254,7 @@ fun MatchLeagueInfo(
         Text(
             text = competitionName,
             color = ColorFF181818,
+            modifier = Modifier.padding(top = 4.dp),
             style = GnrTypography.descriptionSemiBold
         )
     }

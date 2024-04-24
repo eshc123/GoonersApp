@@ -88,7 +88,7 @@ fun HomeScreen(
                         awayUrl = matches.awayTeamImageUrl,
                         awayShortName = matches.awayTeamNickname,
                         time = DateUtil.getYearAndMonthAndDateAndTimeString(matches.matchDate),
-                        location = matches.stadiumName,
+                        location = if (matches.stadiumName == "null") "" else matches.stadiumName,
                         competitionUrl = matches.leagueImageUrl,
                         competitionName = "Premier League"
                     )

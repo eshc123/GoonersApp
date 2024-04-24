@@ -3,6 +3,7 @@ package com.eshc.goonersapp.feature.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eshc.goonersapp.core.domain.model.DataResult
+import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.model.match.MatchRecently
 import com.eshc.goonersapp.core.domain.usecase.match.GetRecentlyMatchUseCase
 import com.eshc.goonersapp.core.domain.usecase.match.GetUpcomingMatchesUseCase

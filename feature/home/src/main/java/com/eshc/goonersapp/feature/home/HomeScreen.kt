@@ -80,7 +80,7 @@ fun HomeScreen(
             ) {
                 items(
                     items = upcomingMatches,
-                    key = { upcomingMatches -> upcomingMatches.matchId }
+                    key = { upcomingMatches -> upcomingMatches.id }
                 ) { matches ->
                     UpcomingMatchCard(
                         homeUrl = matches.homeTeamImageUrl,
@@ -88,7 +88,7 @@ fun HomeScreen(
                         awayUrl = matches.awayTeamImageUrl,
                         awayShortName = matches.awayTeamNickname,
                         time = DateUtil.getYearAndMonthAndDateAndTimeString(matches.matchDate),
-                        location = matches.stadiumName ?: "",
+                        location = matches.stadiumName,
                         competitionUrl = matches.leagueImageUrl,
                         competitionName = "Premier League"
                     )

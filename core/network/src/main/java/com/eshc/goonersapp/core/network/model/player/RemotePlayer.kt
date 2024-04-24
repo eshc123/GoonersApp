@@ -9,7 +9,7 @@ data class RemotePlayer(
     val playerId :Int? = 0,
     @SerialName("player_name")
     val playerName : String? = "",
-    @SerialName("back_number")
+    @SerialName("jersey_number")
     val backNumber : Int? = 0,
     @SerialName("birth_date")
     val birthDate : String? = "",

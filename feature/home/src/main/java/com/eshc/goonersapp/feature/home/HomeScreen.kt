@@ -40,7 +40,7 @@ fun HomeRoute(
     ) { padding ->
         HomeScreen(
             modifier = Modifier.padding(padding),
-            viewModel = viewModel
+            viewModel
         )
     }
 }

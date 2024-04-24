@@ -23,6 +23,7 @@ retrofit2-kotlinx-serialization-converter = "1.0.0"
 kotlinx-serialization-json = "1.6.2"
 appcompat = "1.6.1"
 material = "1.9.0"
+androidx-compose-material = "1.6.6"
 
 room = "2.6.1"
 org-jetbrains-kotlin-jvm = "1.9.20"
@@ -39,6 +40,7 @@ androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtim
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle_version" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle_version" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
+androidx-compose-material = { module = "androidx.compose.material:material" ,version.ref = "androidx-compose-material"  }
 
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt-compiler" }
@@ -59,6 +61,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine-test" }
 socket-io-client = { group = "io.socket", name = "socket.io-client" , version.ref = "socket-io"}
+
 
 
 [plugins]

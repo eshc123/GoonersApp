@@ -6,7 +6,6 @@ import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.model.match.MatchInformation
 import com.eshc.goonersapp.core.domain.model.match.MatchRecently
-import com.eshc.goonersapp.core.domain.model.match.MatchUpcoming
 import com.eshc.goonersapp.core.domain.repository.MatchRepository
 import com.eshc.goonersapp.core.network.fake.FakeMatchDataSource
 import kotlinx.coroutines.flow.Flow
@@ -48,7 +47,7 @@ class FakeMatchRepositoryImpl @Inject constructor(
         emit(result)
     }
 
-    override fun getUpcomingMatches(): Flow<DataResult<List<MatchUpcoming>>> = flow {
+    override fun getUpcomingMatches(): Flow<DataResult<List<Match>>> = flow {
         val result = fakeMatchDataSource
             .getUpcomingMatches()
             .toDataResult { remote -> remote.map { response -> response.toModel() } }

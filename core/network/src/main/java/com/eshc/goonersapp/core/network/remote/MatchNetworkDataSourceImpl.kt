@@ -4,10 +4,9 @@ import com.eshc.goonersapp.core.network.MatchNetworkDataSource
 import com.eshc.goonersapp.core.network.api.MatchNetworkService
 import com.eshc.goonersapp.core.network.model.NetworkResult
 import com.eshc.goonersapp.core.network.model.handleApi
-import com.eshc.goonersapp.core.network.model.match.RemoteMatch
+import com.eshc.goonersapp.core.network.model.match.RemoteMatchData
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchInformation
-import com.eshc.goonersapp.core.network.model.match.RemoteMatchTeam
-import com.eshc.goonersapp.core.network.model.match.RemoteMatchUpcoming
+import com.eshc.goonersapp.core.network.model.match.RemoteMatch
 import com.eshc.goonersapp.core.network.model.match.RemoteRecentlyMatch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,7 +15,7 @@ import javax.inject.Singleton
 class MatchNetworkDataSourceImpl @Inject constructor(
     private val matchNetworkService: MatchNetworkService
 ) : MatchNetworkDataSource {
-    override suspend fun getMatch(matchId: Int): NetworkResult<RemoteMatch> {
+    override suspend fun getMatch(matchId: Int): NetworkResult<RemoteMatchData> {
        return handleApi {
            matchNetworkService.getMatch(matchId = matchId)
        }
@@ -36,13 +35,13 @@ class MatchNetworkDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getMatchesBySeason(seasonId : Int): NetworkResult<List<RemoteMatchTeam>> {
+    override suspend fun getMatchesBySeason(seasonId : Int): NetworkResult<List<RemoteMatch>> {
         return handleApi {
             matchNetworkService.getMatchesBySeason(seasonId = seasonId)
         }
     }
 
-    override suspend fun getUpcomingMatches(): NetworkResult<List<RemoteMatchUpcoming>> {
+    override suspend fun getUpcomingMatches(): NetworkResult<List<RemoteMatch>> {
         return handleApi {
             matchNetworkService.getUpcomingMatches()
         }

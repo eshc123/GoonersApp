@@ -21,8 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.IconPack
-import com.eshc.goonersapp.core.designsystem.component.GNRCard
-import com.eshc.goonersapp.core.designsystem.component.GNRElevatedCard
+import com.eshc.goonersapp.core.designsystem.component.GnrCard
+import com.eshc.goonersapp.core.designsystem.component.GnrElevatedCard
 import com.eshc.goonersapp.core.designsystem.iconpack.IcArrowRight
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
@@ -34,7 +34,7 @@ import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 
 @Composable
 fun DashboardCard(modifier: Modifier = Modifier) {
-    GNRElevatedCard(
+    GnrElevatedCard(
         colors = CardDefaults.cardColors(containerColor = ColorFFFFFFFF),
         radius = 10.dp,
         modifier = modifier
@@ -221,7 +221,7 @@ fun LeagueDashboardItem(
     points: Int,
     modifier: Modifier = Modifier
 ) {
-    GNRCard(
+    GnrCard(
         shapeRadius = 5.dp,
         containerColor = if (teamId != 19) ColorFFF5F5F5 else ColorFF10358A,
         modifier = modifier.fillMaxWidth().padding(vertical = 3.dp)
@@ -296,7 +296,7 @@ fun LeagueDashBoardClubInfo(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        GNRCard(
+        GnrCard(
             shapes = CircleShape,
             colors = CardDefaults.cardColors(containerColor = ColorFFFFFFFF),
             modifier = Modifier.size(22.dp)

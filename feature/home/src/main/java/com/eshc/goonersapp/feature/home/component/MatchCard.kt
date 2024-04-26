@@ -34,7 +34,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.eshc.goonersapp.core.designsystem.component.GNRElevatedCard
+import com.eshc.goonersapp.core.designsystem.component.GnrElevatedCard
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF4C68A7
@@ -69,7 +69,7 @@ fun RecentlyMatchCard(
         withStyle(style = SpanStyle(ColorFF10358A)) { append(" $awayScore") }
     }
 
-    GNRElevatedCard(
+    GnrElevatedCard(
         modifier = modifier
             .padding(horizontal = 8.dp, vertical = 12.dp)
             .fillMaxWidth()
@@ -173,7 +173,7 @@ fun UpcomingMatchCard(
     competitionUrl: String,
     competitionName: String
 ) {
-    GNRElevatedCard(
+    GnrElevatedCard(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         radius = 10.dp,
         modifier = modifier

@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 
 @Composable
-fun GNRCard(
+fun GnrCard(
     shapes: Shape,
     colors: CardColors,
     modifier: Modifier = Modifier,
@@ -30,14 +30,14 @@ fun GNRCard(
 }
 
 @Composable
-fun GNRCard(
+fun GnrCard(
     shapeRadius: Dp,
     containerColor: Color,
     modifier: Modifier = Modifier,
     border: BorderStroke? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    GNRCard(
+    GnrCard(
         modifier = modifier,
         shapes = RoundedCornerShape(shapeRadius),
         colors = CardDefaults.cardColors(containerColor = containerColor),

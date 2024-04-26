@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 
 @Composable
-fun GNRElevatedCard(
+fun GnrElevatedCard(
     shape: Shape,
     colors: CardColors,
     elevation: CardElevation,
@@ -29,13 +29,13 @@ fun GNRElevatedCard(
 }
 
 @Composable
-fun GNRElevatedCard(
+fun GnrElevatedCard(
     colors: CardColors,
     radius: Dp,
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    GNRElevatedCard(
+    GnrElevatedCard(
         shape = RoundedCornerShape(radius),
         colors = colors,
         elevation = CardDefaults.elevatedCardElevation(),

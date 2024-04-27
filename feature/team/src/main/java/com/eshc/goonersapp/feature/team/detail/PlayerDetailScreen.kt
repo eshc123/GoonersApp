@@ -4,23 +4,24 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,13 +35,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.component.TabItem
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.core.domain.model.player.Player
@@ -56,7 +58,9 @@ fun PlayerDetailScreen(
     var selectedTab by remember { mutableStateOf(DetailTab.PROFILE) }
     val playerDetailUiState by viewModel.playerDetailUiState.collectAsStateWithLifecycle()
 
-    Surface {
+    Surface(
+        color = ColorFFFFFFFF
+    ) {
         when (playerDetailUiState) {
             is PlayerDetailUiState.Success -> {
                 (playerDetailUiState as PlayerDetailUiState.Success).playerDetail.let { player: Player ->
@@ -74,11 +78,32 @@ fun PlayerDetailScreen(
 
                         item {
                             Row(
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier.padding(vertical = 20.dp, horizontal = 15.dp),
+                                horizontalArrangement = Arrangement.spacedBy(20.dp)
+                            ) {
+                                PlayerDetailInfo(
+                                    title = "Age",
+                                    content = "22"
+                                )
+                                PlayerDetailInfo(
+                                    title = "Games",
+                                    content = "14"
+                                )
+                                PlayerDetailInfo(
+                                    title = "Goals",
+                                    content = "10"
+                                )
+                            }
+                        }
+
+                        item {
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(horizontal = 15.dp),
+                                horizontalArrangement = Arrangement.spacedBy(24.dp)
                             ) {
                                 DetailTab.entries.forEach {
                                     TabItem(
-                                        modifier = Modifier.weight(1f),
+                                        modifier = Modifier.width(IntrinsicSize.Max),
                                         tabTitle = it.name,
                                         isSelected = selectedTab == it,
                                         onSelect = {
@@ -99,8 +124,6 @@ fun PlayerDetailScreen(
                                     StatScreen()
                                 }
                             }
-
-
                         }
                     }
                 }
@@ -177,9 +200,9 @@ fun PlayerDetailImage(
             }
             val names = player.name.split(" ")
             val firstName = names.first()
-            val secondNames = if(names.size > 1){
-                "\n${names.subList(1,names.lastIndex + 1).joinToString(" ")}"
-            }else ""
+            val secondNames = if (names.size > 1) {
+                "\n${names.subList(1, names.lastIndex + 1).joinToString(" ")}"
+            } else ""
             Text(
                 text = firstName + secondNames,
                 lineHeight = 30.sp,
@@ -187,7 +210,7 @@ fun PlayerDetailImage(
                 color = ColorFFFFFFFF
             )
             Text(
-                text =  player.position,
+                text = player.position,
                 style = GnrTypography.body1Medium,
                 color = ColorFFFFFFFF
             )
@@ -214,6 +237,38 @@ fun PlayerDetailBackNumberChip(
             style = GnrTypography.subtitleSemiBold,
             color = ColorFFFFFFFF
         )
+    }
+}
+
+@Composable
+fun RowScope.PlayerDetailInfo(
+    title: String,
+    content: String
+) {
+    ElevatedCard(
+        modifier = Modifier
+            .height(110.dp)
+            .weight(1f),
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = ColorFFFFFFFF
+        )
+    ) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp)) {
+            Text(
+                modifier = Modifier.align(Alignment.TopStart),
+                text = title,
+                style = GnrTypography.body1Regular,
+                color = ColorFF181818
+            )
+            Text(
+                modifier = Modifier.align(Alignment.BottomEnd),
+                text = content,
+                style = GnrTypography.heading1Bold,
+                color = ColorFF10358A
+            )
+        }
     }
 }
 

@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF9E9E9E
+import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 
 
@@ -31,16 +35,15 @@ fun TabItem(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            modifier = Modifier.padding(vertical = 16.dp),
+            modifier = Modifier.padding(bottom = 8.dp),
             text = tabTitle,
-            style = MaterialTheme.typography.titleSmall,
-            fontWeight = if (isSelected) FontWeight.ExtraBold else FontWeight.Medium,
-            color = if (isSelected) Color.Black else Color.LightGray,
+            style = GnrTypography.body1SemiBold,
+            color = if (isSelected) ColorFF10358A else ColorFF9E9E9E,
         )
         if (isSelected)
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier,
-                color = Color.Black,
+                color = ColorFF10358A,
                 thickness = 2.dp
             )
     }

@@ -1,5 +1,6 @@
 package com.eshc.goonersapp.feature.team
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,15 +34,20 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.eshc.goonersapp.core.designsystem.component.LargeDropdownMenu
 import com.eshc.goonersapp.core.domain.model.player.Player
 import com.eshc.goonersapp.core.domain.model.player.PlayerPosition
+import com.eshc.goonersapp.feature.team.state.TeamUiState
 import com.eshc.goonersapp.feature.team.ui.SquadPlayerCard
 
 @Composable
-fun TeamRoute(
+fun TeamScreen(
     topBar : @Composable () -> Unit,
     bottomBar : @Composable () -> Unit,
     onPlayerClick: (String) -> Unit,
-    onShowSnackbar : (String) -> Unit
+    onShowSnackbar : (String) -> Unit,
+    viewModel: TeamViewModel = hiltViewModel(),
 ) {
+    val teamUiState by viewModel.players.collectAsStateWithLifecycle()
+    val scrollState = rememberScrollState()
+
     Scaffold(
         topBar = {
             topBar()
@@ -53,57 +59,67 @@ fun TeamRoute(
         Column(
             modifier = Modifier.padding(padding)
         ) {
-            LargeDropdownMenu(
-                modifier = Modifier.padding(horizontal = 24.dp),
-                label = "season",
-                items = listOf("2023-2024","2022-2023"),
-                onItemSelected = { index, item ->
-
-                }
-
-            )
             TeamScreen(
+                teamUiState = teamUiState,
+                scrollState = scrollState,
                 onClick = onPlayerClick
             )
-
         }
     }
 }
 
 @Composable
-fun TeamScreen(
+fun ColumnScope.TeamScreen(
+    teamUiState : TeamUiState,
+    scrollState : ScrollState,
+    onClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: TeamViewModel = hiltViewModel(),
-    onClick: (String) -> Unit
 ) {
-    val players by viewModel.players.collectAsStateWithLifecycle()
-    val scrollState = rememberScrollState()
+    LargeDropdownMenu(
+        modifier = Modifier.padding(horizontal = 24.dp),
+        label = "season",
+        items = listOf("2023-2024","2022-2023"),
+        onItemSelected = { index, item ->
+            //TODO
+        }
+    )
 
-    if (players.isNotEmpty()) {
-        Column(
-            modifier = modifier
-                .padding(top = 12.dp)
-                .verticalScroll(scrollState)
-        ) {
-            PlayerPosition.entries.forEach { position ->
-                HorizontalPlayerListByPosition(
-                    position = position.name,
-                    filteredPlayers = players.filter { it.positionCategory == position.positionCategory },
-                    onClick = onClick
+    when(teamUiState){
+        is TeamUiState.Success -> {
+            Column(
+                modifier = modifier
+                    .padding(top = 12.dp)
+                    .verticalScroll(scrollState)
+            ) {
+                PlayerPosition.entries.forEach { position ->
+                    HorizontalPlayerListByPosition(
+                        position = position.name,
+                        filteredPlayers = teamUiState.players.filter { it.positionCategory == position.positionCategory },
+                        onClick = onClick
+                    )
+                }
+                Spacer(modifier = Modifier.size(16.dp))
+            }
+        }
+        is TeamUiState.Loading -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+        is TeamUiState.Error -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Players cannot be loaded.",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = Color.LightGray,
                 )
             }
-            Spacer(modifier = Modifier.size(16.dp))
-        }
-    } else {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Players cannot be loaded.",
-                style = MaterialTheme.typography.titleSmall,
-                color = Color.LightGray,
-            )
         }
     }
 }

@@ -29,31 +29,20 @@ class HomeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             getUpcomingMatchesUseCase()
-                .catch {
-                    //TODO
-                }.collect {
+                .catch { /* TODO("Not yet implemented") */ }
+                .collect {
                     when(it){
-                        is DataResult.Success -> {
-                            _upcomingMatches.emit(it.data)
-                        }
-                        is DataResult.Failure -> {
-
-                        }
+                        is DataResult.Success -> _upcomingMatches.emit(it.data)
+                        is DataResult.Failure -> { /* TODO("Not yet implemented") */ }
                     }
-
                 }
 
             getRecentlyMatchUseCase()
-                .catch {
-                    //TODO
-                }.collect {
+                .catch { /* TODO("Not yet implemented") */ }
+                .collect {
                     when(it){
-                        is DataResult.Success -> {
-                            _recentlyMatch.emit(it.data)
-                        }
-                        is DataResult.Failure -> {
-
-                        }
+                        is DataResult.Success ->  _recentlyMatch.emit(it.data)
+                        is DataResult.Failure -> { /* TODO("Not yet implemented") */ }
                     }
                 }
         }

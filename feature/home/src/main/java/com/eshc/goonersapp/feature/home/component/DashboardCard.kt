@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.IconPack
@@ -46,25 +47,24 @@ fun DashboardCard(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(top = 12.dp, start = 12.dp, end = 12.dp, bottom = 5.dp),
-            content =  {
-                LeagueDashboardTitle()
-                Spacer(modifier = Modifier.size(5.dp))
-                HorizontalDivider(
-                    modifier = modifier.fillMaxWidth(),
-                    color = ColorFFDCDCDC,
-                    thickness = 1.dp
-                )
-                Spacer(modifier = Modifier.size(5.dp))
-                LeagueDashboardRow()
-            }
-        )
+                .padding(top = 12.dp, start = 12.dp, end = 12.dp, bottom = 5.dp)
+        ) {
+            LeagueDashboardTitle()
+            Spacer(modifier = Modifier.size(5.dp))
+            HorizontalDivider(
+                modifier = modifier.fillMaxWidth(),
+                color = ColorFFDCDCDC,
+                thickness = 1.dp
+            )
+            Spacer(modifier = Modifier.size(5.dp))
+            LeagueDashboardRow()
+        }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .padding(start = 12.dp, end = 12.dp, top = 4.dp, bottom = 12.dp)
-        ){
+        ) {
             LeagueDashboardItem(
                 rank = 1,
                 teamId = 20,
@@ -221,9 +221,12 @@ fun LeagueDashboardItem(
     points: Int,
     modifier: Modifier = Modifier
 ) {
+    val cardContainerColor = if (teamId != 19) ColorFFF5F5F5 else ColorFF10358A
+    val cardItemTextColor = if (teamId != 19) ColorFF181818 else ColorFFFFFFFF
+
     GnrCard(
         shapeRadius = 5.dp,
-        containerColor = if (teamId != 19) ColorFFF5F5F5 else ColorFF10358A,
+        containerColor = cardContainerColor,
         modifier = modifier.fillMaxWidth().padding(vertical = 3.dp)
     ) {
         Row(
@@ -239,46 +242,46 @@ fun LeagueDashboardItem(
                 style = GnrTypography.body2Medium
             )
             LeagueDashBoardClubInfo(
-                teamId = teamId,
                 teamImgUrl = teamImgUrl,
                 teamShortName = teamShortName,
+                cardItemTextColor = cardItemTextColor,
                 modifier = modifier.weight(3f)
             )
             Text(
                 text = "$totalGames",
                 modifier = modifier.weight(1f),
-                color = if (teamId != 19) ColorFF181818 else ColorFFFFFFFF,
+                color = cardItemTextColor,
                 style = GnrTypography.body2Regular
             )
             Text(
                 text = "$wins", 
                 modifier = modifier.weight(1f), 
-                color = if (teamId != 19) ColorFF181818 else ColorFFFFFFFF, 
+                color = cardItemTextColor,
                 style = GnrTypography.body2Regular
             )
             Text(
                 text = "$draws",
                 modifier = modifier.weight(1f),
-                color = if (teamId != 19) ColorFF181818 else ColorFFFFFFFF,
+                color = cardItemTextColor,
                 style = GnrTypography.body2Regular
             )
             Text(
                 text = "$losses",
                 modifier = modifier.weight(1f),
-                color = if (teamId != 19) ColorFF181818 else ColorFFFFFFFF,
+                color = cardItemTextColor,
                 style = GnrTypography.body2Regular
             )
 
             Text(
                 text = "${if(goalDiff > 0)"+" else ""}${goalDiff}",
                 modifier = modifier.weight(1f),
-                color = if (teamId != 19) ColorFF181818 else ColorFFFFFFFF,
+                color = cardItemTextColor,
                 style = GnrTypography.body2Regular
             )
             Text(
                 text = "$points",
                 modifier = modifier.weight(1f),
-                color = if (teamId != 19) ColorFF181818 else ColorFFFFFFFF,
+                color = cardItemTextColor,
                 style = GnrTypography.body2SemiBold
             )
         }
@@ -287,9 +290,9 @@ fun LeagueDashboardItem(
 
 @Composable
 fun LeagueDashBoardClubInfo(
-    teamId: Int,
     teamImgUrl: String,
     teamShortName: String,
+    cardItemTextColor: Color,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -310,7 +313,7 @@ fun LeagueDashBoardClubInfo(
         Spacer(modifier = Modifier.size(8.dp))
         Text(
             text = teamShortName,
-            color = if (teamId != 19) ColorFF181818 else ColorFFFFFFFF,
+            color = cardItemTextColor,
             style = GnrTypography.body2Medium
         )
     }

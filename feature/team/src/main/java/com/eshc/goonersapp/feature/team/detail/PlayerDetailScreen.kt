@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.eshc.goonersapp.core.designsystem.component.GnrElevatedCard
 import com.eshc.goonersapp.core.designsystem.component.TabItem
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
@@ -189,8 +190,8 @@ fun PlayerDetailImage(
                     modifier = Modifier
                         .size(35.dp)
                         .clip(CircleShape),
-                    model = "https://cdn.sportmonks.com/images/countries/png/short/gb.png",
-                    contentDescription = null,
+                    model = "https://cdn.sportmonks.com/images/countries/png/short/gb.png", //
+                    contentDescription = "Flag",
                     contentScale = ContentScale.Crop
                 )
                 PlayerDetailBackNumberChip(
@@ -198,13 +199,8 @@ fun PlayerDetailImage(
                     backgroundColor = Color(0xFFC10006),
                 )
             }
-            val names = player.name.split(" ")
-            val firstName = names.first()
-            val secondNames = if (names.size > 1) {
-                "\n${names.subList(1, names.lastIndex + 1).joinToString(" ")}"
-            } else ""
             Text(
-                text = firstName + secondNames,
+                text = player.displayName,
                 lineHeight = 30.sp,
                 style = GnrTypography.heading1Bold.copy(fontSize = 28.sp),
                 color = ColorFFFFFFFF
@@ -245,10 +241,11 @@ fun RowScope.PlayerDetailInfo(
     title: String,
     content: String
 ) {
-    ElevatedCard(
+    GnrElevatedCard(
         modifier = Modifier
             .height(110.dp)
             .weight(1f),
+        radius = 15.dp,
         colors = CardDefaults.elevatedCardColors(
             containerColor = ColorFFFFFFFF
         )

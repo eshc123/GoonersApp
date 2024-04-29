@@ -190,7 +190,7 @@ fun PlayerDetailImage(
                     modifier = Modifier
                         .size(35.dp)
                         .clip(CircleShape),
-                    model = "https://cdn.sportmonks.com/images/countries/png/short/gb.png", //
+                    model = player.nationalityImageUrl,
                     contentDescription = "Flag",
                     contentScale = ContentScale.Crop
                 )

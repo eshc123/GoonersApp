@@ -13,7 +13,8 @@ data class Player(
     val position : String = "",
     val positionInitial : String = "",
     val positionCategory : String = "",
-    val nationality : String = ""
+    val nationality : String = "",
+    val nationalityImageUrl: String = ""
 ) {
     private val names : List<String>
         get() = name.split(" ")

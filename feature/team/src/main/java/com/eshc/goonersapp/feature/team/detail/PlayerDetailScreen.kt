@@ -103,7 +103,7 @@ fun PlayerDetailScreen(
                                 horizontalArrangement = Arrangement.spacedBy(24.dp)
                             ) {
                                 DetailTab.entries.forEach {
-                                    TabItem(
+                                    GnrTabItem(
                                         modifier = Modifier.width(IntrinsicSize.Max),
                                         tabTitle = it.name,
                                         isSelected = selectedTab == it,

@@ -3,25 +3,19 @@ package com.eshc.goonersapp.core.designsystem.component
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF9E9E9E
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
-import com.eshc.goonersapp.core.designsystem.theme.pretendard
 
 
 @Composable
-fun TabItem(
+fun GnrTabItem(
     modifier: Modifier = Modifier,
     tabTitle: String,
     isSelected: Boolean,

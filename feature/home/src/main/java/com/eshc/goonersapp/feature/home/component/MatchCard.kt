@@ -296,7 +296,7 @@ fun RecentlyGoalHistory(
 ) {
     val goalHistory = matchHistory.let { detail ->
         detail
-            .filter { history -> history.type == "GOAL" }
+            .filter { history -> history.type == "GOAL" || history.type == "PENALTY" }
             .filter { history -> history.teamId == teamId }
     }
 
@@ -307,9 +307,15 @@ fun RecentlyGoalHistory(
         horizontalAlignment = Alignment.Start,
         content =  {
             goalHistory.forEach { history ->
+                val historyText = if (history.type == "PENALTY") {
+                    "${history.playerName} (${history.minute}`) PK"
+                } else {
+                    "${history.playerName} (${history.minute}`)"
+                }
+
                 Spacer(modifier = Modifier.size(3.dp))
                 Text(
-                    text = "${history.playerName} (${history.minute}`)",
+                    text = historyText,
                     modifier = Modifier.padding(horizontal = 10.dp),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

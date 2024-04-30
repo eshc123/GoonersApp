@@ -21,7 +21,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,7 +40,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.component.GnrElevatedCard
-import com.eshc.goonersapp.core.designsystem.component.TabItem
+import com.eshc.goonersapp.core.designsystem.component.GnrTabItem
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
@@ -49,22 +48,38 @@ import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.core.domain.model.player.Player
 import com.eshc.goonersapp.feature.team.state.PlayerDetailUiState
 
+@Composable
+fun PlayerDetailRootScreen(
+    onShowSnackbar: (String) -> Unit,
+    viewModel : PlayerDetailViewModel = hiltViewModel()
+) {
+    val playerDetailUiState by viewModel.playerDetailUiState.collectAsStateWithLifecycle()
+    var selectedTab by remember { mutableStateOf(DetailTab.PROFILE) }
+
+    PlayerDetailScreen(
+        playerDetailUiState = playerDetailUiState,
+        selectedTab = selectedTab,
+        onShowSnackbar =  onShowSnackbar,
+        onUpdateTab = {
+            selectedTab = it
+        }
+    )
+}
+
 
 @Composable
 fun PlayerDetailScreen(
-    viewModel: PlayerDetailViewModel = hiltViewModel(),
-    onShowSnackbar: (String) -> Unit
+    playerDetailUiState : PlayerDetailUiState,
+    selectedTab : DetailTab,
+    onShowSnackbar: (String) -> Unit,
+    onUpdateTab : (DetailTab) -> Unit
 ) {
-
-    var selectedTab by remember { mutableStateOf(DetailTab.PROFILE) }
-    val playerDetailUiState by viewModel.playerDetailUiState.collectAsStateWithLifecycle()
-
     Surface(
         color = ColorFFFFFFFF
     ) {
         when (playerDetailUiState) {
             is PlayerDetailUiState.Success -> {
-                (playerDetailUiState as PlayerDetailUiState.Success).playerDetail.let { player: Player ->
+                playerDetailUiState.playerDetail.let { player: Player ->
                     LazyColumn(
                         modifier = Modifier.fillMaxSize()
                     ) {
@@ -108,7 +123,7 @@ fun PlayerDetailScreen(
                                         tabTitle = it.name,
                                         isSelected = selectedTab == it,
                                         onSelect = {
-                                            selectedTab = it
+                                            onUpdateTab(it)
                                         }
                                     )
                                 }

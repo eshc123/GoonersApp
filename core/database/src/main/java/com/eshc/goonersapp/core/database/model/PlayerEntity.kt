@@ -20,6 +20,8 @@ data class PlayerEntity(
     @ColumnInfo(name = "back_number")
     val backNumber : Int,
     val nationality : String,
+    @ColumnInfo(name = "nationality_image_url")
+    val nationalityImageUrl: String,
     @ColumnInfo(name = "image_url")
     val imageUrl : String,
     @ColumnInfo(name = "contract_start_date")

@@ -17,7 +17,8 @@ fun RemotePlayer.toModel() = Player(
     position = position ?: "",
     positionInitial = positionInitial ?: "",
     positionCategory = positionCategory  ?: "",
-    nationality = nationality ?: ""
+    nationality = nationality ?: "",
+    nationalityImageUrl = nationalityImageUrl ?: ""
 )
 
 fun RemotePlayer.toEntity() = PlayerEntity(
@@ -31,7 +32,8 @@ fun RemotePlayer.toEntity() = PlayerEntity(
     contractStartDate = "",
     contractEndDate = "",
     position = position ?: "",
-    nationality = nationality ?: ""
+    nationality = nationality ?: "",
+    nationalityImageUrl = nationalityImageUrl ?: ""
 )
 
 fun PlayerEntity.toModel() = Player(
@@ -45,5 +47,6 @@ fun PlayerEntity.toModel() = Player(
     contractStartDate = contractStartDate,
     contractEndDate = contractEndDate,
     position = position,
-    nationality = nationality
+    nationality = nationality,
+    nationalityImageUrl = nationalityImageUrl
 )

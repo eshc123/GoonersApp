@@ -26,18 +26,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.ImageCard
-import com.eshc.goonersapp.core.designsystem.component.TabItem
+import com.eshc.goonersapp.core.designsystem.component.GnrTabItem
 import com.eshc.goonersapp.core.designsystem.iconpack.IcTalk
-import com.eshc.goonersapp.core.designsystem.theme.pretendard
 import com.eshc.goonersapp.feature.match.model.MatchUiModel
 
 @Composable
@@ -147,7 +144,7 @@ fun MatchDetailScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     DetailTab.entries.forEach {
-                        TabItem(
+                        GnrTabItem(
                             modifier = Modifier.weight(1f),
                             tabTitle = it.name,
                             isSelected = selectedTab == it,

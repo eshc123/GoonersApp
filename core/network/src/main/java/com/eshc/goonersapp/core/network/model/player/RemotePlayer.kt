@@ -26,5 +26,7 @@ data class RemotePlayer(
     @SerialName("position_category")
     val positionCategory : String? = "",
     @SerialName("nationality")
-    val nationality : String? = ""
+    val nationality : String? = "",
+    @SerialName("nationality_image_url")
+    val nationalityImageUrl : String? = ""
 )

@@ -13,8 +13,25 @@ data class Player(
     val position : String = "",
     val positionInitial : String = "",
     val positionCategory : String = "",
-    val nationality : String = ""
-)
+    val nationality : String = "",
+    val nationalityImageUrl: String = ""
+) {
+    private val names : List<String>
+        get() = name.split(" ")
+
+    val firstName : String
+        get() = names.firstOrNull() ?: ""
+
+    val lastNames : String
+        get() = names.let {
+            if(it.size > 1) names.subList(1, names.lastIndex + 1).joinToString(" ")
+            else ""
+        }
+
+    val displayName : String
+        get() = firstName + (if(lastNames.isEmpty()) "" else "\n${lastNames}")
+
+}
 
 enum class PlayerPosition(val positionCategory: String) {
     GOALKEEPER("Goalkeeper"),

@@ -20,7 +20,7 @@ interface PlayerNetworkService {
 
     @GET(value = "$PLAYER_BASE_URL/detail")
     suspend fun getPlayerDetail(
-        @Query("teamId") teamId : Int = 2,
+        @Query("teamId") teamId : Int = 19,
         @Query("playerId") playerId : Int
     ) : Response<BaseResponse<RemotePlayer>>
 }

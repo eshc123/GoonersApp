@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,6 +44,7 @@ import com.eshc.goonersapp.core.designsystem.component.GnrElevatedCard
 import com.eshc.goonersapp.core.designsystem.component.GnrTabItem
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFF5F5F5
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.core.domain.model.player.Player
@@ -99,7 +101,7 @@ fun PlayerDetailScreen(
                             ) {
                                 PlayerDetailInfo(
                                     title = "Age",
-                                    content = "22"
+                                    content = "${player.getAge()}"
                                 )
                                 PlayerDetailInfo(
                                     title = "Games",
@@ -110,16 +112,22 @@ fun PlayerDetailScreen(
                                     content = "10"
                                 )
                             }
+
+                            HorizontalDivider(
+                                modifier = Modifier.padding(top = 14.dp),
+                                thickness = 7.dp,
+                                color = ColorFFF5F5F5
+                            )
                         }
 
                         item {
                             Row(
-                                modifier = Modifier.fillMaxWidth().padding(horizontal = 15.dp),
-                                horizontalArrangement = Arrangement.spacedBy(24.dp)
+                                modifier = Modifier
+                                    .fillMaxWidth()
                             ) {
                                 DetailTab.entries.forEach {
                                     GnrTabItem(
-                                        modifier = Modifier.width(IntrinsicSize.Max),
+                                        modifier = Modifier.weight(1f),
                                         tabTitle = it.name,
                                         isSelected = selectedTab == it,
                                         onSelect = {

@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF9E9E9E
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 
 
@@ -29,16 +30,16 @@ fun GnrTabItem(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            modifier = Modifier.padding(bottom = 8.dp),
+            modifier = Modifier.padding(vertical = 10.dp),
             text = tabTitle,
             style = GnrTypography.body1SemiBold,
             color = if (isSelected) ColorFF10358A else ColorFF9E9E9E,
         )
-        if (isSelected)
-            HorizontalDivider(
-                modifier = Modifier,
-                color = ColorFF10358A,
-                thickness = 2.dp
-            )
+
+        HorizontalDivider(
+            modifier = Modifier,
+            color = if (isSelected) ColorFF10358A else ColorFFDCDCDC,
+            thickness = 2.dp
+        )
     }
 }

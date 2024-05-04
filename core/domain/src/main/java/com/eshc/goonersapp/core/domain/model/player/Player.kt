@@ -1,5 +1,9 @@
 package com.eshc.goonersapp.core.domain.model.player
 
+import com.eshc.goonersapp.core.common.util.DateUtil.getYearAndMonthAndDateLocalDate
+import java.time.LocalDate
+import java.time.Period
+
 data class Player(
     val id :Int,
     val name : String = "",
@@ -30,6 +34,13 @@ data class Player(
 
     val displayName : String
         get() = firstName + (if(lastNames.isEmpty()) "" else "\n${lastNames}")
+
+    fun getAge() : Int {
+        return Period.between(
+            getYearAndMonthAndDateLocalDate(birthDate),
+            LocalDate.now()
+        ).years
+    }
 
 }
 

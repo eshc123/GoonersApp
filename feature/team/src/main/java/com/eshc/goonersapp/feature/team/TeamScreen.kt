@@ -5,21 +5,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -32,13 +27,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.eshc.goonersapp.core.designsystem.component.GnrDropdownMenu
+import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.core.domain.model.player.Player
 import com.eshc.goonersapp.core.domain.model.player.PlayerPosition
 import com.eshc.goonersapp.feature.team.state.TeamUiState
 import com.eshc.goonersapp.feature.team.ui.SquadPlayerCard
 
 @Composable
-fun TeamScreen(
+fun TeamRootScreen(
     topBar : @Composable () -> Unit,
     bottomBar : @Composable () -> Unit,
     onPlayerClick: (String) -> Unit,
@@ -94,11 +90,12 @@ fun ColumnScope.TeamScreen(
                 PlayerPosition.entries.forEach { position ->
                     HorizontalPlayerListByPosition(
                         position = position.name,
-                        filteredPlayers = teamUiState.players.filter { it.positionCategory == position.positionCategory },
+                        filteredPlayers = teamUiState.players
+                            .filter { it.positionCategory == position.positionCategory }
+                            .sortedBy { it.backNumber },
                         onClick = onClick
                     )
                 }
-                Spacer(modifier = Modifier.size(16.dp))
             }
         }
         is TeamUiState.Loading -> {
@@ -130,31 +127,26 @@ fun ColumnScope.HorizontalPlayerListByPosition(
     filteredPlayers: List<Player>,
     onClick: (String) -> Unit
 ) {
-    Column(
-        modifier = Modifier.width(IntrinsicSize.Max)
-    ) {
-        Text(
-            modifier = Modifier.padding(top = 8.dp, start = 8.dp),
-            text = position,
-            style = MaterialTheme.typography.titleLarge,
-            color = Color.Black,
-        )
-        Divider(
-            modifier = Modifier
-                .padding(start = 8.dp, bottom = 12.dp)
-                .width(20.dp), thickness = 4.dp
-        )
-    }
+    Text(
+        modifier = Modifier.padding(top = 8.dp, start = 15.dp, bottom = 14.dp),
+        text = position,
+        style = GnrTypography.subtitleMedium,
+        color = Color.Black,
+    )
     if (filteredPlayers.isNotEmpty()) {
         LazyRow(
-            contentPadding = PaddingValues(horizontal = 8.dp),
+            contentPadding = PaddingValues(horizontal = 15.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             items(
-                filteredPlayers
-            ) {
+                items = filteredPlayers,
+                key = {
+                    it.id
+                }
+            ) { player ->
                 SquadPlayerCard(
-                    it, onClick
+                    player = player,
+                    onClick = onClick
                 )
             }
         }
@@ -163,7 +155,7 @@ fun ColumnScope.HorizontalPlayerListByPosition(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(216.dp),
+                .height(153.dp),
             contentAlignment = Alignment.Center
         ){
             CircularProgressIndicator()

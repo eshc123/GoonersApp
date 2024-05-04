@@ -52,14 +52,13 @@ fun GnrNavigationBar(
         shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp),
         tonalElevation = tonalElevation,
         border = BorderStroke(1.dp, Color(0xFFF0F0F0)),
-        shadowElevation = 40.dp,
         modifier = modifier
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .windowInsetsPadding(windowInsets)
-                .height(87.dp)
+                .height(56.dp)
                 .selectableGroup(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             content = content,

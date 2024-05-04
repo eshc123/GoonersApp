@@ -2,6 +2,7 @@ package com.eshc.goonersapp.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
@@ -199,7 +200,7 @@ fun GnrBottomBar(
                 },
                 icon = {
                     Icon(
-                        modifier = Modifier.widthIn(max = 48.dp).padding(bottom = 4.dp),
+                        modifier = Modifier.padding(bottom = 4.dp).heightIn(max = 18.dp),
                         imageVector = destination.unselectedIcon,
                         tint = Color(0xFF888888),
                         contentDescription = null,
@@ -207,7 +208,7 @@ fun GnrBottomBar(
                 },
                 selectedIcon = {
                     Icon(
-                        modifier = Modifier.widthIn(max = 48.dp).padding(bottom = 4.dp),
+                        modifier = Modifier.padding(bottom = 4.dp).heightIn(max = 18.dp),
                         imageVector = destination.selectedIcon,
                         contentDescription = null,
                     )
@@ -215,7 +216,7 @@ fun GnrBottomBar(
                 label = {
                     Text(
                         text = stringResource(id = destination.iconTextId),
-                        style = GnrTypography.body1Regular.copy(
+                        style = GnrTypography.body2Regular.copy(
                             color = if(selected) ColorFF181818 else Color(0xFF888888)
                         )
                     )

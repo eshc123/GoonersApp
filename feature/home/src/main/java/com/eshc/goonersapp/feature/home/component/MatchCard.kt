@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.component.GnrElevatedCard
+import com.eshc.goonersapp.core.designsystem.ext.gnrElevatedCardBorder
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF4C68A7
@@ -74,11 +75,7 @@ fun RecentlyMatchCard(
             .padding(horizontal = 8.dp, vertical = 12.dp)
             .fillMaxWidth()
             .height(IntrinsicSize.Max)
-            .border(
-                width = 1.dp,
-                color = ColorFFF5F5F5,
-                shape = RoundedCornerShape(10.dp)
-            ),
+            .gnrElevatedCardBorder(10.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         radius = 10.dp
     ) {
@@ -179,11 +176,7 @@ fun UpcomingMatchCard(
         modifier = modifier
             .width(263.dp)
             .height(131.dp)
-            .border(
-                width = 1.dp,
-                color = ColorFFF5F5F5,
-                shape = RoundedCornerShape(10.dp)
-            )
+            .gnrElevatedCardBorder(10.dp)
     ) {
         Column(
             modifier = modifier

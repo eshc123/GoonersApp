@@ -1,6 +1,5 @@
 package com.eshc.goonersapp.feature.team.detail
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,19 +15,17 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.eshc.goonersapp.core.designsystem.component.GnrElevatedCard
-import com.eshc.goonersapp.core.designsystem.component.LargeDropdownMenu
+import com.eshc.goonersapp.core.designsystem.component.GnrDropdownMenu
+import com.eshc.goonersapp.core.designsystem.ext.gnrElevatedCardBorder
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF000000
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF777777
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
@@ -36,7 +33,6 @@ import com.eshc.goonersapp.core.designsystem.theme.ColorFFE9343C
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFFECD44
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
-import com.eshc.goonersapp.core.designsystem.theme.pretendard
 
 @Composable
 fun StatScreen(
@@ -66,7 +62,8 @@ fun TotalStatCard(
     modifier: Modifier = Modifier,
 ) {
     GnrElevatedCard(
-        modifier = modifier.padding(vertical = 20.dp, horizontal = 14.dp),
+        modifier = modifier.padding(vertical = 20.dp, horizontal = 14.dp)
+            .gnrElevatedCardBorder(15.dp),
         radius = 15.dp,
         colors = CardDefaults.elevatedCardColors(
             containerColor = ColorFFFFFFFF

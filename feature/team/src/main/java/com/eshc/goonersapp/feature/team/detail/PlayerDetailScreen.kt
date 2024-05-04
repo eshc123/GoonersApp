@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.aspectRatio
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -42,6 +40,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.component.GnrElevatedCard
 import com.eshc.goonersapp.core.designsystem.component.GnrTabItem
+import com.eshc.goonersapp.core.designsystem.ext.gnrElevatedCardBorder
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF5F5F5
@@ -267,7 +266,8 @@ fun RowScope.PlayerDetailInfo(
     GnrElevatedCard(
         modifier = Modifier
             .height(110.dp)
-            .weight(1f),
+            .weight(1f)
+            .gnrElevatedCardBorder(15.dp),
         radius = 15.dp,
         colors = CardDefaults.elevatedCardColors(
             containerColor = ColorFFFFFFFF

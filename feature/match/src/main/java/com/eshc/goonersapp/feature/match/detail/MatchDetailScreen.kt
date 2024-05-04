@@ -79,9 +79,9 @@ fun MatchDetailScreen(
                             .weight(1f)
                     ) {
                         Text(
-                            text = DateUtil.getYearAndMonthAndDateAndTimeString(match.matchDate),
-                            style = MaterialTheme.typography.titleLarge,
-                            color = Color.Black,
+                            text = DateUtil.getYearAndMonthAndDateAndDayAndTimeString(match.matchDate),
+                            style = GnrTypography.body1SemiBold,
+                            color = ColorFF10358A,
                         )
                         Text(
                             modifier = Modifier.padding(top = 4.dp),

@@ -11,11 +11,11 @@ class FakePlayerNetworkDataSource : PlayerNetworkDataSource {
     private var responseForPlayerList: (() -> List<RemotePlayer>)? = null
     private var responseForPlayerDetail: (() -> RemotePlayer)? = null
 
-    fun setResponseForPlayerList(response: () -> List<RemotePlayer>) {
+    fun setResponseForPlayerList(response:( () -> List<RemotePlayer>)?) {
         this.responseForPlayerList = response
     }
 
-    fun setResponseForPlayerDetail(response: () -> RemotePlayer) {
+    fun setResponseForPlayerDetail(response: (() -> RemotePlayer)?) {
         this.responseForPlayerDetail = response
     }
 
@@ -24,7 +24,7 @@ class FakePlayerNetworkDataSource : PlayerNetworkDataSource {
         return if (response != null) {
             NetworkResult.Success(response)
         } else {
-            NetworkResult.Error(code = 404, message = "Response for getPlayerList not se")
+            NetworkResult.Error(code = 404, message = "Response for getPlayerList not sent")
         }
     }
 
@@ -33,7 +33,7 @@ class FakePlayerNetworkDataSource : PlayerNetworkDataSource {
         return if (response != null) {
             NetworkResult.Success(response)
         } else {
-            NetworkResult.Error(code = 404, message = "Response for getPlayerList not se")
+            NetworkResult.Error(code = 404, message = "Response for getPlayerDetail not sent")
         }
     }
 }

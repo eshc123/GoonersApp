@@ -45,9 +45,10 @@ fun StatScreen(
     Column(
         modifier = modifier.fillMaxSize()
     ) {
-        LargeDropdownMenu(
-            modifier = Modifier.padding(horizontal = 24.dp),
+        GnrDropdownMenu(
+            modifier = Modifier.padding(start = 14.dp,end = 14.dp, top = 26.dp),
             label = "season",
+            selectedIndex = 0,
             items = listOf("2023-2024", "2022-2023"),
             onItemSelected = { index, item ->
                 //TODO

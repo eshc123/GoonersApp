@@ -39,9 +39,9 @@ class FakeMatchRepositoryImpl @Inject constructor(
         emit(result)
     }
 
-    override fun getMatchesBySeason(season: String): Flow<DataResult<List<Match>>> = flow {
+    override fun getMatchesBySeason(seasonId: Int): Flow<DataResult<List<Match>>> = flow {
         val result = fakeMatchDataSource
-            .getMatchesBySeason(seasonId = season.toInt())
+            .getMatchesBySeason(seasonId = seasonId)
             .toDataResult { remote -> remote.map { response -> response.toModel() } }
 
         emit(result)

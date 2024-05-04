@@ -6,42 +6,31 @@ import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.usecase.match.GetMatchesBySeasonUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 class MatchViewModel @Inject constructor(
-    private val getMatchesBySeasonUseCase : GetMatchesBySeasonUseCase
+    getMatchesBySeasonUseCase : GetMatchesBySeasonUseCase
 ) : ViewModel() {
-    private val _matches = MutableStateFlow<List<Match>>(emptyList())
-    val matches : StateFlow<List<Match>> = _matches.asStateFlow()
 
-    init {
-        fetchMatchesBySeason("2023-2024")
-    }
-
-    fun fetchMatchesBySeason(
-        season : String
-    ){
-        viewModelScope.launch {
-            getMatchesBySeasonUseCase(season)
-                .catch {
-                    //TODO Error
-                }.collect {
-                    when(it){
-                        is DataResult.Success -> {
-                            _matches.emit(it.data)
-                        }
-                        is DataResult.Failure -> {
-
-                        }
+    val matches : StateFlow<List<Match>> =
+        getMatchesBySeasonUseCase(21646)
+            .map {
+                when(it){
+                    is DataResult.Success -> {
+                        it.data
                     }
-
+                    is DataResult.Failure -> {
+                        emptyList()
+                    }
                 }
-        }
-    }
+            }.stateIn(
+                scope = viewModelScope,
+                initialValue = emptyList(),
+                started = SharingStarted.Eagerly
+            )
 }

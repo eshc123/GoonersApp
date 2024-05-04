@@ -10,6 +10,6 @@ class GetMatchesBySeasonUseCase @Inject constructor(
     private val matchRepository: MatchRepository
 ) {
 
-    operator fun invoke(season : String): Flow<DataResult<List<Match>>> =
-        matchRepository.getMatchesBySeason(season)
+    operator fun invoke(seasonId : Int): Flow<DataResult<List<Match>>> =
+        matchRepository.getMatchesBySeason(seasonId)
 }

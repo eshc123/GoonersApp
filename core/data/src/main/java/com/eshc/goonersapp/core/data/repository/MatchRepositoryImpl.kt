@@ -36,9 +36,9 @@ class MatchRepositoryImpl @Inject constructor(
         emit(result)
     }
 
-    override fun getMatchesBySeason(season : String): Flow<DataResult<List<Match>>> = flow {
+    override fun getMatchesBySeason(seasonId : Int): Flow<DataResult<List<Match>>> = flow {
         val result = matchNetworkDataSource
-            .getMatchesBySeason(season.toInt())
+            .getMatchesBySeason(seasonId)
             .toDataResult { remote -> remote.map { response -> response.toModel() } }
 
         emit(result)

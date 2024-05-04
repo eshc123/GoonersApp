@@ -12,7 +12,7 @@ interface MatchRepository {
 
     fun getMatchInformation(match: Int, season: Int, opponent: Int): Flow<DataResult<MatchInformation>>
 
-    fun getMatchesBySeason(season : String): Flow<DataResult<List<Match>>>
+    fun getMatchesBySeason(seasonId : Int): Flow<DataResult<List<Match>>>
 
     fun getUpcomingMatches() : Flow<DataResult<List<Match>>>
 

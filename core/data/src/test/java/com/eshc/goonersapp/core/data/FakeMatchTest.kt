@@ -71,7 +71,7 @@ class FakeMatchTest {
 
     @Test
     fun testMatchBySeasonsWithFake() = runBlocking {
-        fakeMatchRepository.getMatchesBySeason("2025").collect { result ->
+        fakeMatchRepository.getMatchesBySeason(21646).collect { result ->
             when (result) {
                 is DataResult.Success -> { assertEquals(listOf<Match>(), result.data) }
                 is DataResult.Failure -> { assertEquals(404, result.code) }

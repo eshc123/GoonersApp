@@ -70,7 +70,7 @@ class FakeMatchDataSource @Inject constructor(): MatchNetworkDataSource {
     override suspend fun getMatchesBySeason(
         seasonId: Int
     ): NetworkResult<List<RemoteMatch>> {
-        return if (seasonId > 2024) {
+        return if (seasonId > 21646) {
             NetworkResult.Error(code = 404, message = "Not Found")
         } else {
             NetworkResult.Success(listOf())

@@ -1,5 +1,9 @@
 package com.eshc.goonersapp.core.domain.model.player
 
+import com.eshc.goonersapp.core.common.util.DateUtil.getYearAndMonthAndDateLocalDate
+import java.time.LocalDate
+import java.time.Period
+
 data class Player(
     val id :Int,
     val name : String = "",
@@ -13,8 +17,32 @@ data class Player(
     val position : String = "",
     val positionInitial : String = "",
     val positionCategory : String = "",
-    val nationality : String = ""
-)
+    val nationality : String = "",
+    val nationalityImageUrl: String = ""
+) {
+    private val names : List<String>
+        get() = name.split(" ")
+
+    val firstName : String
+        get() = names.firstOrNull() ?: ""
+
+    val lastNames : String
+        get() = names.let {
+            if(it.size > 1) names.subList(1, names.lastIndex + 1).joinToString(" ")
+            else ""
+        }
+
+    val displayName : String
+        get() = firstName + (if(lastNames.isEmpty()) "" else "\n${lastNames}")
+
+    fun getAge() : Int {
+        return Period.between(
+            getYearAndMonthAndDateLocalDate(birthDate),
+            LocalDate.now()
+        ).years
+    }
+
+}
 
 enum class PlayerPosition(val positionCategory: String) {
     GOALKEEPER("Goalkeeper"),

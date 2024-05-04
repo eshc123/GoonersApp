@@ -14,4 +14,5 @@ dependencies {
     implementation(libs.hilt.core)
     implementation(libs.kotlinx.coroutines)
     kapt(libs.hilt.compiler)
+    implementation(project(":core:common"))
 }

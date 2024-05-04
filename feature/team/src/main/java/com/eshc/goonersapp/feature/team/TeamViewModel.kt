@@ -3,40 +3,34 @@ package com.eshc.goonersapp.feature.team
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eshc.goonersapp.core.domain.model.DataResult
-import com.eshc.goonersapp.core.domain.model.player.Player
 import com.eshc.goonersapp.core.domain.usecase.player.GetPlayersUseCase
+import com.eshc.goonersapp.feature.team.state.TeamUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 class TeamViewModel @Inject constructor(
-    private val getPlayersUseCase: GetPlayersUseCase
+    getPlayersUseCase: GetPlayersUseCase
 ) : ViewModel() {
 
-    private val _players = MutableStateFlow<List<Player>>(emptyList())
-    val players: StateFlow<List<Player>> = _players.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            getPlayersUseCase()
-                .catch {
-                    //TODO
-                }.collect {
-                    when(it){
-                        is DataResult.Success -> {
-                            _players.emit(it.data)
-                        }
-                        is DataResult.Failure -> {
-
-                        }
+    val players: StateFlow<TeamUiState> =
+        getPlayersUseCase()
+            .map {
+                when(it){
+                    is DataResult.Success -> {
+                        TeamUiState.Success(it.data)
                     }
-
+                    is DataResult.Failure -> {
+                        TeamUiState.Error
+                    }
                 }
-        }
-    }
+            }.stateIn(
+                scope = viewModelScope,
+                initialValue = TeamUiState.Loading,
+                started = SharingStarted.Eagerly
+            )
 }

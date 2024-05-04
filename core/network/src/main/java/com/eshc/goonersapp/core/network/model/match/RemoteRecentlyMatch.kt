@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RemoteRecentlyMatch(
-    @SerialName("match") val match: RemoteMatchTeam,
+    @SerialName("match") val match: RemoteMatch,
     @SerialName("matchDetail") val matchDetail: List<RemoteMatchDetail>
 )

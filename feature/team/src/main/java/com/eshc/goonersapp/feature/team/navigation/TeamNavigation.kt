@@ -7,10 +7,9 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.eshc.goonersapp.feature.team.detail.PlayerDetailScreen
-import com.eshc.goonersapp.feature.team.TeamRoute
+import com.eshc.goonersapp.feature.team.TeamRootScreen
 import com.eshc.goonersapp.feature.team.club.ClubDetailRoute
-import com.eshc.goonersapp.feature.team.club.ClubDetailScreen
+import com.eshc.goonersapp.feature.team.detail.PlayerDetailRootScreen
 import com.eshc.goonersapp.feature.team.history.TeamHistoryScreen
 
 const val teamNavigationRoute = "team_route"
@@ -46,7 +45,7 @@ fun NavGraphBuilder.teamScreen(
     composable(
         route = teamNavigationRoute
     ) {
-        TeamRoute(
+        TeamRootScreen(
             topBar = topBar,
             bottomBar = bottomBar,
             onPlayerClick,
@@ -64,7 +63,7 @@ fun NavGraphBuilder.playerDetailScreen(
             navArgument(playerIdArg) { type = NavType.StringType },
         ),
     ) {
-        PlayerDetailScreen(
+        PlayerDetailRootScreen(
             onShowSnackbar = onShowSnackbar
         )
     }

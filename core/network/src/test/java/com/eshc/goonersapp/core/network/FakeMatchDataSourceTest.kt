@@ -4,7 +4,7 @@ import com.eshc.goonersapp.core.network.fake.FakeMatchDataSource
 import com.eshc.goonersapp.core.network.model.NetworkResult
 import com.eshc.goonersapp.core.network.model.match.LineUp
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchDetail
-import com.eshc.goonersapp.core.network.model.match.RemoteMatchUpcoming
+import com.eshc.goonersapp.core.network.model.match.RemoteMatch
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -71,7 +71,7 @@ class FakeMatchDataSourceTest {
         when (val result = fakeMatchDataSource.getMatchesBySeason(2025)) {
             is NetworkResult.Success -> {
                 assertEquals(
-                    listOf<RemoteMatchUpcoming>(),
+                    listOf<RemoteMatch>(),
                     result.data
                 )
             }
@@ -90,7 +90,7 @@ class FakeMatchDataSourceTest {
         when (val result = fakeMatchDataSource.getUpcomingMatches()) {
             is NetworkResult.Success -> {
                 assertEquals(
-                    listOf<RemoteMatchUpcoming>(),
+                    listOf<RemoteMatch>(),
                     result.data
                 )
             }

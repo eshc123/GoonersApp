@@ -7,7 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.eshc.goonersapp.feature.team.TeamScreen
+import com.eshc.goonersapp.feature.team.TeamRootScreen
 import com.eshc.goonersapp.feature.team.club.ClubDetailRoute
 import com.eshc.goonersapp.feature.team.detail.PlayerDetailRootScreen
 import com.eshc.goonersapp.feature.team.history.TeamHistoryScreen
@@ -45,7 +45,7 @@ fun NavGraphBuilder.teamScreen(
     composable(
         route = teamNavigationRoute
     ) {
-        TeamScreen(
+        TeamRootScreen(
             topBar = topBar,
             bottomBar = bottomBar,
             onPlayerClick,

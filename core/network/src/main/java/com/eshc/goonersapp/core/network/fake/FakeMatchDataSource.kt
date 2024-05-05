@@ -3,10 +3,9 @@ package com.eshc.goonersapp.core.network.fake
 import com.eshc.goonersapp.core.network.MatchNetworkDataSource
 import com.eshc.goonersapp.core.network.model.NetworkResult
 import com.eshc.goonersapp.core.network.model.match.Performance
+import com.eshc.goonersapp.core.network.model.match.RemoteMatch
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchData
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchInformation
-import com.eshc.goonersapp.core.network.model.match.RemoteMatch
-import com.eshc.goonersapp.core.network.model.match.RemoteRecentlyMatch
 import javax.inject.Inject
 
 /**
@@ -81,9 +80,9 @@ class FakeMatchDataSource @Inject constructor(): MatchNetworkDataSource {
         return NetworkResult.Success(listOf())
     }
 
-    override suspend fun getRecentlyMatch(): NetworkResult<RemoteRecentlyMatch> {
+    override suspend fun getRecentlyMatch(): NetworkResult<RemoteMatchData> {
         return NetworkResult.Success(
-            RemoteRecentlyMatch(
+            RemoteMatchData(
                 match = RemoteMatch(),
                 matchDetail = listOf()
             )

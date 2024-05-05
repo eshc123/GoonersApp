@@ -35,6 +35,9 @@ import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.ImageCard
 import com.eshc.goonersapp.core.designsystem.component.GnrTabItem
 import com.eshc.goonersapp.core.designsystem.iconpack.IcTalk
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
+import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
+import com.eshc.goonersapp.core.domain.model.match.MatchData
 import com.eshc.goonersapp.feature.match.model.MatchUiModel
 
 @Composable
@@ -177,7 +180,7 @@ fun MatchDetailScreen(
                 .align(Alignment.BottomEnd)
                 .padding(18.dp),
             onClick = {
-                onClickChat(match)
+                // onClickChat(match)
             }
         ) {
             Icon(

@@ -3,6 +3,7 @@ package com.eshc.goonersapp.core.data
 import com.eshc.goonersapp.core.data.fake.FakeMatchRepositoryImpl
 import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.match.Match
+import com.eshc.goonersapp.core.domain.model.match.MatchData
 import com.eshc.goonersapp.core.domain.model.match.MatchInformation
 import com.eshc.goonersapp.core.domain.model.match.MatchRecently
 import com.eshc.goonersapp.core.domain.model.match.Performance
@@ -36,7 +37,12 @@ class FakeMatchTest {
             when (result) {
                 is DataResult.Success -> {
                     assertEquals(
-                        Match(id = 38),
+                        MatchData(
+                            match = Match(
+                                id = 38
+                            ),
+                            matchDetail = listOf()
+                        ),
                         result.data
                     )
                 }

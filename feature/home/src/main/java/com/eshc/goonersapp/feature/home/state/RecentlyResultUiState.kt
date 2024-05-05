@@ -1,11 +1,11 @@
 package com.eshc.goonersapp.feature.home.state
 
-import com.eshc.goonersapp.core.domain.model.match.MatchRecently
+import com.eshc.goonersapp.core.domain.model.match.MatchData
 
 sealed interface RecentlyResultUiState {
     data object Loading: RecentlyResultUiState
 
-    data class Success(val data: MatchRecently? = null): RecentlyResultUiState
+    data class Success(val data: MatchData? = null): RecentlyResultUiState
 
     data class Failed(val message: String? = null): RecentlyResultUiState
 

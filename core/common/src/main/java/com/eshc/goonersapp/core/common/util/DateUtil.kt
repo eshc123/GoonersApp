@@ -24,6 +24,11 @@ object DateUtil {
         return LocalDateTime.parse(date, defaultDateFormat).format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"))
     }
 
+    fun getYearAndMonthAndDateAndDayAndTimeString(date : String ) : String {
+        if(date.isBlank()) return date
+        return LocalDateTime.parse(date, defaultDateFormat).format(DateTimeFormatter.ofPattern("yyyy.MM.dd E HH:mm")).uppercase()
+    }
+
     fun getYearAndMonthAndDateLocalDate(date : String ) : LocalDate {
         if(date.isBlank()) return LocalDate.now()
         return LocalDate.parse(date, defaultDateFormat)

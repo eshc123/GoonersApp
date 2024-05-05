@@ -35,6 +35,9 @@ import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.ImageCard
 import com.eshc.goonersapp.core.designsystem.component.GnrTabItem
 import com.eshc.goonersapp.core.designsystem.iconpack.IcTalk
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
+import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
+import com.eshc.goonersapp.core.domain.model.match.MatchData
 import com.eshc.goonersapp.feature.match.model.MatchUiModel
 
 @Composable
@@ -43,20 +46,21 @@ fun MatchDetailRoute(
     onClickChat: (MatchUiModel) -> Unit,
     onShowSnackbar : (String) -> Unit
 ) {
-    val match by viewModel.match.collectAsStateWithLifecycle()
+    val matchData by viewModel.matchDetail.collectAsStateWithLifecycle()
     MatchDetailScreen(
-        match = match,
+        matchData = matchData,
         onClickChat = onClickChat
     )
 }
 
 @Composable
 fun MatchDetailScreen(
-    match: MatchUiModel,
+    matchData: MatchData,
     onClickChat: (MatchUiModel) -> Unit
 ) {
     var selectedTab by remember { mutableStateOf(DetailTab.SUMMARY) }
-
+    val match = matchData.match
+    val matchDetail = matchData.matchDetail
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -79,9 +83,9 @@ fun MatchDetailScreen(
                             .weight(1f)
                     ) {
                         Text(
-                            text = DateUtil.getYearAndMonthAndDateAndTimeString(match.matchDate),
-                            style = MaterialTheme.typography.titleLarge,
-                            color = Color.Black,
+                            text = DateUtil.getYearAndMonthAndDateAndDayAndTimeString(match.matchDate),
+                            style = GnrTypography.body1SemiBold,
+                            color = ColorFF10358A,
                         )
                         Text(
                             modifier = Modifier.padding(top = 4.dp),
@@ -176,7 +180,7 @@ fun MatchDetailScreen(
                 .align(Alignment.BottomEnd)
                 .padding(18.dp),
             onClick = {
-                onClickChat(match)
+                // onClickChat(match)
             }
         ) {
             Icon(

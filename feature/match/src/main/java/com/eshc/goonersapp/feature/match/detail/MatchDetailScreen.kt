@@ -43,20 +43,21 @@ fun MatchDetailRoute(
     onClickChat: (MatchUiModel) -> Unit,
     onShowSnackbar : (String) -> Unit
 ) {
-    val match by viewModel.match.collectAsStateWithLifecycle()
+    val matchData by viewModel.matchDetail.collectAsStateWithLifecycle()
     MatchDetailScreen(
-        match = match,
+        matchData = matchData,
         onClickChat = onClickChat
     )
 }
 
 @Composable
 fun MatchDetailScreen(
-    match: MatchUiModel,
+    matchData: MatchData,
     onClickChat: (MatchUiModel) -> Unit
 ) {
     var selectedTab by remember { mutableStateOf(DetailTab.SUMMARY) }
-
+    val match = matchData.match
+    val matchDetail = matchData.matchDetail
     Box(
         modifier = Modifier
             .fillMaxSize()

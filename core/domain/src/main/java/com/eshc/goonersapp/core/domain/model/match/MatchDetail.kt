@@ -26,3 +26,8 @@ data class MatchDetail(
                 }
 
 }
+
+fun List<MatchDetail>.getScoreHistoryList(teamId: Int? = null) =
+    this.filter {
+        it.isScoredMatchDetailType && (teamId == null || it.teamId == teamId)
+    }

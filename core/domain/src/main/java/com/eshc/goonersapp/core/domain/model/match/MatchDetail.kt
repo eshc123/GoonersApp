@@ -12,8 +12,9 @@ data class MatchDetail(
     val playerName: String,
     val relatedPlayerName: String? = ""
 ) {
+
     val isScoredMatchDetailType: Boolean
-        get() = type in setOf(MatchDetailType.GOAL, MatchDetailType.PENALTY, MatchDetailType.OWNGOAL)
+        get() = type in MatchDetailType.scoredTypes
 
     val scoringRecordText: String
         get() = "$playerName (${minute}`)" +

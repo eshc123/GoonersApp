@@ -9,7 +9,11 @@ enum class MatchDetailType {
     YELLOWREDCARD,
     PENALTY,
     MISSED_PENALTY,
-    UNKNOWN
+    UNKNOWN;
+
+    companion object {
+        val scoredTypes = setOf(GOAL, PENALTY, OWNGOAL)
+    }
 }
 
 fun String.toMatchDetailType() : MatchDetailType {

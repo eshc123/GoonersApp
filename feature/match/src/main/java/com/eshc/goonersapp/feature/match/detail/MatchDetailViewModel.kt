@@ -3,11 +3,12 @@ package com.eshc.goonersapp.feature.match.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.eshc.goonersapp.core.common.state.UiState
 import com.eshc.goonersapp.core.domain.model.DataResult
-import com.eshc.goonersapp.core.domain.model.match.Match
-import com.eshc.goonersapp.core.domain.model.match.MatchData
 import com.eshc.goonersapp.core.domain.usecase.match.GetMatchDetailUseCase
 import com.eshc.goonersapp.feature.match.model.MatchUiModel
+import com.eshc.goonersapp.feature.match.model.toUiModel
+import com.eshc.goonersapp.feature.match.state.MatchDetailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -21,27 +22,29 @@ class MatchDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val _match = savedStateHandle.getStateFlow(MATCH_SAVED_STATE_KEY,MatchUiModel(0))
-    val matchDetail : StateFlow<MatchData> = getMatchDetailUseCase(
+
+    val matchDetailUiState : StateFlow<MatchDetailUiState> = getMatchDetailUseCase(
         matchId = _match.value.id
     ).map {
             when(it){
                 is DataResult.Success -> {
-                    it.data
+                    MatchDetailUiState(
+                        match = it.data.match.toUiModel(),
+                        matchDetailState = UiState.Success(it.data.matchDetail)
+                    )
                 }
                 is DataResult.Failure -> {
-                    MatchData(
-                        match = Match(id = 0),
-                        matchDetail = emptyList()
+                    MatchDetailUiState(
+                        match = _match.value,
+                        matchDetailState = UiState.Error
                     )
                 }
             }
         }.stateIn(
             scope = viewModelScope,
-            initialValue = MatchData(
-                match = Match(
-                    id = _match.value.id
-                ),
-                matchDetail = emptyList()
+            initialValue = MatchDetailUiState(
+                match = _match.value,
+                matchDetailState = UiState.Loading
             ),
             started = SharingStarted.Eagerly
         )

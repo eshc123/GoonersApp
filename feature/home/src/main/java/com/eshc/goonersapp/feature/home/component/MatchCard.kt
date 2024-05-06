@@ -1,9 +1,7 @@
 package com.eshc.goonersapp.feature.home.component
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -17,7 +15,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -31,10 +28,10 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.component.GnrElevatedCard
+import com.eshc.goonersapp.core.designsystem.component.MatchLeagueInfo
 import com.eshc.goonersapp.core.designsystem.ext.gnrElevatedCardBorder
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
@@ -42,10 +39,10 @@ import com.eshc.goonersapp.core.designsystem.theme.ColorFF4C68A7
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF9E9E9E
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFC3CDE2
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
-import com.eshc.goonersapp.core.designsystem.theme.ColorFFF5F5F5
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF7F9FF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.core.domain.model.match.MatchDetail
+import com.eshc.goonersapp.core.domain.model.match.getScoreHistoryList
 
 @Composable
 fun RecentlyMatchCard(
@@ -210,49 +207,6 @@ fun UpcomingMatchCard(
 }
 
 @Composable
-fun MatchLeagueInfo(
-    logoSize: Dp,
-    logoPadding: Dp,
-    competitionUrl: String,
-    competitionName: String,
-    modifier: Modifier = Modifier,
-    verticalAlignment: Alignment.Vertical = Alignment.Top,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = verticalAlignment,
-        horizontalArrangement = horizontalArrangement
-    ) {
-        Card(
-            modifier = Modifier
-                .wrapContentSize()
-                .border(
-                    width = 0.5.dp,
-                    shape = CircleShape,
-                    color = ColorFFDCDCDC
-                ),
-            shape = CircleShape,
-            colors = CardDefaults.cardColors(containerColor = ColorFFF5F5F5),
-            content = {
-                Box(
-                    modifier = Modifier
-                        .padding(logoPadding)
-                        .size(logoSize),
-                    content = { AsyncImage(model = competitionUrl, contentDescription = "League Logo") }
-                )
-            }
-        )
-        Spacer(modifier = Modifier.size(10.dp))
-        Text(
-            text = competitionName,
-            color = ColorFF181818,
-            style = GnrTypography.descriptionSemiBold
-        )
-    }
-}
-
-@Composable
 fun RecentlyTeamInfo(
     teamImgUrl: String,
     teamShortName: String,
@@ -287,11 +241,7 @@ fun RecentlyGoalHistory(
     matchHistory: List<MatchDetail>,
     modifier: Modifier = Modifier
 ) {
-    val goalHistory = matchHistory.let { detail ->
-        detail
-            .filter { history -> history.type == "GOAL" || history.type == "PENALTY" }
-            .filter { history -> history.teamId == teamId }
-    }
+    val goalHistory = matchHistory.getScoreHistoryList(teamId)
 
     Column(
         modifier = modifier
@@ -300,15 +250,9 @@ fun RecentlyGoalHistory(
         horizontalAlignment = Alignment.Start,
         content =  {
             goalHistory.forEach { history ->
-                val historyText = if (history.type == "PENALTY") {
-                    "${history.playerName} (${history.minute}`) PK"
-                } else {
-                    "${history.playerName} (${history.minute}`)"
-                }
-
                 Spacer(modifier = Modifier.size(3.dp))
                 Text(
-                    text = historyText,
+                    text = history.scoringRecordText,
                     modifier = Modifier.padding(horizontal = 10.dp),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

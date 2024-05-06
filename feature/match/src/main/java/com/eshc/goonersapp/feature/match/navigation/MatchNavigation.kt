@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.feature.match.MatchRoute
-import com.eshc.goonersapp.feature.match.detail.MatchDetailRoute
+import com.eshc.goonersapp.feature.match.detail.MatchDetailRootScreen
 import com.eshc.goonersapp.feature.match.model.MatchType
 import com.eshc.goonersapp.feature.match.model.MatchUiModel
 
@@ -54,7 +54,7 @@ fun NavGraphBuilder.matchDetailScreen(
             navArgument(matchArg) { type = MatchType },
         ),
     ) {
-        MatchDetailRoute(
+        MatchDetailRootScreen(
             onClickChat = onClickChat,
             onShowSnackbar = onShowSnackbar
         )

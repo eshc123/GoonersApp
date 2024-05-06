@@ -89,7 +89,7 @@ fun RemoteMatchDetail.toModel() = MatchDetail(
     relatedPlayerId = relatedPlayerId,
     minute = minute,
     extraMinute = extraMinute,
-    matchDetailType = type.toMatchDetailType(),
+    type = type.toMatchDetailType(),
     playerName = playerName,
     relatedPlayerName = relatedPlayerName
 )

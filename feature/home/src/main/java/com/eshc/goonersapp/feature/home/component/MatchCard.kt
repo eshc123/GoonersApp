@@ -110,7 +110,7 @@ fun RecentlyMatchCard(
                     Spacer(modifier = modifier.size(5.dp))
                     Text(
                         text = location,
-                        color = ColorFF4C68A7,
+                        color = ColorFF9E9E9E,
                         style = GnrTypography.descriptionMedium.copy(
                             lineBreak = LineBreak(
                                 strategy = LineBreak.Strategy.Balanced,
@@ -371,6 +371,7 @@ fun UpcomingHomeTeamInfo(
             Spacer(modifier = modifier.size(10.dp))
             Text(
                 text = homeShortName,
+                color = ColorFF181818,
                 style = GnrTypography.subtitleMedium
             )
         }
@@ -425,6 +426,7 @@ fun UpcomingMatchDateInfo(
             content = {
                 Text(
                     text = time,
+                    color = ColorFF181818,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                     style = GnrTypography.body2Medium
@@ -432,6 +434,7 @@ fun UpcomingMatchDateInfo(
                 Spacer(modifier = Modifier.size(5.dp))
                 Text(
                     text = location,
+                    color = ColorFF181818,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                     style = GnrTypography.body2Medium

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -125,9 +124,7 @@ fun GnrApp(
                                     )
                                 }
 
-                                else -> {
-
-                                }
+                                else -> { /* TODO("Implement Nothing") */ }
                             }
                         }
                     )
@@ -174,7 +171,7 @@ fun GnrTopLevelBar(
 ) {
     TopLevelTopBar(
         modifier = Modifier.padding(horizontal = 8.dp),
-        title = topLevelDestination.name
+        title = stringResource(id = topLevelDestination.titleTextId)
     ) {
         icons()
     }
@@ -200,7 +197,9 @@ fun GnrBottomBar(
                 },
                 icon = {
                     Icon(
-                        modifier = Modifier.padding(bottom = 4.dp).heightIn(max = 18.dp),
+                        modifier = Modifier
+                            .padding(bottom = 4.dp)
+                            .heightIn(max = 18.dp),
                         imageVector = destination.unselectedIcon,
                         tint = Color(0xFF888888),
                         contentDescription = null,
@@ -208,7 +207,9 @@ fun GnrBottomBar(
                 },
                 selectedIcon = {
                     Icon(
-                        modifier = Modifier.padding(bottom = 4.dp).heightIn(max = 18.dp),
+                        modifier = Modifier
+                            .padding(bottom = 4.dp)
+                            .heightIn(max = 18.dp),
                         imageVector = destination.selectedIcon,
                         contentDescription = null,
                     )

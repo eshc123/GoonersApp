@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
@@ -87,7 +88,7 @@ fun RecentlyMatchCard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
-                modifier = modifier.fillMaxWidth(),
+                modifier = modifier.fillMaxWidth().padding(bottom = 15.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -98,7 +99,9 @@ fun RecentlyMatchCard(
                     competitionName = competitionName,
                     verticalAlignment = Alignment.CenterVertically,
                 )
-                Row {
+                Column(
+                    horizontalAlignment = Alignment.End
+                ) {
                     Text(
                         text = time,
                         color = ColorFF4C68A7,
@@ -108,7 +111,13 @@ fun RecentlyMatchCard(
                     Text(
                         text = location,
                         color = ColorFF4C68A7,
-                        style = GnrTypography.descriptionMedium
+                        style = GnrTypography.descriptionMedium.copy(
+                            lineBreak = LineBreak(
+                                strategy = LineBreak.Strategy.Balanced,
+                                strictness = LineBreak.Strictness.Strict,
+                                wordBreak = LineBreak.WordBreak.Default
+                            )
+                        )
                     )
                 }
             }

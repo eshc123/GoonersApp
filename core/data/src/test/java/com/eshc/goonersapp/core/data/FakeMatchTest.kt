@@ -3,16 +3,15 @@ package com.eshc.goonersapp.core.data
 import com.eshc.goonersapp.core.data.fake.FakeMatchRepositoryImpl
 import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.match.Match
+import com.eshc.goonersapp.core.domain.model.match.MatchData
 import com.eshc.goonersapp.core.domain.model.match.MatchInformation
-import com.eshc.goonersapp.core.domain.model.match.MatchRecently
 import com.eshc.goonersapp.core.domain.model.match.Performance
 import com.eshc.goonersapp.core.domain.repository.MatchRepository
 import com.eshc.goonersapp.core.network.fake.FakeMatchDataSource
 import kotlinx.coroutines.runBlocking
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Test
 
 /**
  * Created By KanuKim97
@@ -36,7 +35,12 @@ class FakeMatchTest {
             when (result) {
                 is DataResult.Success -> {
                     assertEquals(
-                        Match(id = 38),
+                        MatchData(
+                            match = Match(
+                                id = 38
+                            ),
+                            matchDetail = listOf()
+                        ),
                         result.data
                     )
                 }
@@ -71,7 +75,7 @@ class FakeMatchTest {
 
     @Test
     fun testMatchBySeasonsWithFake() = runBlocking {
-        fakeMatchRepository.getMatchesBySeason("2025").collect { result ->
+        fakeMatchRepository.getMatchesBySeason(21646).collect { result ->
             when (result) {
                 is DataResult.Success -> { assertEquals(listOf<Match>(), result.data) }
                 is DataResult.Failure -> { assertEquals(404, result.code) }
@@ -95,7 +99,7 @@ class FakeMatchTest {
             when (result) {
                 is DataResult.Success -> {
                     assertEquals(
-                        MatchRecently(
+                        MatchData(
                             match = Match(),
                             matchDetail = listOf()
                         ),

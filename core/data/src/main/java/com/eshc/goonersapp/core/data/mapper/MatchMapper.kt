@@ -7,6 +7,7 @@ import com.eshc.goonersapp.core.domain.model.match.MatchDetail
 import com.eshc.goonersapp.core.domain.model.match.MatchInformation
 import com.eshc.goonersapp.core.domain.model.match.NotablePlayer
 import com.eshc.goonersapp.core.domain.model.match.Performance
+import com.eshc.goonersapp.core.domain.model.match.toMatchDetailType
 import com.eshc.goonersapp.core.network.model.match.RemoteMatch
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchData
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchDetail
@@ -88,7 +89,7 @@ fun RemoteMatchDetail.toModel() = MatchDetail(
     relatedPlayerId = relatedPlayerId,
     minute = minute,
     extraMinute = extraMinute,
-    type = type,
+    type = type.toMatchDetailType(),
     playerName = playerName,
     relatedPlayerName = relatedPlayerName
 )

@@ -1,5 +1,6 @@
 package com.eshc.goonersapp.core.designsystem.theme
 
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)
@@ -11,6 +12,7 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val ColorFF10358A = Color(0xFF10358A)
+val ColorFF072872 = Color(0xFF072872)
 val ColorFF4C68A7 = Color(0xFF4C68A7)
 val ColorFF889AC4 = Color(0xFF889AC4)
 val ColorFFC3CDE2 = Color(0xFFC3CDE2)
@@ -28,5 +30,15 @@ val ColorFFF5F5F5 = Color(0xFFF5F5F5)
 val ColorFFFAFAFC = Color(0xFFFAFAFC)
 val ColorFFFFFFFF = Color(0xFFFFFFFF)
 
+
+val Color88FFFFFF = Color(0x88FFFFFF)
+
 val ColorFFFECD44 = Color(0xFFFECD44)
 val ColorFFE9343C = Color(0xFFE9343C)
+
+val BrushMainGradient = Brush.verticalGradient(
+    listOf(
+        ColorFF10358A,
+        ColorFF072872
+    )
+)

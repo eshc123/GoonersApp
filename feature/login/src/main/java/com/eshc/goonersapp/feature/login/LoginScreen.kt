@@ -16,12 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.eshc.goonersapp.core.designsystem.component.GnrTextFiled
 import com.eshc.goonersapp.core.designsystem.component.TopBar
-import com.eshc.goonersapp.core.designsystem.theme.pretendard
 
 @Composable
 fun LoginScreen(
@@ -32,7 +30,8 @@ fun LoginScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         TopBar(
-            title = "LOGIN"
+            title = "LOGIN",
+            onBackIconClick = {}
         )
 
         Image(

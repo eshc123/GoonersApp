@@ -42,7 +42,8 @@ fun SignUpScreen(
             modifier = Modifier.fillMaxSize()
         ) {
             TopBar(
-                title = "SIGN UP"
+                title = "SIGN UP",
+                onBackIconClick = {}
             )
             LazyColumn(
                 modifier = Modifier

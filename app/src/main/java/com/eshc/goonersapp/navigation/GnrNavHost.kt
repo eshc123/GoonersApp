@@ -19,7 +19,7 @@ import com.eshc.goonersapp.feature.team.navigation.clubDetailScreen
 import com.eshc.goonersapp.feature.match.navigation.navigateToMatchDetail
 import com.eshc.goonersapp.feature.team.navigation.navigateToPlayerDetail
 import com.eshc.goonersapp.feature.team.navigation.playerDetailScreen
-import com.eshc.goonersapp.feature.team.navigation.teamHistoryScreen
+import com.eshc.goonersapp.feature.team.navigation.teamSearchScreen
 import com.eshc.goonersapp.feature.team.navigation.teamScreen
 
 const val mainNavigationRoute = "main_route"
@@ -75,29 +75,35 @@ fun GnrNavHost(
         )
 
         matchDetailScreen(
-            onClickChat = {
-                navController.navigateToChatRoom(it)
-            },
+            bottomBar = bottomBar,
+            onClickChat = { navController.navigateToChatRoom(it) },
+            onBackIconClick = { navController.popBackStack() },
             onShowSnackbar = onShowSnackbar
         )
-        teamHistoryScreen(
-            onPlayerClick = {
-                navController.navigateToPlayerDetail(it)
-            },
+
+        teamSearchScreen(
+            bottomBar = bottomBar,
+            onPlayerClick = { navController.navigateToPlayerDetail(it) },
+            onBackIconClick = { navController.popBackStack() },
             onShowSnackbar = onShowSnackbar
         )
+
         chatRoomScreen(
             onShowSnackbar = onShowSnackbar
         )
+
         clubDetailScreen(
+            onBackIconClick = { navController.popBackStack() },
             onShowSnackbar = onShowSnackbar
         )
+
         loginScreen(
             onShowSnackbar = onShowSnackbar,
             onClickSignUp = {
                 navController.navigateToSignUp()
             }
         )
+
         signUpScreen(
             onShowSnackbar = onShowSnackbar
         )

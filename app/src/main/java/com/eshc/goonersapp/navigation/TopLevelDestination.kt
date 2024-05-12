@@ -15,9 +15,9 @@ import com.eshc.goonersapp.feature.home.R as home
 import com.eshc.goonersapp.feature.match.R as match
 import com.eshc.goonersapp.feature.team.R as team
 
-val topLevelDestinationSet = TopLevelDestination.entries.map {
-    it.route
-}.toSet()
+val topLevelDestinationSet = TopLevelDestination.entries
+    .map { destination -> destination.route }
+    .toSet()
 
 enum class TopLevelDestination(
     val selectedIcon: ImageVector,

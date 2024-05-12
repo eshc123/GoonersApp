@@ -3,7 +3,6 @@ package com.eshc.goonersapp.feature.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.eshc.goonersapp.core.common.util.DateUtil
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.feature.home.component.DashboardCard
 import com.eshc.goonersapp.feature.home.component.RecentlyMatchCard
@@ -64,13 +64,13 @@ fun HomeScreen(
 ) {
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(top = 12.dp)
+        contentPadding = PaddingValues(top = 30.dp)
     ) {
         item {
-            Spacer(modifier = Modifier.height(12.dp))
             Text(
-                modifier = Modifier.padding(start = 8.dp),
                 text = "Team Dashboard",
+                modifier = Modifier.padding(start = 8.dp),
+                color = ColorFF181818,
                 style = GnrTypography.subtitleMedium
             )
             DashboardCard()
@@ -78,10 +78,10 @@ fun HomeScreen(
 
         item {
             Text(
-                modifier = Modifier.padding(start = 8.dp),
                 text = "Upcoming Matches",
+                modifier = Modifier.padding(start = 8.dp),
+                color = ColorFF181818,
                 style = GnrTypography.subtitleMedium,
-                color = Color.Black,
             )
             when (upcomingMatchesUiState) {
                 is UpcomingMatchesUiState.Loading -> {

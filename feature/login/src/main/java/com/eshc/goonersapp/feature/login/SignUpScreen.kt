@@ -31,6 +31,7 @@ import com.eshc.goonersapp.core.designsystem.theme.pretendard
 @Composable
 fun SignUpScreen(
     onShowSnackbar: (String) -> Unit,
+    onBackIconClick: () -> Unit,
     viewModel: SignUpViewModel = hiltViewModel()
 ) {
     val inputTypeList by viewModel.signUpInputTypeList.collectAsStateWithLifecycle()
@@ -43,7 +44,7 @@ fun SignUpScreen(
         ) {
             TopBar(
                 title = "SIGN UP",
-                onBackIconClick = {}
+                onBackIconClick = onBackIconClick
             )
             LazyColumn(
                 modifier = Modifier
@@ -126,5 +127,8 @@ fun SignUpScreen(
 @Preview
 @Composable
 fun PreviewSignUpScreen() {
-    SignUpScreen(onShowSnackbar = {})
+    SignUpScreen(
+        onShowSnackbar = {},
+        onBackIconClick = {}
+    )
 }

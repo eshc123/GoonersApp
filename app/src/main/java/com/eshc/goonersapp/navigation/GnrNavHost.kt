@@ -99,13 +99,13 @@ fun GnrNavHost(
 
         loginScreen(
             onShowSnackbar = onShowSnackbar,
-            onClickSignUp = {
-                navController.navigateToSignUp()
-            }
+            onClickSignUp = { navController.navigateToSignUp() },
+            onBackIconClick = { navController.popBackStack() }
         )
 
         signUpScreen(
-            onShowSnackbar = onShowSnackbar
+            onShowSnackbar = onShowSnackbar,
+            onBackIconClick = { navController.popBackStack() }
         )
     }
 }

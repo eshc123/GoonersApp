@@ -20,26 +20,30 @@ fun NavController.navigateToSignUp(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.loginScreen(
     onShowSnackbar : (String) -> Unit,
-    onClickSignUp : () -> Unit
+    onClickSignUp : () -> Unit,
+    onBackIconClick: () -> Unit
 ) {
     composable(
         route = loginNavigationRoute
     ) {
         LoginScreen(
             onShowSnackbar = onShowSnackbar,
-            onClickSignUp = onClickSignUp
+            onClickSignUp = onClickSignUp,
+            onBackIconClick = onBackIconClick
         )
     }
 }
 
 fun NavGraphBuilder.signUpScreen(
-    onShowSnackbar : (String) -> Unit
+    onShowSnackbar : (String) -> Unit,
+    onBackIconClick: () -> Unit
 ) {
     composable(
         route = signUpNavigationRoute
     ) {
         SignUpScreen(
-            onShowSnackbar = onShowSnackbar
+            onShowSnackbar = onShowSnackbar,
+            onBackIconClick = onBackIconClick
         )
     }
 }

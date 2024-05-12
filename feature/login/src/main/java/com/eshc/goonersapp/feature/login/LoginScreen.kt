@@ -24,14 +24,15 @@ import com.eshc.goonersapp.core.designsystem.component.TopBar
 @Composable
 fun LoginScreen(
     onShowSnackbar: (String) -> Unit,
-    onClickSignUp : () -> Unit
+    onClickSignUp : () -> Unit,
+    onBackIconClick: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         TopBar(
             title = "LOGIN",
-            onBackIconClick = {}
+            onBackIconClick = onBackIconClick
         )
 
         Image(
@@ -112,6 +113,7 @@ fun LoginScreen(
 fun PreviewLoginScreen() {
     LoginScreen(
         onShowSnackbar = {},
-        onClickSignUp = {}
+        onClickSignUp = {},
+        onBackIconClick = {}
     )
 }

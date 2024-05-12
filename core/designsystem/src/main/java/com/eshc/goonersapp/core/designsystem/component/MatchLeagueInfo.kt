@@ -57,7 +57,7 @@ fun MatchLeagueInfo(
                 )
             }
         )
-        Spacer(modifier = Modifier.size(10.dp))
+        Spacer(modifier = Modifier.size(7.dp))
         Text(
             text = competitionName,
             color = ColorFF181818,

@@ -370,7 +370,7 @@ fun UpcomingMatchDateInfo(
             content = {
                 Text(
                     text = time,
-                    color = ColorFF181818,
+                    color = ColorFF4C68A7,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                     style = GnrTypography.body2Medium
@@ -378,7 +378,7 @@ fun UpcomingMatchDateInfo(
                 Spacer(modifier = Modifier.size(5.dp))
                 Text(
                     text = location,
-                    color = ColorFF181818,
+                    color = ColorFF4C68A7,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                     style = GnrTypography.body2Medium

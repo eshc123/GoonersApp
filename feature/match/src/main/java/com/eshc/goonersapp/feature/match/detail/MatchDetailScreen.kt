@@ -46,7 +46,6 @@ import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.GnrTabItem
 import com.eshc.goonersapp.core.designsystem.component.MatchLeagueInfo
-import com.eshc.goonersapp.core.designsystem.component.TopBar
 import com.eshc.goonersapp.core.designsystem.iconpack.IcTalk
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF777777
@@ -62,19 +61,13 @@ import com.eshc.goonersapp.feature.match.state.MatchDetailUiState
 @Composable
 fun MatchDetailRootScreen(
     onShowSnackbar: (String) -> Unit,
-    onBackIconClick: () -> Unit,
     onClickChat: (MatchUiModel) -> Unit,
     viewModel: MatchDetailViewModel = hiltViewModel(),
 ) {
     val matchData by viewModel.matchDetailUiState.collectAsStateWithLifecycle()
 
     Scaffold(
-        topBar = { 
-            TopBar(
-                title = "",
-                onBackIconClick = onBackIconClick
-            )
-        }
+        topBar = { /* TODO("Not yet implemented") */ }
     ) { paddingValues ->
         MatchDetailScreen(
             matchDetailUiState = matchData,

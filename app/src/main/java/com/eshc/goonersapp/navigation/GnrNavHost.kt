@@ -75,14 +75,12 @@ fun GnrNavHost(
         )
 
         matchDetailScreen(
-            bottomBar = bottomBar,
             onClickChat = { navController.navigateToChatRoom(it) },
             onBackIconClick = { navController.popBackStack() },
             onShowSnackbar = onShowSnackbar
         )
 
         teamSearchScreen(
-            bottomBar = bottomBar,
             onPlayerClick = { navController.navigateToPlayerDetail(it) },
             onBackIconClick = { navController.popBackStack() },
             onShowSnackbar = onShowSnackbar

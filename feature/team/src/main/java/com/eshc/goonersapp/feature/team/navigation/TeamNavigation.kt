@@ -70,7 +70,6 @@ fun NavGraphBuilder.playerDetailScreen(
 }
 
 fun NavGraphBuilder.teamSearchScreen(
-    bottomBar: @Composable () -> Unit,
     onPlayerClick: (String) -> Unit,
     onBackIconClick: () -> Unit,
     onShowSnackbar: (String) -> Unit
@@ -79,7 +78,6 @@ fun NavGraphBuilder.teamSearchScreen(
         route = teamSearchNavigationRoute
     ) {
         TeamSearchRootScreen(
-            bottomBar = bottomBar,
             onClick = onPlayerClick,
             onBackIconClick = onBackIconClick,
             onShowSnackbar = onShowSnackbar

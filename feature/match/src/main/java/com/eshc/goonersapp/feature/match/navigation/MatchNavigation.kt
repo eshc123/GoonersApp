@@ -45,7 +45,6 @@ fun NavGraphBuilder.matchScreen(
 
 
 fun NavGraphBuilder.matchDetailScreen(
-    bottomBar: @Composable () -> Unit,
     onClickChat : (MatchUiModel) -> Unit,
     onBackIconClick: () -> Unit,
     onShowSnackbar : (String) -> Unit
@@ -55,7 +54,6 @@ fun NavGraphBuilder.matchDetailScreen(
         arguments = listOf(navArgument(matchArg) { type = MatchType })
     ) {
         MatchDetailRootScreen(
-            bottomBar = bottomBar,
             onClickChat = onClickChat,
             onBackIconClick = onBackIconClick,
             onShowSnackbar = onShowSnackbar

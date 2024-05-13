@@ -10,7 +10,6 @@ import com.eshc.goonersapp.core.designsystem.component.TopBar
 
 @Composable
 fun TeamSearchRootScreen(
-    bottomBar: @Composable () -> Unit,
     onClick: (String) -> Unit,
     onBackIconClick: () -> Unit,
     onShowSnackbar: (String) -> Unit
@@ -21,8 +20,7 @@ fun TeamSearchRootScreen(
                 title = "Search",
                 onBackIconClick = onBackIconClick
             )
-        },
-        bottomBar = bottomBar
+        }
     ) { paddingValues ->
         TeamSearchScreen(
             onClick = onClick,

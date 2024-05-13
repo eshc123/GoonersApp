@@ -61,7 +61,6 @@ import com.eshc.goonersapp.feature.match.state.MatchDetailUiState
 
 @Composable
 fun MatchDetailRootScreen(
-    bottomBar: @Composable () -> Unit,
     onShowSnackbar: (String) -> Unit,
     onBackIconClick: () -> Unit,
     onClickChat: (MatchUiModel) -> Unit,
@@ -75,8 +74,7 @@ fun MatchDetailRootScreen(
                 title = "",
                 onBackIconClick = onBackIconClick
             )
-        },
-        bottomBar = bottomBar
+        }
     ) { paddingValues ->
         MatchDetailScreen(
             matchDetailUiState = matchData,

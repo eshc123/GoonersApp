@@ -40,6 +40,7 @@ import com.eshc.goonersapp.core.designsystem.theme.ColorFF4C68A7
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF9E9E9E
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFC3CDE2
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFE6EDFC
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF7F9FF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.core.domain.model.match.MatchDetail
@@ -312,7 +313,7 @@ fun UpcomingHomeTeamInfo(
                 modifier = modifier.size(30.dp),
                 contentDescription = "Home Team Logo"
             )
-            Spacer(modifier = modifier.size(10.dp))
+            Spacer(modifier = modifier.size(7.dp))
             Text(
                 text = homeShortName,
                 color = ColorFF181818,
@@ -335,7 +336,7 @@ fun UpcomingAwayTeamInfo(
                 text = awayShortName,
                 style = GnrTypography.subtitleMedium
             )
-            Spacer(modifier = modifier.size(10.dp))
+            Spacer(modifier = modifier.size(7.dp))
             AsyncImage(
                 model = awayUrl,
                 modifier = modifier.size(30.dp),
@@ -360,7 +361,7 @@ fun UpcomingMatchDateInfo(
         ),
         border = BorderStroke(
             width = 0.5.dp,
-            color = ColorFFC3CDE2
+            color = ColorFFE6EDFC
         )
     ) {
         Row(

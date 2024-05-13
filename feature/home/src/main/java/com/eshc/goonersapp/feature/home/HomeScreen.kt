@@ -3,7 +3,6 @@ package com.eshc.goonersapp.feature.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -65,10 +64,9 @@ fun HomeScreen(
 ) {
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(top = 12.dp)
+        contentPadding = PaddingValues(top = 30.dp)
     ) {
         item {
-            Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "Team Dashboard",
                 modifier = Modifier.padding(start = 8.dp),

@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.component.TopBar
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 import com.eshc.goonersapp.core.domain.model.match.Match
@@ -40,8 +39,9 @@ import com.eshc.goonersapp.feature.team.state.ClubDetailUiState
 
 @Composable
 fun ClubDetailRoute(
-    clubDetailViewModel: ClubDetailViewModel = hiltViewModel(),
-    onShowSnackbar : (String) -> Unit
+    onBackIconClick: () -> Unit,
+    onShowSnackbar : (String) -> Unit,
+    clubDetailViewModel: ClubDetailViewModel = hiltViewModel()
 ) {
     val clubDetailUiState by clubDetailViewModel.clubDetail.collectAsStateWithLifecycle()
 
@@ -52,19 +52,22 @@ fun ClubDetailRoute(
     }
 
     ClubDetailScreen(
-        clubDetailUiState
+        onBackIconClick = onBackIconClick,
+        clubDetailUiState = clubDetailUiState
     )
 }
 
 @Composable
 fun ClubDetailScreen(
+    onBackIconClick: () -> Unit,
     clubDetailUiState: ClubDetailUiState
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         TopBar(
-            title = "CLUB"
+            title = "CLUB",
+            onBackIconClick = onBackIconClick
         )
         when(clubDetailUiState){
             is ClubDetailUiState.Success -> {

@@ -10,11 +10,11 @@ import androidx.navigation.navArgument
 import com.eshc.goonersapp.feature.team.TeamRootScreen
 import com.eshc.goonersapp.feature.team.club.ClubDetailRoute
 import com.eshc.goonersapp.feature.team.detail.PlayerDetailRootScreen
-import com.eshc.goonersapp.feature.team.history.TeamHistoryScreen
+import com.eshc.goonersapp.feature.team.history.TeamSearchRootScreen
 
 const val teamNavigationRoute = "team_route"
 const val playerDetailNavigationRoute = "player_route"
-const val teamHistoryNavigationRoute = "team_history_route"
+const val teamSearchNavigationRoute = "team_search_route"
 const val clubDetailNavigationRoute = "club_detail_route"
 
 
@@ -28,8 +28,8 @@ fun NavController.navigateToPlayerDetail(playerId: String, navOptions: NavOption
     this.navigate(playerDetailNavigationRoute + "/${playerId}", navOptions)
 }
 
-fun NavController.navigateToTeamHistory(navOptions: NavOptions? = null) {
-    this.navigate(teamHistoryNavigationRoute, navOptions)
+fun NavController.navigateToSearch(navOptions: NavOptions? = null) {
+    this.navigate(teamSearchNavigationRoute, navOptions)
 }
 
 fun NavController.navigateToClubDetail(navOptions: NavOptions? = null) {
@@ -69,27 +69,31 @@ fun NavGraphBuilder.playerDetailScreen(
     }
 }
 
-fun NavGraphBuilder.teamHistoryScreen(
+fun NavGraphBuilder.teamSearchScreen(
     onPlayerClick: (String) -> Unit,
+    onBackIconClick: () -> Unit,
     onShowSnackbar: (String) -> Unit
 ) {
     composable(
-        route = teamHistoryNavigationRoute
+        route = teamSearchNavigationRoute
     ) {
-        TeamHistoryScreen(
-            onPlayerClick,
-            onShowSnackbar
+        TeamSearchRootScreen(
+            onClick = onPlayerClick,
+            onBackIconClick = onBackIconClick,
+            onShowSnackbar = onShowSnackbar
         )
     }
 }
 
 fun NavGraphBuilder.clubDetailScreen(
+    onBackIconClick: () -> Unit,
     onShowSnackbar: (String) -> Unit
 ) {
     composable(
         route = clubDetailNavigationRoute
     ) {
         ClubDetailRoute(
+            onBackIconClick = onBackIconClick,
             onShowSnackbar = onShowSnackbar
         )
     }

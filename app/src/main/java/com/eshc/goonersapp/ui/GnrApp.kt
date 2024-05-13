@@ -17,7 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -33,16 +32,19 @@ import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBar
 import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBarItem
 import com.eshc.goonersapp.core.designsystem.component.TopLevelTopBar
 import com.eshc.goonersapp.core.designsystem.iconpack.IcInfo
+import com.eshc.goonersapp.core.designsystem.iconpack.IcNotification
+import com.eshc.goonersapp.core.designsystem.iconpack.IcPeople
 import com.eshc.goonersapp.core.designsystem.iconpack.IcSearch
-import com.eshc.goonersapp.core.designsystem.iconpack.IcUser
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF777777
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF9E9E9E
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.feature.home.navigation.navigateToHome
 import com.eshc.goonersapp.feature.login.navigation.navigateToLogin
 import com.eshc.goonersapp.feature.match.navigation.navigateToMatch
 import com.eshc.goonersapp.feature.team.navigation.navigateToClubDetail
 import com.eshc.goonersapp.feature.team.navigation.navigateToTeam
-import com.eshc.goonersapp.feature.team.navigation.navigateToTeamHistory
+import com.eshc.goonersapp.feature.team.navigation.navigateToSearch
 import com.eshc.goonersapp.navigation.GnrNavHost
 import com.eshc.goonersapp.navigation.TopLevelDestination
 import kotlinx.coroutines.launch
@@ -95,9 +97,8 @@ fun GnrApp(
                                         modifier = Modifier
                                             .padding(horizontal = 8.dp)
                                             .size(24.dp)
-                                            .clickable {
-                                                navController.navigateToClubDetail()
-                                            }
+                                            .clickable { navController.navigateToClubDetail() },
+                                        tint = ColorFF777777
                                     )
                                     Icon(
                                         imageVector = IconPack.IcSearch,
@@ -105,22 +106,28 @@ fun GnrApp(
                                         modifier = Modifier
                                             .padding(horizontal = 8.dp)
                                             .size(24.dp)
-                                            .clickable {
-                                                navController.navigateToTeamHistory()
-                                            }
+                                            .clickable { navController.navigateToSearch() },
+                                        tint = ColorFF777777
                                     )
                                 }
 
                                 TopLevelDestination.HOME -> {
                                     Icon(
-                                        imageVector = IconPack.IcUser,
+                                        imageVector = IconPack.IcNotification,
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .padding(horizontal = 8.dp)
+                                            .size(24.dp),
+                                        tint = ColorFF777777
+                                    )
+                                    Icon(
+                                        imageVector = IconPack.IcPeople,
                                         contentDescription = null,
                                         modifier = Modifier
                                             .padding(horizontal = 8.dp)
                                             .size(24.dp)
-                                            .clickable {
-                                                navController.navigateToLogin()
-                                            }
+                                            .clickable { navController.navigateToLogin() },
+                                        tint = ColorFF777777
                                     )
                                 }
 
@@ -201,7 +208,7 @@ fun GnrBottomBar(
                             .padding(bottom = 4.dp)
                             .heightIn(max = 18.dp),
                         imageVector = destination.unselectedIcon,
-                        tint = Color(0xFF888888),
+                        tint = ColorFF9E9E9E,
                         contentDescription = null,
                     )
                 },
@@ -218,7 +225,7 @@ fun GnrBottomBar(
                     Text(
                         text = stringResource(id = destination.iconTextId),
                         style = GnrTypography.body2Regular.copy(
-                            color = if(selected) ColorFF181818 else Color(0xFF888888)
+                            color = if(selected) ColorFF181818 else ColorFF9E9E9E
                         )
                     )
                 }

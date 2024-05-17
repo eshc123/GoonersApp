@@ -50,9 +50,7 @@ fun NavGraphBuilder.matchDetailScreen(
 ) {
     composable(
         route = "$matchDetailNavigationRoute?$matchArg={$matchArg}",
-        arguments = listOf(
-            navArgument(matchArg) { type = MatchType },
-        ),
+        arguments = listOf(navArgument(matchArg) { type = MatchType })
     ) {
         MatchDetailRootScreen(
             onClickChat = onClickChat,

@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -39,6 +40,7 @@ import com.eshc.goonersapp.core.designsystem.theme.ColorFF4C68A7
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF9E9E9E
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFC3CDE2
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFE6EDFC
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF7F9FF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.core.domain.model.match.MatchDetail
@@ -84,7 +86,7 @@ fun RecentlyMatchCard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
-                modifier = modifier.fillMaxWidth(),
+                modifier = modifier.fillMaxWidth().padding(bottom = 15.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -95,7 +97,9 @@ fun RecentlyMatchCard(
                     competitionName = competitionName,
                     verticalAlignment = Alignment.CenterVertically,
                 )
-                Row {
+                Column(
+                    horizontalAlignment = Alignment.End
+                ) {
                     Text(
                         text = time,
                         color = ColorFF4C68A7,
@@ -104,8 +108,14 @@ fun RecentlyMatchCard(
                     Spacer(modifier = modifier.size(5.dp))
                     Text(
                         text = location,
-                        color = ColorFF4C68A7,
-                        style = GnrTypography.descriptionMedium
+                        color = ColorFF9E9E9E,
+                        style = GnrTypography.descriptionMedium.copy(
+                            lineBreak = LineBreak(
+                                strategy = LineBreak.Strategy.Balanced,
+                                strictness = LineBreak.Strictness.Strict,
+                                wordBreak = LineBreak.WordBreak.Default
+                            )
+                        )
                     )
                 }
             }
@@ -303,9 +313,10 @@ fun UpcomingHomeTeamInfo(
                 modifier = modifier.size(30.dp),
                 contentDescription = "Home Team Logo"
             )
-            Spacer(modifier = modifier.size(10.dp))
+            Spacer(modifier = modifier.size(7.dp))
             Text(
                 text = homeShortName,
+                color = ColorFF181818,
                 style = GnrTypography.subtitleMedium
             )
         }
@@ -325,7 +336,7 @@ fun UpcomingAwayTeamInfo(
                 text = awayShortName,
                 style = GnrTypography.subtitleMedium
             )
-            Spacer(modifier = modifier.size(10.dp))
+            Spacer(modifier = modifier.size(7.dp))
             AsyncImage(
                 model = awayUrl,
                 modifier = modifier.size(30.dp),
@@ -350,7 +361,7 @@ fun UpcomingMatchDateInfo(
         ),
         border = BorderStroke(
             width = 0.5.dp,
-            color = ColorFFC3CDE2
+            color = ColorFFE6EDFC
         )
     ) {
         Row(
@@ -360,6 +371,7 @@ fun UpcomingMatchDateInfo(
             content = {
                 Text(
                     text = time,
+                    color = ColorFF4C68A7,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                     style = GnrTypography.body2Medium
@@ -367,6 +379,7 @@ fun UpcomingMatchDateInfo(
                 Spacer(modifier = Modifier.size(5.dp))
                 Text(
                     text = location,
+                    color = ColorFF4C68A7,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                     style = GnrTypography.body2Medium

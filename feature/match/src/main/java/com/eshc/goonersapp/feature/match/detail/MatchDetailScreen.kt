@@ -20,6 +20,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -59,27 +60,36 @@ import com.eshc.goonersapp.feature.match.state.MatchDetailUiState
 
 @Composable
 fun MatchDetailRootScreen(
-    viewModel: MatchDetailViewModel = hiltViewModel(),
+    onShowSnackbar: (String) -> Unit,
     onClickChat: (MatchUiModel) -> Unit,
-    onShowSnackbar: (String) -> Unit
+    viewModel: MatchDetailViewModel = hiltViewModel(),
 ) {
     val matchData by viewModel.matchDetailUiState.collectAsStateWithLifecycle()
-    MatchDetailScreen(
-        matchDetailUiState = matchData,
-        onClickChat = onClickChat
-    )
+
+    Scaffold(
+        topBar = { /* TODO("Not yet implemented") */ }
+    ) { paddingValues ->
+        MatchDetailScreen(
+            matchDetailUiState = matchData,
+            onClickChat = onClickChat,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        )
+    }
 }
 
 @Composable
 fun MatchDetailScreen(
     matchDetailUiState: MatchDetailUiState,
-    onClickChat: (MatchUiModel) -> Unit
+    onClickChat: (MatchUiModel) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var selectedTab by remember { mutableStateOf(DetailTab.SUMMARY) }
     val match = matchDetailUiState.match
     val matchDetail = matchDetailUiState.matchDetailState
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
@@ -186,7 +196,9 @@ fun MatchDetailScreen(
                     }
                     is UiState.Loading -> {
                         Box(
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp),
                             contentAlignment = Alignment.Center
                         ){
                             CircularProgressIndicator()

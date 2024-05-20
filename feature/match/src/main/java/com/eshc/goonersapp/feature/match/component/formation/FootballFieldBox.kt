@@ -37,9 +37,6 @@ fun FootballFieldBox(
     modifier: Modifier = Modifier,
     rotateDegree : Float = 0f
 ) {
-    var firstCircle by remember { mutableStateOf(Pair(0.5f, 0.125f)) }
-    var boxSize by remember { mutableStateOf(Triple<Float, Float, Boolean>(0f, 0f, true)) }
-
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -49,13 +46,7 @@ fun FootballFieldBox(
         contentAlignment = Alignment.Center
     ) {
         Canvas(
-            modifier = modifier.onGloballyPositioned {
-                boxSize = Triple(
-                    it.size.width.toFloat(),
-                    it.size.height.toFloat(),
-                    boxSize.second > it.size.height.toFloat()
-                )
-            }
+            modifier = modifier
         ) {
             drawArc(
                 color = Color88FFFFFF,
@@ -127,32 +118,7 @@ fun FootballFieldBox(
                 strokeWidth = 3f
             )
         }
-        Box(
-            modifier = Modifier
-                .width(boxSize.first.dp)
-                .height(boxSize.second.dp)
-        ) {
-            Spacer(
-                modifier = Modifier
-                    .offset(
-                        (boxSize.first * firstCircle.first).dp - 25.dp,
-                        (boxSize.second * firstCircle.second).dp
-                    )
-                    .size(50.dp)
-                    .clip(CircleShape)
-                    .background(Color.Cyan)
-                    .pointerInput(Unit) {
-                        detectDragGestures { change, dragAmount ->
-                            change.consume()
-                            val nextX =
-                                ((boxSize.first * firstCircle.first) + dragAmount.x) / boxSize.first
-                            val nextY =
-                                ((boxSize.second * firstCircle.second) + dragAmount.y) / boxSize.second
-                            firstCircle = Pair(nextX, nextY)
-                        }
-                    }
-            )
-        }
+
     }
 
 }

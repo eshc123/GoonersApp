@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -50,11 +51,12 @@ fun LineUpPlayerCard(
             )
         }
         Text(
-            modifier = Modifier.padding(top = 2.dp),
+            modifier = Modifier.padding(top = 2.dp).height(24.dp),
             text = player.displayName,
             style = GnrTypography.descriptionMedium.copy(
                 lineHeight = 11.sp
             ),
+            maxLines = 2,
             textAlign = TextAlign.Center,
             color = ColorFFDCDCDC
 

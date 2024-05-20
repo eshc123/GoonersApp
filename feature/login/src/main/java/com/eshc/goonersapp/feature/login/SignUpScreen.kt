@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.eshc.goonersapp.core.designsystem.component.GnrTextFiled
-import com.eshc.goonersapp.core.designsystem.component.TopBar
+import com.eshc.goonersapp.core.designsystem.component.GnrTopBar
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -42,7 +42,7 @@ fun SignUpScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            TopBar(
+            GnrTopBar(
                 title = "SIGN UP",
                 onBackIconClick = onBackIconClick
             )

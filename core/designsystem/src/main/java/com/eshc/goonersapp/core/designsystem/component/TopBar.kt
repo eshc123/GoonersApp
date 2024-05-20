@@ -16,11 +16,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.iconpack.IcIosArrowBack
+import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 
 @Composable
-fun TopLevelTopBar(
-    modifier: Modifier = Modifier,
+fun GnrTopLevelTopBar(
     title : String,
+    modifier: Modifier = Modifier,
     content : @Composable () -> Unit
 ){
     Row(
@@ -30,7 +31,7 @@ fun TopLevelTopBar(
         Text(
             modifier = Modifier.padding(vertical = 8.dp).wrapContentHeight().weight(1f),
             text = title,
-            style = MaterialTheme.typography.headlineLarge,
+            style = GnrTypography.heading2SemiBold,
             color = Color.Black,
         )
         content()
@@ -38,11 +39,11 @@ fun TopLevelTopBar(
 }
 
 @Composable
-fun TopBar(
-    modifier: Modifier = Modifier,
+fun GnrTopBar(
     title : String,
-    content : @Composable () -> Unit = {},
-    onBackIconClick: () -> Unit
+    onBackIconClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    content : @Composable () -> Unit = {}
 ){
     Row(
         modifier = modifier.fillMaxWidth(),

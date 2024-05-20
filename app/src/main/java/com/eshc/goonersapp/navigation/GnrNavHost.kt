@@ -71,6 +71,7 @@ fun GnrNavHost(
         }
 
         playerDetailScreen(
+            onBackIconClick = { navController.popBackStack() },
             onShowSnackbar = onShowSnackbar
         )
 

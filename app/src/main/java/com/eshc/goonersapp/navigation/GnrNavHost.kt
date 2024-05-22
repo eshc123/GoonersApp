@@ -77,6 +77,7 @@ fun GnrNavHost(
 
         matchDetailScreen(
             onClickChat = { navController.navigateToChatRoom(it) },
+            onBackIconClick = { navController.popBackStack() },
             onShowSnackbar = onShowSnackbar
         )
 

@@ -239,11 +239,11 @@ fun MatchDetailScreen(
             item {
                 when (selectedTab) {
                     DetailTab.SUMMARY -> {
-
+                        SummaryScreen()
                     }
 
                     DetailTab.COMMENT -> {
-
+                        
                     }
                 }
             }

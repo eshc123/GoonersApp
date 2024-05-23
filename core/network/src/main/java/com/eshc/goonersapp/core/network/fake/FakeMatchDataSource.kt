@@ -6,6 +6,8 @@ import com.eshc.goonersapp.core.network.model.match.Performance
 import com.eshc.goonersapp.core.network.model.match.RemoteMatch
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchData
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchInformation
+import com.eshc.goonersapp.core.network.model.match.RemoteMatchLineup
+import com.eshc.goonersapp.core.network.model.match.RemoteTeamLineup
 import javax.inject.Inject
 
 /**
@@ -31,6 +33,10 @@ import javax.inject.Inject
  *
  *  getRecentlyMatch()
  *   - return [NetworkResult.Success]
+ *
+ *  getMatchLineup(matchId: Int)
+ *   - if matchId is over 39 then return [NetworkResult.Error]
+ *   - else return [NetworkResult.Success]
  */
 class FakeMatchDataSource @Inject constructor(): MatchNetworkDataSource {
     override suspend fun getMatch(matchId: Int): NetworkResult<RemoteMatchData> {
@@ -88,4 +94,16 @@ class FakeMatchDataSource @Inject constructor(): MatchNetworkDataSource {
         )
     }
 
+    override suspend fun getMatchLineup(matchId: Int): NetworkResult<RemoteMatchLineup> {
+        return if (matchId < 39) {
+            NetworkResult.Success(
+                RemoteMatchLineup(
+                    homeLineup = RemoteTeamLineup(),
+                    awayLineup = RemoteTeamLineup()
+                )
+            )
+        } else {
+            NetworkResult.Error(code = 404, message = "Not Found")
+        }
+    }
 }

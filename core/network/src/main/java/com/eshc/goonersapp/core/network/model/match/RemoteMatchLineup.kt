@@ -3,6 +3,7 @@ package com.eshc.goonersapp.core.network.model.match
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@Serializable
 data class RemoteMatchLineup(
     @SerialName("home_lineup") val homeLineup : RemoteTeamLineup = RemoteTeamLineup(),
     @SerialName("away_lineup") val awayLineup : RemoteTeamLineup = RemoteTeamLineup(),
@@ -11,7 +12,7 @@ data class RemoteMatchLineup(
 @Serializable
 data class RemoteTeamLineup(
     @SerialName("team_id") val teamId : Long = 0L,
-    @SerialName("formaition") val formation : String = "",
+    @SerialName("formation") val formation : String = "",
     @SerialName("players") val players : List<PlayerLineup> = emptyList()
 )
 

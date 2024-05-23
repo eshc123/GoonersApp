@@ -45,6 +45,7 @@ import com.eshc.goonersapp.core.common.state.UiState
 import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.GnrTabItem
+import com.eshc.goonersapp.core.designsystem.component.GnrTopBar
 import com.eshc.goonersapp.core.designsystem.component.MatchLeagueInfo
 import com.eshc.goonersapp.core.designsystem.iconpack.IcTalk
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
@@ -60,6 +61,7 @@ import com.eshc.goonersapp.feature.match.state.MatchDetailUiState
 
 @Composable
 fun MatchDetailRootScreen(
+    onBackIconClick: () -> Unit,
     onShowSnackbar: (String) -> Unit,
     onClickChat: (MatchUiModel) -> Unit,
     viewModel: MatchDetailViewModel = hiltViewModel(),
@@ -67,7 +69,13 @@ fun MatchDetailRootScreen(
     val matchData by viewModel.matchDetailUiState.collectAsStateWithLifecycle()
 
     Scaffold(
-        topBar = { /* TODO("Not yet implemented") */ }
+        topBar = {
+            GnrTopBar(
+                title = "",
+                onBackIconClick = onBackIconClick,
+                content = {  }
+            )
+        }
     ) { paddingValues ->
         MatchDetailScreen(
             matchDetailUiState = matchData,
@@ -88,6 +96,7 @@ fun MatchDetailScreen(
     var selectedTab by remember { mutableStateOf(DetailTab.SUMMARY) }
     val match = matchDetailUiState.match
     val matchDetail = matchDetailUiState.matchDetailState
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -238,13 +247,8 @@ fun MatchDetailScreen(
 
             item {
                 when (selectedTab) {
-                    DetailTab.SUMMARY -> {
-                        SummaryScreen()
-                    }
-
-                    DetailTab.COMMENT -> {
-                        
-                    }
+                    DetailTab.SUMMARY -> { SummaryScreen() }
+                    DetailTab.COMMENT -> { /* TODO("Not yet implemented") */ }
                 }
             }
         }

@@ -71,11 +71,13 @@ fun GnrNavHost(
         }
 
         playerDetailScreen(
+            onBackIconClick = { navController.popBackStack() },
             onShowSnackbar = onShowSnackbar
         )
 
         matchDetailScreen(
             onClickChat = { navController.navigateToChatRoom(it) },
+            onBackIconClick = { navController.popBackStack() },
             onShowSnackbar = onShowSnackbar
         )
 

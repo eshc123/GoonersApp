@@ -1,6 +1,8 @@
 package com.eshc.goonersapp.feature.team.detail
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,9 +21,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,33 +45,72 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.GnrElevatedCard
 import com.eshc.goonersapp.core.designsystem.component.GnrTabItem
 import com.eshc.goonersapp.core.designsystem.ext.gnrElevatedCardBorder
+import com.eshc.goonersapp.core.designsystem.iconpack.IcIosArrowBack
+import com.eshc.goonersapp.core.designsystem.iconpack.IcNotification
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF720509
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFC10006
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF5F5F5
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.core.domain.model.player.Player
 import com.eshc.goonersapp.feature.team.state.PlayerDetailUiState
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlayerDetailRootScreen(
+    onBackIconClick: () -> Unit,
     onShowSnackbar: (String) -> Unit,
     viewModel : PlayerDetailViewModel = hiltViewModel()
 ) {
     val playerDetailUiState by viewModel.playerDetailUiState.collectAsStateWithLifecycle()
     var selectedTab by remember { mutableStateOf(DetailTab.PROFILE) }
 
-    PlayerDetailScreen(
-        playerDetailUiState = playerDetailUiState,
-        selectedTab = selectedTab,
-        onShowSnackbar =  onShowSnackbar,
-        onUpdateTab = {
-            selectedTab = it
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { /*TODO*/ },
+                modifier = Modifier.fillMaxWidth(),
+                navigationIcon = {
+                    Icon(
+                        imageVector = IconPack.IcIosArrowBack,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .size(24.dp)
+                            .clickable(onClick = onBackIconClick),
+                        tint = ColorFFFFFFFF
+                    )
+                },
+                actions = {
+                    Icon(
+                        imageVector = IconPack.IcNotification,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .size(24.dp)
+                            .clickable { /* TODO("Not yet implemented") */ },
+                        tint = ColorFFFFFFFF
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
+            )
         }
-    )
+    ) { _ ->
+        PlayerDetailScreen(
+            playerDetailUiState = playerDetailUiState,
+            selectedTab = selectedTab,
+            onShowSnackbar =  onShowSnackbar,
+            onUpdateTab = { tab -> selectedTab = tab },
+            modifier = Modifier
+        )
+    }
 }
 
 
@@ -73,9 +119,11 @@ fun PlayerDetailScreen(
     playerDetailUiState : PlayerDetailUiState,
     selectedTab : DetailTab,
     onShowSnackbar: (String) -> Unit,
-    onUpdateTab : (DetailTab) -> Unit
+    onUpdateTab : (DetailTab) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Surface(
+        modifier = modifier,
         color = ColorFFFFFFFF
     ) {
         when (playerDetailUiState) {
@@ -183,8 +231,8 @@ fun PlayerDetailImage(
             .background(
                 Brush.verticalGradient(
                     listOf(
-                        Color(0xFFC10006),
-                        Color(0xFF720509)
+                        ColorFFC10006,
+                        ColorFF720509
                     )
                 )
             ),
@@ -218,7 +266,7 @@ fun PlayerDetailImage(
                 )
                 PlayerDetailBackNumberChip(
                     backNumber = player.backNumber,
-                    backgroundColor = Color(0xFFC10006),
+                    backgroundColor = ColorFFC10006
                 )
             }
             Text(

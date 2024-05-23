@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import com.eshc.goonersapp.core.designsystem.component.TopBar
+import com.eshc.goonersapp.core.designsystem.component.GnrTopBar
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.feature.team.state.ClubDetailUiState
@@ -65,7 +65,7 @@ fun ClubDetailScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        TopBar(
+        GnrTopBar(
             title = "CLUB",
             onBackIconClick = onBackIconClick
         )

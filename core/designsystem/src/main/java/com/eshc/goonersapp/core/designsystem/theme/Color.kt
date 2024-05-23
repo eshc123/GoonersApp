@@ -44,3 +44,9 @@ val BrushMainGradient = Brush.verticalGradient(
         ColorFF072872
     )
 )
+
+/**
+ * Player Detail Color
+ * */
+val ColorFFC10006 = Color(0xFFC10006)
+val ColorFF720509 = Color(0xFF720509)

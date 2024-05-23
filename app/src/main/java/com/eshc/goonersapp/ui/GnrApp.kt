@@ -30,7 +30,7 @@ import com.eshc.goonersapp.core.data.util.NetworkConnectivityManager
 import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBar
 import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBarItem
-import com.eshc.goonersapp.core.designsystem.component.TopLevelTopBar
+import com.eshc.goonersapp.core.designsystem.component.GnrTopLevelTopBar
 import com.eshc.goonersapp.core.designsystem.iconpack.IcInfo
 import com.eshc.goonersapp.core.designsystem.iconpack.IcNotification
 import com.eshc.goonersapp.core.designsystem.iconpack.IcPeople
@@ -131,7 +131,25 @@ fun GnrApp(
                                     )
                                 }
 
-                                else -> { /* TODO("Implement Nothing") */ }
+                                else -> {
+                                    Icon(
+                                        imageVector = IconPack.IcNotification,
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .padding(horizontal = 8.dp)
+                                            .size(24.dp),
+                                        tint = ColorFF777777
+                                    )
+                                    Icon(
+                                        imageVector = IconPack.IcPeople,
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .padding(horizontal = 8.dp)
+                                            .size(24.dp)
+                                            .clickable { navController.navigateToLogin() },
+                                        tint = ColorFF777777
+                                    )
+                                }
                             }
                         }
                     )
@@ -176,7 +194,7 @@ fun GnrTopLevelBar(
     topLevelDestination: TopLevelDestination,
     icons: @Composable () -> Unit
 ) {
-    TopLevelTopBar(
+    GnrTopLevelTopBar(
         modifier = Modifier.padding(horizontal = 8.dp),
         title = stringResource(id = topLevelDestination.titleTextId)
     ) {

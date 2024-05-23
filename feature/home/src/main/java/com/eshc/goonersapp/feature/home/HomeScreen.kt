@@ -41,12 +41,8 @@ fun HomeRoute(
     val recentlyResultUiState by viewModel.recentlyResultUiStateFlow.collectAsStateWithLifecycle()
 
     Scaffold(
-        topBar = {
-            topBar()
-        },
-        bottomBar = {
-            bottomBar()
-        }
+        topBar = { topBar() },
+        bottomBar = { bottomBar() }
     ) { padding ->
         HomeScreen(
             modifier = Modifier.padding(padding),

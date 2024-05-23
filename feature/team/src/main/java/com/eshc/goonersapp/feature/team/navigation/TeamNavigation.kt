@@ -55,6 +55,7 @@ fun NavGraphBuilder.teamScreen(
 }
 
 fun NavGraphBuilder.playerDetailScreen(
+    onBackIconClick: () -> Unit,
     onShowSnackbar: (String) -> Unit
 ) {
     composable(
@@ -64,6 +65,7 @@ fun NavGraphBuilder.playerDetailScreen(
         ),
     ) {
         PlayerDetailRootScreen(
+            onBackIconClick = onBackIconClick,
             onShowSnackbar = onShowSnackbar
         )
     }

@@ -19,7 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.eshc.goonersapp.core.designsystem.component.GnrTextFiled
-import com.eshc.goonersapp.core.designsystem.component.TopBar
+import com.eshc.goonersapp.core.designsystem.component.GnrTopBar
 
 @Composable
 fun LoginScreen(
@@ -30,7 +30,7 @@ fun LoginScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        TopBar(
+        GnrTopBar(
             title = "LOGIN",
             onBackIconClick = onBackIconClick
         )

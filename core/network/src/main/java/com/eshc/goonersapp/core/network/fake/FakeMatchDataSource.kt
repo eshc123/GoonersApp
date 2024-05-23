@@ -57,7 +57,6 @@ class FakeMatchDataSource @Inject constructor(): MatchNetworkDataSource {
             NetworkResult.Success(
                 RemoteMatchInformation(
                     notablePlayer = null,
-                    lineUp = listOf(),
                     performance = Performance()
                 )
             )

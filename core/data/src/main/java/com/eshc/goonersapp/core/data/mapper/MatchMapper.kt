@@ -54,21 +54,6 @@ fun RemoteMatchInformation.toModel() = MatchInformation(
             playerGoalCount = remote.goalCount
         )
     },
-    lineUp = lineUp.map { remote ->
-        LineUp(
-            lineUpId = remote.lineUpId,
-            matchId = remote.matchId,
-            playerId = remote.playerId,
-            teamId = remote.teamId,
-            playerName = remote.playerName,
-            playerBackNumber = remote.jerseyNumber,
-            formationField = remote.formationField,
-            formationPosition = remote.formationPosition,
-            positionId = remote.positionId,
-            positionCategory = remote.positionCategory,
-            positionInitial = remote.positionInitial
-        )
-    },
     performance = Performance(
         opponentImageUrl = performance.opponentImage,
         win = performance.win,

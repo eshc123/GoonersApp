@@ -2,7 +2,6 @@ package com.eshc.goonersapp.core.domain.model.match
 
 data class MatchInformation(
     val notablePlayer: NotablePlayer? = null,
-    val lineUp: List<LineUp>,
     val performance: Performance
 )
 

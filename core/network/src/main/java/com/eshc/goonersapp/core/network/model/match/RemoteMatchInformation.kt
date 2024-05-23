@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RemoteMatchInformation(
     @SerialName("notablePlayer") val notablePlayer: NotablePlayer? = null,
-    @SerialName("lineUp") val lineUp: List<LineUp>,
     @SerialName("performance") val performance: Performance
 )
 

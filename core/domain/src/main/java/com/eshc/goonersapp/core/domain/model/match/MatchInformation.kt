@@ -16,20 +16,6 @@ data class NotablePlayer(
     val playerGoalCount: Int
 )
 
-data class LineUp(
-    val lineUpId: Double,
-    val matchId: Int,
-    val playerId: Int,
-    val teamId: Int,
-    val playerName: String,
-    val playerBackNumber: Int,
-    val formationField: String?,
-    val formationPosition: Int?,
-    val positionId: Int,
-    val positionCategory: String,
-    val positionInitial: String
-)
-
 data class Performance(
     val opponentImageUrl: String,
     val win: Int,

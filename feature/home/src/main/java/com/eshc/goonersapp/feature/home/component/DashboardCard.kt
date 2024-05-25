@@ -39,18 +39,19 @@ fun DashboardCard(modifier: Modifier = Modifier) {
         colors = CardDefaults.cardColors(containerColor = ColorFFFFFFFF),
         radius = 10.dp,
         modifier = modifier
-            .padding(horizontal = 8.dp, vertical = 12.dp)
+            .padding(horizontal = 15.dp, vertical = 15.dp)
             .fillMaxWidth()
-            .height(IntrinsicSize.Max)
+            .height(IntrinsicSize.Max),
+        elevation = 6.dp
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(top = 12.dp, start = 12.dp, end = 12.dp, bottom = 5.dp)
+                .padding(top = 20.dp, start = 20.dp, end = 20.dp, bottom = 7.dp)
         ) {
             LeagueDashboardTitle()
-            Spacer(modifier = Modifier.size(5.dp))
+            Spacer(modifier = Modifier.size(7.dp))
             HorizontalDivider(
                 modifier = modifier.fillMaxWidth(),
                 color = ColorFFDCDCDC,
@@ -63,7 +64,7 @@ fun DashboardCard(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(start = 12.dp, end = 12.dp, top = 4.dp, bottom = 12.dp)
+                .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
         ) {
             LeagueDashboardItem(
                 rank = 1,
@@ -232,7 +233,7 @@ fun LeagueDashboardItem(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(horizontal = 15.dp, vertical = 2.dp),
+                .padding(horizontal = 17.dp, vertical = 2.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(

@@ -61,7 +61,7 @@ fun MatchLeagueInfo(
         Text(
             text = competitionName,
             color = ColorFF181818,
-            style = GnrTypography.descriptionSemiBold
+            style = GnrTypography.descriptionMedium
         )
     }
 }

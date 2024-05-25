@@ -3,6 +3,7 @@ package com.eshc.goonersapp.feature.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -59,13 +60,13 @@ fun HomeScreen(
     recentlyResultUiState: RecentlyResultUiState
 ) {
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(top = 30.dp)
     ) {
         item {
             Text(
                 text = "Team Dashboard",
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier.padding(start = 15.dp),
                 color = ColorFF181818,
                 style = GnrTypography.subtitleMedium
             )
@@ -75,7 +76,7 @@ fun HomeScreen(
         item {
             Text(
                 text = "Upcoming Matches",
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier.padding(start = 15.dp, top = 55.dp),
                 color = ColorFF181818,
                 style = GnrTypography.subtitleMedium,
             )
@@ -92,7 +93,7 @@ fun HomeScreen(
                 }
                 is UpcomingMatchesUiState.Success -> {
                     LazyRow(
-                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 12.dp),
+                        contentPadding = PaddingValues(horizontal = 15.dp, vertical = 15.dp),
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         items(
@@ -145,7 +146,7 @@ fun HomeScreen(
 
         item {
             Text(
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier.padding(start = 15.dp, top = 55.dp),
                 text = "Recently Result",
                 style = GnrTypography.subtitleMedium,
                 color = Color.Black,

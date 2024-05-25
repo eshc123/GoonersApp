@@ -59,7 +59,7 @@ fun UpcomingMatchCard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             MatchLeagueInfo(
-                logoSize = 30.dp,
+                logoSize = 22.dp,
                 logoPadding = 5.dp,
                 competitionUrl = competitionUrl,
                 competitionName = competitionName,

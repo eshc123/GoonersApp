@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.component.GnrElevatedCard
@@ -38,6 +40,7 @@ import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.core.domain.model.match.MatchDetail
+import com.eshc.goonersapp.core.domain.model.match.MatchDetailType
 import com.eshc.goonersapp.core.domain.model.match.getScoreHistoryList
 
 @Composable
@@ -132,6 +135,7 @@ fun RecentlyMatchCard(
                         .weight(1f),
                     alignment = Alignment.Start
                 )
+                Spacer(modifier = Modifier.width(20.dp))
                 RecentlyGoalHistory(
                     teamId = awayId,
                     matchHistory = matchHistory,
@@ -218,15 +222,13 @@ fun RecentlyGoalHistory(
         horizontalAlignment = alignment,
         content =  {
             goalHistory.forEach { history ->
-                Spacer(modifier = Modifier.size(3.dp))
                 Text(
                     text = history.scoringRecordText,
-                    modifier = Modifier.padding(horizontal = 10.dp),
+                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                     style = GnrTypography.descriptionMedium
                 )
-                Spacer(modifier = Modifier.size(1.5.dp))
                 HorizontalDivider(
                     modifier = Modifier.wrapContentWidth(),
                     thickness = 0.5.dp,
@@ -234,5 +236,54 @@ fun RecentlyGoalHistory(
                 )
             }
         }
+    )
+}
+
+@Preview
+@Composable
+fun RecentlyCard() {
+    RecentlyMatchCard(
+        competitionUrl = "",
+        competitionName = "Premier League",
+        time = "24.05.26 WED 18:00",
+        location = "The American Express Community Stadium",
+        homeId = 19,
+        homeUrl = "",
+        homeShortName = "ARS",
+        homeScore = "3",
+        awayId = 236,
+        awayUrl = "",
+        awayShortName = "BHA",
+        awayScore = "1",
+        matchHistory = listOf(
+            MatchDetail(
+                matchId = 222,
+                matchDetailId = 222,
+                teamId = 19,
+                playerId = 2222222,
+                playerName = "Antony",
+                minute = 90,
+                type = MatchDetailType.GOAL,
+            ),
+            MatchDetail(
+                matchId = 222,
+                matchDetailId = 222,
+                teamId = 236,
+                playerId = 2222222,
+                playerName = "Gabriel Martinelli",
+                minute = 9,
+                type = MatchDetailType.OWNGOAL,
+            ),
+            MatchDetail(
+                matchId = 222,
+                matchDetailId = 222,
+                teamId = 19,
+                playerId = 2222222,
+                playerName = "Antony",
+                minute = 90,
+                extraMinute = 5,
+                type = MatchDetailType.GOAL,
+            )
+        )
     )
 }

@@ -56,7 +56,7 @@ fun UpcomingMatchCard(
             modifier = modifier
                 .fillMaxSize()
                 .padding(15.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             MatchLeagueInfo(
                 logoSize = 22.dp,
@@ -102,7 +102,7 @@ fun UpcomingMatchInfo(
             UpcomingHomeTeamInfo(homeUrl = homeUrl, homeShortName = homeShortName)
             Text(
                 text = "VS",
-                modifier = modifier.padding(horizontal = 10.dp),
+                modifier = Modifier.padding(horizontal = 10.dp),
                 color = ColorFF10358A,
                 style = GnrTypography.subtitleMedium
             )
@@ -178,7 +178,7 @@ fun UpcomingDateCard(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun PreviewUpcomingCard() {
     UpcomingMatchCard(

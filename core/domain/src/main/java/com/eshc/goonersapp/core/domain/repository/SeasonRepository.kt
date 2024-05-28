@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface SeasonRepository {
 
-    suspend fun getSeasonListByTeam(teamId: Int): Flow<DataResult<List<Season>>>
+    fun getSeasonListByTeam(teamId: Int): Flow<DataResult<List<Season>>>
 
-    suspend fun getLeagueListAsCurrentSeasonByTeam(teamId: Int): Flow<DataResult<List<League>>>
+    fun getLeagueListAsCurrentSeasonByTeam(teamId: Int): Flow<DataResult<List<League>>>
 
-    suspend fun getPreviewRankListByTeamAndSeason(
+    fun getPreviewRankListByTeamAndSeason(
         teamId: Int,
         seasonId: Int
     ): Flow<DataResult<List<Rank>>>

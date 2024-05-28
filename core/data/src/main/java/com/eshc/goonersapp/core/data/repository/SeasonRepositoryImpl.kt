@@ -15,7 +15,7 @@ import javax.inject.Inject
 class SeasonRepositoryImpl @Inject constructor(
     private val seasonNetworkDataSource: SeasonNetworkDataSource
 ): SeasonRepository {
-    override suspend fun getSeasonListByTeam(teamId: Int): Flow<DataResult<List<Season>>> = flow {
+    override fun getSeasonListByTeam(teamId: Int): Flow<DataResult<List<Season>>> = flow {
         val result = seasonNetworkDataSource
             .getSeasonListByTeam(teamId)
             .toDataResult { remote -> remote.map { it.toModel() } }
@@ -23,7 +23,7 @@ class SeasonRepositoryImpl @Inject constructor(
         emit(result)
     }
 
-    override suspend fun getLeagueListAsCurrentSeasonByTeam(
+    override fun getLeagueListAsCurrentSeasonByTeam(
         teamId: Int
     ): Flow<DataResult<List<League>>> = flow {
         val result = seasonNetworkDataSource
@@ -33,7 +33,7 @@ class SeasonRepositoryImpl @Inject constructor(
         emit(result)
     }
 
-    override suspend fun getPreviewRankListByTeamAndSeason(
+    override fun getPreviewRankListByTeamAndSeason(
         teamId: Int,
         seasonId: Int,
     ): Flow<DataResult<List<Rank>>> = flow {

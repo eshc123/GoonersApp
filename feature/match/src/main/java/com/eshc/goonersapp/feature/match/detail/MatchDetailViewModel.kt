@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eshc.goonersapp.core.common.state.UiState
 import com.eshc.goonersapp.core.domain.model.DataResult
+import com.eshc.goonersapp.core.domain.model.match.MatchLineup
 import com.eshc.goonersapp.core.domain.usecase.match.GetMatchDetailUseCase
+import com.eshc.goonersapp.core.domain.usecase.match.GetMatchLineupUseCase
 import com.eshc.goonersapp.feature.match.model.MatchUiModel
 import com.eshc.goonersapp.feature.match.model.toUiModel
 import com.eshc.goonersapp.feature.match.state.MatchDetailUiState
@@ -19,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MatchDetailViewModel @Inject constructor(
     getMatchDetailUseCase : GetMatchDetailUseCase,
+    getMatchLineupUseCase: GetMatchLineupUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val _match = savedStateHandle.getStateFlow(MATCH_SAVED_STATE_KEY,MatchUiModel(0))
@@ -48,6 +51,25 @@ class MatchDetailViewModel @Inject constructor(
             ),
             started = SharingStarted.Eagerly
         )
+
+    val lineupUiState : StateFlow<UiState<MatchLineup>> = getMatchLineupUseCase(
+        matchId = _match.value.id
+    ).map {
+        when(it){
+            is DataResult.Success -> {
+                UiState.Success(
+                    it.data
+                )
+            }
+            is DataResult.Failure -> {
+                UiState.Error
+            }
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        initialValue = UiState.Loading,
+        started = SharingStarted.Eagerly
+    )
 
     companion object {
         private const val MATCH_SAVED_STATE_KEY = "match"

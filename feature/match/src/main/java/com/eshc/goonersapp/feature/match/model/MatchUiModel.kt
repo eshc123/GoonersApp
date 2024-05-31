@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets
 @Parcelize
 data class MatchUiModel(
     val id :Int,
+    val seasonId : Int = 0,
     val homeTeamName : String = "",
     val homeTeamImageUrl : String = "",
     val awayTeamName : String = "",
@@ -33,10 +34,16 @@ data class MatchUiModel(
             StandardCharsets.UTF_8.toString()
         )
     }
+
+    fun getOpponentTeamId(myTeamId : Int) : Int {
+        return if(homeTeamId == myTeamId) awayTeamId
+        else homeTeamId
+    }
 }
 
 fun Match.toUiModel() = MatchUiModel(
     id = id,
+    seasonId = seasonId,
     homeTeamName = homeTeamName,
     homeTeamImageUrl= homeTeamImageUrl,
     homeTeamId = homeTeamId,

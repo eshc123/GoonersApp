@@ -13,7 +13,8 @@ data class NotablePlayer(
     val playerImageUrl: String,
     val playerPosition: String,
     val playerPositionInitial: String,
-    val playerGoalCount: Int
+    val playerGoalCount: Int,
+    val playerParticipationCount : Int
 )
 
 data class Performance(

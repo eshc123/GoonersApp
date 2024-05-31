@@ -5,7 +5,11 @@ import com.eshc.goonersapp.core.domain.model.player.Player
 data class MatchLineup(
     val homeLineup : TeamLineup,
     val awayLineup : TeamLineup
-)
+){
+    fun getMyTeamLineup(myTeamId : Int) : TeamLineup {
+        return if(homeLineup.teamId == myTeamId) homeLineup else awayLineup
+    }
+}
 
 data class TeamLineup(
     val teamId : Int,

@@ -12,7 +12,7 @@ data class RemoteMatchLineup(
 @Serializable
 data class RemoteTeamLineup(
     @SerialName("team_id") val teamId : Long = 0L,
-    @SerialName("formation") val formation : String = "",
+    @SerialName("formaition") val formation : String = "",
     @SerialName("players") val players : List<RemotePlayerLineup> = emptyList()
 )
 

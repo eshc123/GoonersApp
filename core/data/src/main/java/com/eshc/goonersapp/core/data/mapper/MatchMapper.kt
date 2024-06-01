@@ -24,6 +24,7 @@ import com.eshc.goonersapp.core.network.model.match.RemoteTeamLineup
  */
 fun RemoteMatch.toModel() = Match(
     id = matchId,
+    seasonId = seasonId,
     homeTeamId = homeTeamId,
     homeTeamName = homeTeamName,
     homeTeamImageUrl = homeTeamImage,
@@ -51,12 +52,13 @@ fun RemoteMatchInformation.toModel() = MatchInformation(
         NotablePlayer(
             playerId = remote.playerId,
             playerName = remote.playerName,
-            playerHeight = remote.height,
-            playerWeight = remote.weight,
-            playerImageUrl = remote.playerImage,
-            playerPosition = remote.position,
-            playerPositionInitial = remote.positionInitial,
-            playerGoalCount = remote.goalCount
+            playerHeight = remote.height ?: 0,
+            playerWeight = remote.weight  ?: 0,
+            playerImageUrl = remote.playerImage  ?: "",
+            playerPosition = remote.position  ?: "",
+            playerPositionInitial = remote.positionInitial  ?: "",
+            playerGoalCount = remote.goalCount  ?: 0,
+            playerParticipationCount = remote.participationCount ?: 0
         )
     },
     performance = Performance(

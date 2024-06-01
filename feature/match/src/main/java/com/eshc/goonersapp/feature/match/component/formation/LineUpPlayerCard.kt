@@ -1,14 +1,12 @@
 package com.eshc.goonersapp.feature.match.component.formation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,37 +20,33 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
-import com.eshc.goonersapp.core.domain.model.player.Player
+import com.eshc.goonersapp.core.domain.model.match.PlayerLineup
 
 @Composable
-fun LineUpPlayerCard(
-    player: Player,
+fun RowScope.LineUpPlayerCard(
+    player: PlayerLineup,
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.wrapContentWidth(),
+        modifier = modifier
+            .wrapContentHeight()
+            .weight(1f),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(
+        AsyncImage(
             modifier = Modifier
-                .size(50.dp)
+                .size(46.dp)
                 .clip(CircleShape)
-                .background(ColorFFDCDCDC)
-
-        ) {
-            AsyncImage(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f)
-                    .align(Alignment.Center),
-                contentScale = ContentScale.Crop,
-                model = player.imageUrl,
-                contentDescription = null
-            )
-        }
+                .background(ColorFFDCDCDC),
+            contentScale = ContentScale.Crop,
+            model = player.playerImageUrl,
+            contentDescription = null
+        )
         Text(
-            modifier = Modifier.padding(top = 2.dp).height(24.dp),
-            text = player.displayName,
+            modifier = Modifier
+                .padding(top = 2.dp)
+                .height(24.dp),
+            text = player.playerName,
             style = GnrTypography.descriptionMedium.copy(
                 lineHeight = 11.sp
             ),

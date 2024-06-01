@@ -13,12 +13,13 @@ data class RemoteMatchInformation(
 data class NotablePlayer(
     @SerialName("player_id") val playerId: Int,
     @SerialName("player_name") val playerName: String,
-    @SerialName("height") val height: Int,
-    @SerialName("weight") val weight: Int,
-    @SerialName("player_image_url") val playerImage: String,
-    @SerialName("position") val position: String,
-    @SerialName("position_initial") val positionInitial: String,
-    @SerialName("goal_count") val goalCount: Int
+    @SerialName("height") val height: Int?,
+    @SerialName("weight") val weight: Int?,
+    @SerialName("player_image_url") val playerImage: String?,
+    @SerialName("position") val position: String?,
+    @SerialName("position_initial") val positionInitial: String?,
+    @SerialName("goal_count") val goalCount: Int?,
+    @SerialName("participation_count") val participationCount: Int?
 )
 
 @Serializable

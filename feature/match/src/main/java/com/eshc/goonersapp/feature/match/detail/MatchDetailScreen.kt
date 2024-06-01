@@ -40,6 +40,9 @@ import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF777777
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.core.domain.model.match.MatchDetail
+import com.eshc.goonersapp.core.domain.model.match.MatchInformation
+import com.eshc.goonersapp.core.domain.model.match.MatchLineup
+import com.eshc.goonersapp.core.domain.model.match.getScoreHistoryList
 import com.eshc.goonersapp.feature.match.model.MatchUiModel
 import com.eshc.goonersapp.feature.match.state.MatchDetailUiState
 
@@ -51,6 +54,8 @@ fun MatchDetailRootScreen(
     viewModel: MatchDetailViewModel = hiltViewModel(),
 ) {
     val matchData by viewModel.matchDetailUiState.collectAsStateWithLifecycle()
+    val lineup by viewModel.lineupUiState.collectAsStateWithLifecycle()
+    val matchInformation by viewModel.matchInformationState.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -67,6 +72,8 @@ fun MatchDetailRootScreen(
     ) { paddingValues ->
         MatchDetailScreen(
             matchDetailUiState = matchData,
+            lineupUiState = lineup,
+            matchInformationState = matchInformation,
             onClickChat = onClickChat,
             modifier = Modifier
                 .fillMaxSize()
@@ -78,6 +85,8 @@ fun MatchDetailRootScreen(
 @Composable
 fun MatchDetailScreen(
     matchDetailUiState: MatchDetailUiState,
+    lineupUiState: UiState<MatchLineup>,
+    matchInformationState : UiState<MatchInformation>,
     onClickChat: (MatchUiModel) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -129,6 +138,7 @@ fun MatchDetailScreen(
                     }
                 }
 
+
                 HorizontalDivider(
                     modifier = Modifier
                         .padding(top = 40.dp)
@@ -156,7 +166,12 @@ fun MatchDetailScreen(
 
             item {
                 when (selectedTab) {
-                    DetailTab.SUMMARY -> { SummaryScreen() }
+                    DetailTab.SUMMARY -> {
+                        SummaryScreen(
+                            lineupUiState = lineupUiState,
+                            matchInformationState = matchInformationState
+                        )
+                    }
                     DetailTab.COMMENT -> { /* TODO("Not yet implemented") */ }
                 }
             }

@@ -18,10 +18,10 @@ import org.junit.Test
 /**
  * Created By KanuKim97
  *
- * [FakeMatchTest]
+ * [FakeMatchRepositoryImplTest]
  *  - FakeMatchRepository Test
  */
-class FakeMatchTest {
+class FakeMatchRepositoryImplTest {
     private lateinit var fakeMatchDataSource: FakeMatchDataSource
     private lateinit var fakeMatchRepository: MatchRepository
 

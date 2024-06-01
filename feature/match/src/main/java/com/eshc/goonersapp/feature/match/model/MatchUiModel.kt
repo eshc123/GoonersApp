@@ -14,8 +14,10 @@ import java.nio.charset.StandardCharsets
 data class MatchUiModel(
     val id :Int,
     val homeTeamName : String = "",
+    val homeTeamNickname : String = "",
     val homeTeamImageUrl : String = "",
     val awayTeamName : String = "",
+    val awayTeamNickname : String = "",
     val awayTeamImageUrl : String = "",
     val matchDate : String = "",
     val homeScore :Int = 0,

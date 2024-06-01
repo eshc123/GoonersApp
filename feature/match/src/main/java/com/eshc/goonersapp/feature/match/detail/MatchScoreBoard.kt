@@ -23,6 +23,8 @@ fun LazyItemScope.MatchScoreBoard(
     match: MatchUiModel,
     matchDetailList: List<MatchDetail>
 ) {
+    if(match.isScorelessMatch) return
+
     Row(
         modifier = Modifier
             .fillMaxWidth()

@@ -30,6 +30,9 @@ data class MatchUiModel(
     val stadiumName : String = "",
     val leagueImageUrl : String = "",
 ) : Parcelable {
+    val isScorelessMatch : Boolean
+        get() = homeScore == 0 && awayScore == 0
+
     override fun toString(): String {
         return URLEncoder.encode(
             Json.encodeToString(this),

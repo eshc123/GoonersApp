@@ -2,6 +2,7 @@ package com.eshc.goonersapp.core.domain.model.match
 
 data class Match(
     val id :Int = 0,
+    val seasonId : Int = 0,
     val homeTeamId : Int = 0,
     val homeTeamName : String = "",
     val homeTeamImageUrl : String = "",

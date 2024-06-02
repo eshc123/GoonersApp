@@ -3,6 +3,7 @@ package com.eshc.goonersapp.core.data.di
 import com.eshc.goonersapp.core.data.repository.ChatRepositoryImpl
 import com.eshc.goonersapp.core.data.repository.MatchRepositoryImpl
 import com.eshc.goonersapp.core.data.repository.PlayerRepositoryImpl
+import com.eshc.goonersapp.core.data.repository.SeasonRepositoryImpl
 import com.eshc.goonersapp.core.data.repository.TeamRepositoryImpl
 import com.eshc.goonersapp.core.data.repository.UserRepositoryImpl
 import com.eshc.goonersapp.core.data.util.NetworkConnectivityManager
@@ -10,6 +11,7 @@ import com.eshc.goonersapp.core.data.util.NetworkConnectivityManagerImpl
 import com.eshc.goonersapp.core.domain.repository.ChatRepository
 import com.eshc.goonersapp.core.domain.repository.MatchRepository
 import com.eshc.goonersapp.core.domain.repository.PlayerRepository
+import com.eshc.goonersapp.core.domain.repository.SeasonRepository
 import com.eshc.goonersapp.core.domain.repository.TeamRepository
 import com.eshc.goonersapp.core.domain.repository.UserRepository
 import dagger.Binds
@@ -40,6 +42,11 @@ abstract class DataModule {
     abstract fun bindsTeamRepository(
         teamRepository: TeamRepositoryImpl,
     ): TeamRepository
+
+    @Binds
+    abstract fun bindsSeasonRepository(
+        seasonRepository: SeasonRepositoryImpl
+    ): SeasonRepository
 
     @Binds
     abstract fun bindsUserRepository(

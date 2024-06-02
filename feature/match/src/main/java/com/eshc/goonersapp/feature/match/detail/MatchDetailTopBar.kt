@@ -31,7 +31,7 @@ fun MatchDetailTopBar(
             contentDescription = "League Logo"
         )
         Text(
-            text = "${match.homeTeamNickname} vs ${match.awayTeamNickname}",
+            text = match.getMatchTitle(),
             style = GnrTypography.subtitleSemiBold,
             color = ColorFF181818,
             maxLines = 1,

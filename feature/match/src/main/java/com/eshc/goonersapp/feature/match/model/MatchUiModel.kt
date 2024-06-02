@@ -12,25 +12,25 @@ import java.nio.charset.StandardCharsets
 @Serializable
 @Parcelize
 data class MatchUiModel(
-    val id :Int,
-    val seasonId : Int = 0,
-    val homeTeamName : String = "",
-    val homeTeamNickname : String = "",
-    val homeTeamImageUrl : String = "",
-    val awayTeamName : String = "",
-    val awayTeamNickname : String = "",
-    val awayTeamImageUrl : String = "",
-    val matchDate : String = "",
-    val homeScore :Int = 0,
-    val awayScore :Int = 0,
-    val homeTeamId : Int = 0,
-    val awayTeamId : Int = 0,
-    val round :Int = 0,
-    val isFinished :Boolean = false,
-    val stadiumName : String = "",
-    val leagueImageUrl : String = "",
+    val id: Int,
+    val seasonId: Int = 0,
+    val homeTeamName: String = "",
+    val homeTeamNickname: String = "",
+    val homeTeamImageUrl: String = "",
+    val awayTeamName: String = "",
+    val awayTeamNickname: String = "",
+    val awayTeamImageUrl: String = "",
+    val matchDate: String = "",
+    val homeScore: Int = 0,
+    val awayScore: Int = 0,
+    val homeTeamId: Int = 0,
+    val awayTeamId: Int = 0,
+    val round: Int = 0,
+    val isFinished: Boolean = false,
+    val stadiumName: String = "",
+    val leagueImageUrl: String = "",
 ) : Parcelable {
-    val isScorelessMatch : Boolean
+    val isScorelessMatch: Boolean
         get() = homeScore == 0 && awayScore == 0
 
     override fun toString(): String {
@@ -40,13 +40,27 @@ data class MatchUiModel(
         )
     }
 
-    fun getOpponentTeamId(myTeamId : Int) : Int {
-        return if(homeTeamId == myTeamId) awayTeamId
+    fun getMatchTitle(): String {
+        val homeTeamNameTitle =
+            if (homeTeamNickname.isBlank() && homeTeamName.length >= 2) homeTeamName.substring(0..2)
+                .uppercase()
+            else homeTeamNickname
+
+        val awayTeamNameTitle =
+            if (awayTeamNickname.isBlank() && awayTeamName.length >= 2) awayTeamName.substring(0..2)
+                .uppercase()
+            else awayTeamNickname
+
+        return "$homeTeamNameTitle vs $awayTeamNameTitle"
+    }
+
+    fun getOpponentTeamId(myTeamId: Int): Int {
+        return if (homeTeamId == myTeamId) awayTeamId
         else homeTeamId
     }
 
-    fun getOpponentTeamName(myTeamId : Int) : String {
-        return if(homeTeamId == myTeamId) awayTeamName
+    fun getOpponentTeamName(myTeamId: Int): String {
+        return if (homeTeamId == myTeamId) awayTeamName
         else homeTeamName
     }
 }
@@ -55,7 +69,7 @@ fun Match.toUiModel() = MatchUiModel(
     id = id,
     seasonId = seasonId,
     homeTeamName = homeTeamName,
-    homeTeamImageUrl= homeTeamImageUrl,
+    homeTeamImageUrl = homeTeamImageUrl,
     homeTeamId = homeTeamId,
     awayTeamName = awayTeamName,
     awayTeamImageUrl = awayTeamImageUrl,

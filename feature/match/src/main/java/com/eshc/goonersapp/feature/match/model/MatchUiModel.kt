@@ -44,6 +44,11 @@ data class MatchUiModel(
         return if(homeTeamId == myTeamId) awayTeamId
         else homeTeamId
     }
+
+    fun getOpponentTeamName(myTeamId : Int) : String {
+        return if(homeTeamId == myTeamId) awayTeamName
+        else homeTeamName
+    }
 }
 
 fun Match.toUiModel() = MatchUiModel(

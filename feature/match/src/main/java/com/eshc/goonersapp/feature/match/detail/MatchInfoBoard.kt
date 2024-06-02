@@ -4,12 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.shape.CircleShape
@@ -57,6 +60,7 @@ fun LazyItemScope.MatchInfoBoard(
             teamLogoImageUrl = match.homeTeamImageUrl,
             teamName = match.homeTeamName
         )
+
         if (match.isFinished) {
             MatchResultBoard(
                 match
@@ -107,8 +111,11 @@ fun RowScope.MatchFixtureBoard(
 
         }
         Text(
-            modifier = Modifier.padding(top = 3.dp),
+            modifier = Modifier
+                .padding(top = 3.dp)
+                .widthIn(max = 140.dp),
             text = match.stadiumName,
+            textAlign = TextAlign.Center,
             style = GnrTypography.body2Regular,
             color = ColorFF777777
         )
@@ -128,14 +135,17 @@ fun RowScope.MatchResultBoard(
         withStyle(style = SpanStyle(ColorFF10358A)) { append("  vs  ") }
     }
     Column(
-        modifier = modifier.padding(horizontal = 8.dp),
+        modifier = modifier
+            .width(IntrinsicSize.Min)
+            .padding(horizontal = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
         Column(
             modifier = Modifier
+                .width(IntrinsicSize.Max)
                 .height(78.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp,Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -152,8 +162,11 @@ fun RowScope.MatchResultBoard(
 
         }
         Text(
-            modifier = Modifier.padding(top = 3.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 3.dp),
             text = match.stadiumName,
+            textAlign = TextAlign.Center,
             style = GnrTypography.body2Regular,
             color = ColorFF777777
         )

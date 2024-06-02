@@ -168,6 +168,7 @@ fun MatchDetailScreen(
                 when (selectedTab) {
                     DetailTab.SUMMARY -> {
                         SummaryScreen(
+                            match = match,
                             lineupUiState = lineupUiState,
                             matchInformationState = matchInformationState
                         )

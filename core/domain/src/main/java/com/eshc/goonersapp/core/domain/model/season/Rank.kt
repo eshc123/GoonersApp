@@ -11,4 +11,6 @@ data class Rank(
     val teamId: Int,
     val teamName: String,
     val shortCode: String
-)
+) {
+    fun getTotalGames(): Int = wins + draw + loss
+}

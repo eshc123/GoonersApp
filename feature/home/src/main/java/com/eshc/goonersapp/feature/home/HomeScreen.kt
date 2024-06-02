@@ -28,6 +28,7 @@ import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.feature.home.component.DashboardCard
 import com.eshc.goonersapp.feature.home.component.RecentlyMatchCard
 import com.eshc.goonersapp.feature.home.component.UpcomingMatchCard
+import com.eshc.goonersapp.feature.home.state.DashBoardUiState
 import com.eshc.goonersapp.feature.home.state.RecentlyResultUiState
 import com.eshc.goonersapp.feature.home.state.UpcomingMatchesUiState
 
@@ -38,6 +39,7 @@ fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
     onShowSnackbar : (String) -> Unit
 ) {
+    val dashBoardUiState by viewModel.teamDashBoardUiStateFlow.collectAsStateWithLifecycle()
     val upcomingMatchesUiState by viewModel.upcomingMatchesUiStateFlow.collectAsStateWithLifecycle()
     val recentlyResultUiState by viewModel.recentlyResultUiStateFlow.collectAsStateWithLifecycle()
 
@@ -47,6 +49,7 @@ fun HomeRoute(
     ) { padding ->
         HomeScreen(
             modifier = Modifier.padding(padding),
+            dashBoardUiState = dashBoardUiState,
             upcomingMatchesUiState = upcomingMatchesUiState,
             recentlyResultUiState = recentlyResultUiState
         )
@@ -55,9 +58,10 @@ fun HomeRoute(
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
+    dashBoardUiState: DashBoardUiState,
     upcomingMatchesUiState: UpcomingMatchesUiState,
-    recentlyResultUiState: RecentlyResultUiState
+    recentlyResultUiState: RecentlyResultUiState,
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -70,7 +74,49 @@ fun HomeScreen(
                 color = ColorFF181818,
                 style = GnrTypography.subtitleMedium
             )
-            DashboardCard()
+            when (dashBoardUiState) {
+                is DashBoardUiState.Loading -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(208.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+                is DashBoardUiState.Success -> {
+                    DashboardCard(dashBoardUiState.data)
+                }
+                is DashBoardUiState.Failed -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(208.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Rank List cannot be loaded.",
+                            style = MaterialTheme.typography.titleSmall,
+                            color = Color.LightGray,
+                        )
+                    }
+                }
+                is DashBoardUiState.Error -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(208.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Error! ${dashBoardUiState.throwable}",
+                            style = MaterialTheme.typography.titleSmall,
+                            color = Color.LightGray,
+                        )
+                    }
+                }
+            }
         }
 
         item {

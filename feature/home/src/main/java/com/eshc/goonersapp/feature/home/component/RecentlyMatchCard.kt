@@ -142,7 +142,7 @@ fun RecentlyMatchCard(
                     modifier = modifier
                         .wrapContentHeight()
                         .weight(1f),
-                    alignment = Alignment.End
+                    alignment = Alignment.Start
                 )
             }
         }

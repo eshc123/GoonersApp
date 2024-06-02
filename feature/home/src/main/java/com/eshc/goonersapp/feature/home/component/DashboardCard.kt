@@ -32,9 +32,13 @@ import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF5F5F5
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
+import com.eshc.goonersapp.core.domain.model.season.Rank
 
 @Composable
-fun DashboardCard(modifier: Modifier = Modifier) {
+fun DashboardCard(
+    previewRankList: List<Rank>,
+    modifier: Modifier = Modifier
+) {
     GnrElevatedCard(
         colors = CardDefaults.cardColors(containerColor = ColorFFFFFFFF),
         radius = 10.dp,
@@ -66,54 +70,20 @@ fun DashboardCard(modifier: Modifier = Modifier) {
                 .wrapContentHeight()
                 .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
         ) {
-            LeagueDashboardItem(
-                rank = 1,
-                teamId = 20,
-                teamImgUrl = "",
-                teamShortName = "MCI",
-                totalGames = 31,
-                wins = 22,
-                draws = 5,
-                losses = 4,
-                goalDiff = 51,
-                points = 71
-            )
-            LeagueDashboardItem(
-                rank = 2,
-                teamId = 19,
-                teamImgUrl = "",
-                teamShortName = "ARS",
-                totalGames = 31,
-                wins = 21,
-                draws = 8,
-                losses = 2,
-                goalDiff = 42,
-                points = 71
-            )
-            LeagueDashboardItem(
-                rank = 3,
-                teamId = 100,
-                teamImgUrl = "",
-                teamShortName = "CHE",
-                totalGames = 30,
-                wins = 18,
-                draws = 7,
-                losses = 3,
-                goalDiff = 40,
-                points = 70
-            )
-            LeagueDashboardItem(
-                rank = 4,
-                teamId = 201,
-                teamImgUrl = "",
-                teamShortName = "TOT",
-                totalGames = 32,
-                wins = 18,
-                draws = 6,
-                losses = 7,
-                goalDiff = 20,
-                points = 60
-            )
+            previewRankList.forEach { rank ->
+                LeagueDashboardItem(
+                    rank = rank.position,
+                    teamId = rank.teamId,
+                    teamImgUrl = "",
+                    teamShortName = rank.shortCode,
+                    totalGames = rank.getTotalGames(),
+                    wins = rank.wins,
+                    draws = rank.draw,
+                    losses = rank.loss,
+                    goalDiff = rank.goalDifference,
+                    points = rank.points
+                )
+            }
         }
     }
 }

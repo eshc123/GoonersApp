@@ -264,3 +264,107 @@ fun PlayerLineUpBox(
         }
     }
 }
+
+@Composable
+fun HeadToHeadBox(
+    opponentTeamName: String,
+    performance: Performance,
+    modifier: Modifier = Modifier
+) {
+    GnrElevatedCard(
+        colors = CardDefaults.cardColors(containerColor = ColorFFFFFFFF),
+        radius = 10.dp,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Max)
+            .gnrElevatedCardBorder(10.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(top = 20.dp, bottom = 13.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(13.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    modifier = Modifier.padding(end = 10.dp),
+                    text = "VS",
+                    style = GnrTypography.subtitleMedium,
+                    color = ColorFF4C68A7
+                )
+                AsyncImage(
+                    modifier = Modifier.size(34.dp),
+                    model = performance.opponentImageUrl,
+                    contentDescription = "teamLogo",
+                    contentScale = ContentScale.Crop
+                )
+                Text(
+                    modifier = Modifier
+                        .padding(start = 6.dp)
+                        .widthIn(max = 120.dp),
+                    text = opponentTeamName,
+                    style = GnrTypography.body2Medium,
+                    color = ColorFF181818, textAlign = TextAlign.Center
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(),
+                horizontalArrangement = Arrangement.spacedBy(20.dp,Alignment.CenterHorizontally),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                MatchRecordText(
+                    resultType = "Win",
+                    resultCount = performance.win,
+                    color = ColorFF10358A
+                )
+                VerticalDivider(
+                    modifier = Modifier.height(25.dp),
+                    thickness = 1.dp,
+                    color = ColorFFDCDCDC
+                )
+                MatchRecordText(
+                    resultType = "Draw",
+                    resultCount = performance.draw,
+                    color = ColorFF181818
+                )
+                VerticalDivider(
+                    modifier = Modifier.height(25.dp),
+                    thickness = 1.dp,
+                    color = ColorFFDCDCDC
+                )
+                MatchRecordText(
+                    resultType = "Loss",
+                    resultCount = performance.lose,
+                    color = ColorFF181818
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun MatchRecordText(
+    resultType : String,
+    resultCount : Int,
+    color : Color
+){
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        Text(
+            modifier = Modifier
+                .padding(end = 6.dp),
+            text = resultType,
+            style = GnrTypography.body1Medium,
+            color = color
+        )
+        Text(
+            text = "$resultCount",
+            style = GnrTypography.heading1SemiBold,
+            color = color
+        )
+    }
+}

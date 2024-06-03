@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.IconPack
@@ -124,11 +125,12 @@ fun LeagueDashboardTitle(modifier: Modifier = Modifier) {
 @Composable
 fun LeagueDashboardRow(modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier.fillMaxWidth().padding(horizontal = 15.dp),
+        modifier = modifier.fillMaxWidth().padding(end = 15.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = "Pos",
+            textAlign = TextAlign.Center,
             modifier = modifier.weight(1f),
             color = ColorFF9E9E9E,
             style = GnrTypography.descriptionMedium
@@ -203,11 +205,12 @@ fun LeagueDashboardItem(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(horizontal = 17.dp, vertical = 2.dp),
+                .padding(top = 2.dp, bottom = 2.dp, end = 17.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "$rank",
+                textAlign = TextAlign.Center,
                 modifier = modifier.weight(1f),
                 color = ColorFF9E9E9E,
                 style = GnrTypography.body2Medium
@@ -289,3 +292,4 @@ fun LeagueDashBoardClubInfo(
         )
     }
 }
+

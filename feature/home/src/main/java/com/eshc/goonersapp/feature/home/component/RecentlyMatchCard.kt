@@ -28,6 +28,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.component.GnrElevatedCard
 import com.eshc.goonersapp.core.designsystem.component.MatchLeagueInfo
 import com.eshc.goonersapp.core.designsystem.ext.gnrElevatedCardBorder
@@ -245,7 +246,7 @@ fun RecentlyCard() {
     RecentlyMatchCard(
         competitionUrl = "",
         competitionName = "Premier League",
-        time = "24.05.26 WED 18:00",
+        time = DateUtil.getYearAndMonthAndDateAndDayAndTimeString("2024-04-06T16:30:00.000Z"),
         location = "The American Express Community Stadium",
         homeId = 19,
         homeUrl = "",

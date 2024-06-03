@@ -151,7 +151,7 @@ fun HomeScreen(
                                 homeShortName = matches.homeTeamNickname,
                                 awayUrl = matches.awayTeamImageUrl,
                                 awayShortName = matches.awayTeamNickname,
-                                time = DateUtil.getYearAndMonthAndDateAndTimeString(matches.matchDate),
+                                time = DateUtil.getYearAndMonthAndDateAndDayAndTimeString(matches.matchDate),
                                 location = if (matches.stadiumName == "null") "" else matches.stadiumName,
                                 competitionUrl = matches.leagueImageUrl,
                                 competitionName = "Premier League"
@@ -213,7 +213,7 @@ fun HomeScreen(
                         RecentlyMatchCard(
                             competitionUrl = match.match.leagueImageUrl,
                             competitionName = "Premier league",
-                            time = DateUtil.getYearAndMonthAndDateAndTimeString(match.match.matchDate),
+                            time = DateUtil.getYearAndMonthAndDateAndDayAndTimeString(match.match.matchDate),
                             location = match.match.stadiumName,
                             homeId = match.match.homeTeamId,
                             homeUrl = match.match.homeTeamImageUrl,

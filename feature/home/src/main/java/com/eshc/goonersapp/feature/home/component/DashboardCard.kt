@@ -125,7 +125,9 @@ fun LeagueDashboardTitle(modifier: Modifier = Modifier) {
 @Composable
 fun LeagueDashboardRow(modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier.fillMaxWidth().padding(end = 15.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 10.dp, end = 17.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
@@ -205,7 +207,7 @@ fun LeagueDashboardItem(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 2.dp, bottom = 2.dp, end = 17.dp),
+                .padding(top = 2.dp, bottom = 2.dp, end = 17.dp, start = 10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(

@@ -3,6 +3,7 @@ package com.eshc.goonersapp.core.network.di
 import com.eshc.goonersapp.core.network.BuildConfig
 import com.eshc.goonersapp.core.network.api.MatchNetworkService
 import com.eshc.goonersapp.core.network.api.PlayerNetworkService
+import com.eshc.goonersapp.core.network.api.SeasonNetworkService
 import com.eshc.goonersapp.core.network.api.TeamNetworkService
 import com.eshc.goonersapp.core.network.api.UserNetworkService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -80,6 +81,13 @@ object NetworkModule {
     fun provideUserNetworkService(retrofit: Retrofit): UserNetworkService =
         retrofit.create(
             UserNetworkService::class.java
+        )
+
+    @Singleton
+    @Provides
+    fun provideSeasonNetworkService(retrofit: Retrofit): SeasonNetworkService =
+        retrofit.create(
+            SeasonNetworkService::class.java
         )
 
     @Singleton

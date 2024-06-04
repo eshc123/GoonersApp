@@ -3,6 +3,7 @@ package com.eshc.goonersapp.feature.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -27,6 +28,7 @@ import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.feature.home.component.DashboardCard
 import com.eshc.goonersapp.feature.home.component.RecentlyMatchCard
 import com.eshc.goonersapp.feature.home.component.UpcomingMatchCard
+import com.eshc.goonersapp.feature.home.state.DashBoardUiState
 import com.eshc.goonersapp.feature.home.state.RecentlyResultUiState
 import com.eshc.goonersapp.feature.home.state.UpcomingMatchesUiState
 
@@ -37,6 +39,7 @@ fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
     onShowSnackbar : (String) -> Unit
 ) {
+    val dashBoardUiState by viewModel.teamDashBoardUiStateFlow.collectAsStateWithLifecycle()
     val upcomingMatchesUiState by viewModel.upcomingMatchesUiStateFlow.collectAsStateWithLifecycle()
     val recentlyResultUiState by viewModel.recentlyResultUiStateFlow.collectAsStateWithLifecycle()
 
@@ -46,6 +49,7 @@ fun HomeRoute(
     ) { padding ->
         HomeScreen(
             modifier = Modifier.padding(padding),
+            dashBoardUiState = dashBoardUiState,
             upcomingMatchesUiState = upcomingMatchesUiState,
             recentlyResultUiState = recentlyResultUiState
         )
@@ -54,28 +58,71 @@ fun HomeRoute(
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
+    dashBoardUiState: DashBoardUiState,
     upcomingMatchesUiState: UpcomingMatchesUiState,
-    recentlyResultUiState: RecentlyResultUiState
+    recentlyResultUiState: RecentlyResultUiState,
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(top = 30.dp)
     ) {
         item {
             Text(
                 text = "Team Dashboard",
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier.padding(start = 15.dp),
                 color = ColorFF181818,
                 style = GnrTypography.subtitleMedium
             )
-            DashboardCard()
+            when (dashBoardUiState) {
+                is DashBoardUiState.Loading -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(208.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+                is DashBoardUiState.Success -> {
+                    DashboardCard(dashBoardUiState.data)
+                }
+                is DashBoardUiState.Failed -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(208.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Rank List cannot be loaded.",
+                            style = MaterialTheme.typography.titleSmall,
+                            color = Color.LightGray,
+                        )
+                    }
+                }
+                is DashBoardUiState.Error -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(208.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Error! ${dashBoardUiState.throwable}",
+                            style = MaterialTheme.typography.titleSmall,
+                            color = Color.LightGray,
+                        )
+                    }
+                }
+            }
         }
 
         item {
             Text(
                 text = "Upcoming Matches",
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier.padding(start = 15.dp, top = 55.dp),
                 color = ColorFF181818,
                 style = GnrTypography.subtitleMedium,
             )
@@ -92,7 +139,7 @@ fun HomeScreen(
                 }
                 is UpcomingMatchesUiState.Success -> {
                     LazyRow(
-                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 12.dp),
+                        contentPadding = PaddingValues(horizontal = 15.dp, vertical = 15.dp),
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         items(
@@ -104,7 +151,7 @@ fun HomeScreen(
                                 homeShortName = matches.homeTeamNickname,
                                 awayUrl = matches.awayTeamImageUrl,
                                 awayShortName = matches.awayTeamNickname,
-                                time = DateUtil.getYearAndMonthAndDateAndTimeString(matches.matchDate),
+                                time = DateUtil.getYearAndMonthAndDateAndDayAndTimeString(matches.matchDate),
                                 location = if (matches.stadiumName == "null") "" else matches.stadiumName,
                                 competitionUrl = matches.leagueImageUrl,
                                 competitionName = "Premier League"
@@ -145,7 +192,7 @@ fun HomeScreen(
 
         item {
             Text(
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier.padding(start = 15.dp, top = 55.dp),
                 text = "Recently Result",
                 style = GnrTypography.subtitleMedium,
                 color = Color.Black,
@@ -166,7 +213,7 @@ fun HomeScreen(
                         RecentlyMatchCard(
                             competitionUrl = match.match.leagueImageUrl,
                             competitionName = "Premier league",
-                            time = DateUtil.getYearAndMonthAndDateAndTimeString(match.match.matchDate),
+                            time = DateUtil.getYearAndMonthAndDateAndDayAndTimeString(match.match.matchDate),
                             location = match.match.stadiumName,
                             homeId = match.match.homeTeamId,
                             homeUrl = match.match.homeTeamImageUrl,

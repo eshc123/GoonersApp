@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.IconPack
@@ -32,25 +33,30 @@ import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF5F5F5
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
+import com.eshc.goonersapp.core.domain.model.season.Rank
 
 @Composable
-fun DashboardCard(modifier: Modifier = Modifier) {
+fun DashboardCard(
+    previewRankList: List<Rank>,
+    modifier: Modifier = Modifier
+) {
     GnrElevatedCard(
         colors = CardDefaults.cardColors(containerColor = ColorFFFFFFFF),
         radius = 10.dp,
         modifier = modifier
-            .padding(horizontal = 8.dp, vertical = 12.dp)
+            .padding(horizontal = 15.dp, vertical = 15.dp)
             .fillMaxWidth()
-            .height(IntrinsicSize.Max)
+            .height(IntrinsicSize.Max),
+        elevation = 6.dp
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(top = 12.dp, start = 12.dp, end = 12.dp, bottom = 5.dp)
+                .padding(top = 20.dp, start = 20.dp, end = 20.dp, bottom = 7.dp)
         ) {
             LeagueDashboardTitle()
-            Spacer(modifier = Modifier.size(5.dp))
+            Spacer(modifier = Modifier.size(7.dp))
             HorizontalDivider(
                 modifier = modifier.fillMaxWidth(),
                 color = ColorFFDCDCDC,
@@ -63,56 +69,22 @@ fun DashboardCard(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(start = 12.dp, end = 12.dp, top = 4.dp, bottom = 12.dp)
+                .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
         ) {
-            LeagueDashboardItem(
-                rank = 1,
-                teamId = 20,
-                teamImgUrl = "",
-                teamShortName = "MCI",
-                totalGames = 31,
-                wins = 22,
-                draws = 5,
-                losses = 4,
-                goalDiff = 51,
-                points = 71
-            )
-            LeagueDashboardItem(
-                rank = 2,
-                teamId = 19,
-                teamImgUrl = "",
-                teamShortName = "ARS",
-                totalGames = 31,
-                wins = 21,
-                draws = 8,
-                losses = 2,
-                goalDiff = 42,
-                points = 71
-            )
-            LeagueDashboardItem(
-                rank = 3,
-                teamId = 100,
-                teamImgUrl = "",
-                teamShortName = "CHE",
-                totalGames = 30,
-                wins = 18,
-                draws = 7,
-                losses = 3,
-                goalDiff = 40,
-                points = 70
-            )
-            LeagueDashboardItem(
-                rank = 4,
-                teamId = 201,
-                teamImgUrl = "",
-                teamShortName = "TOT",
-                totalGames = 32,
-                wins = 18,
-                draws = 6,
-                losses = 7,
-                goalDiff = 20,
-                points = 60
-            )
+            previewRankList.forEach { rank ->
+                LeagueDashboardItem(
+                    rank = rank.position,
+                    teamId = rank.teamId,
+                    teamImgUrl = "",
+                    teamShortName = rank.shortCode,
+                    totalGames = rank.getTotalGames(),
+                    wins = rank.wins,
+                    draws = rank.draw,
+                    losses = rank.loss,
+                    goalDiff = rank.goalDifference,
+                    points = rank.points
+                )
+            }
         }
     }
 }
@@ -153,11 +125,14 @@ fun LeagueDashboardTitle(modifier: Modifier = Modifier) {
 @Composable
 fun LeagueDashboardRow(modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier.fillMaxWidth().padding(horizontal = 15.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 10.dp, end = 17.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = "Pos",
+            textAlign = TextAlign.Center,
             modifier = modifier.weight(1f),
             color = ColorFF9E9E9E,
             style = GnrTypography.descriptionMedium
@@ -232,11 +207,12 @@ fun LeagueDashboardItem(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(horizontal = 15.dp, vertical = 2.dp),
+                .padding(top = 2.dp, bottom = 2.dp, end = 17.dp, start = 10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "$rank",
+                textAlign = TextAlign.Center,
                 modifier = modifier.weight(1f),
                 color = ColorFF9E9E9E,
                 style = GnrTypography.body2Medium
@@ -318,3 +294,4 @@ fun LeagueDashBoardClubInfo(
         )
     }
 }
+

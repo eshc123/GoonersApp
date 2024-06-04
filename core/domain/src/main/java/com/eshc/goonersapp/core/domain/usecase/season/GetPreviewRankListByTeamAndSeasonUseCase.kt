@@ -10,8 +10,8 @@ class GetPreviewRankListByTeamAndSeasonUseCase @Inject constructor(
     private val seasonRepository: SeasonRepository
 ) {
     operator fun invoke(
-        teamId: Int,
-        seasonId: Int
+        seasonId: Int,
+        teamId: Int = 19
     ): Flow<DataResult<List<Rank>>> = seasonRepository.getPreviewRankListByTeamAndSeason(
         teamId = teamId,
         seasonId = seasonId

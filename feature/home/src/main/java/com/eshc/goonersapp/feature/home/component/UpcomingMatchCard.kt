@@ -33,7 +33,6 @@ import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 
 @Composable
 fun UpcomingMatchCard(
-    modifier: Modifier = Modifier,
     homeUrl: String,
     homeShortName: String,
     awayUrl: String,
@@ -41,7 +40,8 @@ fun UpcomingMatchCard(
     time: String,
     location: String,
     competitionUrl: String,
-    competitionName: String
+    competitionName: String,
+    modifier: Modifier = Modifier
 ) {
     GnrElevatedCard(
         modifier = modifier

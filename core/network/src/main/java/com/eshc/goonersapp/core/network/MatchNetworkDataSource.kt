@@ -4,6 +4,7 @@ import com.eshc.goonersapp.core.network.model.NetworkResult
 import com.eshc.goonersapp.core.network.model.match.RemoteMatch
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchData
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchInformation
+import com.eshc.goonersapp.core.network.model.match.RemoteMatchLineup
 
 interface MatchNetworkDataSource {
 
@@ -20,4 +21,6 @@ interface MatchNetworkDataSource {
     suspend fun getUpcomingMatches(): NetworkResult<List<RemoteMatch>>
 
     suspend fun getRecentlyMatch(): NetworkResult<RemoteMatchData>
+
+    suspend fun getMatchLineup(matchId: Int) : NetworkResult<RemoteMatchLineup>
 }

@@ -5,7 +5,9 @@ import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.model.match.MatchData
 import com.eshc.goonersapp.core.domain.model.match.MatchInformation
+import com.eshc.goonersapp.core.domain.model.match.MatchLineup
 import com.eshc.goonersapp.core.domain.model.match.Performance
+import com.eshc.goonersapp.core.domain.model.match.TeamLineup
 import com.eshc.goonersapp.core.domain.repository.MatchRepository
 import com.eshc.goonersapp.core.network.fake.FakeMatchDataSource
 import kotlinx.coroutines.runBlocking
@@ -16,10 +18,10 @@ import org.junit.Test
 /**
  * Created By KanuKim97
  *
- * [FakeMatchTest]
+ * [FakeMatchRepositoryImplTest]
  *  - FakeMatchRepository Test
  */
-class FakeMatchTest {
+class FakeMatchRepositoryImplTest {
     private lateinit var fakeMatchDataSource: FakeMatchDataSource
     private lateinit var fakeMatchRepository: MatchRepository
 
@@ -62,7 +64,6 @@ class FakeMatchTest {
                     assertEquals(
                         MatchInformation(
                             notablePlayer = null,
-                            lineUp = listOf(),
                             performance = Performance(opponentImageUrl = "", win = 0, draw = 0, lose = 0)
                         ),
                         result.data
@@ -102,6 +103,32 @@ class FakeMatchTest {
                         MatchData(
                             match = Match(),
                             matchDetail = listOf()
+                        ),
+                        result.data
+                    )
+                }
+                is DataResult.Failure -> { /* Nothing */ }
+            }
+        }
+    }
+
+    @Test
+    fun testMatchLineupWithFake() = runBlocking {
+        fakeMatchRepository.getMatchLineup(38).collect { result ->
+            when (result) {
+                is DataResult.Success -> {
+                    assertEquals(
+                        MatchLineup(
+                            homeLineup = TeamLineup(
+                                teamId = 0,
+                                formation = "",
+                                playerLineup = emptyList()
+                            ),
+                            awayLineup = TeamLineup(
+                                teamId = 0,
+                                formation = "",
+                                playerLineup = emptyList()
+                            )
                         ),
                         result.data
                     )

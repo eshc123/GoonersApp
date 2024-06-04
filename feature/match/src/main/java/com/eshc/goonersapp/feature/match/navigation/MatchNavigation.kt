@@ -45,17 +45,17 @@ fun NavGraphBuilder.matchScreen(
 
 
 fun NavGraphBuilder.matchDetailScreen(
+    onBackIconClick: () -> Unit,
     onClickChat : (MatchUiModel) -> Unit,
     onShowSnackbar : (String) -> Unit
 ) {
     composable(
         route = "$matchDetailNavigationRoute?$matchArg={$matchArg}",
-        arguments = listOf(
-            navArgument(matchArg) { type = MatchType },
-        ),
+        arguments = listOf(navArgument(matchArg) { type = MatchType })
     ) {
         MatchDetailRootScreen(
             onClickChat = onClickChat,
+            onBackIconClick = onBackIconClick,
             onShowSnackbar = onShowSnackbar
         )
     }

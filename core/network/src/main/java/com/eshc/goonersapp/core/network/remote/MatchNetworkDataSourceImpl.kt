@@ -7,6 +7,7 @@ import com.eshc.goonersapp.core.network.model.handleApi
 import com.eshc.goonersapp.core.network.model.match.RemoteMatch
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchData
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchInformation
+import com.eshc.goonersapp.core.network.model.match.RemoteMatchLineup
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -49,6 +50,12 @@ class MatchNetworkDataSourceImpl @Inject constructor(
     override suspend fun getRecentlyMatch(): NetworkResult<RemoteMatchData> {
         return handleApi {
             matchNetworkService.getRecentlyMatch()
+        }
+    }
+
+    override suspend fun getMatchLineup(matchId: Int): NetworkResult<RemoteMatchLineup> {
+        return handleApi {
+            matchNetworkService.getMatchLineup(matchId)
         }
     }
 }

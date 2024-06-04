@@ -36,9 +36,17 @@ val Color88FFFFFF = Color(0x88FFFFFF)
 val ColorFFFECD44 = Color(0xFFFECD44)
 val ColorFFE9343C = Color(0xFFE9343C)
 
+val ColorFFE6EDFC = Color(0xFFE6EDFC)
+
 val BrushMainGradient = Brush.verticalGradient(
     listOf(
         ColorFF10358A,
         ColorFF072872
     )
 )
+
+/**
+ * Player Detail Color
+ * */
+val ColorFFC10006 = Color(0xFFC10006)
+val ColorFF720509 = Color(0xFF720509)

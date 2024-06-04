@@ -4,6 +4,7 @@ import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.model.match.MatchData
 import com.eshc.goonersapp.core.domain.model.match.MatchInformation
+import com.eshc.goonersapp.core.domain.model.match.MatchLineup
 import kotlinx.coroutines.flow.Flow
 
 interface MatchRepository {
@@ -18,4 +19,5 @@ interface MatchRepository {
 
     fun getRecentlyMatch() : Flow<DataResult<MatchData>>
 
+    fun getMatchLineup(matchId: Int) : Flow<DataResult<MatchLineup>>
 }

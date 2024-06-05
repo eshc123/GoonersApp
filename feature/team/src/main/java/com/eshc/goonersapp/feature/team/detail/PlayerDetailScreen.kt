@@ -53,8 +53,10 @@ import com.eshc.goonersapp.core.designsystem.iconpack.IcIosArrowBack
 import com.eshc.goonersapp.core.designsystem.iconpack.IcNotification
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF4C68A7
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF720509
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFC10006
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF5F5F5
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
@@ -70,6 +72,7 @@ fun PlayerDetailRootScreen(
     viewModel : PlayerDetailViewModel = hiltViewModel()
 ) {
     val playerDetailUiState by viewModel.playerDetailUiState.collectAsStateWithLifecycle()
+    val selectedSeason by viewModel.selectedSeason.collectAsStateWithLifecycle()
     var selectedTab by remember { mutableStateOf(DetailTab.PROFILE) }
 
     Scaffold(
@@ -105,9 +108,11 @@ fun PlayerDetailRootScreen(
     ) { _ ->
         PlayerDetailScreen(
             playerDetailUiState = playerDetailUiState,
+            selectedSeason = selectedSeason,
             selectedTab = selectedTab,
             onShowSnackbar =  onShowSnackbar,
             onUpdateTab = { tab -> selectedTab = tab },
+            onUpdateSeason = viewModel::updateSelectedSeason,
             modifier = Modifier
         )
     }
@@ -117,9 +122,11 @@ fun PlayerDetailRootScreen(
 @Composable
 fun PlayerDetailScreen(
     playerDetailUiState : PlayerDetailUiState,
+    selectedSeason : String,
     selectedTab : DetailTab,
     onShowSnackbar: (String) -> Unit,
     onUpdateTab : (DetailTab) -> Unit,
+    onUpdateSeason : (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -148,15 +155,24 @@ fun PlayerDetailScreen(
                             ) {
                                 PlayerDetailInfo(
                                     title = "Age",
-                                    content = "${player.getAge()}"
+                                    content = "${player.getAge()}",
+                                    modifier = Modifier
+                                        .height(110.dp)
+                                        .weight(1f)
                                 )
                                 PlayerDetailInfo(
                                     title = "Games",
-                                    content = "14"
+                                    content = "14",
+                                    modifier = Modifier
+                                        .height(110.dp)
+                                        .weight(1f)
                                 )
                                 PlayerDetailInfo(
                                     title = "Goals",
-                                    content = "10"
+                                    content = "10",
+                                    modifier = Modifier
+                                        .height(110.dp)
+                                        .weight(1f)
                                 )
                             }
 
@@ -192,7 +208,10 @@ fun PlayerDetailScreen(
                                 }
 
                                 DetailTab.STATS -> {
-                                    StatScreen()
+                                    StatScreen(
+                                        selectedSeason = selectedSeason,
+                                        onUpdateSeason = onUpdateSeason
+                                    )
                                 }
                             }
                         }
@@ -223,18 +242,19 @@ fun PlayerDetailImage(
     player: Player,
     modifier: Modifier = Modifier
 ) {
+    val teamBackgroundBrush = Brush.verticalGradient(
+        listOf(
+            ColorFFC10006,
+            ColorFF720509
+        )
+    )
     Box(
         modifier = modifier
             .clip(
                 RoundedCornerShape(bottomEnd = 30.dp, bottomStart = 30.dp)
             )
             .background(
-                Brush.verticalGradient(
-                    listOf(
-                        ColorFFC10006,
-                        ColorFF720509
-                    )
-                )
+                teamBackgroundBrush
             ),
     ) {
         AsyncImage(
@@ -253,12 +273,10 @@ fun PlayerDetailImage(
                 .padding(25.dp),
             verticalArrangement = Arrangement.spacedBy(11.dp)
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
+            Box {
                 AsyncImage(
                     modifier = Modifier
-                        .size(35.dp)
+                        .size(40.dp)
                         .clip(CircleShape),
                     model = player.nationalityImageUrl,
                     contentDescription = "Flag",
@@ -266,7 +284,10 @@ fun PlayerDetailImage(
                 )
                 PlayerDetailBackNumberChip(
                     backNumber = player.backNumber,
-                    backgroundColor = ColorFFC10006
+                    backgroundBrush = teamBackgroundBrush,
+                    modifier = Modifier
+                        .padding(start = 31.dp)
+                        .size(40.dp)
                 )
             }
             Text(
@@ -288,14 +309,13 @@ fun PlayerDetailImage(
 @Composable
 fun PlayerDetailBackNumberChip(
     backNumber: Int,
-    backgroundColor: Color,
+    backgroundBrush: Brush,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
-            .size(35.dp)
             .clip(CircleShape)
-            .background(color = backgroundColor),
+            .background(brush = backgroundBrush),
         contentAlignment = Alignment.Center
     ) {
         Text(
@@ -309,26 +329,28 @@ fun PlayerDetailBackNumberChip(
 @Composable
 fun RowScope.PlayerDetailInfo(
     title: String,
-    content: String
+    content: String,
+    modifier: Modifier = Modifier
 ) {
     GnrElevatedCard(
-        modifier = Modifier
-            .height(110.dp)
-            .weight(1f)
-            .gnrElevatedCardBorder(15.dp),
+        modifier = modifier
+            .gnrElevatedCardBorder(
+                round = 15.dp,
+                color = ColorFFDCDCDC
+            ),
         radius = 15.dp,
         colors = CardDefaults.elevatedCardColors(
-            containerColor = ColorFFFFFFFF
+            containerColor = ColorFFF5F5F5
         )
     ) {
         Box(modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp)) {
+            .padding(16.dp)) {
             Text(
                 modifier = Modifier.align(Alignment.TopStart),
                 text = title,
-                style = GnrTypography.body1Regular,
-                color = ColorFF181818
+                style = GnrTypography.body1SemiBold,
+                color = ColorFF4C68A7
             )
             Text(
                 modifier = Modifier.align(Alignment.BottomEnd),

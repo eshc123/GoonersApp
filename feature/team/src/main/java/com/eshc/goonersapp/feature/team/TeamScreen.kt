@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.eshc.goonersapp.core.designsystem.component.GnrDropdownMenu
+import com.eshc.goonersapp.core.designsystem.component.GnrDropdownMenuWithBottomSheet
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.core.domain.model.player.Player
 import com.eshc.goonersapp.core.domain.model.player.PlayerPosition
@@ -71,15 +71,12 @@ fun ColumnScope.TeamScreen(
     onClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    GnrDropdownMenu(
-        modifier = Modifier.padding(horizontal = 24.dp),
+    GnrDropdownMenuWithBottomSheet(
         label = "season",
-        items = listOf("2023-2024","2022-2023"),
-        onItemSelected = { index, item ->
-            //TODO
-        }
-    )
+        modifier = Modifier.height(42.dp).padding(horizontal = 15.dp),
+    ) {
 
+    }
     when(teamUiState){
         is TeamUiState.Success -> {
             Column(

@@ -20,14 +20,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.eshc.goonersapp.core.designsystem.component.GnrDropdownMenuWithBottomSheet
 import com.eshc.goonersapp.core.designsystem.component.GnrElevatedCard
-import com.eshc.goonersapp.core.designsystem.component.GnrDropdownMenu
+import com.eshc.goonersapp.core.designsystem.component.GnrMenuContent
 import com.eshc.goonersapp.core.designsystem.ext.gnrElevatedCardBorder
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF000000
-import com.eshc.goonersapp.core.designsystem.theme.ColorFF777777
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF555555
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFE9343C
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFFECD44
@@ -36,20 +36,34 @@ import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 
 @Composable
 fun StatScreen(
+    selectedSeason : String,
+    onUpdateSeason : (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier.fillMaxSize()
     ) {
-        GnrDropdownMenu(
-            modifier = Modifier.padding(start = 14.dp,end = 14.dp, top = 26.dp),
-            label = "season",
-            selectedIndex = 0,
-            items = listOf("2023-2024", "2022-2023"),
-            onItemSelected = { index, item ->
-                //TODO
-            }
-        )
+        GnrDropdownMenuWithBottomSheet(
+            label = selectedSeason.ifBlank { "season" },
+            modifier = Modifier
+                .padding(start = 14.dp, end = 14.dp, top = 26.dp)
+                .height(42.dp),
+        ) { onDismiss ->
+            GnrMenuContent(
+                title = "Season",
+                menuItems = listOf("2023-2024", "2022-2023","2021-2022","2020-2021"),
+                selectedItem = selectedSeason,
+                onClick = {
+                    if(it == null){
+                        //TODO
+                    }else {
+                        onUpdateSeason(it)
+                        onDismiss()
+                    }
+
+                }
+            )
+        }
 
         TotalStatCard()
 
@@ -62,7 +76,8 @@ fun TotalStatCard(
     modifier: Modifier = Modifier,
 ) {
     GnrElevatedCard(
-        modifier = modifier.padding(vertical = 20.dp, horizontal = 14.dp)
+        modifier = modifier
+            .padding(vertical = 20.dp, horizontal = 14.dp)
             .gnrElevatedCardBorder(15.dp),
         radius = 15.dp,
         colors = CardDefaults.elevatedCardColors(
@@ -125,8 +140,8 @@ fun RowScope.StatContent(
     ) {
         Text(
             text = title,
-            style = GnrTypography.body2Regular,
-            color = ColorFF777777
+            style = GnrTypography.body2SemiBold,
+            color = ColorFF555555
         )
         Text(
             text = description,
@@ -151,7 +166,7 @@ fun RowScope.StatContentWithColorChip(
         Text(
             text = title,
             style = GnrTypography.body2Regular,
-            color = ColorFF777777
+            color = ColorFF555555
         )
         Row(
             horizontalArrangement = Arrangement.spacedBy(7.dp),

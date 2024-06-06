@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.usecase.match.GetRecentlyMatchUseCase
 import com.eshc.goonersapp.core.domain.usecase.match.GetUpcomingMatchesUseCase
+import com.eshc.goonersapp.core.domain.usecase.season.GetPreviewRankListByTeamAndSeasonUseCase
+import com.eshc.goonersapp.feature.home.state.DashBoardUiState
 import com.eshc.goonersapp.feature.home.state.RecentlyResultUiState
 import com.eshc.goonersapp.feature.home.state.UpcomingMatchesUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,9 +19,27 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    getPreviewRankListByTeamAndSeasonUseCase: GetPreviewRankListByTeamAndSeasonUseCase,
     getUpcomingMatchesUseCase: GetUpcomingMatchesUseCase,
     getRecentlyMatchUseCase: GetRecentlyMatchUseCase
 ) : ViewModel() {
+    val teamDashBoardUiStateFlow: StateFlow<DashBoardUiState> =
+        getPreviewRankListByTeamAndSeasonUseCase(
+            seasonId = 21646
+        ).catch { exception ->
+                DashBoardUiState.Error(exception.message)
+        }.map { result ->
+            when (result) {
+                is DataResult.Success -> DashBoardUiState.Success(result.data)
+                is DataResult.Failure -> DashBoardUiState.Failed(result.message)
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            initialValue = DashBoardUiState.Loading,
+            started = SharingStarted.Eagerly
+        )
+
+
     val upcomingMatchesUiStateFlow: StateFlow<UpcomingMatchesUiState> =
         getUpcomingMatchesUseCase()
             .catch { exception ->

@@ -32,11 +32,11 @@ data class Player(
             else ""
         }
 
-    val displayName: String by lazy {
+    val displayName: String by lazy(LazyThreadSafetyMode.PUBLICATION) {
         firstName + (if (lastNames.isEmpty()) "" else "\n${lastNames}")
     }
 
-    val age: Int by lazy {
+    val age: Int by lazy(LazyThreadSafetyMode.PUBLICATION) {
         Period.between(
             getYearAndMonthAndDateLocalDate(birthDate),
             LocalDate.now()

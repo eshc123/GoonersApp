@@ -43,3 +43,20 @@ fun GnrElevatedCard(
         content = content
     )
 }
+
+@Composable
+fun GnrElevatedCard(
+    colors: CardColors,
+    radius: Dp,
+    elevation: Dp,
+    modifier: Modifier = Modifier,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    GnrElevatedCard(
+        shape = RoundedCornerShape(radius),
+        colors = colors,
+        elevation = CardDefaults.elevatedCardElevation(elevation),
+        modifier = modifier,
+        content = content
+    )
+}

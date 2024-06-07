@@ -11,9 +11,11 @@ import com.eshc.goonersapp.core.database.model.onFailure
 import com.eshc.goonersapp.core.database.model.onSuccess
 import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.player.Player
+import com.eshc.goonersapp.core.domain.model.player.PlayerList
 import com.eshc.goonersapp.core.domain.repository.PlayerRepository
 import com.eshc.goonersapp.core.network.PlayerNetworkDataSource
 import com.eshc.goonersapp.core.network.model.NetworkResult
+import com.eshc.goonersapp.core.network.model.player.RemotePlayerList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -22,12 +24,10 @@ class PlayerRepositoryImpl @Inject constructor(
     private val playerNetworkDataSource: PlayerNetworkDataSource,
     private val playerLocalDataSource: PlayerLocalDataSource
 ) : PlayerRepository {
-    override fun getPlayers(): Flow<DataResult<List<Player>>> = flow {
+    override fun getPlayers(): Flow<DataResult<PlayerList>> = flow {
         emit(
             playerNetworkDataSource.getPlayerList().toDataResult {
-                it.map { remotePlayer ->
-                    remotePlayer.toModel()
-                }
+                it.toModel()
             }
         )
     }

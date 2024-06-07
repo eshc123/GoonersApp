@@ -5,13 +5,14 @@ import com.eshc.goonersapp.core.network.model.NetworkResult
 import com.eshc.goonersapp.core.network.model.match.RemoteMatch
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchData
 import com.eshc.goonersapp.core.network.model.player.RemotePlayer
+import com.eshc.goonersapp.core.network.model.player.RemotePlayerList
 
 class FakePlayerNetworkDataSource : PlayerNetworkDataSource {
 
-    private var responseForPlayerList: (() -> List<RemotePlayer>)? = null
+    private var responseForPlayerList: (() -> RemotePlayerList)? = null
     private var responseForPlayerDetail: (() -> RemotePlayer)? = null
 
-    fun setResponseForPlayerList(response:( () -> List<RemotePlayer>)?) {
+    fun setResponseForPlayerList(response:( () -> RemotePlayerList)?) {
         this.responseForPlayerList = response
     }
 
@@ -19,7 +20,7 @@ class FakePlayerNetworkDataSource : PlayerNetworkDataSource {
         this.responseForPlayerDetail = response
     }
 
-    override suspend fun getPlayerList(): NetworkResult<List<RemotePlayer>> {
+    override suspend fun getPlayerList(): NetworkResult<RemotePlayerList> {
         val response = responseForPlayerList?.invoke()
         return if (response != null) {
             NetworkResult.Success(response)

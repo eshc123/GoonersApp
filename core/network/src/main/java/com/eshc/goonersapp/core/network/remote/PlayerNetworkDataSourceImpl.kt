@@ -5,6 +5,7 @@ import com.eshc.goonersapp.core.network.api.PlayerNetworkService
 import com.eshc.goonersapp.core.network.model.NetworkResult
 import com.eshc.goonersapp.core.network.model.handleApi
 import com.eshc.goonersapp.core.network.model.player.RemotePlayer
+import com.eshc.goonersapp.core.network.model.player.RemotePlayerList
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,7 +14,7 @@ class PlayerNetworkDataSourceImpl @Inject constructor(
     private val playerNetworkService: PlayerNetworkService
 ) : PlayerNetworkDataSource {
 
-    override suspend fun getPlayerList(): NetworkResult<List<RemotePlayer>> {
+    override suspend fun getPlayerList(): NetworkResult<RemotePlayerList> {
         return handleApi {
             playerNetworkService.getPlayers()
         }

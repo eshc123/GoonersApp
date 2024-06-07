@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
@@ -51,8 +52,8 @@ import com.eshc.goonersapp.core.designsystem.component.GnrTabItem
 import com.eshc.goonersapp.core.designsystem.ext.gnrElevatedCardBorder
 import com.eshc.goonersapp.core.designsystem.iconpack.IcIosArrowBack
 import com.eshc.goonersapp.core.designsystem.iconpack.IcNotification
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF000000
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
-import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF4C68A7
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF720509
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFC10006
@@ -69,11 +70,11 @@ import com.eshc.goonersapp.feature.team.state.PlayerDetailUiState
 fun PlayerDetailRootScreen(
     onBackIconClick: () -> Unit,
     onShowSnackbar: (String) -> Unit,
-    viewModel : PlayerDetailViewModel = hiltViewModel()
+    viewModel: PlayerDetailViewModel = hiltViewModel()
 ) {
     val playerDetailUiState by viewModel.playerDetailUiState.collectAsStateWithLifecycle()
     val selectedSeason by viewModel.selectedSeason.collectAsStateWithLifecycle()
-    var selectedTab by remember { mutableStateOf(DetailTab.PROFILE) }
+    var selectedTab by remember { mutableStateOf(DetailTab.Overview) }
 
     Scaffold(
         topBar = {
@@ -110,7 +111,7 @@ fun PlayerDetailRootScreen(
             playerDetailUiState = playerDetailUiState,
             selectedSeason = selectedSeason,
             selectedTab = selectedTab,
-            onShowSnackbar =  onShowSnackbar,
+            onShowSnackbar = onShowSnackbar,
             onUpdateTab = { tab -> selectedTab = tab },
             onUpdateSeason = viewModel::updateSelectedSeason,
             modifier = Modifier
@@ -121,12 +122,12 @@ fun PlayerDetailRootScreen(
 
 @Composable
 fun PlayerDetailScreen(
-    playerDetailUiState : PlayerDetailUiState,
-    selectedSeason : String,
-    selectedTab : DetailTab,
+    playerDetailUiState: PlayerDetailUiState,
+    selectedSeason: String,
+    selectedTab: DetailTab,
     onShowSnackbar: (String) -> Unit,
-    onUpdateTab : (DetailTab) -> Unit,
-    onUpdateSeason : (String) -> Unit,
+    onUpdateTab: (DetailTab) -> Unit,
+    onUpdateSeason: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -200,14 +201,29 @@ fun PlayerDetailScreen(
                                 }
                             }
                         }
-
-                        item {
-                            when (selectedTab) {
-                                DetailTab.PROFILE -> {
-                                    ProfileScreen(player = player)
+                        when (selectedTab) {
+                            DetailTab.Overview -> {
+                                item {
+                                    ProfileContent(
+                                        player = player,
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
+                                    Text(
+                                        modifier = Modifier.padding(
+                                            top = 15.dp,
+                                            bottom = 16.dp,
+                                            start = 15.dp,
+                                            end = 15.dp
+                                        ),
+                                        text = "Matches",
+                                        style = GnrTypography.subtitleSemiBold,
+                                        color = ColorFF000000
+                                    )
                                 }
+                            }
 
-                                DetailTab.STATS -> {
+                            DetailTab.Stats -> {
+                                item {
                                     StatScreen(
                                         selectedSeason = selectedSeason,
                                         onUpdateSeason = onUpdateSeason
@@ -217,7 +233,6 @@ fun PlayerDetailScreen(
                         }
                     }
                 }
-
             }
 
             is PlayerDetailUiState.Loading -> {
@@ -343,9 +358,11 @@ fun RowScope.PlayerDetailInfo(
             containerColor = ColorFFF5F5F5
         )
     ) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
             Text(
                 modifier = Modifier.align(Alignment.TopStart),
                 text = title,
@@ -363,5 +380,5 @@ fun RowScope.PlayerDetailInfo(
 }
 
 enum class DetailTab {
-    PROFILE, STATS
+    Overview, Stats
 }

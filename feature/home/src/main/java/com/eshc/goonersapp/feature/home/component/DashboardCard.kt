@@ -75,7 +75,7 @@ fun DashboardCard(
                 LeagueDashboardItem(
                     rank = rank.position,
                     teamId = rank.teamId,
-                    teamImgUrl = "",
+                    teamImgUrl = rank.teamImgUrl,
                     teamShortName = rank.shortCode,
                     totalGames = rank.getTotalGames(),
                     wins = rank.wins,

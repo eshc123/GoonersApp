@@ -29,5 +29,6 @@ fun RemoteRank.toModel() = Rank(
     goalDifference = goalDifference,
     teamId = teamId,
     teamName = teamName,
+    teamImgUrl = teamImgUrl,
     shortCode = shortCode
 )

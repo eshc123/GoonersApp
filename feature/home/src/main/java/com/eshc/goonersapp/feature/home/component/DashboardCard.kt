@@ -127,7 +127,7 @@ fun LeagueDashboardRow(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 10.dp, end = 17.dp),
+            .padding(start = 17.dp, end = 17.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
@@ -145,36 +145,42 @@ fun LeagueDashboardRow(modifier: Modifier = Modifier) {
         )
         Text(
             text = "PL",
+            textAlign = TextAlign.Center,
             modifier = modifier.weight(1f),
             color = ColorFF9E9E9E,
             style = GnrTypography.descriptionMedium
         )
         Text(
             text = "W",
+            textAlign = TextAlign.Center,
             modifier = modifier.weight(1f),
             color = ColorFF9E9E9E,
             style = GnrTypography.descriptionMedium
         )
         Text(
             text = "D",
+            textAlign = TextAlign.Center,
             modifier = modifier.weight(1f),
             color = ColorFF9E9E9E,
             style = GnrTypography.descriptionMedium
         )
         Text(
             text = "L",
+            textAlign = TextAlign.Center,
             modifier = modifier.weight(1f),
             color = ColorFF9E9E9E,
             style = GnrTypography.descriptionMedium
         )
         Text(
             text = "GD",
+            textAlign = TextAlign.Center,
             modifier = modifier.weight(1f),
             color = ColorFF9E9E9E,
             style = GnrTypography.descriptionMedium
         )
         Text(
             text = "Pts",
+            textAlign = TextAlign.Center,
             modifier = modifier.weight(1f),
             color = ColorFF9E9E9E,
             style = GnrTypography.descriptionMedium
@@ -207,7 +213,7 @@ fun LeagueDashboardItem(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 2.dp, bottom = 2.dp, end = 17.dp, start = 10.dp),
+                .padding(top = 2.dp, bottom = 2.dp, end = 17.dp, start = 17.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -225,24 +231,28 @@ fun LeagueDashboardItem(
             )
             Text(
                 text = "$totalGames",
+                textAlign = TextAlign.Center,
                 modifier = modifier.weight(1f),
                 color = cardItemTextColor,
                 style = GnrTypography.body2Regular
             )
             Text(
-                text = "$wins", 
-                modifier = modifier.weight(1f), 
+                text = "$wins",
+                textAlign = TextAlign.Center,
+                modifier = modifier.weight(1f),
                 color = cardItemTextColor,
                 style = GnrTypography.body2Regular
             )
             Text(
                 text = "$draws",
+                textAlign = TextAlign.Center,
                 modifier = modifier.weight(1f),
                 color = cardItemTextColor,
                 style = GnrTypography.body2Regular
             )
             Text(
                 text = "$losses",
+                textAlign = TextAlign.Center,
                 modifier = modifier.weight(1f),
                 color = cardItemTextColor,
                 style = GnrTypography.body2Regular
@@ -250,12 +260,14 @@ fun LeagueDashboardItem(
 
             Text(
                 text = "${if(goalDiff > 0)"+" else ""}${goalDiff}",
+                textAlign = TextAlign.Center,
                 modifier = modifier.weight(1f),
                 color = cardItemTextColor,
                 style = GnrTypography.body2Regular
             )
             Text(
                 text = "$points",
+                textAlign = TextAlign.Center,
                 modifier = modifier.weight(1f),
                 color = cardItemTextColor,
                 style = GnrTypography.body2SemiBold

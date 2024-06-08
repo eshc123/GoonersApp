@@ -148,7 +148,7 @@ fun PlayerDetailScreen(
                             ) {
                                 PlayerDetailInfo(
                                     title = "Age",
-                                    content = "${player.getAge()}"
+                                    content = "${player.age}"
                                 )
                                 PlayerDetailInfo(
                                     title = "Games",

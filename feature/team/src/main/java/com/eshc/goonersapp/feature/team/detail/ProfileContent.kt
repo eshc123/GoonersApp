@@ -3,7 +3,6 @@ package com.eshc.goonersapp.feature.team.detail
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -22,34 +21,41 @@ import com.eshc.goonersapp.core.domain.model.player.Player
 import com.eshc.goonersapp.feature.team.R
 
 @Composable
-fun ProfileScreen(
-    player : Player,
+fun ProfileContent(
+    player: Player,
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.fillMaxSize().padding(horizontal = 15.dp, vertical = 20.dp)
+        modifier = modifier
+            .padding(horizontal = 15.dp, vertical = 20.dp)
     ) {
-        ProfileContent(
+        Text(
+            modifier = Modifier.padding(vertical = 10.dp),
+            text = "Detailed Profile",
+            style = GnrTypography.subtitleSemiBold,
+            color = ColorFF000000
+        )
+        ProfileContentItem(
             title = stringResource(id = R.string.player_detail_profile_date_of_birth),
             description = getYearAndMonthAndDateString(player.birthDate),
             modifier = Modifier.fillMaxWidth()
         )
-        ProfileContent(
+        ProfileContentItem(
             title = stringResource(id = R.string.player_detail_profile_height),
             description = "${player.height}cm",
             modifier = Modifier.fillMaxWidth()
         )
-        ProfileContent(
+        ProfileContentItem(
             title = stringResource(id = R.string.player_detail_profile_weight),
             description = "${player.weight}kg",
             modifier = Modifier.fillMaxWidth()
         )
-        ProfileContent(
+        ProfileContentItem(
             title = stringResource(id = R.string.player_detail_profile_nationality),
-            description =  player.nationality,
+            description = player.nationality,
             modifier = Modifier.fillMaxWidth()
         )
-        ProfileContent(
+        ProfileContentItem(
             title = stringResource(id = R.string.player_detail_profile_position),
             description = player.position,
             modifier = Modifier.fillMaxWidth()
@@ -58,9 +64,9 @@ fun ProfileScreen(
 }
 
 @Composable
-fun ColumnScope.ProfileContent(
-    title : String,
-    description : String,
+fun ColumnScope.ProfileContentItem(
+    title: String,
+    description: String,
     modifier: Modifier = Modifier
 ) {
     Row(

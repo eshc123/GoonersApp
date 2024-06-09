@@ -16,10 +16,13 @@ object DateUtil {
             .format(DateTimeFormatter.ofPattern("yyyy.MM"))
     }
 
-    fun getYearAndMonthAndDateString(date: String): String {
+    fun getYearAndMonthAndDateString(date: String,useTwoDigitYear : Boolean = false): String {
         if (date.isBlank()) return date
         return LocalDate.parse(date, defaultDateFormat)
-            .format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+            .format(DateTimeFormatter.ofPattern(
+                if(useTwoDigitYear) "yy.MM.dd"
+                else "yyyy.MM.dd"
+            ))
     }
 
     fun getYearAndMonthAndDateAndTimeString(date: String): String {

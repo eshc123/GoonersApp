@@ -39,6 +39,8 @@ val ColorFFE9343C = Color(0xFFE9343C)
 val ColorFFE6EDFC = Color(0xFFE6EDFC)
 
 val ColorFFA5DBFF = Color(0xFFA5DBFF)
+val ColorFFF69D4A = Color(0xFFF69D4A)
+val ColorFFF46B6C = Color(0xFFF46B6C)
 
 val BrushMainGradient = Brush.verticalGradient(
     listOf(

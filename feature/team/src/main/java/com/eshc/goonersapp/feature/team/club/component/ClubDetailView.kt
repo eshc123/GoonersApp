@@ -33,6 +33,12 @@ import com.eshc.goonersapp.feature.team.R
 @Composable
 fun ClubDetailImageView(
     clubImgUrl: String,
+    clubName: String,
+    clubFoundedYear: String,
+    clubHomeTown: String,
+    clubStadium: String,
+    clubCoachName: String,
+    clubCaptainName: String,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -54,7 +60,7 @@ fun ClubDetailImageView(
             verticalArrangement = Arrangement.Top
         ) {
             Row(
-                modifier = Modifier.padding(horizontal = 15.dp),
+                modifier = Modifier.padding(horizontal = 15.dp, vertical = 30.dp),
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -65,7 +71,7 @@ fun ClubDetailImageView(
                 )
                 Column {
                     Text(
-                        text = "Arsenal",
+                        text = clubName,
                         style = GnrTypography.heading1SemiBold,
                         color = ColorFFFFFFFF
                     )
@@ -76,11 +82,11 @@ fun ClubDetailImageView(
                 }
             }
             ClubInfoTextContent(
-                establishDate = "1886.12.01",
-                hometown = "London",
-                stadium = "Emirates Stadium",
-                coach = "Mikel Arteta",
-                captain = "Martin Ødegaard",
+                establishDate = clubFoundedYear,
+                hometown = clubHomeTown,
+                stadium = clubStadium,
+                coach = clubCoachName,
+                captain = clubCaptainName,
                 modifier = Modifier.padding(vertical = 15.dp)
             )
         }
@@ -202,7 +208,15 @@ fun PreviewClubDetailImgView() {
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        ClubDetailImageView(clubImgUrl = "")
+        ClubDetailImageView(
+            clubImgUrl = "",
+            clubName = "",
+            clubHomeTown = "",
+            clubStadium = "",
+            clubCoachName = "",
+            clubFoundedYear = "",
+            clubCaptainName = ""
+        )
         ClubLocation("", "London, England")
 
         ClubInfoTextRow(infoTitle = "Establishment", infoContent = "1886.12.01")

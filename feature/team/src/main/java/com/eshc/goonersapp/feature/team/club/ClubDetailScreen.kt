@@ -47,6 +47,7 @@ import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 import com.eshc.goonersapp.core.domain.model.match.Match
+import com.eshc.goonersapp.feature.team.club.component.ClubDetailImageView
 import com.eshc.goonersapp.feature.team.state.ClubDetailUiState
 
 @Composable
@@ -77,99 +78,25 @@ fun ClubDetailScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        GnrTopBar(
-            title = "CLUB",
-            onBackIconClick = onBackIconClick
-        )
         when(clubDetailUiState){
             is ClubDetailUiState.Success -> {
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ){
-                    Card(
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                            .padding(16.dp),
-                        shape = RoundedCornerShape(8.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = Color(0xFF151D2D)
-                        )
-                    ) {
-                        Box(
-                            modifier = Modifier.padding(8.dp)
-                        ){
-                            AsyncImage(
-                                model = clubDetailUiState.teamDetail.team.imageUrl,
-                                contentDescription = null,
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        }
-                    }
-                    Column(
-                        modifier = Modifier
-                            .wrapContentHeight()
-                            .weight(1f)
-                            .padding(8.dp),
-                        verticalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Text(
-                            text = "Name",
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black,
-                            fontSize = 14.sp,
-                            letterSpacing = 0.1.sp
-                        )
-                        Text(
-                            text = clubDetailUiState.teamDetail.team.clubName,
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Medium,
-                            color = Color.Black,
-                            fontSize = 14.sp,
-                            letterSpacing = 0.1.sp
-                        )
-                        Text(
-                            text = "Foundation Year",
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black,
-                            fontSize = 14.sp,
-                            letterSpacing = 0.1.sp
-                        )
-                        Text(
-                            text = clubDetailUiState.teamDetail.team.foundationDate,
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Medium,
-                            color = Color.Black,
-                            fontSize = 14.sp,
-                            letterSpacing = 0.1.sp
-                        )
-                        Text(
-                            text = "Stadium",
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black,
-                            fontSize = 14.sp,
-                            letterSpacing = 0.1.sp
-                        )
-                        Text(
-                            text = clubDetailUiState.teamDetail.team.stadiumName,
-                            textAlign = TextAlign.Center,
-                            fontFamily = pretendard,
-                            fontWeight = FontWeight.Medium,
-                            color = Color.Black,
-                            fontSize = 14.sp,
-                            letterSpacing = 0.1.sp
-                        )
-                    }
-                }
+                ClubDetailImageView(
+                    clubImgUrl = clubDetailUiState.teamDetail.team.imageUrl,
+                    clubName = clubDetailUiState.teamDetail.team.clubName,
+                    clubHomeTown = "London",
+                    clubFoundedYear = clubDetailUiState.teamDetail.team.foundationDate,
+                    clubStadium = clubDetailUiState.teamDetail.team.stadiumName,
+                    clubCoachName =clubDetailUiState.teamDetail.team.manager,
+                    clubCaptainName = clubDetailUiState.teamDetail.team.captain
+                )
+
                 Text(
+                    text = "Homepage",
+                    modifier = Modifier.padding(top = 50.dp, start = 16.dp),
+                    style = GnrTypography.subtitleSemiBold
+                )
+
+                /*Text(
                     modifier = Modifier.padding(16.dp),
                     text = "Recently Results",
                     textAlign = TextAlign.Center,
@@ -187,7 +114,7 @@ fun ClubDetailScreen(
                     items(clubDetailUiState.teamDetail.recentlyMatches){
                         RecentlyResultItem(match = it)
                     }
-                }
+                }*/
             }
             is ClubDetailUiState.Loading -> {
                 Box(

@@ -5,38 +5,39 @@ import java.time.LocalDate
 import java.time.Period
 
 data class Player(
-    val id :Int,
-    val name : String = "",
-    val backNumber : Int = 0,
-    val birthDate : String = "",
-    val height : Int = 0,
-    val weight : Int = 0,
-    val imageUrl : String = "",
-    val contractStartDate : String = "",
-    val contractEndDate : String = "",
-    val position : String = "",
-    val positionInitial : String = "",
-    val positionCategory : String = "",
-    val nationality : String = "",
+    val id: Int,
+    val name: String = "",
+    val backNumber: Int = 0,
+    val birthDate: String = "",
+    val height: Int = 0,
+    val weight: Int = 0,
+    val imageUrl: String = "",
+    val contractStartDate: String = "",
+    val contractEndDate: String = "",
+    val position: String = "",
+    val positionInitial: String = "",
+    val positionCategory: String = "",
+    val nationality: String = "",
     val nationalityImageUrl: String = ""
 ) {
-    private val names : List<String>
+    private val names: List<String>
         get() = name.split(" ")
 
-    val firstName : String
+    private val firstName: String
         get() = names.firstOrNull() ?: ""
 
-    val lastNames : String
+    private val lastNames: String
         get() = names.let {
-            if(it.size > 1) names.subList(1, names.lastIndex + 1).joinToString(" ")
+            if (it.size > 1) names.subList(1, names.lastIndex + 1).joinToString(" ")
             else ""
         }
 
-    val displayName : String
-        get() = firstName + (if(lastNames.isEmpty()) "" else "\n${lastNames}")
+    val displayName: String by lazy(LazyThreadSafetyMode.NONE) {
+        firstName + (if (lastNames.isEmpty()) "" else "\n${lastNames}")
+    }
 
-    fun getAge() : Int {
-        return Period.between(
+    val age: Int by lazy(LazyThreadSafetyMode.NONE) {
+        Period.between(
             getYearAndMonthAndDateLocalDate(birthDate),
             LocalDate.now()
         ).years

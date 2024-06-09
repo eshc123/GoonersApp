@@ -3,6 +3,7 @@ package com.eshc.goonersapp.core.network
 import com.eshc.goonersapp.core.network.fake.FakePlayerNetworkDataSource
 import com.eshc.goonersapp.core.network.model.NetworkResult
 import com.eshc.goonersapp.core.network.model.player.RemotePlayer
+import com.eshc.goonersapp.core.network.model.player.RemotePlayerList
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Assert.fail
@@ -29,7 +30,9 @@ class FakePlayerDataSourceTest {
     @Test
     fun `fake_get_player_list_as_success`() = runBlocking {
         fakePlayerNetworkDataSource.setResponseForPlayerList {
-            playerList
+            RemotePlayerList(
+                teamPlayer = playerList
+            )
         }
 
         when (val result = fakePlayerNetworkDataSource.getPlayerList()) {

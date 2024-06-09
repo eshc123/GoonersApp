@@ -156,7 +156,7 @@ fun PlayerDetailScreen(
                             ) {
                                 PlayerDetailInfo(
                                     title = "Age",
-                                    content = "${player.getAge()}",
+                                    content = "${player.age}",
                                     modifier = Modifier
                                         .height(110.dp)
                                         .weight(1f)

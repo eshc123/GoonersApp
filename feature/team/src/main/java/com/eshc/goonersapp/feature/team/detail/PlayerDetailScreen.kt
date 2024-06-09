@@ -61,7 +61,9 @@ import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF5F5F5
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
+import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.model.player.Player
+import com.eshc.goonersapp.core.domain.model.player.PlayerMatchStat
 import com.eshc.goonersapp.feature.team.state.PlayerDetailUiState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -139,6 +141,7 @@ fun PlayerDetailScreen(
                 playerDetailUiState.playerDetail.let { player: Player ->
                     LazyColumn(
                         modifier = Modifier.fillMaxSize()
+                            .padding(bottom = 16.dp)
                     ) {
                         item {
                             PlayerDetailImage(
@@ -208,18 +211,28 @@ fun PlayerDetailScreen(
                                         player = player,
                                         modifier = Modifier.fillMaxWidth()
                                     )
-                                    Text(
-                                        modifier = Modifier.padding(
-                                            top = 15.dp,
-                                            bottom = 16.dp,
-                                            start = 15.dp,
-                                            end = 15.dp
-                                        ),
-                                        text = "Matches",
-                                        style = GnrTypography.subtitleSemiBold,
-                                        color = ColorFF000000
-                                    )
+                                    // TODO /player/match API 연동 후
+//                                    Text(
+//                                        modifier = Modifier.padding(
+//                                            top = 15.dp,
+//                                            bottom = 16.dp,
+//                                            start = 15.dp,
+//                                            end = 15.dp
+//                                        ),
+//                                        text = "Matches",
+//                                        style = GnrTypography.subtitleSemiBold,
+//                                        color = ColorFF000000
+//                                    )
                                 }
+                                // TODO /player/match API 연동 후
+//                                items(
+//
+//                                ){
+//                                    MatchItem(
+//                                        modifier = Modifier.padding(horizontal = 15.dp, vertical = 4.dp),
+//                                        playerMatchStat = it
+//                                    )
+//                                }
                             }
 
                             DetailTab.Stats -> {

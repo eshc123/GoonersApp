@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.IconPack
@@ -36,8 +37,11 @@ import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF4C68A7
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFA5DBFF
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFE6EDFC
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFF46B6C
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFF69D4A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
+import com.eshc.goonersapp.core.domain.model.common.MatchResult
 import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.core.domain.model.player.PlayerMatchStat
 
@@ -56,7 +60,8 @@ fun LazyItemScope.MatchItem(
         )
     ) {
         Row(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Row(
                 modifier = Modifier
@@ -66,9 +71,11 @@ fun LazyItemScope.MatchItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
+                    modifier = Modifier.width(42.dp),
                     text = playerMatchStat.formattedDate,
                     style = GnrTypography.descriptionMedium,
-                    color = ColorFF4C68A7
+                    color = ColorFF4C68A7,
+                    textAlign = TextAlign.Start
                 )
                 MatchItemVersusTeamInfo(
                     match = playerMatchStat.match,
@@ -96,7 +103,11 @@ fun LazyItemScope.MatchItem(
                 )
                 MatchItemResultChip(
                     playerMatchStat.match.getMatchResult(19).name.uppercase(),
-                    color = ColorFFA5DBFF
+                    color = when(playerMatchStat.match.getMatchResult(19)){
+                        MatchResult.Win -> ColorFFA5DBFF
+                        MatchResult.Draw -> ColorFFF69D4A
+                        MatchResult.Loss -> ColorFFF46B6C
+                    }
                 )
             }
         }

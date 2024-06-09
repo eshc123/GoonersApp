@@ -14,5 +14,6 @@ data class RemoteRank(
     @SerialName("goal_difference") val goalDifference : Int,
     @SerialName("team_id") val teamId : Int,
     @SerialName("team_name") val teamName : String,
+    @SerialName("team_image_url") val teamImgUrl: String,
     @SerialName("short_code") val shortCode : String,
 )

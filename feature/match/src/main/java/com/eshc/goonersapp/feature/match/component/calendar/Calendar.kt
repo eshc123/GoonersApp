@@ -1,6 +1,8 @@
 package com.eshc.goonersapp.feature.match.component.calendar
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -10,11 +12,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -22,6 +26,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,6 +37,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -41,9 +48,21 @@ import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.ImageCard
+import com.eshc.goonersapp.core.designsystem.component.MatchItemResultChip
 import com.eshc.goonersapp.core.designsystem.iconpack.IcGrid
+import com.eshc.goonersapp.core.designsystem.iconpack.IcIosArrowBack
 import com.eshc.goonersapp.core.designsystem.iconpack.IcList
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF555555
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFA5DBFF
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFE9343C
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFF46B6C
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFF69D4A
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
+import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
+import com.eshc.goonersapp.core.domain.model.common.MatchResult
 import com.eshc.goonersapp.core.domain.model.match.Match
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -60,52 +79,84 @@ fun CalendarGrid(
     pagerState : PagerState,
     onSelectDate: (LocalDate) -> Unit,
     onChangeCalendarType : () -> Unit,
-    onClickDetail: (Match) -> Unit
+    onClickDetail: (Match) -> Unit,
+    onClickPrevious : () -> Unit,
+    onClickNext : () -> Unit
 ) {
-
-    val listState = rememberLazyListState()
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .height(height.dp)
     ) {
-        Box(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(headerHeight.dp)
                 .padding(horizontal = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
+            Spacer(modifier = Modifier
+                .wrapContentHeight()
+                .weight(0.3f))
+            Row(
                 modifier = Modifier
-                    .align(Alignment.Center),
-                text = calendarMonthListState[pagerState.currentPage].currentMonth.format(
-                    DateTimeFormatter.ofPattern(
-                        "yyyy.MM"
-                    )
-                ),
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.Black
-            )
-            Icon(
-                imageVector =IconPack.IcList,
-                contentDescription = null,
-                modifier= Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(8.dp)
-                    .size(24.dp)
-                    .clickable {
-                        onChangeCalendarType()
-                    }
-            )
+                    .wrapContentHeight()
+                    .weight(0.4f),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround
+            ){
+                Icon(
+                    modifier = Modifier.clickable {
+                        onClickPrevious()
+                    },
+                    imageVector = IconPack.IcIosArrowBack,
+                    contentDescription = "prev"
+                )
+                Text(
+                    text = calendarMonthListState[pagerState.currentPage].currentMonth.format(
+                        DateTimeFormatter.ofPattern(
+                            "yyyy.MM"
+                        )
+                    ),
+                    style = GnrTypography.heading2SemiBold,
+                    color = ColorFF181818
+                )
+                Icon(
+                    modifier = Modifier.rotate(180f).clickable {
+                               onClickNext()
+                    },
+                    imageVector = IconPack.IcIosArrowBack,
+                    contentDescription = "prev"
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .wrapContentHeight()
+                    .weight(0.3f)
+            ){
+                Icon(
+                    imageVector =IconPack.IcList,
+                    contentDescription = null,
+                    modifier= Modifier
+                        .align(Alignment.Center)
+                        .padding(8.dp)
+                        .size(24.dp)
+                        .clickable {
+                            onChangeCalendarType()
+                        }
+                )
+            }
+
         }
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier
+            .padding(top = 16.dp)
+            .fillMaxSize()) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Absolute.SpaceEvenly
             ) {
-                listOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT").forEach {
+                CalendarUtil.dayOfWeekList.forEach {
                     CalendarDayItem(it, 24)
                 }
             }
@@ -136,17 +187,6 @@ fun CalendarGrid(
                     }
                 }
             }
-//            LazyRow(
-//                modifier = Modifier.fillMaxSize(),
-//                state = listState,
-//                flingBehavior = rememberSnapFlingBehavior(lazyListState = listState)
-//            ) {
-//                items(12) {
-//
-//
-//                }
-//
-//            }
         }
     }
 }
@@ -283,8 +323,8 @@ fun RowScope.CalendarDayItem(
             .height(height.dp)
             .weight(1f),
         text = text,
-        color = if (text == "SUN" || text == "SAT") Color.Red else Color.Gray,
-        style = MaterialTheme.typography.labelMedium,
+        color = if (text == "SUN") ColorFFE9343C else ColorFF181818,
+        style = GnrTypography.body2Medium,
         textAlign = TextAlign.Center
     )
 }
@@ -317,40 +357,48 @@ fun RowScope.CalendarItem(
         Text(
             modifier = Modifier.padding(4.dp),
             text = localDate.dayOfMonth.toString(),
-            color = if (localDate.dayOfWeek in setOf(
-                    DayOfWeek.SATURDAY,
-                    DayOfWeek.SUNDAY
-                )
-            ) Color.Red else Color.Black,
-            style = MaterialTheme.typography.labelLarge,
+            color = if (localDate.dayOfWeek == DayOfWeek.SUNDAY) ColorFFE9343C else ColorFF555555,
+            style = GnrTypography.body1Medium
         )
         if (matchList.containsKey(localDate)) {
             matchList[localDate]?.firstOrNull()?.let { match ->
-                AsyncImage(
-                    modifier = Modifier.size(24.dp),
-                    model = if (match.homeTeamName == "Arsenal") match.awayTeamImageUrl else match.homeTeamImageUrl,
-                    contentDescription = null
-                )
+                Box(
+                    modifier = Modifier
+                        .size(22.dp)
+                        .background(ColorFFFFFFFF)
+                        .border(1.dp, ColorFFDCDCDC, CircleShape)
+                        .clip(CircleShape)
+                        .padding(2.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    AsyncImage(
+                        model = match.getOpponentTeamImageUrl(19),
+                        contentDescription = null
+                    )
+                }
                 if (match.isFinished) {
                     Text(
                         text = "${match.homeScore}:${match.awayScore}",
-                        style = MaterialTheme.typography.labelMedium,
+                        style = GnrTypography.body2Regular,
+                        color = ColorFF181818
                     )
-                    Text(
-                        text = if (match.homeTeamName == "Arsenal") {
-                            if (match.homeScore > match.awayScore) "WIN"
-                            else if (match.homeScore < match.awayScore) "LOSS"
-                            else "DRAW"
-                        } else {
-                            if (match.awayScore > match.homeScore) "WIN"
-                            else if (match.awayScore < match.homeScore) "LOSS"
-                            else "DRAW"
+                    MatchItemResultChip(
+                        match.getMatchResult(19).name.uppercase(),
+                        color = when(match.getMatchResult(19)){
+                            MatchResult.Win -> ColorFFA5DBFF
+                            MatchResult.Draw -> ColorFFF69D4A
+                            MatchResult.Loss -> ColorFFF46B6C
                         },
-                        style = MaterialTheme.typography.labelMedium,
+                        modifier = Modifier
+                            .width(40.dp)
+                            .height(15.dp)
                     )
                 } else {
-                    Text(text = DateUtil.getTimeString(match.matchDate),
-                        style = MaterialTheme.typography.labelMedium
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = DateUtil.getTimeString(match.matchDate),
+                        style = GnrTypography.body2Regular,
+                        color = ColorFF181818
                     )
                 }
 
@@ -372,7 +420,7 @@ fun RowScope.FaintCalendarItem(
             .weight(1f)
             .padding(4.dp),
         text = localDate.dayOfMonth.toString(),
-        style = MaterialTheme.typography.labelLarge,
+        style = GnrTypography.body1Medium,
         color = Color.LightGray,
         textAlign = TextAlign.Center
     )

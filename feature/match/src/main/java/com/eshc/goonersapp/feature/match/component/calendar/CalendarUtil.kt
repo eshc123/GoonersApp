@@ -17,6 +17,8 @@ data class CalendarDates(
 
 object CalendarUtil {
 
+    val dayOfWeekList = listOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")
+
     fun getCalendarDatesListAsOneYear(
         startLocalDate: LocalDate,
     ): List<CalendarDates> {

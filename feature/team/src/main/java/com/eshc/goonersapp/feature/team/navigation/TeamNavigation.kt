@@ -96,7 +96,7 @@ fun NavGraphBuilder.clubDetailScreen(
     ) {
         ClubDetailRoute(
             onBackIconClick = onBackIconClick,
-            onShowSnackbar = onShowSnackbar
+            onShowSnackBar = onShowSnackbar
         )
     }
 }

@@ -10,8 +10,14 @@ data class Team(
     val captain: String = "",
     val stadiumName: String = "",
     val clubHomeTown: String = "",
+    val clubNationality: String = "",
+    val clubNationImgUrl: String = "",
     val officialWebUrl: String = "",
     val snsFaceBook: String = "",
     val snsX: String = "",
     val snsInstagram: String = ""
-)
+) {
+    fun socialMediaIsNotEmpty(): Boolean {
+        return !(snsX.isEmpty() && snsFaceBook.isEmpty() && snsInstagram.isEmpty())
+    }
+}

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -17,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,6 +33,7 @@ import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBar
 import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBarItem
 import com.eshc.goonersapp.core.designsystem.component.GnrTopLevelTopBar
+import com.eshc.goonersapp.core.designsystem.iconpack.IcGridCalender
 import com.eshc.goonersapp.core.designsystem.iconpack.IcInfo
 import com.eshc.goonersapp.core.designsystem.iconpack.IcNotification
 import com.eshc.goonersapp.core.designsystem.iconpack.IcPeople
@@ -69,9 +72,7 @@ fun GnrApp(
 
     Scaffold(
         modifier = Modifier,
-        snackbarHost = {
-            SnackbarHost(snackbarHostState)
-        }
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { padding ->
         Column(
             modifier = Modifier.padding(padding)
@@ -80,9 +81,7 @@ fun GnrApp(
                 navController = navController,
                 onShowSnackbar = { message ->
                     coroutineScope.launch {
-                        snackbarHostState.showSnackbar(
-                            message
-                        )
+                        snackbarHostState.showSnackbar(message)
                     }
                 },
                 topBar = { topLevelDestination ->
@@ -90,6 +89,50 @@ fun GnrApp(
                         topLevelDestination = topLevelDestination,
                         icons = {
                             when (topLevelDestination) {
+                                TopLevelDestination.HOME -> {
+                                    Icon(
+                                        imageVector = IconPack.IcNotification,
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .padding(horizontal = 8.dp)
+                                            .size(24.dp)
+                                            .clip(RoundedCornerShape(3.dp)),
+                                        tint = ColorFF777777
+                                    )
+                                    Icon(
+                                        imageVector = IconPack.IcPeople,
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .padding(horizontal = 8.dp)
+                                            .size(24.dp)
+                                            .clip(RoundedCornerShape(3.dp))
+                                            .clickable { navController.navigateToLogin() },
+                                        tint = ColorFF777777
+                                    )
+                                }
+
+                                TopLevelDestination.MATCH -> {
+                                    Icon(
+                                        imageVector = IconPack.IcGridCalender,
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .padding(horizontal = 8.dp)
+                                            .size(24.dp)
+                                            .clip(RoundedCornerShape(3.dp)),
+                                        tint = ColorFF777777
+                                    )
+                                    Icon(
+                                        imageVector = IconPack.IcPeople,
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .padding(horizontal = 8.dp)
+                                            .size(24.dp)
+                                            .clip(RoundedCornerShape(3.dp))
+                                            .clickable { navController.navigateToLogin() },
+                                        tint = ColorFF777777
+                                    )
+                                }
+
                                 TopLevelDestination.TEAM -> {
                                     Icon(
                                         imageVector = IconPack.IcInfo,
@@ -97,6 +140,7 @@ fun GnrApp(
                                         modifier = Modifier
                                             .padding(horizontal = 8.dp)
                                             .size(24.dp)
+                                            .clip(RoundedCornerShape(3.dp))
                                             .clickable { navController.navigateToClubDetail() },
                                         tint = ColorFF777777
                                     )
@@ -106,47 +150,8 @@ fun GnrApp(
                                         modifier = Modifier
                                             .padding(horizontal = 8.dp)
                                             .size(24.dp)
+                                            .clip(RoundedCornerShape(3.dp))
                                             .clickable { navController.navigateToSearch() },
-                                        tint = ColorFF777777
-                                    )
-                                }
-
-                                TopLevelDestination.HOME -> {
-                                    Icon(
-                                        imageVector = IconPack.IcNotification,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .padding(horizontal = 8.dp)
-                                            .size(24.dp),
-                                        tint = ColorFF777777
-                                    )
-                                    Icon(
-                                        imageVector = IconPack.IcPeople,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .padding(horizontal = 8.dp)
-                                            .size(24.dp)
-                                            .clickable { navController.navigateToLogin() },
-                                        tint = ColorFF777777
-                                    )
-                                }
-
-                                else -> {
-                                    Icon(
-                                        imageVector = IconPack.IcNotification,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .padding(horizontal = 8.dp)
-                                            .size(24.dp),
-                                        tint = ColorFF777777
-                                    )
-                                    Icon(
-                                        imageVector = IconPack.IcPeople,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .padding(horizontal = 8.dp)
-                                            .size(24.dp)
-                                            .clickable { navController.navigateToLogin() },
                                         tint = ColorFF777777
                                     )
                                 }

@@ -36,6 +36,8 @@ fun ClubDetailImageView(
     clubName: String,
     clubFoundedYear: String,
     clubHomeTown: String,
+    clubNation: String,
+    clubNationImgUrl: String,
     clubStadium: String,
     clubCoachName: String,
     clubCaptainName: String,
@@ -76,8 +78,8 @@ fun ClubDetailImageView(
                         color = ColorFFFFFFFF
                     )
                     ClubLocation(
-                        clubNationalityImgUrl = "",
-                        clubLocation = "London, England"
+                        clubNationalityImgUrl = clubNationImgUrl,
+                        clubLocation = "${clubHomeTown}, $clubNation"
                     )
                 }
             }
@@ -215,7 +217,9 @@ fun PreviewClubDetailImgView() {
             clubStadium = "",
             clubCoachName = "",
             clubFoundedYear = "",
-            clubCaptainName = ""
+            clubCaptainName = "",
+            clubNation = "",
+            clubNationImgUrl = ""
         )
         ClubLocation("", "London, England")
 

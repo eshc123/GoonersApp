@@ -14,6 +14,8 @@ data class RemoteTeam(
     @SerialName("captain_player_name") val captainName: String?,
     @SerialName("venue_name") val venueName: String?,
     @SerialName("city_name") val cityName: String?,
+    @SerialName("nationality") val nationality: String?,
+    @SerialName("nationality_image_url") val nationalityImgUrl: String?,
     @SerialName("official_web_url") val officialWebUrl: String?,
     @SerialName("sns_facebook") val snsFacebook: String?,
     @SerialName("sns_x") val snsX: String?,

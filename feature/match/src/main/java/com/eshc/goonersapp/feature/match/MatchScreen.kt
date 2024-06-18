@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +22,7 @@ import com.eshc.goonersapp.feature.match.component.calendar.CalendarDates
 import com.eshc.goonersapp.feature.match.component.calendar.CalendarGrid
 import com.eshc.goonersapp.feature.match.component.calendar.CalendarList
 import com.eshc.goonersapp.feature.match.component.calendar.CalendarUtil
+import com.eshc.goonersapp.feature.match.event.UpdateMonthEvent
 import java.time.LocalDate
 
 enum class CalendarType {
@@ -44,7 +46,9 @@ fun MatchRoute(
         }
     ) { padding ->
         MatchScreen(
-            modifier = Modifier.fillMaxSize().padding(padding),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding),
             viewModel = viewModel,
             onClickDetail = onClickDetail
         )
@@ -69,10 +73,30 @@ fun MatchScreen(
     }
     val calendarGridPagerState = rememberPagerState { calendarList.size }
 
+    LaunchedEffect(Unit ) {
+        viewModel.mUpdateCurrentMonthEvent.collect {
+            when(it){
+                UpdateMonthEvent.UpdateToNextMonth -> {
+                    calendarGridPagerState.animateScrollToPage(
+                        calendarGridPagerState.currentPage + 1
+                    )
+                }
+                UpdateMonthEvent.UpdateToPreviousMonth -> {
+                    calendarGridPagerState.animateScrollToPage(
+                        calendarGridPagerState.currentPage - 1
+                    )
+
+                }
+                is UpdateMonthEvent.UpdateToTargetMonth -> {
+                    //TODO
+                }
+            }
+        }
+    }
+
     Column(
         modifier = modifier
     ) {
-
         when (calendarType) {
             CalendarType.Grid -> {
                 CalendarGrid(
@@ -91,6 +115,14 @@ fun MatchScreen(
                     },
                     onClickDetail = {
                         onClickDetail(it)
+                    },
+                    onClickPrevious = {
+                        if(calendarGridPagerState.currentPage != 0)
+                            viewModel.updateCurrentMonth(UpdateMonthEvent.UpdateToPreviousMonth)
+                    },
+                    onClickNext = {
+                        if(calendarGridPagerState.currentPage < calendarGridPagerState.pageCount)
+                            viewModel.updateCurrentMonth(UpdateMonthEvent.UpdateToNextMonth)
                     }
                 )
             }

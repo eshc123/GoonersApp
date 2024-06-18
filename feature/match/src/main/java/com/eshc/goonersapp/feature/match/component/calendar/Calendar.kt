@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -28,6 +29,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -97,21 +99,21 @@ fun CalendarGrid(
         ) {
             Spacer(modifier = Modifier
                 .wrapContentHeight()
-                .weight(0.3f))
+                .weight(1f))
             Row(
                 modifier = Modifier
-                    .wrapContentHeight()
-                    .weight(0.4f),
+                    .wrapContentSize(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
+                horizontalArrangement = Arrangement.SpaceEvenly
             ){
-                Icon(
-                    modifier = Modifier.clickable {
-                        onClickPrevious()
-                    },
-                    imageVector = IconPack.IcIosArrowBack,
-                    contentDescription = "prev"
-                )
+                IconButton(
+                    onClick = {  onClickPrevious() }
+                ) {
+                    Icon(
+                        imageVector = IconPack.IcIosArrowBack,
+                        contentDescription = "prev"
+                    )
+                }
                 Text(
                     text = calendarMonthListState[pagerState.currentPage].currentMonth.format(
                         DateTimeFormatter.ofPattern(
@@ -121,18 +123,21 @@ fun CalendarGrid(
                     style = GnrTypography.heading2SemiBold,
                     color = ColorFF181818
                 )
-                Icon(
-                    modifier = Modifier.rotate(180f).clickable {
-                               onClickNext()
-                    },
-                    imageVector = IconPack.IcIosArrowBack,
-                    contentDescription = "prev"
-                )
+                IconButton(
+                    onClick = { onClickNext() }
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .rotate(180f),
+                        imageVector = IconPack.IcIosArrowBack,
+                        contentDescription = "next"
+                    )
+                }
             }
             Box(
                 modifier = Modifier
                     .wrapContentHeight()
-                    .weight(0.3f)
+                    .weight(1f)
             ){
                 Icon(
                     imageVector =IconPack.IcList,

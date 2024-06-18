@@ -23,7 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.feature.team.club.component.ClubDetailHomePage
-import com.eshc.goonersapp.feature.team.club.component.ClubDetailImageView
+import com.eshc.goonersapp.feature.team.club.component.ClubDetailHeaderView
 import com.eshc.goonersapp.feature.team.club.component.ClubDetailRecentlyMatchItem
 import com.eshc.goonersapp.feature.team.club.component.ClubDetailSocialMedia
 import com.eshc.goonersapp.feature.team.state.ClubDetailUiState
@@ -62,21 +62,22 @@ fun ClubDetailScreen(
 ) {
     val scrollState: ScrollState = rememberScrollState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-    ) {
-        when(clubDetailUiState){
-            is ClubDetailUiState.Loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center,
-                    content = { CircularProgressIndicator() }
-                )
-            }
-            is ClubDetailUiState.Success -> {
-                ClubDetailImageView(
+
+    when(clubDetailUiState){
+        is ClubDetailUiState.Loading -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+                content = { CircularProgressIndicator() }
+            )
+        }
+        is ClubDetailUiState.Success -> {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
+            ) {
+                ClubDetailHeaderView(
                     clubImgUrl = clubDetailUiState.teamDetail.team.clubImgUrl,
                     clubName = clubDetailUiState.teamDetail.team.clubName,
                     clubHomeTown = clubDetailUiState.teamDetail.team.clubHomeTown,
@@ -84,8 +85,9 @@ fun ClubDetailScreen(
                     clubNationImgUrl = clubDetailUiState.teamDetail.team.clubNationImgUrl,
                     clubFoundedYear = clubDetailUiState.teamDetail.team.clubFoundedYear.toString(),
                     clubStadium = clubDetailUiState.teamDetail.team.stadiumName,
-                    clubCoachName =clubDetailUiState.teamDetail.team.manager,
-                    clubCaptainName = clubDetailUiState.teamDetail.team.captain
+                    clubCoachName = clubDetailUiState.teamDetail.team.manager,
+                    clubCaptainName = clubDetailUiState.teamDetail.team.captain,
+                    onBackIconClick = onBackIconClick
                 )
 
                 Column(
@@ -111,7 +113,6 @@ fun ClubDetailScreen(
                         modifier = Modifier.padding(top = 30.dp),
                         style = GnrTypography.subtitleSemiBold
                     )
-
                     ClubDetailSocialMedia(
                         onClickInstagram = { /*TODO*/ },
                         onClickFaceBook = { /*TODO*/ },
@@ -144,14 +145,14 @@ fun ClubDetailScreen(
                     }
                 }
             }
-            is ClubDetailUiState.Error -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center,
-                    content = { Text(text = "Load Failed") }
-                )
-            }
         }
-
+        is ClubDetailUiState.Error -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+                content = { Text(text = "Load Failed") }
+            )
+        }
     }
+
 }

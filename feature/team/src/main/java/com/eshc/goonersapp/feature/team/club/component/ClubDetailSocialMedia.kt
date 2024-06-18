@@ -35,7 +35,7 @@ fun ClubDetailSocialMedia(
                 .clip(CircleShape)
                 .clickable(onClick = onClickInstagram),
             contentScale = ContentScale.Crop,
-            contentDescription = null
+            contentDescription = "Club Instagram Image"
         )
         Image(
             painter = painterResource(id = com.eshc.goonersapp.core.designsystem.R.drawable.ic_facebook),
@@ -45,7 +45,7 @@ fun ClubDetailSocialMedia(
                 .clip(CircleShape)
                 .clickable(onClick = onClickFaceBook),
             contentScale = ContentScale.Crop,
-            contentDescription = null
+            contentDescription = "Club facebook Image"
         )
         Image(
             painter = painterResource(id = com.eshc.goonersapp.core.designsystem.R.drawable.ic_x),
@@ -54,7 +54,7 @@ fun ClubDetailSocialMedia(
                 .clip(CircleShape)
                 .clickable(onClick = onClickX),
             contentScale = ContentScale.Crop,
-            contentDescription = null
+            contentDescription = "Club X Image"
         )
     }
 }

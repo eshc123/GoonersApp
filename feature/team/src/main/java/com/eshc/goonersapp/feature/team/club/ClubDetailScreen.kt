@@ -2,11 +2,13 @@ package com.eshc.goonersapp.feature.team.club
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +25,7 @@ import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 import com.eshc.goonersapp.feature.team.club.component.ClubDetailHomePage
 import com.eshc.goonersapp.feature.team.club.component.ClubDetailImageView
 import com.eshc.goonersapp.feature.team.club.component.ClubDetailRecentlyMatchItem
+import com.eshc.goonersapp.feature.team.club.component.ClubDetailSocialMedia
 import com.eshc.goonersapp.feature.team.state.ClubDetailUiState
 
 @Composable
@@ -57,8 +60,12 @@ fun ClubDetailScreen(
     onHomePageUrlClick: (String) -> Unit,
     clubDetailUiState: ClubDetailUiState
 ) {
+    val scrollState: ScrollState = rememberScrollState()
+
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
     ) {
         when(clubDetailUiState){
             is ClubDetailUiState.Loading -> {
@@ -99,13 +106,18 @@ fun ClubDetailScreen(
                         )
                     }
 
-                    if (clubDetailUiState.teamDetail.team.socialMediaIsNotEmpty()) {
-                        Text(
-                            text = "Social Media",
-                            modifier = Modifier.padding(top = 30.dp),
-                            style = GnrTypography.subtitleSemiBold
-                        )
-                    }
+                    Text(
+                        text = "Social Media",
+                        modifier = Modifier.padding(top = 30.dp),
+                        style = GnrTypography.subtitleSemiBold
+                    )
+
+                    ClubDetailSocialMedia(
+                        onClickInstagram = { /*TODO*/ },
+                        onClickFaceBook = { /*TODO*/ },
+                        onClickX = { /*TODO*/ },
+                        modifier = Modifier.padding(top = 16.dp)
+                    )
 
                     if (clubDetailUiState.teamDetail.recentlyMatches.isNotEmpty()) {
                         Text(

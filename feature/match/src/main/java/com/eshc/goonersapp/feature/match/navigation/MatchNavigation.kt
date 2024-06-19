@@ -26,18 +26,18 @@ fun NavController.navigateToMatchDetail(matchUiModel: MatchUiModel,navOptions: N
 }
 
 fun NavGraphBuilder.matchScreen(
-    topBar : @Composable () -> Unit,
     bottomBar : @Composable () -> Unit,
     onClickDetail : (Match) -> Unit,
+    onClickUser : () -> Unit,
     onShowSnackbar : (String) -> Unit
 ) {
     composable(
         route = matchNavigationRoute
     ) {
         MatchRoute(
-            topBar = topBar,
             bottomBar = bottomBar,
             onClickDetail = onClickDetail,
+            onClickUser = onClickUser,
             onShowSnackbar = onShowSnackbar
         )
     }

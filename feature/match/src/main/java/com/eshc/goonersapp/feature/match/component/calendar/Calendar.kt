@@ -80,7 +80,6 @@ fun CalendarGrid(
     calendarMonthListState: List<CalendarDates>,
     pagerState : PagerState,
     onSelectDate: (LocalDate) -> Unit,
-    onChangeCalendarType : () -> Unit,
     onClickDetail: (Match) -> Unit,
     onClickPrevious : () -> Unit,
     onClickNext : () -> Unit
@@ -139,17 +138,7 @@ fun CalendarGrid(
                     .wrapContentHeight()
                     .weight(1f)
             ){
-                Icon(
-                    imageVector =IconPack.IcList,
-                    contentDescription = null,
-                    modifier= Modifier
-                        .align(Alignment.Center)
-                        .padding(8.dp)
-                        .size(24.dp)
-                        .clickable {
-                            onChangeCalendarType()
-                        }
-                )
+
             }
 
         }
@@ -202,7 +191,6 @@ fun CalendarList(
     season : String,
     headerHeight :Int,
     matchList: Map<String, List<Match>>,
-    onChangeCalendarType : () -> Unit,
     onClickDetail : (Match) -> Unit
 ) {
     Column(
@@ -220,17 +208,6 @@ fun CalendarList(
                 text = season,
                 style = MaterialTheme.typography.titleLarge,
                 color = Color.Black
-            )
-            Icon(
-                imageVector =IconPack.IcGrid,
-                contentDescription = null,
-                modifier= Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(8.dp)
-                    .size(24.dp)
-                    .clickable {
-                        onChangeCalendarType()
-                    }
             )
         }
         LazyColumn(

@@ -16,8 +16,4 @@ data class Team(
     val snsFaceBook: String = "",
     val snsX: String = "",
     val snsInstagram: String = ""
-) {
-    fun socialMediaIsNotEmpty(): Boolean {
-        return !(snsX.isEmpty() && snsFaceBook.isEmpty() && snsInstagram.isEmpty())
-    }
-}
+)

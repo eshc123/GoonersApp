@@ -22,7 +22,7 @@ import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 
 @Composable
-fun ClubDetailHomePage(
+fun ClubDetailHomePageRow(
     homepageUrl: String,
     onHomePageClick: (String) -> Unit,
     modifier: Modifier = Modifier

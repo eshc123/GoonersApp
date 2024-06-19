@@ -1,10 +1,10 @@
 package com.eshc.goonersapp.feature.match.component.calendar
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,20 +22,20 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,19 +51,20 @@ import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.ImageCard
 import com.eshc.goonersapp.core.designsystem.component.MatchItemResultChip
-import com.eshc.goonersapp.core.designsystem.iconpack.IcGrid
 import com.eshc.goonersapp.core.designsystem.iconpack.IcIosArrowBack
-import com.eshc.goonersapp.core.designsystem.iconpack.IcList
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF000000
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF555555
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF889AC4
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFA5DBFF
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFE6EDFC
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFE9343C
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF46B6C
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF69D4A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
-import com.eshc.goonersapp.core.designsystem.theme.pretendard
 import com.eshc.goonersapp.core.domain.model.common.MatchResult
 import com.eshc.goonersapp.core.domain.model.match.Match
 import java.time.DayOfWeek
@@ -82,7 +83,8 @@ fun CalendarGrid(
     onSelectDate: (LocalDate) -> Unit,
     onClickDetail: (Match) -> Unit,
     onClickPrevious : () -> Unit,
-    onClickNext : () -> Unit
+    onClickNext : () -> Unit,
+    onClickToday : () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -138,7 +140,10 @@ fun CalendarGrid(
                     .wrapContentHeight()
                     .weight(1f)
             ){
-
+                TodayButton(
+                    modifier = Modifier.align(Alignment.Center).height(22.dp),
+                    onClick = onClickToday
+                )
             }
 
         }
@@ -406,4 +411,35 @@ fun RowScope.FaintCalendarItem(
         color = Color.LightGray,
         textAlign = TextAlign.Center
     )
+}
+
+@Composable
+fun TodayButton(
+    onClick : () -> Unit,
+    modifier : Modifier = Modifier,
+    backgroundColor : Color = ColorFFE6EDFC,
+    borderColor : Color = ColorFF889AC4,
+    textColor : Color = ColorFF10358A
+){
+    Button(
+        modifier = modifier,
+        shape = RoundedCornerShape(5.dp),
+        border = BorderStroke(1.dp,borderColor),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = backgroundColor,
+            contentColor = textColor
+        ),
+        contentPadding = PaddingValues(0.dp),
+        onClick = onClick
+    ) {
+        Box(
+            modifier = Modifier.wrapContentSize().padding(horizontal = 8.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Today",
+                style = GnrTypography.body2Medium
+            )
+        }
+    }
 }

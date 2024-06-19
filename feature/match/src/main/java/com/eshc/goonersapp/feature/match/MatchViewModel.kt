@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,6 +46,16 @@ class MatchViewModel @Inject constructor(
     fun updateCurrentMonth(updateMonthEvent: UpdateMonthEvent){
         viewModelScope.launch {
             _mUpdateCurrentMonthEvent.emit(updateMonthEvent)
+        }
+    }
+
+    fun updateCurrentMonthAsToday(){
+        viewModelScope.launch {
+            _mUpdateCurrentMonthEvent.emit(
+                UpdateMonthEvent.UpdateToTargetMonth(
+                    targetMonth = LocalDate.now().monthValue
+                )
+            )
         }
     }
 }

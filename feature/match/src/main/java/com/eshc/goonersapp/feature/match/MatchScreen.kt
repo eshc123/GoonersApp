@@ -34,6 +34,7 @@ import com.eshc.goonersapp.feature.match.component.calendar.CalendarDates
 import com.eshc.goonersapp.feature.match.component.calendar.CalendarGrid
 import com.eshc.goonersapp.feature.match.component.calendar.CalendarList
 import com.eshc.goonersapp.feature.match.component.calendar.CalendarUtil
+import com.eshc.goonersapp.feature.match.component.calendar.getIndexByMonth
 import com.eshc.goonersapp.feature.match.event.UpdateMonthEvent
 import java.time.LocalDate
 
@@ -110,7 +111,9 @@ fun MatchScreen(
 
                 }
                 is UpdateMonthEvent.UpdateToTargetMonth -> {
-                    //TODO
+                    calendarGridPagerState.animateScrollToPage(
+                       calendarList.getIndexByMonth(it.targetMonth)
+                    )
                 }
             }
         }
@@ -142,6 +145,9 @@ fun MatchScreen(
                     onClickNext = {
                         if(calendarGridPagerState.currentPage < calendarGridPagerState.pageCount)
                             viewModel.updateCurrentMonth(UpdateMonthEvent.UpdateToNextMonth)
+                    },
+                    onClickToday = {
+                        viewModel.updateCurrentMonthAsToday()
                     }
                 )
             }

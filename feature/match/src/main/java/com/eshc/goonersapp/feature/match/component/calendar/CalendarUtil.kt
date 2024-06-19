@@ -15,6 +15,10 @@ data class CalendarDates(
     }
 }
 
+fun List<CalendarDates>.getIndexByMonth(month : Int) : Int {
+    return indexOfFirst { it.currentMonth.monthValue == month }
+}
+
 object CalendarUtil {
 
     val dayOfWeekList = listOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")

@@ -13,11 +13,11 @@ data class TeamDetail(
         return !(team.snsX.isEmpty() && team.snsFaceBook.isEmpty() && team.snsInstagram.isEmpty())
     }
 
-    fun snsXisNotEmpty(): Boolean = team.snsX.isNotEmpty()
+    fun xIsNotEmpty(): Boolean = team.snsX.isNotEmpty()
 
-    fun snsFaceBookIsNotEmpty(): Boolean = team.snsFaceBook.isNotEmpty()
+    fun faceBookIsNotEmpty(): Boolean = team.snsFaceBook.isNotEmpty()
 
-    fun snsInstagramIsNotEmpty(): Boolean = team.snsInstagram.isNotEmpty()
+    fun instagramIsNotEmpty(): Boolean = team.snsInstagram.isNotEmpty()
 
     fun matchesLastIndex(): Int = recentlyMatches.lastIndex
 

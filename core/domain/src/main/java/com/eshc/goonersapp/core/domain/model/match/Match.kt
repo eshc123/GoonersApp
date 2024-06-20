@@ -33,6 +33,11 @@ data class Match(
         else homeTeamNickname
     }
 
+    fun getOpponentTeamImageUrl(myTeamId : Int) : String {
+        return if(myTeamId == homeTeamId) awayTeamImageUrl
+        else homeTeamImageUrl
+    }
+
     fun getMatchResult(myTeamId : Int) : MatchResult {
         return if(homeScore == awayScore) MatchResult.Draw
         else if(myTeamId == homeTeamId && homeScore > awayScore ||

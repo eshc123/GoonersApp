@@ -4,9 +4,7 @@ import com.eshc.goonersapp.core.domain.model.team.TeamDetail
 
 
 sealed class ClubDetailUiState {
-    data class Success(
-        val teamDetail: TeamDetail
-    ) : ClubDetailUiState()
+    data class Success(val teamDetail: TeamDetail) : ClubDetailUiState()
 
     data object Error : ClubDetailUiState()
 

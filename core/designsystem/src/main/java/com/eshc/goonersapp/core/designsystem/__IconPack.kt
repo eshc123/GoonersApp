@@ -1,8 +1,8 @@
 package com.eshc.goonersapp.core.designsystem
 
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.eshc.goonersapp.core.designsystem.iconpack.IcBall
-import com.eshc.goonersapp.core.designsystem.iconpack.IcTrophy
+import com.eshc.goonersapp.core.designsystem.iconpack.IcGrid
+import com.eshc.goonersapp.core.designsystem.iconpack.IcList
 import kotlin.collections.List as ____KtList
 
 public object IconPack
@@ -14,6 +14,6 @@ public val IconPack.Icons: ____KtList<ImageVector>
     if (__Icons != null) {
       return __Icons!!
     }
-    __Icons= listOf(IcBall, IcTrophy)
+    __Icons= listOf(IcList, IcGrid)
     return __Icons!!
   }

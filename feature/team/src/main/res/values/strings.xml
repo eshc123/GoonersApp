@@ -8,4 +8,10 @@
     <string name="player_detail_profile_nationality">Nationality</string>
     <string name="player_detail_profile_position">Position</string>
 
+    <string name="club_detail_establishment">Establishment</string>
+    <string name="club_detail_hometown">Hometown</string>
+    <string name="club_detail_stadium">Stadium</string>
+    <string name="club_detail_coach">Coach</string>
+    <string name="club_detail_captain">Captain</string>
+
 </resources>

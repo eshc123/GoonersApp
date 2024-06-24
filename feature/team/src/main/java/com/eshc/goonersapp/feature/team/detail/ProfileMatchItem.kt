@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.GnrElevatedCard
+import com.eshc.goonersapp.core.designsystem.component.MatchItemResultChip
 import com.eshc.goonersapp.core.designsystem.ext.gnrElevatedCardBorder
 import com.eshc.goonersapp.core.designsystem.iconpack.IcBall
 import com.eshc.goonersapp.core.designsystem.iconpack.IcTrophy
@@ -107,7 +108,9 @@ fun LazyItemScope.MatchItem(
                         MatchResult.Win -> ColorFFA5DBFF
                         MatchResult.Draw -> ColorFFF69D4A
                         MatchResult.Loss -> ColorFFF46B6C
-                    }
+                    },
+                    modifier = Modifier.width(50.dp)
+                        .height(15.dp),
                 )
             }
         }
@@ -206,30 +209,4 @@ fun MatchItemGoalInfo(
     }
 }
 
-@Composable
-fun MatchItemResultChip(
-    result: String,
-    color: Color,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier
-            .width(50.dp)
-            .height(15.dp),
-        shape = RoundedCornerShape(3.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = color,
-            contentColor = ColorFF000000
-        )
-    ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = result,
-                style = GnrTypography.descriptionMedium
-            )
-        }
-    }
-}
+

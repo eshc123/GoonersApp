@@ -8,7 +8,6 @@ import com.eshc.goonersapp.feature.team.state.ClubDetailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
@@ -17,17 +16,15 @@ import javax.inject.Inject
 class ClubDetailViewModel @Inject constructor(
     getTeamDetailUseCase: GetTeamDetailUseCase
 ) : ViewModel() {
-
     val clubDetail: StateFlow<ClubDetailUiState> = getTeamDetailUseCase()
         .map {
             when(it){
                 is DataResult.Success -> ClubDetailUiState.Success(it.data)
                 is DataResult.Failure -> ClubDetailUiState.Error
             }
-        }
-        .stateIn(
-            viewModelScope, started = SharingStarted.WhileSubscribed(5_000),
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
             initialValue = ClubDetailUiState.Loading,
         )
-
 }

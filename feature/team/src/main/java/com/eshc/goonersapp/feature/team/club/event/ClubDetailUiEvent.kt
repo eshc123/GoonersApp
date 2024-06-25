@@ -1,4 +1,4 @@
-package com.eshc.goonersapp.feature.team.club
+package com.eshc.goonersapp.feature.team.club.event
 
 import androidx.compose.runtime.Stable
 

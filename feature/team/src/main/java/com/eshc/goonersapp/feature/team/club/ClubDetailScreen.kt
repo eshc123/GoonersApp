@@ -29,6 +29,7 @@ import com.eshc.goonersapp.feature.team.club.component.ClubDetailHomePageRow
 import com.eshc.goonersapp.feature.team.club.component.ClubDetailHeaderView
 import com.eshc.goonersapp.feature.team.club.component.ClubDetailRecentlyMatchItem
 import com.eshc.goonersapp.feature.team.club.component.ClubDetailSocialMediaRow
+import com.eshc.goonersapp.feature.team.club.event.ClubDetailUiEvent
 import com.eshc.goonersapp.feature.team.state.ClubDetailUiState
 
 @Composable

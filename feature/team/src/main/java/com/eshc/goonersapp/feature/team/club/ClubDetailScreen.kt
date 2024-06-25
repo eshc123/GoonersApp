@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -38,6 +39,31 @@ fun ClubDetailRoute(
 ) {
     val context = LocalContext.current
     val clubDetailUiState by clubDetailViewModel.clubDetail.collectAsStateWithLifecycle()
+    val clubDetailUiEvent = remember {
+        ClubDetailUiEvent(
+            onInstagramClick = { instagramUrl ->
+                Intent(Intent.ACTION_VIEW, Uri.parse(instagramUrl)).run {
+                    context.startActivity(this)
+                }
+            },
+            onFaceBookClick = { faceBookUrl ->
+                Intent(Intent.ACTION_VIEW, Uri.parse(faceBookUrl)).run {
+                    context.startActivity(this)
+                }
+            },
+            onXClick = { xUrl ->
+                Intent(Intent.ACTION_VIEW, Uri.parse(xUrl)).run {
+                    context.startActivity(this)
+                }
+            },
+            onHomePageUrlClick = { homePageUrl ->
+                Intent(Intent.ACTION_VIEW, Uri.parse(homePageUrl)).run {
+                    context.startActivity(this)
+                }
+            }
+        )
+    }
+
 
     LaunchedEffect(clubDetailUiState){
         if(clubDetailUiState is ClubDetailUiState.Error) {
@@ -47,11 +73,7 @@ fun ClubDetailRoute(
 
     ClubDetailScreen(
         onBackIconClick = onBackIconClick,
-        onHomePageUrlClick = { homePageUrl ->
-            Intent(Intent.ACTION_VIEW, Uri.parse(homePageUrl)).run {
-                context.startActivity(this)
-            }
-        },
+        clubDetailUiEvent = clubDetailUiEvent,
         clubDetailUiState = clubDetailUiState
     )
 }
@@ -59,7 +81,7 @@ fun ClubDetailRoute(
 @Composable
 fun ClubDetailScreen(
     onBackIconClick: () -> Unit,
-    onHomePageUrlClick: (String) -> Unit,
+    clubDetailUiEvent: ClubDetailUiEvent,
     clubDetailUiState: ClubDetailUiState
 ) {
     when(clubDetailUiState){
@@ -105,23 +127,29 @@ fun ClubDetailScreen(
                         )
                         ClubDetailHomePageRow(
                             homepageUrl = clubDetailUiState.teamDetail.team.officialWebUrl,
-                            onHomePageClick = onHomePageUrlClick
+                            onHomePageClick = clubDetailUiEvent.onHomePageUrlClick
                         )
                     }
 
                     if (clubDetailUiState.teamDetail.socialMediaIsNotEmpty()) {
                         Text(
                             text = "Social Media",
-                            modifier = Modifier.padding(top = 30.dp),
+                            modifier = Modifier.padding(top = 30.dp, bottom = 16.dp),
                             style = GnrTypography.subtitleSemiBold
                         )
                         ClubDetailSocialMediaRow(
                             isInstagramNotEmpty = clubDetailUiState.teamDetail.instagramIsNotEmpty(),
                             isFaceBookNotEmpty = clubDetailUiState.teamDetail.faceBookIsNotEmpty(),
                             isXNotEmpty = clubDetailUiState.teamDetail.xIsNotEmpty(),
-                            onInstagramLogoClick = { /* Nothing Implemented */ },
-                            onFaceBookLogoClick = { /* Nothing Implemented */ },
-                            onXLogoClick = { /* Nothing Implemented */ }
+                            onInstagramLogoClick = {
+                                clubDetailUiEvent.onInstagramClick(clubDetailUiState.teamDetail.team.snsInstagram)
+                            },
+                            onFaceBookLogoClick = {
+                                clubDetailUiEvent.onFaceBookClick(clubDetailUiState.teamDetail.team.snsFaceBook)
+                            },
+                            onXLogoClick = {
+                                clubDetailUiEvent.onXClick(clubDetailUiState.teamDetail.team.snsX)
+                            }
                         )
                     }
 

@@ -2,9 +2,10 @@ package com.eshc.goonersapp.core.network
 
 import com.eshc.goonersapp.core.network.fake.FakeMatchDataSource
 import com.eshc.goonersapp.core.network.model.NetworkResult
-import com.eshc.goonersapp.core.network.model.match.LineUp
-import com.eshc.goonersapp.core.network.model.match.RemoteMatchDetail
+import com.eshc.goonersapp.core.network.model.match.Performance
 import com.eshc.goonersapp.core.network.model.match.RemoteMatch
+import com.eshc.goonersapp.core.network.model.match.RemoteMatchDetail
+import com.eshc.goonersapp.core.network.model.match.RemoteMatchLineup
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -52,8 +53,8 @@ class FakeMatchDataSourceTest {
         when (result) {
             is NetworkResult.Success -> {
                 assertEquals(
-                    listOf<LineUp>(),
-                    result.data.lineUp
+                    Performance(),
+                    result.data.performance
                 )
             }
             is NetworkResult.Error -> {
@@ -106,6 +107,21 @@ class FakeMatchDataSourceTest {
                 assertEquals(
                     listOf<RemoteMatchDetail>(),
                     result.data.matchDetail
+                )
+            }
+            is NetworkResult.Error -> { /* Nothing */ }
+            is NetworkResult.Exception -> { /* Nothing */ }
+        }
+
+    }
+
+    @Test
+    fun fakeGetMatchLineup() = runBlocking {
+        when (val result = fakeMatchDataSource.getMatchLineup(38)) {
+            is NetworkResult.Success -> {
+                assertEquals(
+                    RemoteMatchLineup(),
+                    result.data
                 )
             }
             is NetworkResult.Error -> { /* Nothing */ }

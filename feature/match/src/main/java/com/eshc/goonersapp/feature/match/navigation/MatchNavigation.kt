@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.eshc.goonersapp.core.domain.model.match.Match
 import com.eshc.goonersapp.feature.match.MatchRoute
-import com.eshc.goonersapp.feature.match.detail.MatchDetailRoute
+import com.eshc.goonersapp.feature.match.detail.MatchDetailRootScreen
 import com.eshc.goonersapp.feature.match.model.MatchType
 import com.eshc.goonersapp.feature.match.model.MatchUiModel
 
@@ -26,18 +26,18 @@ fun NavController.navigateToMatchDetail(matchUiModel: MatchUiModel,navOptions: N
 }
 
 fun NavGraphBuilder.matchScreen(
-    topBar : @Composable () -> Unit,
     bottomBar : @Composable () -> Unit,
     onClickDetail : (Match) -> Unit,
+    onClickUser : () -> Unit,
     onShowSnackbar : (String) -> Unit
 ) {
     composable(
         route = matchNavigationRoute
     ) {
         MatchRoute(
-            topBar = topBar,
             bottomBar = bottomBar,
             onClickDetail = onClickDetail,
+            onClickUser = onClickUser,
             onShowSnackbar = onShowSnackbar
         )
     }
@@ -45,17 +45,17 @@ fun NavGraphBuilder.matchScreen(
 
 
 fun NavGraphBuilder.matchDetailScreen(
+    onBackIconClick: () -> Unit,
     onClickChat : (MatchUiModel) -> Unit,
     onShowSnackbar : (String) -> Unit
 ) {
     composable(
         route = "$matchDetailNavigationRoute?$matchArg={$matchArg}",
-        arguments = listOf(
-            navArgument(matchArg) { type = MatchType },
-        ),
+        arguments = listOf(navArgument(matchArg) { type = MatchType })
     ) {
-        MatchDetailRoute(
+        MatchDetailRootScreen(
             onClickChat = onClickChat,
+            onBackIconClick = onBackIconClick,
             onShowSnackbar = onShowSnackbar
         )
     }

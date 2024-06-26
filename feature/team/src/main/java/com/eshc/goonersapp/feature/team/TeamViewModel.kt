@@ -22,7 +22,7 @@ class TeamViewModel @Inject constructor(
             .map {
                 when(it){
                     is DataResult.Success -> {
-                        TeamUiState.Success(it.data)
+                        TeamUiState.Success(it.data.players)
                     }
                     is DataResult.Failure -> {
                         TeamUiState.Error

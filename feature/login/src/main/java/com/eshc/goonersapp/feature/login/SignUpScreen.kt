@@ -24,13 +24,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.eshc.goonersapp.core.designsystem.component.GnrTextFiled
-import com.eshc.goonersapp.core.designsystem.component.TopBar
+import com.eshc.goonersapp.core.designsystem.component.GnrTopBar
 import com.eshc.goonersapp.core.designsystem.theme.pretendard
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SignUpScreen(
     onShowSnackbar: (String) -> Unit,
+    onBackIconClick: () -> Unit,
     viewModel: SignUpViewModel = hiltViewModel()
 ) {
     val inputTypeList by viewModel.signUpInputTypeList.collectAsStateWithLifecycle()
@@ -41,8 +42,9 @@ fun SignUpScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            TopBar(
-                title = "SIGN UP"
+            GnrTopBar(
+                title = "SIGN UP",
+                onBackIconClick = onBackIconClick
             )
             LazyColumn(
                 modifier = Modifier
@@ -125,5 +127,8 @@ fun SignUpScreen(
 @Preview
 @Composable
 fun PreviewSignUpScreen() {
-    SignUpScreen(onShowSnackbar = {})
+    SignUpScreen(
+        onShowSnackbar = {},
+        onBackIconClick = {}
+    )
 }

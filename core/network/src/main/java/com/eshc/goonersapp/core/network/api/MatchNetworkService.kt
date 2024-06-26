@@ -1,10 +1,10 @@
 package com.eshc.goonersapp.core.network.api
 
 import com.eshc.goonersapp.core.network.model.BaseResponse
+import com.eshc.goonersapp.core.network.model.match.RemoteMatch
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchData
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchInformation
-import com.eshc.goonersapp.core.network.model.match.RemoteMatch
-import com.eshc.goonersapp.core.network.model.match.RemoteRecentlyMatch
+import com.eshc.goonersapp.core.network.model.match.RemoteMatchLineup
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -40,5 +40,10 @@ interface MatchNetworkService {
     @GET(value = "$MATCH_BASE_URL/team/recently")
     suspend fun getRecentlyMatch(
         @Query("teamId") teamId : Int = 19
-    ) : Response<BaseResponse<RemoteRecentlyMatch>>
+    ) : Response<BaseResponse<RemoteMatchData>>
+
+    @GET(value = "$MATCH_BASE_URL/lineup")
+    suspend fun getMatchLineup(
+        @Query("matchId") matchId: Int
+    ) : Response<BaseResponse<RemoteMatchLineup>>
 }

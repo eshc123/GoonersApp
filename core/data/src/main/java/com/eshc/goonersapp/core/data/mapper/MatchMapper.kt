@@ -1,16 +1,22 @@
 package com.eshc.goonersapp.core.data.mapper
 
-import com.eshc.goonersapp.core.domain.model.match.LineUp
+import com.eshc.goonersapp.core.domain.model.match.PlayerLineup
 import com.eshc.goonersapp.core.domain.model.match.Match
+import com.eshc.goonersapp.core.domain.model.match.MatchData
 import com.eshc.goonersapp.core.domain.model.match.MatchDetail
 import com.eshc.goonersapp.core.domain.model.match.MatchInformation
-import com.eshc.goonersapp.core.domain.model.match.MatchRecently
+import com.eshc.goonersapp.core.domain.model.match.MatchLineup
 import com.eshc.goonersapp.core.domain.model.match.NotablePlayer
 import com.eshc.goonersapp.core.domain.model.match.Performance
+import com.eshc.goonersapp.core.domain.model.match.TeamLineup
+import com.eshc.goonersapp.core.domain.model.match.toMatchDetailType
+import com.eshc.goonersapp.core.network.model.match.RemoteMatch
+import com.eshc.goonersapp.core.network.model.match.RemoteMatchData
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchDetail
 import com.eshc.goonersapp.core.network.model.match.RemoteMatchInformation
-import com.eshc.goonersapp.core.network.model.match.RemoteMatch
-import com.eshc.goonersapp.core.network.model.match.RemoteRecentlyMatch
+import com.eshc.goonersapp.core.network.model.match.RemoteMatchLineup
+import com.eshc.goonersapp.core.network.model.match.RemotePlayerLineup
+import com.eshc.goonersapp.core.network.model.match.RemoteTeamLineup
 
 /**
  * [RemoteMatch] Mapper
@@ -18,6 +24,7 @@ import com.eshc.goonersapp.core.network.model.match.RemoteRecentlyMatch
  */
 fun RemoteMatch.toModel() = Match(
     id = matchId,
+    seasonId = seasonId,
     homeTeamId = homeTeamId,
     homeTeamName = homeTeamName,
     homeTeamImageUrl = homeTeamImage,
@@ -45,27 +52,13 @@ fun RemoteMatchInformation.toModel() = MatchInformation(
         NotablePlayer(
             playerId = remote.playerId,
             playerName = remote.playerName,
-            playerHeight = remote.height,
-            playerWeight = remote.weight,
-            playerImageUrl = remote.playerImage,
-            playerPosition = remote.position,
-            playerPositionInitial = remote.positionInitial,
-            playerGoalCount = remote.goalCount
-        )
-    },
-    lineUp = lineUp.map { remote ->
-        LineUp(
-            lineUpId = remote.lineUpId,
-            matchId = remote.matchId,
-            playerId = remote.playerId,
-            teamId = remote.teamId,
-            playerName = remote.playerName,
-            playerBackNumber = remote.jerseyNumber,
-            formationField = remote.formationField,
-            formationPosition = remote.formationPosition,
-            positionId = remote.positionId,
-            positionCategory = remote.positionCategory,
-            positionInitial = remote.positionInitial
+            playerHeight = remote.height ?: 0,
+            playerWeight = remote.weight  ?: 0,
+            playerImageUrl = remote.playerImage  ?: "",
+            playerPosition = remote.position  ?: "",
+            playerPositionInitial = remote.positionInitial  ?: "",
+            playerGoalCount = remote.goalCount  ?: 0,
+            playerParticipationCount = remote.participationCount ?: 0
         )
     },
     performance = Performance(
@@ -88,16 +81,46 @@ fun RemoteMatchDetail.toModel() = MatchDetail(
     relatedPlayerId = relatedPlayerId,
     minute = minute,
     extraMinute = extraMinute,
-    type = type,
+    type = type.toMatchDetailType(),
     playerName = playerName,
     relatedPlayerName = relatedPlayerName
 )
 
 /**
- * [RemoteRecentlyMatch] Mapper
- *  - Mapper [RemoteRecentlyMatch] to [MatchRecently]
+ * [RemoteMatchData] Mapper
+ *  - Mapper [RemoteMatchData] to [MatchData]
  */
-fun RemoteRecentlyMatch.toModel() = MatchRecently(
+fun RemoteMatchData.toModel() = MatchData(
     match = match.toModel(),
     matchDetail = matchDetail.map { remote -> remote.toModel() }
+)
+
+/**
+ * [RemoteMatchLineup] Mapper
+ *  - Mapper [RemoteMatchLineup] to [MatchLineup]
+ */
+fun RemoteMatchLineup.toModel() = MatchLineup(
+    homeLineup = homeLineup.toModel(),
+    awayLineup = awayLineup.toModel()
+)
+
+fun RemoteTeamLineup.toModel() = TeamLineup(
+    teamId = teamId.toInt(),
+    formation = formation,
+    playerLineup = players.map { remote -> remote.toModel() }
+)
+
+fun RemotePlayerLineup.toModel() = PlayerLineup(
+    lineUpId = lineUpId,
+    matchId = matchId,
+    playerId = playerId,
+    teamId = teamId,
+    playerName = playerName,
+    playerImageUrl = playerImageUrl,
+    playerBackNumber = jerseyNumber,
+    formationField = formationField,
+    formationPosition = formationPosition,
+    positionId = positionId,
+    positionCategory = positionCategory,
+    positionInitial = positionInitial
 )

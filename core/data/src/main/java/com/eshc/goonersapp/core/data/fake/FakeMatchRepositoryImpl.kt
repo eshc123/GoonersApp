@@ -4,8 +4,9 @@ import com.eshc.goonersapp.core.data.mapper.toDataResult
 import com.eshc.goonersapp.core.data.mapper.toModel
 import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.match.Match
+import com.eshc.goonersapp.core.domain.model.match.MatchData
 import com.eshc.goonersapp.core.domain.model.match.MatchInformation
-import com.eshc.goonersapp.core.domain.model.match.MatchRecently
+import com.eshc.goonersapp.core.domain.model.match.MatchLineup
 import com.eshc.goonersapp.core.domain.repository.MatchRepository
 import com.eshc.goonersapp.core.network.fake.FakeMatchDataSource
 import kotlinx.coroutines.flow.Flow
@@ -16,10 +17,10 @@ class FakeMatchRepositoryImpl @Inject constructor(
     private val fakeMatchDataSource: FakeMatchDataSource
 ) : MatchRepository {
 
-    override fun getMatch(match: Int): Flow<DataResult<Match>> = flow {
+    override fun getMatch(matchId: Int): Flow<DataResult<MatchData>> = flow {
         val result = fakeMatchDataSource
-            .getMatch(match)
-            .toDataResult { remote -> remote.match.toModel() }
+            .getMatch(matchId)
+            .toDataResult { remote -> remote.toModel() }
 
         emit(result)
     }
@@ -39,9 +40,9 @@ class FakeMatchRepositoryImpl @Inject constructor(
         emit(result)
     }
 
-    override fun getMatchesBySeason(season: String): Flow<DataResult<List<Match>>> = flow {
+    override fun getMatchesBySeason(seasonId: Int): Flow<DataResult<List<Match>>> = flow {
         val result = fakeMatchDataSource
-            .getMatchesBySeason(seasonId = season.toInt())
+            .getMatchesBySeason(seasonId = seasonId)
             .toDataResult { remote -> remote.map { response -> response.toModel() } }
 
         emit(result)
@@ -55,9 +56,17 @@ class FakeMatchRepositoryImpl @Inject constructor(
         emit(result)
     }
 
-    override fun getRecentlyMatch(): Flow<DataResult<MatchRecently>> = flow {
+    override fun getRecentlyMatch(): Flow<DataResult<MatchData>> = flow {
         val result = fakeMatchDataSource
             .getRecentlyMatch()
+            .toDataResult { remote -> remote.toModel() }
+
+        emit(result)
+    }
+
+    override fun getMatchLineup(matchId: Int): Flow<DataResult<MatchLineup>> = flow {
+        val result = fakeMatchDataSource
+            .getMatchLineup(matchId)
             .toDataResult { remote -> remote.toModel() }
 
         emit(result)

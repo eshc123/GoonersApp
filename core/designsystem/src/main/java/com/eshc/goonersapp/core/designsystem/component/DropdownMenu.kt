@@ -1,163 +1,169 @@
 package com.eshc.goonersapp.core.designsystem.component
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Surface
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import com.eshc.goonersapp.core.designsystem.theme.GoonersAppTheme
+import com.eshc.goonersapp.core.designsystem.IconPack
+import com.eshc.goonersapp.core.designsystem.iconpack.IcArrowDown
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF000000
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF777777
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF9E9E9E
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFF5F5F5
+import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T> LargeDropdownMenu(
+fun GnrDropdownMenuWithBottomSheet(
+    label : String,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    label: String,
-    notSetLabel: String? = null,
-    items: List<T>,
-    selectedIndex: Int = -1,
-    onItemSelected: (index: Int, item: T) -> Unit,
-    selectedItemToString: (T) -> String = { it.toString() },
-    drawItem: @Composable (T, Boolean, Boolean, () -> Unit) -> Unit = { item, selected, itemEnabled, onClick ->
-        LargeDropdownMenuItem(
-            text = item.toString(),
-            selected = selected,
-            enabled = itemEnabled,
-            onClick = onClick,
-        )
-    },
+    bottomSheetContent : @Composable (()-> Unit) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    Box(modifier = modifier.height(IntrinsicSize.Min)) {
-        OutlinedTextField(
-            label = { Text(label) },
-            value = items.getOrNull(selectedIndex)?.let { selectedItemToString(it) } ?: "",
-            enabled = enabled,
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(
-                corner = CornerSize(16.dp)
-            ),
-            trailingIcon = {
-                Icon(Icons.Filled.ArrowDropDown, "",modifier = Modifier.rotate(if(expanded) 180f else 0f))
-            },
-            onValueChange = { },
-            readOnly = true,
-        )
-
-        // Transparent clickable surface on top of OutlinedTextField
-        Surface(
+    OutlinedButton(
+        modifier = modifier,
+        colors = ButtonDefaults.outlinedButtonColors(
+            contentColor = ColorFF9E9E9E
+        ),
+        border = BorderStroke(1.dp, ColorFFDCDCDC),
+        shape = CircleShape,
+        onClick = {
+            expanded = true
+        }
+    ) {
+        Text(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 8.dp)
-                .clip(MaterialTheme.shapes.extraSmall)
-                .clickable(enabled = enabled) { expanded = true },
-            color = Color.Transparent,
-        ) {}
+                .weight(1f)
+                .padding(end = 4.dp),
+            text = label,
+            style = GnrTypography.body1Regular,
+            color = ColorFF777777
+        )
+        Icon(
+            imageVector = IconPack.IcArrowDown,
+            contentDescription = "down"
+        )
     }
 
     if (expanded) {
-        Dialog(
-            onDismissRequest = { expanded = false },
+        GnrBottomSheet(
+            onDismiss = {
+                expanded = !expanded
+            }
         ) {
-            GoonersAppTheme {
-                Surface(
-                    shape = RoundedCornerShape(12.dp),
-                ) {
-                    val listState = rememberLazyListState()
-                    if (selectedIndex > -1) {
-                        LaunchedEffect("ScrollToSelected") {
-                            listState.scrollToItem(index = selectedIndex)
-                        }
-                    }
-
-                    LazyColumn(modifier = Modifier.fillMaxWidth(), state = listState) {
-                        if (notSetLabel != null) {
-                            item {
-                                LargeDropdownMenuItem(
-                                    text = notSetLabel,
-                                    selected = false,
-                                    enabled = false,
-                                    onClick = { },
-                                )
-                            }
-                        }
-                        itemsIndexed(items) { index, item ->
-                            val selectedItem = index == selectedIndex
-                            drawItem(
-                                item,
-                                selectedItem,
-                                true
-                            ) {
-                                onItemSelected(index, item)
-                                expanded = false
-                            }
-
-                            if (index < items.lastIndex) {
-                                Divider(modifier = Modifier.padding(horizontal = 16.dp))
-                            }
-                        }
-                    }
-                }
+            bottomSheetContent{
+                expanded = !expanded
             }
         }
     }
 }
 
 @Composable
-fun LargeDropdownMenuItem(
-    text: String,
-    selected: Boolean,
-    enabled: Boolean,
-    onClick: () -> Unit,
+fun <T> GnrMenuContent(
+    title: String,
+    menuItems : List<T>,
+    selectedItem : T? = null,
+    onClick: (T?) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    val contentColor = when {
-        !enabled -> MaterialTheme.colorScheme.onSurface//.copy(alpha = ALPHA_DISABLED)
-        selected -> MaterialTheme.colorScheme.primary//.copy(alpha = ALPHA_FULL)
-        else -> MaterialTheme.colorScheme.onSurface//.copy(alpha = ALPHA_FULL)
+    var selected by remember {
+        mutableStateOf(selectedItem)
+    }
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            modifier = Modifier.padding(vertical = 7.dp),
+            text = title,
+            style = GnrTypography.heading2SemiBold,
+            color = ColorFF181818
+        )
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(max = 217.dp),
+            contentPadding = PaddingValues(start = 15.dp, end = 15.dp, bottom = 16.dp)
+        ) {
+            items(
+                menuItems
+            ) {
+                GnrMenuItem(
+                    text = it.toString(),
+                    selected = selected == it,
+                    onClick = {
+                        selected = it
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+        HorizontalDivider()
+        GnrTextButton(
+            modifier = Modifier
+                .padding(vertical = 16.dp, horizontal = 50.dp)
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            onClick = {
+                onClick(selected)
+            },
+            text = "OK"
+        )
     }
 
-    CompositionLocalProvider(LocalContentColor provides contentColor) {
-        Box(modifier = Modifier
-            .clickable(enabled) { onClick() }
-            .fillMaxWidth()
-            .padding(16.dp)) {
-            Text(
-                text = text,
-                style = MaterialTheme.typography.titleSmall,
-            )
-        }
+}
+
+@Composable
+fun GnrMenuItem(
+    text: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .wrapContentHeight()
+            .clip(RoundedCornerShape(10.dp))
+            .background(if (selected) ColorFFF5F5F5 else Color.Transparent)
+            .clickable {
+                onClick()
+            }
+            .padding(vertical = 7.dp)
+            ,
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = text,
+            style = GnrTypography.body1Medium,
+            color = ColorFF000000
+        )
     }
+
 }

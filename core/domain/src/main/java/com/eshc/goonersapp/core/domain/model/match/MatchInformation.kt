@@ -2,7 +2,6 @@ package com.eshc.goonersapp.core.domain.model.match
 
 data class MatchInformation(
     val notablePlayer: NotablePlayer? = null,
-    val lineUp: List<LineUp>,
     val performance: Performance
 )
 
@@ -14,21 +13,8 @@ data class NotablePlayer(
     val playerImageUrl: String,
     val playerPosition: String,
     val playerPositionInitial: String,
-    val playerGoalCount: Int
-)
-
-data class LineUp(
-    val lineUpId: Double,
-    val matchId: Int,
-    val playerId: Int,
-    val teamId: Int,
-    val playerName: String,
-    val playerBackNumber: Int,
-    val formationField: String?,
-    val formationPosition: Int?,
-    val positionId: Int,
-    val positionCategory: String,
-    val positionInitial: String
+    val playerGoalCount: Int,
+    val playerParticipationCount : Int
 )
 
 data class Performance(

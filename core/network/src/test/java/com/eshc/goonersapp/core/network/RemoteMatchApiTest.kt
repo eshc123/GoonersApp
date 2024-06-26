@@ -117,4 +117,16 @@ class RemoteMatchApiTest {
         val response = matchApi.getRecentlyMatch()
         assertEquals(responseOkCode, response.code())
     }
+
+    /**
+     * (Test Passed)
+     *
+     * Match Lineup network communication test
+     *  - when response code is 200, Test Passed
+     */
+    @Test
+    fun test_GET_LINEUP_STATUS_IS_OK() = runBlocking {
+        val response = matchApi.getMatchLineup(18138603)
+        assertEquals(responseOkCode, response.code())
+    }
 }

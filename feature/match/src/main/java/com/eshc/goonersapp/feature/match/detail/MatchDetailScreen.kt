@@ -5,17 +5,18 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Divider
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,40 +26,76 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
+import com.eshc.goonersapp.core.common.state.UiState
 import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.IconPack
-import com.eshc.goonersapp.core.designsystem.component.ImageCard
 import com.eshc.goonersapp.core.designsystem.component.GnrTabItem
+import com.eshc.goonersapp.core.designsystem.component.GnrTopBar
+import com.eshc.goonersapp.core.designsystem.component.MatchLeagueInfo
 import com.eshc.goonersapp.core.designsystem.iconpack.IcTalk
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF777777
+import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
+import com.eshc.goonersapp.core.domain.model.match.MatchDetail
+import com.eshc.goonersapp.core.domain.model.match.MatchInformation
+import com.eshc.goonersapp.core.domain.model.match.MatchLineup
+import com.eshc.goonersapp.core.domain.model.match.getScoreHistoryList
 import com.eshc.goonersapp.feature.match.model.MatchUiModel
+import com.eshc.goonersapp.feature.match.state.MatchDetailUiState
 
 @Composable
-fun MatchDetailRoute(
-    viewModel: MatchDetailViewModel = hiltViewModel(),
+fun MatchDetailRootScreen(
+    onBackIconClick: () -> Unit,
+    onShowSnackbar: (String) -> Unit,
     onClickChat: (MatchUiModel) -> Unit,
-    onShowSnackbar : (String) -> Unit
+    viewModel: MatchDetailViewModel = hiltViewModel(),
 ) {
-    val match by viewModel.match.collectAsStateWithLifecycle()
-    MatchDetailScreen(
-        match = match,
-        onClickChat = onClickChat
-    )
+    val matchData by viewModel.matchDetailUiState.collectAsStateWithLifecycle()
+    val lineup by viewModel.lineupUiState.collectAsStateWithLifecycle()
+    val matchInformation by viewModel.matchInformationState.collectAsStateWithLifecycle()
+
+    Scaffold(
+        topBar = {
+            GnrTopBar(
+                title = "",
+                onBackIconClick = onBackIconClick,
+                content = {
+                    MatchDetailTopBar(
+                        match = matchData.match
+                    )
+                }
+            )
+        }
+    ) { paddingValues ->
+        MatchDetailScreen(
+            matchDetailUiState = matchData,
+            lineupUiState = lineup,
+            matchInformationState = matchInformation,
+            onClickChat = onClickChat,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        )
+    }
 }
 
 @Composable
 fun MatchDetailScreen(
-    match: MatchUiModel,
-    onClickChat: (MatchUiModel) -> Unit
+    matchDetailUiState: MatchDetailUiState,
+    lineupUiState: UiState<MatchLineup>,
+    matchInformationState : UiState<MatchInformation>,
+    onClickChat: (MatchUiModel) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var selectedTab by remember { mutableStateOf(DetailTab.SUMMARY) }
+    val match = matchDetailUiState.match
+    val matchDetail = matchDetailUiState.matchDetailState
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
@@ -67,73 +104,44 @@ fun MatchDetailScreen(
                 .fillMaxSize()
         ) {
             item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp, vertical = 20.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .wrapContentHeight()
-                            .weight(1f)
-                    ) {
-                        Text(
-                            text = DateUtil.getYearAndMonthAndDateAndTimeString(match.matchDate),
-                            style = MaterialTheme.typography.titleLarge,
-                            color = Color.Black,
-                        )
-                        Text(
-                            modifier = Modifier.padding(top = 4.dp),
-                            text = match.stadiumName,
-                            style = MaterialTheme.typography.titleMedium,
-                            color = Color.Black,
-                        )
-                    }
-                    ImageCard(backgroundColor = Color(0xFF151D2D)) {
-                        AsyncImage(
-                            model = "https://www.arsenal.com/sites/default/files/styles/small/public/logos/comp_8.png?auto=webp&itok=EBszNKBn",
-                            contentDescription = null
-                        )
-                    }
-
-                }
-
-
+                MatchInfoBoard(
+                    match
+                )
             }
 
+
             item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .padding(vertical = 12.dp, horizontal = 24.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    AsyncImage(
-                        modifier = Modifier.width(64.dp),
-                        model = match.homeTeamImageUrl,
-                        contentDescription = null,
-                        contentScale = ContentScale.FillWidth
-                    )
-                    Text(
-                        modifier = Modifier.padding(horizontal = 8.dp),
-                        text = if (match.isFinished) "${match.homeScore} : ${match.awayScore}" else "  vs  ",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = Color.Black,
-                    )
-                    AsyncImage(
-                        modifier = Modifier.width(64.dp),
-                        model = match.awayTeamImageUrl,
-                        contentDescription = null,
-                        contentScale = ContentScale.FillWidth
-                    )
+                if(match.isFinished){
+                    when (matchDetail) {
+                        is UiState.Success -> {
+                            MatchScoreBoard(
+                                match = match,
+                                matchDetailList = matchDetail.data
+                            )
+                        }
+
+                        is UiState.Loading -> {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 8.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator()
+                            }
+
+                        }
+
+                        else -> {
+                            //TODOx
+                        }
+                    }
                 }
 
-                Divider(
+
+                HorizontalDivider(
                     modifier = Modifier
-                        .padding(top = 6.dp)
+                        .padding(top = 40.dp)
                         .fillMaxWidth(), thickness = 8.dp, color = Color(0xFFE4E4E4)
                 )
             }
@@ -159,15 +167,14 @@ fun MatchDetailScreen(
             item {
                 when (selectedTab) {
                     DetailTab.SUMMARY -> {
-
+                        SummaryScreen(
+                            match = match,
+                            lineupUiState = lineupUiState,
+                            matchInformationState = matchInformationState
+                        )
                     }
-
-                    DetailTab.COMMENT -> {
-
-                    }
+                    DetailTab.COMMENT -> { /* TODO("Not yet implemented") */ }
                 }
-
-
             }
         }
 
@@ -188,9 +195,29 @@ fun MatchDetailScreen(
             )
         }
     }
-
-
 }
+
+@Composable
+fun RowScope.MatchScoredHistory(
+    matchScoreHistoryList: List<MatchDetail>,
+    horizontalAlignment: Alignment.Horizontal,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(3.dp),
+        horizontalAlignment = horizontalAlignment
+    ) {
+        matchScoreHistoryList.forEach { history ->
+            Text(
+                text = history.scoringRecordText,
+                color = if(history.teamId == 19) ColorFF10358A else ColorFF777777,
+                style = GnrTypography.descriptionMedium
+            )
+        }
+    }
+}
+
 
 enum class DetailTab {
     SUMMARY, COMMENT

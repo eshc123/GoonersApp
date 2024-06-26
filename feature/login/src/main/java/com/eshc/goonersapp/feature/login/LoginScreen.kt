@@ -16,23 +16,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.eshc.goonersapp.core.designsystem.component.GnrTextFiled
-import com.eshc.goonersapp.core.designsystem.component.TopBar
-import com.eshc.goonersapp.core.designsystem.theme.pretendard
+import com.eshc.goonersapp.core.designsystem.component.GnrTopBar
 
 @Composable
 fun LoginScreen(
     onShowSnackbar: (String) -> Unit,
-    onClickSignUp : () -> Unit
+    onClickSignUp : () -> Unit,
+    onBackIconClick: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        TopBar(
-            title = "LOGIN"
+        GnrTopBar(
+            title = "LOGIN",
+            onBackIconClick = onBackIconClick
         )
 
         Image(
@@ -113,6 +113,7 @@ fun LoginScreen(
 fun PreviewLoginScreen() {
     LoginScreen(
         onShowSnackbar = {},
-        onClickSignUp = {}
+        onClickSignUp = {},
+        onBackIconClick = {}
     )
 }

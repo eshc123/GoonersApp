@@ -37,6 +37,7 @@ fun ClubDetailRoute(
     clubDetailViewModel: ClubDetailViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
+    val intentActionView = Intent(Intent.ACTION_VIEW)
     val clubDetailUiState by clubDetailViewModel.clubDetail.collectAsStateWithLifecycle()
 
     LaunchedEffect(clubDetailUiState){
@@ -47,10 +48,25 @@ fun ClubDetailRoute(
 
     ClubDetailScreen(
         onBackIconClick = onBackIconClick,
-        onHomePageUrlClick = { homePageUrl ->
-            Intent(Intent.ACTION_VIEW, Uri.parse(homePageUrl)).run {
-                context.startActivity(this)
-            }
+        onHomePageClick = { homepageUrl ->
+            intentActionView
+                .apply { data = Uri.parse(homepageUrl) }
+                .run { context.startActivity(this) }
+        },
+        onInstagramClick = { instagramUrl ->
+            intentActionView
+                .apply { data = Uri.parse(instagramUrl) }
+                .run { context.startActivity(this) }
+        },
+        onFaceBookClick = { facebookUrl ->
+            intentActionView
+                .apply { data = Uri.parse(facebookUrl) }
+                .run { context.startActivity(this) }
+        },
+        onXClick = { xUrl ->
+            intentActionView
+                .apply { data = Uri.parse(xUrl) }
+                .run { context.startActivity(this) }
         },
         clubDetailUiState = clubDetailUiState
     )
@@ -59,7 +75,10 @@ fun ClubDetailRoute(
 @Composable
 fun ClubDetailScreen(
     onBackIconClick: () -> Unit,
-    onHomePageUrlClick: (String) -> Unit,
+    onHomePageClick: (String) -> Unit,
+    onInstagramClick: (String) -> Unit,
+    onFaceBookClick: (String) -> Unit,
+    onXClick: (String) -> Unit,
     clubDetailUiState: ClubDetailUiState
 ) {
     when(clubDetailUiState){
@@ -105,23 +124,23 @@ fun ClubDetailScreen(
                         )
                         ClubDetailHomePageRow(
                             homepageUrl = clubDetailUiState.teamDetail.team.officialWebUrl,
-                            onHomePageClick = onHomePageUrlClick
+                            onHomePageClick = onHomePageClick
                         )
                     }
 
                     if (clubDetailUiState.teamDetail.socialMediaIsNotEmpty()) {
                         Text(
                             text = "Social Media",
-                            modifier = Modifier.padding(top = 30.dp),
+                            modifier = Modifier.padding(top = 30.dp, bottom = 16.dp),
                             style = GnrTypography.subtitleSemiBold
                         )
                         ClubDetailSocialMediaRow(
                             isInstagramNotEmpty = clubDetailUiState.teamDetail.instagramIsNotEmpty(),
                             isFaceBookNotEmpty = clubDetailUiState.teamDetail.faceBookIsNotEmpty(),
                             isXNotEmpty = clubDetailUiState.teamDetail.xIsNotEmpty(),
-                            onInstagramLogoClick = { /* Nothing Implemented */ },
-                            onFaceBookLogoClick = { /* Nothing Implemented */ },
-                            onXLogoClick = { /* Nothing Implemented */ }
+                            onInstagramLogoClick = { onInstagramClick(clubDetailUiState.teamDetail.team.snsInstagram) },
+                            onFaceBookLogoClick = { onFaceBookClick(clubDetailUiState.teamDetail.team.snsFaceBook) },
+                            onXLogoClick = { onXClick(clubDetailUiState.teamDetail.team.snsX) }
                         )
                     }
 

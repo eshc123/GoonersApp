@@ -38,7 +38,7 @@ import com.eshc.goonersapp.core.designsystem.iconpack.IcInfo
 import com.eshc.goonersapp.core.designsystem.iconpack.IcNotification
 import com.eshc.goonersapp.core.designsystem.iconpack.IcPeople
 import com.eshc.goonersapp.core.designsystem.iconpack.IcSearch
-import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
+import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF777777
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF9E9E9E
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
@@ -222,9 +222,7 @@ fun GnrBottomBar(
 
             GnrNavigationBarItem(
                 selected = selected,
-                onClick = {
-                    onNavigateToDestination(destination)
-                },
+                onClick = { onNavigateToDestination(destination) },
                 icon = {
                     Icon(
                         modifier = Modifier
@@ -241,14 +239,15 @@ fun GnrBottomBar(
                             .padding(bottom = 4.dp)
                             .heightIn(max = 18.dp),
                         imageVector = destination.selectedIcon,
+                        tint = ColorFF10358A,
                         contentDescription = null,
                     )
                 },
                 label = {
                     Text(
                         text = stringResource(id = destination.iconTextId),
-                        style = GnrTypography.body2Regular.copy(
-                            color = if(selected) ColorFF181818 else ColorFF9E9E9E
+                        style = GnrTypography.descriptionMedium.copy(
+                            color = if (selected) ColorFF10358A else ColorFF9E9E9E
                         )
                     )
                 }

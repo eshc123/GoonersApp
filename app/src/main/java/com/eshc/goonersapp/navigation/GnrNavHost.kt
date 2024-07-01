@@ -27,84 +27,74 @@ const val mainNavigationRoute = "main_route"
 
 @Composable
 fun GnrNavHost(
-    modifier : Modifier = Modifier,
     navController: NavHostController,
-    onShowSnackbar : (String) -> Unit,
+    onShowSnackBar : (String) -> Unit,
     topBar : @Composable (TopLevelDestination) -> Unit,
-    bottomBar : @Composable () -> Unit
+    bottomBar : @Composable () -> Unit,
+    modifier : Modifier = Modifier
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = mainNavigationRoute
-    ){
+    ) {
         navigation(
             startDestination = homeNavigationRoute,
             route = mainNavigationRoute
-        ){
+        ) {
             homeScreen(
-                topBar = {
-                    topBar(TopLevelDestination.HOME)
-                },
+                topBar = { topBar(TopLevelDestination.HOME) },
                 bottomBar = bottomBar,
-                onShowSnackbar = onShowSnackbar
+                onShowSnackBar = onShowSnackBar
             )
             teamScreen(
-                topBar = {
-                    topBar(TopLevelDestination.TEAM)
-                },
+                topBar = { topBar(TopLevelDestination.TEAM) },
                 bottomBar = bottomBar,
-                onPlayerClick = {
-                    navController.navigateToPlayerDetail(it)
-                },
-                onShowSnackbar = onShowSnackbar
+                onPlayerClick = { navController.navigateToPlayerDetail(it) },
+                onShowSnackbar = onShowSnackBar
             )
             matchScreen(
                 bottomBar = bottomBar,
-                onClickDetail = {
-                    navController.navigateToMatchDetail(it.toUiModel())
-                },
-                onClickUser = {
-                    navController.navigateToLogin()
-                },
-                onShowSnackbar = onShowSnackbar
+                onClickDetail = { navController.navigateToMatchDetail(it.toUiModel()) },
+                onClickUser = { navController.navigateToLogin() },
+                onShowSnackbar = onShowSnackBar
             )
         }
 
         playerDetailScreen(
             onBackIconClick = { navController.popBackStack() },
-            onShowSnackbar = onShowSnackbar
+            onShowSnackbar = onShowSnackBar
         )
 
         matchDetailScreen(
             onClickChat = { navController.navigateToChatRoom(it) },
             onBackIconClick = { navController.popBackStack() },
-            onShowSnackbar = onShowSnackbar
+            onShowSnackbar = onShowSnackBar
         )
 
         teamSearchScreen(
             onPlayerClick = { navController.navigateToPlayerDetail(it) },
             onBackIconClick = { navController.popBackStack() },
-            onShowSnackbar = onShowSnackbar
+            onShowSnackbar = onShowSnackBar
         )
 
         chatRoomScreen(
-            onShowSnackbar = onShowSnackbar
+            onShowSnackbar = onShowSnackBar
         )
 
         clubDetailScreen(
             onBackIconClick = { navController.popBackStack() },
-            onShowSnackbar = onShowSnackbar
+            onShowSnackbar = onShowSnackBar
         )
 
         loginScreen(
-            onShowSnackbar = onShowSnackbar,
+            onShowSnackbar = onShowSnackBar,
             onClickSignUp = { navController.navigateToSignUp() },
             onBackIconClick = { navController.popBackStack() }
         )
 
         signUpScreen(
-            onShowSnackbar = onShowSnackbar,
+            onShowSnackbar = onShowSnackBar,
             onBackIconClick = { navController.popBackStack() }
         )
     }

@@ -37,7 +37,7 @@ fun HomeRoute(
     topBar : @Composable () -> Unit,
     bottomBar : @Composable () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
-    onShowSnackbar : (String) -> Unit
+    onShowSnackBar : (String) -> Unit
 ) {
     val dashBoardUiState by viewModel.teamDashBoardUiStateFlow.collectAsStateWithLifecycle()
     val upcomingMatchesUiState by viewModel.upcomingMatchesUiStateFlow.collectAsStateWithLifecycle()

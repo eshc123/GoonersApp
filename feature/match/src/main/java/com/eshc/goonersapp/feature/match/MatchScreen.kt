@@ -16,7 +16,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -26,10 +25,10 @@ import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.GnrTopLevelTopBar
 import com.eshc.goonersapp.core.designsystem.iconpack.IcGrid
 import com.eshc.goonersapp.core.designsystem.iconpack.IcList
-import com.eshc.goonersapp.core.designsystem.iconpack.IcNotification
 import com.eshc.goonersapp.core.designsystem.iconpack.IcPeople
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF777777
 import com.eshc.goonersapp.core.domain.model.match.Match
+import com.eshc.goonersapp.feature.match.component.GnrMatchTopAppBar
 import com.eshc.goonersapp.feature.match.component.calendar.CalendarDates
 import com.eshc.goonersapp.feature.match.component.calendar.CalendarGrid
 import com.eshc.goonersapp.feature.match.component.calendar.CalendarList
@@ -48,24 +47,25 @@ fun MatchRoute(
     viewModel: MatchViewModel = hiltViewModel(),
     onClickDetail: (Match) -> Unit,
     onClickUser : () -> Unit,
-    onShowSnackbar : (String) -> Unit
+    onShowSnackBar : (String) -> Unit
 ) {
-    var calendarType by remember { mutableStateOf<CalendarType>(CalendarType.Grid) }
+    var calendarType by remember { mutableStateOf(CalendarType.Grid) }
 
     Scaffold(
         topBar = {
-            MatchTopBar(
+            GnrMatchTopAppBar(
                 calendarType = calendarType,
+                onClickUser = onClickUser,
                 onClickViewType = {
-                    calendarType = if(calendarType == CalendarType.Grid) CalendarType.List
-                                    else CalendarType.Grid
-                },
-                onClickUser = onClickUser
+                    calendarType = if (calendarType == CalendarType.Grid) {
+                        CalendarType.List
+                    } else {
+                        CalendarType.Grid
+                    }
+                }
             )
         },
-        bottomBar = {
-            bottomBar()
-        }
+        bottomBar = { bottomBar() }
     ) { padding ->
         MatchScreen(
             modifier = Modifier
@@ -165,41 +165,5 @@ fun MatchScreen(
                 )
             }
         }
-    }
-}
-
-@Composable
-fun MatchTopBar(
-    calendarType: CalendarType,
-    onClickViewType : () -> Unit,
-    onClickUser : () -> Unit
-){
-    GnrTopLevelTopBar(
-        modifier = Modifier.padding(horizontal = 8.dp),
-        title = "Match",
-    ){
-        Icon(
-            imageVector = when(calendarType){
-                CalendarType.Grid -> IconPack.IcList
-                CalendarType.List -> IconPack.IcGrid
-            },
-            contentDescription = null,
-            modifier= Modifier
-                .padding(horizontal = 8.dp)
-                .size(24.dp)
-                .clickable {
-                    onClickViewType()
-                },
-            tint = ColorFF777777
-        )
-        Icon(
-            imageVector = IconPack.IcPeople,
-            contentDescription = null,
-            modifier = Modifier
-                .padding(horizontal = 8.dp)
-                .size(24.dp)
-                .clickable { onClickUser() },
-            tint = ColorFF777777
-        )
     }
 }

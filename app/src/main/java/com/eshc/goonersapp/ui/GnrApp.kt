@@ -33,7 +33,6 @@ import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBar
 import com.eshc.goonersapp.core.designsystem.component.GnrNavigationBarItem
 import com.eshc.goonersapp.core.designsystem.component.GnrTopLevelTopBar
-import com.eshc.goonersapp.core.designsystem.iconpack.IcGridCalender
 import com.eshc.goonersapp.core.designsystem.iconpack.IcInfo
 import com.eshc.goonersapp.core.designsystem.iconpack.IcNotification
 import com.eshc.goonersapp.core.designsystem.iconpack.IcPeople
@@ -79,7 +78,7 @@ fun GnrApp(
         ) {
             GnrNavHost(
                 navController = navController,
-                onShowSnackbar = { message ->
+                onShowSnackBar = { message ->
                     coroutineScope.launch {
                         snackbarHostState.showSnackbar(message)
                     }
@@ -92,28 +91,6 @@ fun GnrApp(
                                 TopLevelDestination.HOME -> {
                                     Icon(
                                         imageVector = IconPack.IcNotification,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .padding(horizontal = 8.dp)
-                                            .size(24.dp)
-                                            .clip(RoundedCornerShape(3.dp)),
-                                        tint = ColorFF777777
-                                    )
-                                    Icon(
-                                        imageVector = IconPack.IcPeople,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .padding(horizontal = 8.dp)
-                                            .size(24.dp)
-                                            .clip(RoundedCornerShape(3.dp))
-                                            .clickable { navController.navigateToLogin() },
-                                        tint = ColorFF777777
-                                    )
-                                }
-
-                                TopLevelDestination.MATCH -> {
-                                    Icon(
-                                        imageVector = IconPack.IcGridCalender,
                                         contentDescription = null,
                                         modifier = Modifier
                                             .padding(horizontal = 8.dp)
@@ -155,6 +132,8 @@ fun GnrApp(
                                         tint = ColorFF777777
                                     )
                                 }
+
+                                else -> { /* Nothing Implemented */ }
                             }
                         }
                     )
@@ -200,7 +179,7 @@ fun GnrTopLevelBar(
     icons: @Composable () -> Unit
 ) {
     GnrTopLevelTopBar(
-        modifier = Modifier.padding(horizontal = 8.dp),
+        modifier = Modifier.padding(horizontal = 15.dp),
         title = stringResource(id = topLevelDestination.titleTextId)
     ) {
         icons()

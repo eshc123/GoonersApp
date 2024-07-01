@@ -38,22 +38,20 @@ fun TeamRootScreen(
     topBar : @Composable () -> Unit,
     bottomBar : @Composable () -> Unit,
     onPlayerClick: (String) -> Unit,
-    onShowSnackbar : (String) -> Unit,
+    onShowSnackBar : (String) -> Unit,
     viewModel: TeamViewModel = hiltViewModel(),
 ) {
     val teamUiState by viewModel.players.collectAsStateWithLifecycle()
     val scrollState = rememberScrollState()
 
     Scaffold(
-        topBar = {
-            topBar()
-        },
-        bottomBar = {
-            bottomBar()
-        }
+        topBar = { topBar() },
+        bottomBar = { bottomBar() }
     ) { padding ->
         Column(
-            modifier = Modifier.padding(padding)
+            modifier = Modifier
+                .padding(padding)
+                .padding(top = 30.dp)
         ) {
             TeamScreen(
                 teamUiState = teamUiState,

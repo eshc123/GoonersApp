@@ -38,7 +38,7 @@ fun NavGraphBuilder.matchScreen(
             bottomBar = bottomBar,
             onClickDetail = onClickDetail,
             onClickUser = onClickUser,
-            onShowSnackbar = onShowSnackbar
+            onShowSnackBar = onShowSnackbar
         )
     }
 }

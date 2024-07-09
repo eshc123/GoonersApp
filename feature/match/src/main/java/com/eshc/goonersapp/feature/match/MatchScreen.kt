@@ -16,7 +16,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -26,7 +25,6 @@ import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.GnrTopLevelTopBar
 import com.eshc.goonersapp.core.designsystem.iconpack.IcGrid
 import com.eshc.goonersapp.core.designsystem.iconpack.IcList
-import com.eshc.goonersapp.core.designsystem.iconpack.IcNotification
 import com.eshc.goonersapp.core.designsystem.iconpack.IcPeople
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF777777
 import com.eshc.goonersapp.core.domain.model.match.Match
@@ -38,9 +36,7 @@ import com.eshc.goonersapp.feature.match.component.calendar.getIndexByMonth
 import com.eshc.goonersapp.feature.match.event.UpdateMonthEvent
 import java.time.LocalDate
 
-enum class CalendarType {
-    Grid, List
-}
+enum class CalendarType { Grid, List }
 
 @Composable
 fun MatchRoute(
@@ -50,22 +46,23 @@ fun MatchRoute(
     onClickUser : () -> Unit,
     onShowSnackbar : (String) -> Unit
 ) {
-    var calendarType by remember { mutableStateOf<CalendarType>(CalendarType.Grid) }
+    var calendarType by remember { mutableStateOf(CalendarType.Grid) }
 
     Scaffold(
         topBar = {
             MatchTopBar(
                 calendarType = calendarType,
                 onClickViewType = {
-                    calendarType = if(calendarType == CalendarType.Grid) CalendarType.List
-                                    else CalendarType.Grid
+                    calendarType = if(calendarType == CalendarType.Grid) {
+                        CalendarType.List
+                    } else {
+                        CalendarType.Grid
+                    }
                 },
                 onClickUser = onClickUser
             )
         },
-        bottomBar = {
-            bottomBar()
-        }
+        bottomBar = { bottomBar() }
     ) { padding ->
         MatchScreen(
             modifier = Modifier
@@ -83,20 +80,18 @@ fun MatchRoute(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MatchScreen(
-    modifier: Modifier = Modifier,
-    viewModel: MatchViewModel,
     calendarType : CalendarType,
-    calendarList : List<CalendarDates> = CalendarUtil.getCalendarDatesListAsOneYear(LocalDate.of(2023, 8, 1)),
-    onClickDetail: (Match) -> Unit
+    viewModel: MatchViewModel,
+    onClickDetail: (Match) -> Unit,
+    modifier: Modifier = Modifier,
+    calendarList : List<CalendarDates> = CalendarUtil.getCalendarDatesListAsOneYear(LocalDate.of(2023, 8, 1))
 ) {
-    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     val matches by viewModel.matches.collectAsStateWithLifecycle()
-    val calendarMonthListState by remember {
-        mutableStateOf(calendarList)
-    }
+    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
+    val calendarMonthListState by remember { mutableStateOf(calendarList) }
     val calendarGridPagerState = rememberPagerState { calendarList.size }
 
-    LaunchedEffect(Unit ) {
+    LaunchedEffect(Unit) {
         viewModel.mUpdateCurrentMonthEvent.collect {
             when(it){
                 UpdateMonthEvent.UpdateToNextMonth -> {
@@ -156,12 +151,8 @@ fun MatchScreen(
                 CalendarList(
                     season = "2023-2024",
                     headerHeight = 60,
-                    matchList = matches.groupBy {
-                        DateUtil.getYearAndMonthString(it.matchDate)
-                    },
-                    onClickDetail = {
-                        onClickDetail(it)
-                    }
+                    matchList = matches.groupBy { DateUtil.getYearAndMonthString(it.matchDate) },
+                    onClickDetail = { onClickDetail(it) }
                 )
             }
         }
@@ -175,11 +166,11 @@ fun MatchTopBar(
     onClickUser : () -> Unit
 ){
     GnrTopLevelTopBar(
-        modifier = Modifier.padding(horizontal = 8.dp),
+        modifier = Modifier.padding(horizontal = 15.dp),
         title = "Match",
-    ){
+    ) {
         Icon(
-            imageVector = when(calendarType){
+            imageVector = when(calendarType) {
                 CalendarType.Grid -> IconPack.IcList
                 CalendarType.List -> IconPack.IcGrid
             },
@@ -187,9 +178,7 @@ fun MatchTopBar(
             modifier= Modifier
                 .padding(horizontal = 8.dp)
                 .size(24.dp)
-                .clickable {
-                    onClickViewType()
-                },
+                .clickable { onClickViewType() },
             tint = ColorFF777777
         )
         Icon(

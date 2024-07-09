@@ -29,11 +29,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -42,17 +40,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.IconPack
-import com.eshc.goonersapp.core.designsystem.component.ImageCard
+import com.eshc.goonersapp.core.designsystem.component.GnrHorizontalDivider
 import com.eshc.goonersapp.core.designsystem.component.MatchItemResultChip
+import com.eshc.goonersapp.core.designsystem.ext.gnrCircleBorderShape
 import com.eshc.goonersapp.core.designsystem.iconpack.IcIosArrowBack
-import com.eshc.goonersapp.core.designsystem.theme.ColorFF000000
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF555555
@@ -98,9 +94,11 @@ fun CalendarGrid(
                 .padding(horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Spacer(modifier = Modifier
-                .wrapContentHeight()
-                .weight(1f))
+            Spacer(
+                modifier = Modifier
+                    .wrapContentHeight()
+                    .weight(1f)
+            )
             Row(
                 modifier = Modifier
                     .wrapContentSize(),
@@ -116,11 +114,9 @@ fun CalendarGrid(
                     )
                 }
                 Text(
-                    text = calendarMonthListState[pagerState.currentPage].currentMonth.format(
-                        DateTimeFormatter.ofPattern(
-                            "yyyy.MM"
-                        )
-                    ),
+                    text = calendarMonthListState[pagerState.currentPage]
+                        .currentMonth.
+                        format(DateTimeFormatter.ofPattern("yyyy.MM")),
                     style = GnrTypography.heading2SemiBold,
                     color = ColorFF181818
                 )
@@ -141,47 +137,53 @@ fun CalendarGrid(
                     .weight(1f)
             ){
                 TodayButton(
-                    modifier = Modifier.align(Alignment.Center).height(22.dp),
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .height(22.dp),
                     onClick = onClickToday
                 )
             }
 
         }
-        Column(modifier = Modifier
-            .padding(top = 16.dp)
-            .fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .padding(top = 16.dp)
+                .fillMaxSize()
+        ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Absolute.SpaceEvenly
-            ) {
-                CalendarUtil.dayOfWeekList.forEach {
-                    CalendarDayItem(it, 24)
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Absolute.SpaceEvenly,
+                content = {
+                    CalendarUtil.dayOfWeekList.forEach {
+                        CalendarDayItem(it, 24)
+                    }
                 }
-            }
+            )
             HorizontalPager(state = pagerState) {
-                Column(
-                    modifier = Modifier.fillMaxSize()
-                ) {
+                Column(modifier = Modifier.fillMaxSize()) {
                     for (i in 0 until calendarMonthListState[it].getAllDates().size / 7) {
                         Row(
                             modifier = Modifier,
                             horizontalArrangement = Arrangement.SpaceAround,
                         ) {
-                            calendarMonthListState[it].getAllDates()
-                                .chunked(7)[i].forEachIndexed { index, localDate ->
-                                if (calendarMonthListState[it].isCurDates(i * 7 + index))
-                                    CalendarItem(
-                                        localDate,
-                                        (height - headerHeight) / 7,
-                                        matchList
-                                    ) {
-                                        onClickDetail(it)
+                            calendarMonthListState[it]
+                                .getAllDates()
+                                .chunked(7)[i]
+                                .forEachIndexed { index, localDate ->
+                                    if (calendarMonthListState[it].isCurDates(i * 7 + index)) {
+                                        CalendarItem(
+                                            localDate = localDate,
+                                            height = (height - headerHeight) / 7,
+                                            matchList = matchList,
+                                            onClickDetail = { onClickDetail(it) }
+                                        )
+                                    } else {
+                                        FaintCalendarItem(
+                                            localDate = localDate,
+                                            height = (height - headerHeight) / 7
+                                        )
                                     }
-                                else {
-                                    FaintCalendarItem(localDate, (height - headerHeight) / 7)
                                 }
-                            }
                         }
                     }
                 }
@@ -190,7 +192,6 @@ fun CalendarGrid(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CalendarList(
     season : String,
@@ -198,106 +199,56 @@ fun CalendarList(
     matchList: Map<String, List<Match>>,
     onClickDetail : (Match) -> Unit
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(headerHeight.dp)
-                .padding(horizontal = 8.dp),
-        ){
-            Text(
-                modifier = Modifier
-                    .align(Alignment.Center),
-                text = season,
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.Black
-            )
-        }
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ){
-            matchList.forEach { (yearAndMonth, matches) ->
-                item {
-                    Text(
-                        modifier = Modifier.padding(vertical = 6.dp),
-                        text = yearAndMonth,
-                        style = MaterialTheme.typography.titleLarge,
-                        color = Color.Black,
-                        fontSize = 20.sp
-                    )
-                }
-                items(matches){
-                    CalendarListItem(
-                        match = it,
-                        onClickDetail = onClickDetail
-                    )
-                }
-            }
-
-        }
-    }
-
-}
-
-@Composable
-fun CalendarListItem(
-    match: Match,
-    onClickDetail: (Match) -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .clickable {
-                onClickDetail(match)
-            }
-            .padding(vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = DateUtil.getYearAndMonthAndDateAndTimeString(match.matchDate),
-            style = MaterialTheme.typography.titleMedium,
-            color = Color.Black,
-            letterSpacing = 0.1.sp
-        )
+    Column(modifier = Modifier.fillMaxSize()) {
         Row(
             modifier = Modifier
-                .wrapContentHeight()
-                .weight(1f),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+                .fillMaxWidth()
+                .padding(horizontal = 15.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            AsyncImage(
-                modifier = Modifier.size(32.dp),
-                model = match.homeTeamImageUrl,
-                contentDescription = null,
-            )
             Text(
-                modifier = Modifier.padding(horizontal = 8.dp),
-                text = if(match.isFinished) "${match.homeScore} : ${match.awayScore}" else "  vs  ",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.ExtraBold,
-                color = Color.Black,
-                letterSpacing = 0.1.sp
+                text = season,
+                style = GnrTypography.subtitleSemiBold
             )
-            AsyncImage(
-                modifier = Modifier.size(32.dp),
-                model = match.awayTeamImageUrl,
-                contentDescription = null
+            TodayButton(
+                onClick = { /*TODO*/ },
+                modifier = Modifier.height(22.dp)
             )
         }
-        ImageCard(backgroundColor = Color(0xFF151D2D)) {
-            AsyncImage(
-                model = "https://www.arsenal.com/sites/default/files/styles/small/public/logos/comp_8.png?auto=webp&itok=EBszNKBn",
-                contentDescription = null
-            )
+
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(vertical = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            matchList.forEach { (yearAndMonth, matches) ->
+                item {
+                    CalendarListStickyHeader(
+                        competitionUrl = matches.first().leagueImageUrl,
+                        competitionName = "Premier league"
+                    )
+                }
+                items(
+                    items = matches,
+                    key = { it.id },
+                    itemContent = {
+                        CalendarListItem(
+                            match = it,
+                            modifier = Modifier.padding(horizontal = 15.dp)
+                        )
+                        if (matches.lastIndex != matches.size) {
+                            GnrHorizontalDivider()
+                        }
+                    }
+                )
+            }
+
         }
     }
+
 }
+
 
 @Composable
 fun RowScope.CalendarDayItem(
@@ -329,16 +280,12 @@ fun RowScope.CalendarItem(
             .weight(1f)
             .clickable(
                 indication = null,
-                interactionSource = remember { MutableInteractionSource() }
-            ) {
-                if (matchList.containsKey(localDate)) {
-                    matchList[localDate]
-                        ?.firstOrNull()
-                        ?.let { match ->
-                            onClickDetail(match)
-                        }
+                interactionSource = remember { MutableInteractionSource() },
+                onClick = {
+                    if (matchList.containsKey(localDate))
+                        matchList[localDate]?.firstOrNull()?.let { match -> onClickDetail(match) }
                 }
-            },
+            ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -347,22 +294,22 @@ fun RowScope.CalendarItem(
             color = if (localDate.dayOfWeek == DayOfWeek.SUNDAY) ColorFFE9343C else ColorFF555555,
             style = GnrTypography.body1Medium
         )
+
         if (matchList.containsKey(localDate)) {
             matchList[localDate]?.firstOrNull()?.let { match ->
+                val matchResult = match.getMatchResult(19)
+                val opponentTeamImgUrl = match.getOpponentTeamImageUrl(19)
+
                 Box(
                     modifier = Modifier
                         .size(22.dp)
                         .background(ColorFFFFFFFF)
-                        .border(1.dp, ColorFFDCDCDC, CircleShape)
-                        .clip(CircleShape)
+                        .gnrCircleBorderShape(1.dp, ColorFFDCDCDC, CircleShape)
                         .padding(2.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    AsyncImage(
-                        model = match.getOpponentTeamImageUrl(19),
-                        contentDescription = null
-                    )
-                }
+                    contentAlignment = Alignment.Center,
+                    content = { AsyncImage(model = opponentTeamImgUrl, contentDescription = null) }
+                )
+
                 if (match.isFinished) {
                     Text(
                         text = "${match.homeScore}:${match.awayScore}",
@@ -370,15 +317,13 @@ fun RowScope.CalendarItem(
                         color = ColorFF181818
                     )
                     MatchItemResultChip(
-                        match.getMatchResult(19).name.uppercase(),
-                        color = when(match.getMatchResult(19)){
+                        result = matchResult.name.uppercase(),
+                        color = when(matchResult) {
                             MatchResult.Win -> ColorFFA5DBFF
                             MatchResult.Draw -> ColorFFF69D4A
                             MatchResult.Loss -> ColorFFF46B6C
                         },
-                        modifier = Modifier
-                            .width(40.dp)
-                            .height(15.dp)
+                        modifier = Modifier.width(40.dp).height(15.dp)
                     )
                 } else {
                     Text(
@@ -433,7 +378,9 @@ fun TodayButton(
         onClick = onClick
     ) {
         Box(
-            modifier = Modifier.wrapContentSize().padding(horizontal = 8.dp),
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(horizontal = 8.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(

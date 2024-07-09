@@ -2,10 +2,7 @@ package com.eshc.goonersapp.core.designsystem.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,27 +14,23 @@ import com.eshc.goonersapp.core.designsystem.theme.ColorFF000000
 import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 
 @Composable
-fun MatchItemResultChip(
+fun GnrChip(
     result: String,
-    color: Color,
+    containerColor: Color,
     modifier: Modifier = Modifier
 ) {
-    Card(
+    GnrCard(
         modifier = modifier,
-        shape = RoundedCornerShape(3.dp),
+        shapes = RoundedCornerShape(3.dp),
         colors = CardDefaults.cardColors(
-            containerColor = color,
+            containerColor = containerColor,
             contentColor = ColorFF000000
         )
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = result,
-                style = GnrTypography.descriptionMedium
-            )
-        }
+            contentAlignment = Alignment.Center,
+            content = { Text(text = result, style = GnrTypography.descriptionMedium) }
+        )
     }
 }

@@ -1,9 +1,7 @@
 package com.eshc.goonersapp.feature.match.component.calendar
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,10 +23,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -37,7 +30,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -45,17 +37,14 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.eshc.goonersapp.core.common.util.DateUtil
 import com.eshc.goonersapp.core.designsystem.IconPack
+import com.eshc.goonersapp.core.designsystem.component.GnrChip
 import com.eshc.goonersapp.core.designsystem.component.GnrHorizontalDivider
-import com.eshc.goonersapp.core.designsystem.component.MatchItemResultChip
 import com.eshc.goonersapp.core.designsystem.ext.gnrCircleBorderShape
 import com.eshc.goonersapp.core.designsystem.iconpack.IcIosArrowBack
-import com.eshc.goonersapp.core.designsystem.theme.ColorFF10358A
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF181818
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF555555
-import com.eshc.goonersapp.core.designsystem.theme.ColorFF889AC4
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFA5DBFF
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
-import com.eshc.goonersapp.core.designsystem.theme.ColorFFE6EDFC
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFE9343C
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF46B6C
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF69D4A
@@ -283,7 +272,9 @@ fun RowScope.CalendarItem(
                 interactionSource = remember { MutableInteractionSource() },
                 onClick = {
                     if (matchList.containsKey(localDate))
-                        matchList[localDate]?.firstOrNull()?.let { match -> onClickDetail(match) }
+                        matchList[localDate]
+                            ?.firstOrNull()
+                            ?.let { match -> onClickDetail(match) }
                 }
             ),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -316,14 +307,14 @@ fun RowScope.CalendarItem(
                         style = GnrTypography.body2Regular,
                         color = ColorFF181818
                     )
-                    MatchItemResultChip(
+                    GnrChip(
                         result = matchResult.name.uppercase(),
-                        color = when(matchResult) {
+                        containerColor = when (matchResult) {
                             MatchResult.Win -> ColorFFA5DBFF
                             MatchResult.Draw -> ColorFFF69D4A
                             MatchResult.Loss -> ColorFFF46B6C
                         },
-                        modifier = Modifier.width(40.dp).height(15.dp)
+                        modifier = Modifier.size(width = 40.dp, height = 15.dp)
                     )
                 } else {
                     Text(
@@ -356,37 +347,4 @@ fun RowScope.FaintCalendarItem(
         color = Color.LightGray,
         textAlign = TextAlign.Center
     )
-}
-
-@Composable
-fun TodayButton(
-    onClick : () -> Unit,
-    modifier : Modifier = Modifier,
-    backgroundColor : Color = ColorFFE6EDFC,
-    borderColor : Color = ColorFF889AC4,
-    textColor : Color = ColorFF10358A
-){
-    Button(
-        modifier = modifier,
-        shape = RoundedCornerShape(5.dp),
-        border = BorderStroke(1.dp,borderColor),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = backgroundColor,
-            contentColor = textColor
-        ),
-        contentPadding = PaddingValues(0.dp),
-        onClick = onClick
-    ) {
-        Box(
-            modifier = Modifier
-                .wrapContentSize()
-                .padding(horizontal = 8.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Today",
-                style = GnrTypography.body2Medium
-            )
-        }
-    }
 }

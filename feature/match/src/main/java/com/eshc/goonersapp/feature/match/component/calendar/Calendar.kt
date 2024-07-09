@@ -181,6 +181,7 @@ fun CalendarGrid(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CalendarList(
     season : String,
@@ -189,31 +190,21 @@ fun CalendarList(
     onClickDetail : (Match) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 15.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = season,
-                style = GnrTypography.subtitleSemiBold
-            )
-            TodayButton(
-                onClick = { /*TODO*/ },
-                modifier = Modifier.height(22.dp)
-            )
-        }
-
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             matchList.forEach { (yearAndMonth, matches) ->
+                stickyHeader {
+                    CalendarStickyHeader(
+                        season = yearAndMonth,
+                        onClickToday = {  }
+                    )
+                }
+
                 item {
-                    CalendarListStickyHeader(
+                    CalendarListLeagueHeader(
                         competitionUrl = matches.first().leagueImageUrl,
                         competitionName = "Premier league"
                     )
@@ -226,8 +217,8 @@ fun CalendarList(
                             match = it,
                             modifier = Modifier.padding(horizontal = 15.dp)
                         )
-                        if (matches.lastIndex != matches.size) {
-                            GnrHorizontalDivider()
+                        if (matches[matches.lastIndex] != it) {
+                            GnrHorizontalDivider(modifier = Modifier.padding(horizontal = 15.dp))
                         }
                     }
                 )

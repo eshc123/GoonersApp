@@ -4,7 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -12,9 +14,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.eshc.goonersapp.core.designsystem.component.MatchLeagueInfo
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF5F5F5
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
+import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 
 @Composable
-fun CalendarListStickyHeader(
+fun CalendarListLeagueHeader(
     competitionUrl: String,
     competitionName: String
 ) {
@@ -36,8 +40,33 @@ fun CalendarListStickyHeader(
     }
 }
 
+@Composable
+fun CalendarStickyHeader(
+    season: String,
+    onClickToday: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(ColorFFFFFFFF)
+            .padding(start = 15.dp, end = 15.dp, top = 30.dp, bottom = 10.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = season,
+            style = GnrTypography.subtitleSemiBold
+        )
+        TodayButton(
+            onClick = onClickToday,
+            modifier = Modifier.height(22.dp)
+        )
+    }
+}
+
+
 @Preview
 @Composable
 fun PreviewStickyHeader() {
-    CalendarListStickyHeader(competitionUrl = "", competitionName = "Premier league")
+    CalendarListLeagueHeader(competitionUrl = "", competitionName = "Premier league")
 }

@@ -29,16 +29,14 @@ fun NavGraphBuilder.matchScreen(
     bottomBar : @Composable () -> Unit,
     onClickDetail : (Match) -> Unit,
     onClickUser : () -> Unit,
-    onShowSnackbar : (String) -> Unit
+    onShowSnackBar : (String) -> Unit
 ) {
-    composable(
-        route = matchNavigationRoute
-    ) {
+    composable(route = matchNavigationRoute) {
         MatchRoute(
             bottomBar = bottomBar,
             onClickDetail = onClickDetail,
             onClickUser = onClickUser,
-            onShowSnackbar = onShowSnackbar
+            onShowSnackBar = onShowSnackBar
         )
     }
 }

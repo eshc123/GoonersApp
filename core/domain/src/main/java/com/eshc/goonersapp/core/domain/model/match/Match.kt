@@ -20,28 +20,40 @@ data class Match(
     val isFinished :Boolean = false,
     val stadiumName : String = "",
     val leagueImageUrl : String = "",
-){
+) {
     val matchScore = "${homeScore}:${awayScore}"
 
     fun getOpponentTeamImage(myTeamId : Int) : String {
-        return if(myTeamId == homeTeamId) awayTeamImageUrl
-        else homeTeamImageUrl
+        return if (myTeamId == homeTeamId) {
+            awayTeamImageUrl
+        } else {
+            homeTeamImageUrl
+        }
     }
 
     fun getOpponentTeamNickname(myTeamId : Int) : String {
-        return if(myTeamId == homeTeamId) awayTeamNickname
-        else homeTeamNickname
+        return if (myTeamId == homeTeamId) {
+            awayTeamNickname
+        } else {
+            homeTeamNickname
+        }
     }
 
     fun getOpponentTeamImageUrl(myTeamId : Int) : String {
-        return if(myTeamId == homeTeamId) awayTeamImageUrl
-        else homeTeamImageUrl
+        return if (myTeamId == homeTeamId) {
+            awayTeamImageUrl
+        } else {
+            homeTeamImageUrl
+        }
     }
 
     fun getMatchResult(myTeamId : Int) : MatchResult {
-        return if(homeScore == awayScore) MatchResult.Draw
-        else if(myTeamId == homeTeamId && homeScore > awayScore ||
-            myTeamId == awayTeamId && awayScore > homeScore) MatchResult.Win
-        else MatchResult.Loss
+        return if (homeScore == awayScore) {
+            MatchResult.Draw
+        } else if (myTeamId == homeTeamId && homeScore > awayScore || myTeamId == awayTeamId && awayScore > homeScore) {
+            MatchResult.Win
+        } else {
+            MatchResult.Loss
+        }
     }
 }

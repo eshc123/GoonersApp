@@ -67,7 +67,7 @@ fun GnrNavHost(
                 onClickUser = {
                     navController.navigateToLogin()
                 },
-                onShowSnackbar = onShowSnackbar
+                onShowSnackBar = onShowSnackbar
             )
         }
 

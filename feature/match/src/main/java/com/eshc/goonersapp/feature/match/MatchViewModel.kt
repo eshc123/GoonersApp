@@ -22,39 +22,29 @@ import javax.inject.Inject
 class MatchViewModel @Inject constructor(
     getMatchesBySeasonUseCase : GetMatchesBySeasonUseCase
 ) : ViewModel() {
-
     private val _mUpdateCurrentMonthEvent = MutableSharedFlow<UpdateMonthEvent>()
     val mUpdateCurrentMonthEvent : SharedFlow<UpdateMonthEvent> = _mUpdateCurrentMonthEvent.asSharedFlow()
 
-    val matches : StateFlow<List<Match>> =
-        getMatchesBySeasonUseCase(21646)
-            .map {
-                when(it){
-                    is DataResult.Success -> {
-                        it.data
-                    }
-                    is DataResult.Failure -> {
-                        emptyList()
-                    }
-                }
-            }.stateIn(
-                scope = viewModelScope,
-                initialValue = emptyList(),
-                started = SharingStarted.Eagerly
-            )
+    val matches : StateFlow<List<Match>> = getMatchesBySeasonUseCase(21646)
+        .map { matchList ->
+            when (matchList) {
+                is DataResult.Success -> matchList.data
+                is DataResult.Failure -> emptyList()
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            initialValue = emptyList(),
+            started = SharingStarted.Eagerly
+        )
 
-    fun updateCurrentMonth(updateMonthEvent: UpdateMonthEvent){
-        viewModelScope.launch {
-            _mUpdateCurrentMonthEvent.emit(updateMonthEvent)
-        }
+    fun updateMonth(updateMonthEvent: UpdateMonthEvent) {
+        viewModelScope.launch { _mUpdateCurrentMonthEvent.emit(updateMonthEvent) }
     }
 
-    fun updateCurrentMonthAsToday(){
+    fun updateCurrentMonthAsToday() {
         viewModelScope.launch {
             _mUpdateCurrentMonthEvent.emit(
-                UpdateMonthEvent.UpdateToTargetMonth(
-                    targetMonth = LocalDate.now().monthValue
-                )
+                UpdateMonthEvent.UpdateToTargetMonth(LocalDate.now().monthValue)
             )
         }
     }

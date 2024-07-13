@@ -1,6 +1,8 @@
 package com.eshc.goonersapp.core.designsystem.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -11,36 +13,42 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
-import com.eshc.goonersapp.core.designsystem.theme.pretendard
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFDCDCDC
+import com.eshc.goonersapp.core.designsystem.theme.ColorFFFFFFFF
 
 @Composable
 fun GnrTextFiled(
-    modifier: Modifier = Modifier,
-    message : String,
+    text : String,
     onValueChange : (String) -> Unit,
+    modifier: Modifier = Modifier,
     placeholder : String = "",
+    backgroundColor : Color = ColorFFFFFFFF,
+    shape : Shape = CircleShape,
+    borderStroke: BorderStroke = BorderStroke(1.dp, ColorFFDCDCDC),
     enabled : Boolean = true
 ) {
     BasicTextField(
         modifier = modifier,
-        value = message,
+        value = text,
         maxLines = 1,
         enabled = enabled,
         textStyle = MaterialTheme.typography.bodyMedium.copy(
             color = if(enabled) Color.Black else Color.Gray
         ),
-        onValueChange = onValueChange,
+        onValueChange = {
+            onValueChange(it)
+        },
         decorationBox = { innerTextField ->
             Box(
                 modifier = Modifier
-                    .background(Color(0xFFF1F1F1), CircleShape)
+                    .border(borderStroke, shape)
+                    .background(backgroundColor)
                     .padding(horizontal = 16.dp),
                 contentAlignment = Alignment.CenterStart
             ) {
-                if(message.isBlank()){
+                if(text.isBlank()){
                     Text(
                         text = placeholder,
                         style = MaterialTheme.typography.bodyMedium,

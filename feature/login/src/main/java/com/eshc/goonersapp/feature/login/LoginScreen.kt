@@ -52,7 +52,7 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .padding(top = 16.dp, bottom = 16.dp, start = 16.dp, end = 16.dp)
                 .height(40.dp),
-            message = "",
+            text = "",
             onValueChange = {
 
             },
@@ -63,7 +63,7 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
                 .height(40.dp),
-            message = "",
+            text = "",
             onValueChange = {
 
             },

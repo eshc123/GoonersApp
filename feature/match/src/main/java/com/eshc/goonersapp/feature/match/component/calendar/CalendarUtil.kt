@@ -25,18 +25,13 @@ object CalendarUtil {
 
     fun getCalendarDatesListAsOneYear(
         startLocalDate: LocalDate,
-    ): List<CalendarDates> {
-        return IntRange(0,11).map {
-            getCalendarDates(startLocalDate.plusMonths(it.toLong()))
-        }
-    }
+    ): List<CalendarDates> = IntRange(0, 11).map { getCalendarDates(startLocalDate.plusMonths(it.toLong())) }
 
     fun isEqualOrLessMonth(localDate: LocalDate, targetLocalDate: LocalDate): Boolean {
         return if (localDate.year < targetLocalDate.year) true
         else if (localDate.year > targetLocalDate.year) false
         else localDate.month <= targetLocalDate.month
     }
-
 
     fun getCalendarDates(localDate: LocalDate): CalendarDates {
         val preDatesEnd = localDate.withDayOfMonth(1).minusDays(1L).dayOfWeek.value % 7

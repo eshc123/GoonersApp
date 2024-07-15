@@ -16,7 +16,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -26,7 +25,6 @@ import com.eshc.goonersapp.core.designsystem.IconPack
 import com.eshc.goonersapp.core.designsystem.component.GnrTopLevelTopBar
 import com.eshc.goonersapp.core.designsystem.iconpack.IcGrid
 import com.eshc.goonersapp.core.designsystem.iconpack.IcList
-import com.eshc.goonersapp.core.designsystem.iconpack.IcNotification
 import com.eshc.goonersapp.core.designsystem.iconpack.IcPeople
 import com.eshc.goonersapp.core.designsystem.theme.ColorFF777777
 import com.eshc.goonersapp.core.domain.model.match.Match
@@ -38,42 +36,41 @@ import com.eshc.goonersapp.feature.match.component.calendar.getIndexByMonth
 import com.eshc.goonersapp.feature.match.event.UpdateMonthEvent
 import java.time.LocalDate
 
-enum class CalendarType {
-    Grid, List
-}
+enum class CalendarType { Grid, List }
 
 @Composable
 fun MatchRoute(
     bottomBar : @Composable () -> Unit,
-    viewModel: MatchViewModel = hiltViewModel(),
     onClickDetail: (Match) -> Unit,
     onClickUser : () -> Unit,
-    onShowSnackbar : (String) -> Unit
+    onShowSnackBar : (String) -> Unit,
+    matchViewModel: MatchViewModel = hiltViewModel()
 ) {
-    var calendarType by remember { mutableStateOf<CalendarType>(CalendarType.Grid) }
+    var calendarType by remember { mutableStateOf(CalendarType.Grid) }
 
     Scaffold(
         topBar = {
             MatchTopBar(
                 calendarType = calendarType,
                 onClickViewType = {
-                    calendarType = if(calendarType == CalendarType.Grid) CalendarType.List
-                                    else CalendarType.Grid
+                    calendarType = if (calendarType == CalendarType.Grid) {
+                        CalendarType.List
+                    } else {
+                        CalendarType.Grid
+                    }
                 },
                 onClickUser = onClickUser
             )
         },
-        bottomBar = {
-            bottomBar()
-        }
+        bottomBar = { bottomBar() }
     ) { padding ->
         MatchScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding),
-            viewModel = viewModel,
             calendarType = calendarType,
-            onClickDetail = onClickDetail
+            onClickDetail = onClickDetail,
+            matchViewModel = matchViewModel
         )
     }
 
@@ -83,45 +80,34 @@ fun MatchRoute(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MatchScreen(
-    modifier: Modifier = Modifier,
-    viewModel: MatchViewModel,
     calendarType : CalendarType,
-    calendarList : List<CalendarDates> = CalendarUtil.getCalendarDatesListAsOneYear(LocalDate.of(2023, 8, 1)),
-    onClickDetail: (Match) -> Unit
+    onClickDetail: (Match) -> Unit,
+    matchViewModel: MatchViewModel,
+    modifier: Modifier = Modifier,
+    calendarList : List<CalendarDates> = CalendarUtil.getCalendarDatesListAsOneYear(LocalDate.of(2023, 8, 1))
 ) {
+    val matches by matchViewModel.matches.collectAsStateWithLifecycle()
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
-    val matches by viewModel.matches.collectAsStateWithLifecycle()
-    val calendarMonthListState by remember {
-        mutableStateOf(calendarList)
-    }
+    val calendarMonthListState by remember { mutableStateOf(calendarList) }
     val calendarGridPagerState = rememberPagerState { calendarList.size }
 
-    LaunchedEffect(Unit ) {
-        viewModel.mUpdateCurrentMonthEvent.collect {
-            when(it){
+    LaunchedEffect(Unit) {
+        matchViewModel.mUpdateCurrentMonthEvent.collect {
+            when (it) {
                 UpdateMonthEvent.UpdateToNextMonth -> {
-                    calendarGridPagerState.animateScrollToPage(
-                        calendarGridPagerState.currentPage + 1
-                    )
+                    calendarGridPagerState.animateScrollToPage(calendarGridPagerState.currentPage + 1)
                 }
                 UpdateMonthEvent.UpdateToPreviousMonth -> {
-                    calendarGridPagerState.animateScrollToPage(
-                        calendarGridPagerState.currentPage - 1
-                    )
-
+                    calendarGridPagerState.animateScrollToPage(calendarGridPagerState.currentPage - 1)
                 }
                 is UpdateMonthEvent.UpdateToTargetMonth -> {
-                    calendarGridPagerState.animateScrollToPage(
-                       calendarList.getIndexByMonth(it.targetMonth)
-                    )
+                    calendarGridPagerState.animateScrollToPage(calendarList.getIndexByMonth(it.targetMonth))
                 }
             }
         }
     }
 
-    Column(
-        modifier = modifier
-    ) {
+    Column(modifier = modifier) {
         when (calendarType) {
             CalendarType.Grid -> {
                 CalendarGrid(
@@ -132,36 +118,26 @@ fun MatchScreen(
                     },
                     calendarMonthListState = calendarMonthListState,
                     pagerState = calendarGridPagerState,
-                    onSelectDate = {
-                        selectedDate = it
-                    },
-                    onClickDetail = {
-                        onClickDetail(it)
-                    },
+                    onSelectDate = { selectedDate = it },
+                    onClickDetail = { onClickDetail(it) },
                     onClickPrevious = {
-                        if(calendarGridPagerState.currentPage != 0)
-                            viewModel.updateCurrentMonth(UpdateMonthEvent.UpdateToPreviousMonth)
+                        if (calendarGridPagerState.currentPage == 0) return@CalendarGrid
+
+                        matchViewModel.updateMonth(UpdateMonthEvent.UpdateToPreviousMonth)
                     },
                     onClickNext = {
-                        if(calendarGridPagerState.currentPage < calendarGridPagerState.pageCount)
-                            viewModel.updateCurrentMonth(UpdateMonthEvent.UpdateToNextMonth)
+                        if (calendarGridPagerState.currentPage >= calendarGridPagerState.pageCount) return@CalendarGrid
+
+                        matchViewModel.updateMonth(UpdateMonthEvent.UpdateToNextMonth)
                     },
-                    onClickToday = {
-                        viewModel.updateCurrentMonthAsToday()
-                    }
+                    onClickToday = { matchViewModel.updateCurrentMonthAsToday() }
                 )
             }
 
             CalendarType.List -> {
                 CalendarList(
-                    season = "2023-2024",
-                    headerHeight = 60,
-                    matchList = matches.groupBy {
-                        DateUtil.getYearAndMonthString(it.matchDate)
-                    },
-                    onClickDetail = {
-                        onClickDetail(it)
-                    }
+                    matchList = matches.groupBy { DateUtil.getYearAndMonthString(it.matchDate) },
+                    onClickDetail = { onClickDetail(it) }
                 )
             }
         }
@@ -173,13 +149,13 @@ fun MatchTopBar(
     calendarType: CalendarType,
     onClickViewType : () -> Unit,
     onClickUser : () -> Unit
-){
+) {
     GnrTopLevelTopBar(
-        modifier = Modifier.padding(horizontal = 8.dp),
+        modifier = Modifier.padding(horizontal = 15.dp),
         title = "Match",
-    ){
+    ) {
         Icon(
-            imageVector = when(calendarType){
+            imageVector = when (calendarType) {
                 CalendarType.Grid -> IconPack.IcList
                 CalendarType.List -> IconPack.IcGrid
             },
@@ -187,9 +163,7 @@ fun MatchTopBar(
             modifier= Modifier
                 .padding(horizontal = 8.dp)
                 .size(24.dp)
-                .clickable {
-                    onClickViewType()
-                },
+                .clickable { onClickViewType() },
             tint = ColorFF777777
         )
         Icon(

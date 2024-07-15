@@ -1,9 +1,12 @@
 package com.eshc.goonersapp.core.designsystem.ext
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.eshc.goonersapp.core.designsystem.theme.ColorFFF5F5F5
@@ -17,4 +20,14 @@ fun Modifier.gnrElevatedCardBorder(
         color = color,
         shape = RoundedCornerShape(round)
     )
+)
+
+fun Modifier.gnrCircleBorderShape(
+    borderWidth: Dp,
+    borderColor: Color,
+    borderShape: Shape
+) = this.then(
+    Modifier
+        .border(width = borderWidth, color = borderColor, shape = borderShape)
+        .clip(borderShape)
 )

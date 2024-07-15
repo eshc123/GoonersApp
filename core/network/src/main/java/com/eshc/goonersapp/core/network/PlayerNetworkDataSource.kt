@@ -6,7 +6,14 @@ import com.eshc.goonersapp.core.network.model.player.RemotePlayerList
 
 interface PlayerNetworkDataSource {
 
-    suspend fun getPlayerList() : NetworkResult<RemotePlayerList>
+    suspend fun getPlayerList(
+        teamId : Int = 19,
+        seasonId : Int = 21646,
+        positionId : Int?  = null,
+        keyword : String? = null,
+        page : Int? = null,
+        size : Int? = null
+    ) : NetworkResult<RemotePlayerList>
 
     suspend fun getPlayerDetail(playerId : Int) : NetworkResult<RemotePlayer>
 }

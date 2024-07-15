@@ -14,9 +14,23 @@ class PlayerNetworkDataSourceImpl @Inject constructor(
     private val playerNetworkService: PlayerNetworkService
 ) : PlayerNetworkDataSource {
 
-    override suspend fun getPlayerList(): NetworkResult<RemotePlayerList> {
+    override suspend fun getPlayerList(
+        teamId : Int,
+        seasonId : Int,
+        positionId : Int?,
+        keyword : String?,
+        page : Int?,
+        size : Int?
+    ): NetworkResult<RemotePlayerList> {
         return handleApi {
-            playerNetworkService.getPlayers()
+            playerNetworkService.getPlayers(
+                teamId = teamId,
+                seasonId = seasonId,
+                positionId = positionId,
+                keyword = keyword,
+                page = page,
+                size = size
+            )
         }
     }
 

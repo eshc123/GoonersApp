@@ -20,7 +20,14 @@ class FakePlayerNetworkDataSource : PlayerNetworkDataSource {
         this.responseForPlayerDetail = response
     }
 
-    override suspend fun getPlayerList(): NetworkResult<RemotePlayerList> {
+    override suspend fun getPlayerList(
+        teamId : Int,
+        seasonId : Int,
+        positionId : Int?,
+        keyword : String?,
+        page : Int?,
+        size : Int?
+    ): NetworkResult<RemotePlayerList> {
         val response = responseForPlayerList?.invoke()
         return if (response != null) {
             NetworkResult.Success(response)

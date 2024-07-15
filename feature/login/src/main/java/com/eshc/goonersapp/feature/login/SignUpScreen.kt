@@ -66,7 +66,7 @@ fun SignUpScreen(
                             .padding(top = 16.dp, bottom = 16.dp, start = 16.dp, end = 16.dp)
                             .height(40.dp),
                         enabled = viewModel.isCurrentType(type),
-                        message = when (type) {
+                        text = when (type) {
                             SignUpInputType.Email -> {
                                 email
                             }

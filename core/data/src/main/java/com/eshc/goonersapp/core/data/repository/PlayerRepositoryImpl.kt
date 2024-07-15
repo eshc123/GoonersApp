@@ -11,6 +11,7 @@ import com.eshc.goonersapp.core.database.model.onFailure
 import com.eshc.goonersapp.core.database.model.onSuccess
 import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.player.Player
+import com.eshc.goonersapp.core.domain.model.player.PlayerFilter
 import com.eshc.goonersapp.core.domain.model.player.PlayerList
 import com.eshc.goonersapp.core.domain.repository.PlayerRepository
 import com.eshc.goonersapp.core.network.PlayerNetworkDataSource
@@ -24,9 +25,18 @@ class PlayerRepositoryImpl @Inject constructor(
     private val playerNetworkDataSource: PlayerNetworkDataSource,
     private val playerLocalDataSource: PlayerLocalDataSource
 ) : PlayerRepository {
-    override fun getPlayers(): Flow<DataResult<PlayerList>> = flow {
+    override fun getPlayers(
+        playerFilter : PlayerFilter
+    ): Flow<DataResult<PlayerList>> = flow {
         emit(
-            playerNetworkDataSource.getPlayerList().toDataResult {
+            playerNetworkDataSource.getPlayerList(
+                teamId = playerFilter.teamId,
+                seasonId = playerFilter.seasonId,
+                positionId = playerFilter.positionId,
+                keyword = playerFilter.keyword,
+                page = playerFilter.page,
+                size = playerFilter.size
+            ).toDataResult {
                 it.toModel()
             }
         )

@@ -136,8 +136,6 @@ fun MatchScreen(
 
             CalendarType.List -> {
                 CalendarList(
-                    season = "2023-2024",
-                    headerHeight = 60,
                     matchList = matches.groupBy { DateUtil.getYearAndMonthString(it.matchDate) },
                     onClickDetail = { onClickDetail(it) }
                 )

@@ -83,11 +83,7 @@ fun CalendarGrid(
                 .padding(horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Spacer(
-                modifier = Modifier
-                    .wrapContentHeight()
-                    .weight(1f)
-            )
+            Spacer(modifier = Modifier.wrapContentHeight().weight(1f))
             Row(
                 modifier = Modifier
                     .wrapContentSize(),
@@ -95,17 +91,18 @@ fun CalendarGrid(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ){
                 IconButton(
-                    onClick = {  onClickPrevious() }
-                ) {
-                    Icon(
-                        imageVector = IconPack.IcIosArrowBack,
-                        contentDescription = "prev"
-                    )
-                }
+                    onClick = {  onClickPrevious() },
+                    content = {
+                        Icon(
+                            imageVector = IconPack.IcIosArrowBack,
+                            contentDescription = "prev"
+                        )
+                    }
+                )
                 Text(
                     text = calendarMonthListState[pagerState.currentPage]
-                        .currentMonth.
-                        format(DateTimeFormatter.ofPattern("yyyy.MM")),
+                        .currentMonth
+                        .format(DateTimeFormatter.ofPattern("yyyy.MM")),
                     style = GnrTypography.heading2SemiBold,
                     color = ColorFF181818
                 )
@@ -113,8 +110,7 @@ fun CalendarGrid(
                     onClick = { onClickNext() }
                 ) {
                     Icon(
-                        modifier = Modifier
-                            .rotate(180f),
+                        modifier = Modifier.rotate(180f),
                         imageVector = IconPack.IcIosArrowBack,
                         contentDescription = "next"
                     )
@@ -124,7 +120,7 @@ fun CalendarGrid(
                 modifier = Modifier
                     .wrapContentHeight()
                     .weight(1f)
-            ){
+            ) {
                 TodayButton(
                     modifier = Modifier
                         .align(Alignment.Center)
@@ -142,11 +138,7 @@ fun CalendarGrid(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Absolute.SpaceEvenly,
-                content = {
-                    CalendarUtil.dayOfWeekList.forEach {
-                        CalendarDayItem(it, 24)
-                    }
-                }
+                content = { CalendarUtil.dayOfWeekList.forEach { CalendarDayItem(it, 24) } }
             )
             HorizontalPager(state = pagerState) {
                 Column(modifier = Modifier.fillMaxSize()) {
@@ -181,11 +173,8 @@ fun CalendarGrid(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CalendarList(
-    season : String,
-    headerHeight :Int,
     matchList: Map<String, List<Match>>,
     onClickDetail : (Match) -> Unit
 ) {
@@ -196,13 +185,7 @@ fun CalendarList(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             matchList.forEach { (yearAndMonth, matches) ->
-                stickyHeader {
-                    CalendarStickyHeader(
-                        season = yearAndMonth,
-                        onClickToday = {  }
-                    )
-                }
-
+                item { CalendarStickyHeader(season = yearAndMonth) }
                 item {
                     CalendarListLeagueHeader(
                         competitionUrl = matches.first().leagueImageUrl,
@@ -211,13 +194,15 @@ fun CalendarList(
                 }
                 items(
                     items = matches,
-                    key = { it.id },
-                    itemContent = {
+                    key = { match -> match.id },
+                    itemContent = { match ->
                         CalendarListItem(
-                            match = it,
-                            modifier = Modifier.padding(horizontal = 15.dp)
+                            modifier = Modifier
+                                .padding(horizontal = 15.dp)
+                                .clickable(onClick = { onClickDetail(match) }),
+                            match = match
                         )
-                        if (matches[matches.lastIndex] != it) {
+                        if (matches[matches.lastIndex] != match) {
                             GnrHorizontalDivider(modifier = Modifier.padding(horizontal = 15.dp))
                         }
                     }

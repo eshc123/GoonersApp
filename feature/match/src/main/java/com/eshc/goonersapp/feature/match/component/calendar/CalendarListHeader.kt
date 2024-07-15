@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,27 +40,16 @@ fun CalendarListLeagueHeader(
 }
 
 @Composable
-fun CalendarStickyHeader(
-    season: String,
-    onClickToday: () -> Unit
-) {
+fun CalendarStickyHeader(season: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(ColorFFFFFFFF)
             .padding(start = 15.dp, end = 15.dp, top = 30.dp, bottom = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = season,
-            style = GnrTypography.subtitleSemiBold
-        )
-        TodayButton(
-            onClick = onClickToday,
-            modifier = Modifier.height(22.dp)
-        )
-    }
+        verticalAlignment = Alignment.CenterVertically,
+        content = { Text(text = season, style = GnrTypography.subtitleSemiBold) }
+    )
 }
 
 

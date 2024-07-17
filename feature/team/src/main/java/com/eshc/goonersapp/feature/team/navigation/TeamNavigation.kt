@@ -10,7 +10,7 @@ import androidx.navigation.navArgument
 import com.eshc.goonersapp.feature.team.TeamRootScreen
 import com.eshc.goonersapp.feature.team.club.ClubDetailRoute
 import com.eshc.goonersapp.feature.team.detail.PlayerDetailRootScreen
-import com.eshc.goonersapp.feature.team.history.TeamSearchRootScreen
+import com.eshc.goonersapp.feature.team.search.TeamSearchRootScreen
 
 const val teamNavigationRoute = "team_route"
 const val playerDetailNavigationRoute = "player_route"

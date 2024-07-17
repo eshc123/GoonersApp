@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,16 +21,19 @@ import com.eshc.goonersapp.core.designsystem.theme.GnrTypography
 
 @Composable
 fun GnrTopLevelTopBar(
-    title : String,
+    title: String,
     modifier: Modifier = Modifier,
-    content : @Composable () -> Unit
-){
+    content: @Composable () -> Unit
+) {
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            modifier = Modifier.padding(vertical = 8.dp).wrapContentHeight().weight(1f),
+            modifier = Modifier
+                .padding(vertical = 8.dp)
+                .wrapContentHeight()
+                .weight(1f),
             text = title,
             style = GnrTypography.heading2SemiBold,
             color = Color.Black,
@@ -40,27 +44,33 @@ fun GnrTopLevelTopBar(
 
 @Composable
 fun GnrTopBar(
-    title : String,
+    title: String,
     onBackIconClick: () -> Unit,
     modifier: Modifier = Modifier,
-    content : @Composable () -> Unit = {}
-){
+    content: @Composable () -> Unit = {}
+) {
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            imageVector = IconPack.IcIosArrowBack,
-            contentDescription = null,
-            modifier= Modifier
-                .padding(start = 8.dp,end = 8.dp)
-                .size(24.dp)
-                .clickable(onClick = onBackIconClick)
-        )
+        IconButton(
+            onClick = onBackIconClick
+        ) {
+            Icon(
+                imageVector = IconPack.IcIosArrowBack,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(18.dp)
+            )
+        }
+
         Text(
-            modifier = Modifier.padding(vertical = 8.dp).wrapContentHeight().weight(1f),
+            modifier = Modifier
+                .padding(vertical = 8.dp)
+                .wrapContentHeight()
+                .weight(1f),
             text = title,
-            style = MaterialTheme.typography.headlineLarge,
+            style = GnrTypography.heading2SemiBold,
             color = Color.Black,
         )
         content()

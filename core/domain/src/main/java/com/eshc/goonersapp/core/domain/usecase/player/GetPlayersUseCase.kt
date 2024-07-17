@@ -2,6 +2,7 @@ package com.eshc.goonersapp.core.domain.usecase.player
 
 import com.eshc.goonersapp.core.domain.model.DataResult
 import com.eshc.goonersapp.core.domain.model.player.Player
+import com.eshc.goonersapp.core.domain.model.player.PlayerFilter
 import com.eshc.goonersapp.core.domain.model.player.PlayerList
 import com.eshc.goonersapp.core.domain.repository.PlayerRepository
 import kotlinx.coroutines.flow.Flow
@@ -11,6 +12,8 @@ class GetPlayersUseCase @Inject constructor(
     private val playerRepository: PlayerRepository
 ) {
 
-    operator fun invoke(): Flow<DataResult<PlayerList>> =
-        playerRepository.getPlayers()
+    operator fun invoke(
+        playerFilter : PlayerFilter = PlayerFilter()
+    ): Flow<DataResult<PlayerList>> =
+        playerRepository.getPlayers(playerFilter)
 }
